@@ -1,0 +1,1414 @@
+{
+  "canvas": [
+    1672,
+    941
+  ],
+  "source": "Original_Without_Characters.png",
+  "layer_order_back_to_front": [
+    "00 Repainted Background Shell",
+    "01 Floor Clean",
+    "02 Window Architecture",
+    "03 Chart Desk Left",
+    "04 Pilot Seat Left",
+    "05 Pilot Seat Right",
+    "06 Helm Wheel",
+    "07 Fern Left",
+    "08 Stool Left",
+    "09 Lounge Couch",
+    "10 Lounge Table",
+    "11 Plant Front Left",
+    "12 Cabinet Right",
+    "13 Globe Right",
+    "14 Stool Right",
+    "15 Plant Right",
+    "16 Foreground Framing",
+    "17 Foreground Framing Right",
+    "18 Entrance Threshold"
+  ],
+  "sprites": [
+    {
+      "name": "Window_Architecture",
+      "type": "window",
+      "canvas_file": "Full_Canvas_Layers/02_Window_Architecture.png",
+      "sprite_file": "Sprites_Cropped/Window_Architecture.png",
+      "bbox_xywh": [
+        320,
+        0,
+        1101,
+        336
+      ],
+      "position_top_left": [
+        320,
+        0
+      ],
+      "position_center": [
+        870.5,
+        168.0
+      ],
+      "approx_mask_pixels": 277428,
+      "polygon": [
+        [
+          320,
+          0
+        ],
+        [
+          1375,
+          0
+        ],
+        [
+          1420,
+          88
+        ],
+        [
+          1420,
+          268
+        ],
+        [
+          1345,
+          334
+        ],
+        [
+          1250,
+          295
+        ],
+        [
+          1130,
+          252
+        ],
+        [
+          1075,
+          224
+        ],
+        [
+          930,
+          217
+        ],
+        [
+          820,
+          212
+        ],
+        [
+          706,
+          210
+        ],
+        [
+          572,
+          224
+        ],
+        [
+          484,
+          266
+        ],
+        [
+          389,
+          335
+        ],
+        [
+          328,
+          320
+        ]
+      ]
+    },
+    {
+      "name": "Chart_Desk_Left",
+      "type": "furniture",
+      "canvas_file": "Full_Canvas_Layers/03_Chart_Desk_Left.png",
+      "sprite_file": "Sprites_Cropped/Chart_Desk_Left.png",
+      "bbox_xywh": [
+        117,
+        392,
+        256,
+        182
+      ],
+      "position_top_left": [
+        117,
+        392
+      ],
+      "position_center": [
+        245.0,
+        483.0
+      ],
+      "approx_mask_pixels": 36711,
+      "polygon": [
+        [
+          117,
+          447
+        ],
+        [
+          156,
+          421
+        ],
+        [
+          266,
+          392
+        ],
+        [
+          313,
+          395
+        ],
+        [
+          369,
+          418
+        ],
+        [
+          382,
+          445
+        ],
+        [
+          364,
+          471
+        ],
+        [
+          337,
+          512
+        ],
+        [
+          318,
+          555
+        ],
+        [
+          276,
+          570
+        ],
+        [
+          162,
+          573
+        ],
+        [
+          119,
+          557
+        ]
+      ]
+    },
+    {
+      "name": "Pilot_Seat_Left",
+      "type": "furniture",
+      "canvas_file": "Full_Canvas_Layers/04_Pilot_Seat_Left.png",
+      "sprite_file": "Sprites_Cropped/Pilot_Seat_Left.png",
+      "bbox_xywh": [
+        618,
+        340,
+        137,
+        165
+      ],
+      "position_top_left": [
+        618,
+        340
+      ],
+      "position_center": [
+        686.5,
+        422.5
+      ],
+      "approx_mask_pixels": 17316,
+      "polygon": [
+        [
+          624,
+          349
+        ],
+        [
+          642,
+          341
+        ],
+        [
+          688,
+          340
+        ],
+        [
+          711,
+          353
+        ],
+        [
+          720,
+          383
+        ],
+        [
+          743,
+          388
+        ],
+        [
+          754,
+          403
+        ],
+        [
+          754,
+          429
+        ],
+        [
+          725,
+          451
+        ],
+        [
+          736,
+          469
+        ],
+        [
+          725,
+          492
+        ],
+        [
+          714,
+          504
+        ],
+        [
+          662,
+          503
+        ],
+        [
+          643,
+          491
+        ],
+        [
+          635,
+          468
+        ],
+        [
+          618,
+          452
+        ],
+        [
+          618,
+          390
+        ]
+      ]
+    },
+    {
+      "name": "Pilot_Seat_Right",
+      "type": "furniture",
+      "canvas_file": "Full_Canvas_Layers/05_Pilot_Seat_Right.png",
+      "sprite_file": "Sprites_Cropped/Pilot_Seat_Right.png",
+      "bbox_xywh": [
+        913,
+        342,
+        130,
+        161
+      ],
+      "position_top_left": [
+        913,
+        342
+      ],
+      "position_center": [
+        978.0,
+        422.5
+      ],
+      "approx_mask_pixels": 15484,
+      "polygon": [
+        [
+          943,
+          354
+        ],
+        [
+          965,
+          343
+        ],
+        [
+          1002,
+          342
+        ],
+        [
+          1021,
+          355
+        ],
+        [
+          1029,
+          384
+        ],
+        [
+          1042,
+          393
+        ],
+        [
+          1034,
+          426
+        ],
+        [
+          1027,
+          451
+        ],
+        [
+          1023,
+          481
+        ],
+        [
+          1005,
+          497
+        ],
+        [
+          963,
+          502
+        ],
+        [
+          939,
+          493
+        ],
+        [
+          927,
+          463
+        ],
+        [
+          914,
+          434
+        ],
+        [
+          913,
+          402
+        ],
+        [
+          936,
+          384
+        ]
+      ]
+    },
+    {
+      "name": "Helm_Wheel",
+      "type": "machine",
+      "canvas_file": "Full_Canvas_Layers/06_Helm_Wheel.png",
+      "sprite_file": "Sprites_Cropped/Helm_Wheel.png",
+      "bbox_xywh": [
+        762,
+        269,
+        131,
+        143
+      ],
+      "position_top_left": [
+        762,
+        269
+      ],
+      "position_center": [
+        827.5,
+        340.5
+      ],
+      "approx_mask_pixels": 15170,
+      "polygon": [
+        [
+          780,
+          275
+        ],
+        [
+          810,
+          269
+        ],
+        [
+          838,
+          272
+        ],
+        [
+          855,
+          283
+        ],
+        [
+          878,
+          300
+        ],
+        [
+          890,
+          322
+        ],
+        [
+          892,
+          351
+        ],
+        [
+          879,
+          380
+        ],
+        [
+          871,
+          407
+        ],
+        [
+          781,
+          411
+        ],
+        [
+          770,
+          382
+        ],
+        [
+          764,
+          360
+        ],
+        [
+          762,
+          324
+        ]
+      ]
+    },
+    {
+      "name": "Fern_Left",
+      "type": "decor",
+      "canvas_file": "Full_Canvas_Layers/07_Fern_Left.png",
+      "sprite_file": "Sprites_Cropped/Fern_Left.png",
+      "bbox_xywh": [
+        350,
+        360,
+        111,
+        158
+      ],
+      "position_top_left": [
+        350,
+        360
+      ],
+      "position_center": [
+        405.5,
+        439.0
+      ],
+      "approx_mask_pixels": 11785,
+      "polygon": [
+        [
+          359,
+          368
+        ],
+        [
+          380,
+          360
+        ],
+        [
+          408,
+          386
+        ],
+        [
+          423,
+          369
+        ],
+        [
+          434,
+          377
+        ],
+        [
+          449,
+          385
+        ],
+        [
+          453,
+          399
+        ],
+        [
+          460,
+          420
+        ],
+        [
+          447,
+          439
+        ],
+        [
+          443,
+          466
+        ],
+        [
+          447,
+          492
+        ],
+        [
+          436,
+          513
+        ],
+        [
+          388,
+          518
+        ],
+        [
+          374,
+          498
+        ],
+        [
+          373,
+          454
+        ],
+        [
+          364,
+          432
+        ],
+        [
+          350,
+          407
+        ]
+      ]
+    },
+    {
+      "name": "Stool_Left",
+      "type": "furniture",
+      "canvas_file": "Full_Canvas_Layers/08_Stool_Left.png",
+      "sprite_file": "Sprites_Cropped/Stool_Left.png",
+      "bbox_xywh": [
+        328,
+        493,
+        69,
+        107
+      ],
+      "position_top_left": [
+        328,
+        493
+      ],
+      "position_center": [
+        362.5,
+        546.5
+      ],
+      "approx_mask_pixels": 5089,
+      "polygon": [
+        [
+          337,
+          499
+        ],
+        [
+          360,
+          493
+        ],
+        [
+          377,
+          499
+        ],
+        [
+          392,
+          516
+        ],
+        [
+          396,
+          536
+        ],
+        [
+          384,
+          550
+        ],
+        [
+          380,
+          581
+        ],
+        [
+          374,
+          596
+        ],
+        [
+          346,
+          599
+        ],
+        [
+          338,
+          585
+        ],
+        [
+          339,
+          553
+        ],
+        [
+          328,
+          539
+        ]
+      ]
+    },
+    {
+      "name": "Lounge_Couch",
+      "type": "furniture",
+      "canvas_file": "Full_Canvas_Layers/09_Lounge_Couch.png",
+      "sprite_file": "Sprites_Cropped/Lounge_Couch.png",
+      "bbox_xywh": [
+        34,
+        521,
+        317,
+        278
+      ],
+      "position_top_left": [
+        34,
+        521
+      ],
+      "position_center": [
+        192.5,
+        660.0
+      ],
+      "approx_mask_pixels": 50222,
+      "polygon": [
+        [
+          37,
+          522
+        ],
+        [
+          70,
+          521
+        ],
+        [
+          95,
+          531
+        ],
+        [
+          114,
+          549
+        ],
+        [
+          139,
+          566
+        ],
+        [
+          162,
+          591
+        ],
+        [
+          188,
+          601
+        ],
+        [
+          218,
+          598
+        ],
+        [
+          249,
+          585
+        ],
+        [
+          287,
+          588
+        ],
+        [
+          320,
+          598
+        ],
+        [
+          348,
+          624
+        ],
+        [
+          351,
+          660
+        ],
+        [
+          334,
+          686
+        ],
+        [
+          326,
+          727
+        ],
+        [
+          300,
+          751
+        ],
+        [
+          280,
+          777
+        ],
+        [
+          230,
+          796
+        ],
+        [
+          139,
+          801
+        ],
+        [
+          99,
+          792
+        ],
+        [
+          63,
+          755
+        ],
+        [
+          45,
+          705
+        ],
+        [
+          34,
+          662
+        ]
+      ]
+    },
+    {
+      "name": "Lounge_Table",
+      "type": "furniture",
+      "canvas_file": "Full_Canvas_Layers/10_Lounge_Table.png",
+      "sprite_file": "Sprites_Cropped/Lounge_Table.png",
+      "bbox_xywh": [
+        308,
+        638,
+        162,
+        164
+      ],
+      "position_top_left": [
+        308,
+        638
+      ],
+      "position_center": [
+        389.0,
+        720.0
+      ],
+      "approx_mask_pixels": 20546,
+      "polygon": [
+        [
+          336,
+          657
+        ],
+        [
+          367,
+          638
+        ],
+        [
+          400,
+          643
+        ],
+        [
+          440,
+          670
+        ],
+        [
+          463,
+          693
+        ],
+        [
+          469,
+          714
+        ],
+        [
+          455,
+          756
+        ],
+        [
+          458,
+          797
+        ],
+        [
+          432,
+          815
+        ],
+        [
+          350,
+          818
+        ],
+        [
+          330,
+          798
+        ],
+        [
+          330,
+          772
+        ],
+        [
+          318,
+          756
+        ],
+        [
+          308,
+          726
+        ]
+      ]
+    },
+    {
+      "name": "Plant_Front_Left",
+      "type": "decor",
+      "canvas_file": "Full_Canvas_Layers/11_Plant_Front_Left.png",
+      "sprite_file": "Sprites_Cropped/Plant_Front_Left.png",
+      "bbox_xywh": [
+        72,
+        661,
+        123,
+        135
+      ],
+      "position_top_left": [
+        72,
+        661
+      ],
+      "position_center": [
+        133.5,
+        728.5
+      ],
+      "approx_mask_pixels": 10152,
+      "polygon": [
+        [
+          94,
+          672
+        ],
+        [
+          109,
+          661
+        ],
+        [
+          122,
+          680
+        ],
+        [
+          140,
+          683
+        ],
+        [
+          151,
+          699
+        ],
+        [
+          167,
+          706
+        ],
+        [
+          183,
+          710
+        ],
+        [
+          194,
+          733
+        ],
+        [
+          186,
+          748
+        ],
+        [
+          165,
+          754
+        ],
+        [
+          162,
+          781
+        ],
+        [
+          153,
+          804
+        ],
+        [
+          112,
+          808
+        ],
+        [
+          91,
+          792
+        ],
+        [
+          93,
+          759
+        ],
+        [
+          79,
+          742
+        ],
+        [
+          72,
+          717
+        ]
+      ]
+    },
+    {
+      "name": "Cabinet_Right",
+      "type": "furniture",
+      "canvas_file": "Full_Canvas_Layers/12_Cabinet_Right.png",
+      "sprite_file": "Sprites_Cropped/Cabinet_Right.png",
+      "bbox_xywh": [
+        1246,
+        406,
+        296,
+        343
+      ],
+      "position_top_left": [
+        1246,
+        406
+      ],
+      "position_center": [
+        1394.0,
+        577.5
+      ],
+      "approx_mask_pixels": 52382,
+      "polygon": [
+        [
+          1246,
+          415
+        ],
+        [
+          1292,
+          406
+        ],
+        [
+          1378,
+          411
+        ],
+        [
+          1464,
+          412
+        ],
+        [
+          1519,
+          434
+        ],
+        [
+          1541,
+          474
+        ],
+        [
+          1532,
+          668
+        ],
+        [
+          1534,
+          716
+        ],
+        [
+          1501,
+          743
+        ],
+        [
+          1379,
+          748
+        ],
+        [
+          1345,
+          732
+        ],
+        [
+          1281,
+          698
+        ],
+        [
+          1253,
+          677
+        ]
+      ]
+    },
+    {
+      "name": "Globe_Right",
+      "type": "decor",
+      "canvas_file": "Full_Canvas_Layers/13_Globe_Right.png",
+      "sprite_file": "Sprites_Cropped/Globe_Right.png",
+      "bbox_xywh": [
+        1326,
+        370,
+        154,
+        199
+      ],
+      "position_top_left": [
+        1326,
+        370
+      ],
+      "position_center": [
+        1403.0,
+        469.5
+      ],
+      "approx_mask_pixels": 22727,
+      "polygon": [
+        [
+          1342,
+          405
+        ],
+        [
+          1364,
+          381
+        ],
+        [
+          1399,
+          370
+        ],
+        [
+          1439,
+          377
+        ],
+        [
+          1465,
+          406
+        ],
+        [
+          1479,
+          444
+        ],
+        [
+          1477,
+          476
+        ],
+        [
+          1464,
+          502
+        ],
+        [
+          1450,
+          524
+        ],
+        [
+          1455,
+          548
+        ],
+        [
+          1428,
+          566
+        ],
+        [
+          1382,
+          568
+        ],
+        [
+          1356,
+          554
+        ],
+        [
+          1356,
+          524
+        ],
+        [
+          1340,
+          495
+        ],
+        [
+          1326,
+          464
+        ]
+      ]
+    },
+    {
+      "name": "Stool_Right",
+      "type": "furniture",
+      "canvas_file": "Full_Canvas_Layers/14_Stool_Right.png",
+      "sprite_file": "Sprites_Cropped/Stool_Right.png",
+      "bbox_xywh": [
+        1237,
+        575,
+        85,
+        139
+      ],
+      "position_top_left": [
+        1237,
+        575
+      ],
+      "position_center": [
+        1279.5,
+        644.5
+      ],
+      "approx_mask_pixels": 8346,
+      "polygon": [
+        [
+          1243,
+          586
+        ],
+        [
+          1270,
+          575
+        ],
+        [
+          1301,
+          580
+        ],
+        [
+          1319,
+          598
+        ],
+        [
+          1317,
+          620
+        ],
+        [
+          1313,
+          668
+        ],
+        [
+          1321,
+          681
+        ],
+        [
+          1316,
+          704
+        ],
+        [
+          1274,
+          713
+        ],
+        [
+          1260,
+          695
+        ],
+        [
+          1255,
+          631
+        ],
+        [
+          1237,
+          613
+        ]
+      ]
+    },
+    {
+      "name": "Plant_Right",
+      "type": "decor",
+      "canvas_file": "Full_Canvas_Layers/15_Plant_Right.png",
+      "sprite_file": "Sprites_Cropped/Plant_Right.png",
+      "bbox_xywh": [
+        1463,
+        506,
+        170,
+        294
+      ],
+      "position_top_left": [
+        1463,
+        506
+      ],
+      "position_center": [
+        1548.0,
+        653.0
+      ],
+      "approx_mask_pixels": 31362,
+      "polygon": [
+        [
+          1467,
+          529
+        ],
+        [
+          1500,
+          506
+        ],
+        [
+          1548,
+          513
+        ],
+        [
+          1572,
+          530
+        ],
+        [
+          1591,
+          520
+        ],
+        [
+          1626,
+          537
+        ],
+        [
+          1632,
+          565
+        ],
+        [
+          1612,
+          587
+        ],
+        [
+          1598,
+          615
+        ],
+        [
+          1590,
+          641
+        ],
+        [
+          1593,
+          686
+        ],
+        [
+          1594,
+          715
+        ],
+        [
+          1583,
+          752
+        ],
+        [
+          1566,
+          792
+        ],
+        [
+          1512,
+          803
+        ],
+        [
+          1492,
+          782
+        ],
+        [
+          1501,
+          748
+        ],
+        [
+          1507,
+          693
+        ],
+        [
+          1501,
+          664
+        ],
+        [
+          1480,
+          627
+        ],
+        [
+          1463,
+          595
+        ]
+      ]
+    },
+    {
+      "name": "Foreground_Framing",
+      "type": "foreground",
+      "canvas_file": "Full_Canvas_Layers/16_Foreground_Framing.png",
+      "sprite_file": "Sprites_Cropped/Foreground_Framing.png",
+      "bbox_xywh": [
+        0,
+        680,
+        694,
+        261
+      ],
+      "position_top_left": [
+        0,
+        680
+      ],
+      "position_center": [
+        347.0,
+        810.5
+      ],
+      "approx_mask_pixels": 100599,
+      "polygon": [
+        [
+          0,
+          680
+        ],
+        [
+          21,
+          686
+        ],
+        [
+          50,
+          716
+        ],
+        [
+          61,
+          757
+        ],
+        [
+          64,
+          790
+        ],
+        [
+          252,
+          802
+        ],
+        [
+          505,
+          802
+        ],
+        [
+          535,
+          821
+        ],
+        [
+          690,
+          819
+        ],
+        [
+          714,
+          839
+        ],
+        [
+          714,
+          941
+        ],
+        [
+          0,
+          941
+        ]
+      ]
+    },
+    {
+      "name": "Foreground_Framing_Right",
+      "type": "foreground",
+      "canvas_file": "Full_Canvas_Layers/17_Foreground_Framing_Right.png",
+      "sprite_file": "Sprites_Cropped/Foreground_Framing_Right.png",
+      "bbox_xywh": [
+        965,
+        673,
+        707,
+        268
+      ],
+      "position_top_left": [
+        965,
+        673
+      ],
+      "position_center": [
+        1318.5,
+        807.0
+      ],
+      "approx_mask_pixels": 102029,
+      "polygon": [
+        [
+          1671,
+          673
+        ],
+        [
+          1641,
+          688
+        ],
+        [
+          1618,
+          724
+        ],
+        [
+          1595,
+          775
+        ],
+        [
+          1595,
+          798
+        ],
+        [
+          1410,
+          801
+        ],
+        [
+          1170,
+          801
+        ],
+        [
+          1144,
+          821
+        ],
+        [
+          963,
+          824
+        ],
+        [
+          954,
+          839
+        ],
+        [
+          953,
+          941
+        ],
+        [
+          1671,
+          941
+        ]
+      ]
+    },
+    {
+      "name": "Entrance_Threshold",
+      "type": "foreground",
+      "canvas_file": "Full_Canvas_Layers/18_Entrance_Threshold.png",
+      "sprite_file": "Sprites_Cropped/Entrance_Threshold.png",
+      "bbox_xywh": [
+        694,
+        808,
+        271,
+        133
+      ],
+      "position_top_left": [
+        694,
+        808
+      ],
+      "position_center": [
+        829.5,
+        874.5
+      ],
+      "approx_mask_pixels": 36043,
+      "polygon": [
+        [
+          694,
+          808
+        ],
+        [
+          964,
+          808
+        ],
+        [
+          964,
+          941
+        ],
+        [
+          694,
+          941
+        ]
+      ]
+    }
+  ],
+  "qa": {
+    "pixel_identical_fraction": 1.0,
+    "mean_absolute_channel_error": 0.0,
+    "max_channel_error": 0,
+    "repaired_background_has_props_baked_in": false,
+    "overlapping_source_pixels_across_object_layers": false
+  },
+  "coordinate_basis": "Pixels measured from top-left of 1672x941 Illustrated Art Pass; no resizing, rotation, or shifting for reassembly.",
+  "note": "Cut-outs are manually traced around the illustrated objects, and underpaint is filled by image inpainting. This is a first-pass separation; some masks and occluded areas require manual cleanup for independent movement. Windows and large console are grouped assets. Every pixel belongs to one visible layer."
+}

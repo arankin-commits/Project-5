@@ -1,0 +1,717 @@
+{
+  "format": "CHAMBERFORGE_IRON_TOWER_V1",
+  "id": "fly_cockpit",
+  "name": "Cockpit",
+  "description": "Two flight seats · pilot · broad view windows · steering levers, gauges, cranks and valves",
+  "theme": "ship",
+  "outline": [
+    [
+      260,
+      120
+    ],
+    [
+      1040,
+      120
+    ],
+    [
+      1080,
+      200
+    ],
+    [
+      1080,
+      620
+    ],
+    [
+      1060,
+      640
+    ],
+    [
+      1020,
+      680
+    ],
+    [
+      280,
+      680
+    ],
+    [
+      220,
+      620
+    ],
+    [
+      220,
+      240
+    ]
+  ],
+  "objects": [
+    {
+      "id": 1,
+      "kind": "spawn",
+      "x": 644,
+      "y": 626,
+      "s": 1,
+      "rot": 0,
+      "layer": "gameplay",
+      "solid": false,
+      "flip": false
+    },
+    {
+      "id": 2,
+      "kind": "exit",
+      "x": 642,
+      "y": 650,
+      "s": 1,
+      "rot": 0,
+      "layer": "gameplay",
+      "solid": false,
+      "flip": false
+    },
+    {
+      "id": 3,
+      "kind": "hubDoor",
+      "x": 641,
+      "y": 651,
+      "s": 0.95,
+      "rot": 0,
+      "layer": "gameplay",
+      "solid": false,
+      "flip": false,
+      "target": "fly_hall",
+      "doorLabel": "Main Hall"
+    },
+    {
+      "id": 4,
+      "kind": "window",
+      "x": 395,
+      "y": 144,
+      "s": 1.46,
+      "rot": 0,
+      "layer": "gameplay",
+      "solid": false,
+      "flip": false
+    },
+    {
+      "id": 5,
+      "kind": "window",
+      "x": 642,
+      "y": 124,
+      "s": 1.48,
+      "rot": 0,
+      "layer": "gameplay",
+      "solid": false,
+      "flip": false
+    },
+    {
+      "id": 6,
+      "kind": "window",
+      "x": 886,
+      "y": 144,
+      "s": 1.46,
+      "rot": 0,
+      "layer": "gameplay",
+      "solid": false,
+      "flip": false
+    },
+    {
+      "id": 7,
+      "kind": "helm",
+      "x": 560,
+      "y": 320,
+      "s": 0.72,
+      "rot": 0,
+      "layer": "gameplay",
+      "solid": true,
+      "flip": false
+    },
+    {
+      "id": 8,
+      "kind": "pilotSeat",
+      "x": 560,
+      "y": 440,
+      "s": 1.16,
+      "rot": 0,
+      "layer": "gameplay",
+      "solid": true,
+      "flip": false
+    },
+    {
+      "id": 9,
+      "kind": "pilotSeat",
+      "x": 760,
+      "y": 440,
+      "s": 1.15,
+      "rot": 0,
+      "layer": "gameplay",
+      "solid": true,
+      "flip": false
+    },
+    {
+      "id": 10,
+      "kind": "pilot",
+      "x": 560,
+      "y": 420,
+      "s": 1,
+      "rot": 0,
+      "layer": "gameplay",
+      "solid": false,
+      "flip": false
+    },
+    {
+      "id": 12,
+      "kind": "throttle",
+      "x": 660,
+      "y": 440,
+      "s": 0.93,
+      "rot": 0,
+      "layer": "gameplay",
+      "solid": true,
+      "flip": false
+    },
+    {
+      "id": 13,
+      "kind": "navChart",
+      "x": 660,
+      "y": 320,
+      "s": 0.95,
+      "rot": 0,
+      "layer": "gameplay",
+      "solid": true,
+      "flip": false
+    },
+    {
+      "id": 14,
+      "kind": "pipeGauge",
+      "x": 500,
+      "y": 240,
+      "s": 0.9,
+      "rot": 0,
+      "layer": "gameplay",
+      "solid": false,
+      "flip": false
+    },
+    {
+      "id": 15,
+      "kind": "pipeGauge",
+      "x": 760,
+      "y": 240,
+      "s": 0.9,
+      "rot": 0,
+      "layer": "gameplay",
+      "solid": false,
+      "flip": false
+    },
+    {
+      "id": 16,
+      "kind": "valve",
+      "x": 760,
+      "y": 320,
+      "s": 0.65,
+      "rot": 0,
+      "layer": "gameplay",
+      "solid": true,
+      "flip": false
+    },
+    {
+      "id": 17,
+      "kind": "valve",
+      "x": 380,
+      "y": 320,
+      "s": 0.65,
+      "rot": 0,
+      "layer": "gameplay",
+      "solid": true,
+      "flip": false
+    },
+    {
+      "id": 19,
+      "kind": "techConsole",
+      "x": 460,
+      "y": 320,
+      "s": 0.8,
+      "rot": 0,
+      "layer": "gameplay",
+      "solid": true,
+      "flip": false
+    },
+    {
+      "id": 20,
+      "kind": "pipes",
+      "x": 400,
+      "y": 240,
+      "s": 0.57,
+      "rot": 0,
+      "layer": "gameplay",
+      "solid": true,
+      "flip": false
+    },
+    {
+      "id": 21,
+      "kind": "pipes",
+      "x": 600,
+      "y": 240,
+      "s": 0.57,
+      "rot": 0,
+      "layer": "gameplay",
+      "solid": true,
+      "flip": false
+    },
+    {
+      "id": 22,
+      "kind": "floorplate",
+      "x": 660,
+      "y": 440,
+      "s": 1.1,
+      "rot": 0,
+      "layer": "background",
+      "solid": false,
+      "flip": false
+    },
+    {
+      "id": 23,
+      "kind": "pipes",
+      "x": 860,
+      "y": 240,
+      "s": 0.57,
+      "rot": 0,
+      "layer": "gameplay",
+      "solid": true,
+      "flip": false
+    },
+    {
+      "id": 24,
+      "kind": "pipes",
+      "x": 660,
+      "y": 240,
+      "s": 0.57,
+      "rot": 0,
+      "layer": "gameplay",
+      "solid": true,
+      "flip": false
+    }
+  ],
+  "gaps": [],
+  "grateZones": [],
+  "notes": "",
+  "playerPreview": {
+    "x": 281.0964953929528,
+    "y": 393.5412397066956
+  },
+  "playerScale": 1,
+  "cameraZoom": 1.45,
+  "sizeTier": "small",
+  "worldWidth": 1280,
+  "worldHeight": 800,
+  "hub": true,
+  "createdWith": "ChamberForge: Flying Liberty Hub v7",
+  "assetDefinitions": {
+    "pillar": {
+      "solid": true,
+      "hazard": null,
+      "category": "structure"
+    },
+    "wall": {
+      "solid": true,
+      "hazard": null,
+      "category": "structure"
+    },
+    "railing": {
+      "solid": true,
+      "hazard": null,
+      "category": "structure"
+    },
+    "catwalk": {
+      "solid": false,
+      "hazard": null,
+      "category": "structure"
+    },
+    "floorplate": {
+      "solid": false,
+      "hazard": null,
+      "category": "structure"
+    },
+    "doorway": {
+      "solid": false,
+      "hazard": null,
+      "category": "structure"
+    },
+    "boiler": {
+      "solid": true,
+      "hazard": null,
+      "category": "machine"
+    },
+    "tank": {
+      "solid": true,
+      "hazard": null,
+      "category": "machine"
+    },
+    "engine": {
+      "solid": true,
+      "hazard": null,
+      "category": "machine"
+    },
+    "gear": {
+      "solid": true,
+      "hazard": null,
+      "category": "machine"
+    },
+    "piston": {
+      "solid": true,
+      "hazard": null,
+      "category": "machine"
+    },
+    "pipes": {
+      "solid": true,
+      "hazard": null,
+      "category": "machine"
+    },
+    "valve": {
+      "solid": true,
+      "hazard": null,
+      "category": "machine"
+    },
+    "furnace": {
+      "solid": true,
+      "hazard": null,
+      "category": "machine"
+    },
+    "pump": {
+      "solid": true,
+      "hazard": null,
+      "category": "machine"
+    },
+    "desk": {
+      "solid": true,
+      "hazard": null,
+      "category": "machine"
+    },
+    "cabinet": {
+      "solid": true,
+      "hazard": null,
+      "category": "machine"
+    },
+    "crate": {
+      "solid": true,
+      "hazard": null,
+      "category": "machine"
+    },
+    "steam": {
+      "solid": false,
+      "hazard": "steam",
+      "category": "hazard"
+    },
+    "poison": {
+      "solid": false,
+      "hazard": "poison",
+      "category": "hazard"
+    },
+    "poisonVent": {
+      "solid": false,
+      "hazard": "poison",
+      "category": "hazard"
+    },
+    "leak": {
+      "solid": false,
+      "hazard": "poison",
+      "category": "hazard"
+    },
+    "electric": {
+      "solid": false,
+      "hazard": "electric",
+      "category": "hazard"
+    },
+    "crusher": {
+      "solid": false,
+      "hazard": "crush",
+      "category": "hazard"
+    },
+    "conveyor": {
+      "solid": false,
+      "hazard": "conveyor",
+      "category": "hazard"
+    },
+    "fire": {
+      "solid": false,
+      "hazard": "fire",
+      "category": "hazard"
+    },
+    "saw": {
+      "solid": false,
+      "hazard": "crush",
+      "category": "hazard"
+    },
+    "warning": {
+      "solid": false,
+      "hazard": null,
+      "category": "decor"
+    },
+    "gauge": {
+      "solid": false,
+      "hazard": null,
+      "category": "decor"
+    },
+    "paper": {
+      "solid": false,
+      "hazard": null,
+      "category": "decor"
+    },
+    "vent": {
+      "solid": false,
+      "hazard": null,
+      "category": "decor"
+    },
+    "cables": {
+      "solid": false,
+      "hazard": null,
+      "category": "decor"
+    },
+    "oil": {
+      "solid": false,
+      "hazard": null,
+      "category": "decor"
+    },
+    "sign": {
+      "solid": false,
+      "hazard": null,
+      "category": "decor"
+    },
+    "chains": {
+      "solid": false,
+      "hazard": null,
+      "category": "decor"
+    },
+    "linkPod": {
+      "solid": false,
+      "hazard": null,
+      "category": "ship"
+    },
+    "powerCable": {
+      "solid": false,
+      "hazard": null,
+      "category": "ship"
+    },
+    "techConsole": {
+      "solid": true,
+      "hazard": null,
+      "category": "ship"
+    },
+    "schematic": {
+      "solid": false,
+      "hazard": null,
+      "category": "ship"
+    },
+    "robotHeavy": {
+      "solid": true,
+      "hazard": null,
+      "category": "ship"
+    },
+    "robotMedium": {
+      "solid": true,
+      "hazard": null,
+      "category": "ship"
+    },
+    "robotLight": {
+      "solid": true,
+      "hazard": null,
+      "category": "ship"
+    },
+    "workbench": {
+      "solid": true,
+      "hazard": null,
+      "category": "ship"
+    },
+    "toolkit": {
+      "solid": true,
+      "hazard": null,
+      "category": "ship"
+    },
+    "robotCore": {
+      "solid": true,
+      "hazard": null,
+      "category": "ship"
+    },
+    "window": {
+      "solid": false,
+      "hazard": null,
+      "category": "ship"
+    },
+    "diningTable": {
+      "solid": true,
+      "hazard": null,
+      "category": "ship"
+    },
+    "diningChair": {
+      "solid": true,
+      "hazard": null,
+      "category": "ship"
+    },
+    "galley": {
+      "solid": true,
+      "hazard": null,
+      "category": "ship"
+    },
+    "foodCart": {
+      "solid": true,
+      "hazard": null,
+      "category": "ship"
+    },
+    "crtComputer": {
+      "solid": true,
+      "hazard": null,
+      "category": "ship"
+    },
+    "telegraph": {
+      "solid": true,
+      "hazard": null,
+      "category": "ship"
+    },
+    "telephone": {
+      "solid": false,
+      "hazard": null,
+      "category": "ship"
+    },
+    "serverRack": {
+      "solid": true,
+      "hazard": null,
+      "category": "ship"
+    },
+    "bunk": {
+      "solid": true,
+      "hazard": null,
+      "category": "ship"
+    },
+    "portrait": {
+      "solid": false,
+      "hazard": null,
+      "category": "ship"
+    },
+    "wardrobe": {
+      "solid": true,
+      "hazard": null,
+      "category": "ship"
+    },
+    "nightstand": {
+      "solid": true,
+      "hazard": null,
+      "category": "ship"
+    },
+    "helm": {
+      "solid": true,
+      "hazard": null,
+      "category": "ship"
+    },
+    "pilotSeat": {
+      "solid": true,
+      "hazard": null,
+      "category": "ship"
+    },
+    "navChart": {
+      "solid": true,
+      "hazard": null,
+      "category": "ship"
+    },
+    "throttle": {
+      "solid": true,
+      "hazard": null,
+      "category": "ship"
+    },
+    "pipeGauge": {
+      "solid": false,
+      "hazard": null,
+      "category": "ship"
+    },
+    "roboCat": {
+      "solid": false,
+      "hazard": null,
+      "category": "ship"
+    },
+    "roboDog": {
+      "solid": false,
+      "hazard": null,
+      "category": "ship"
+    },
+    "handler": {
+      "solid": false,
+      "hazard": null,
+      "category": "ship"
+    },
+    "engineer": {
+      "solid": false,
+      "hazard": null,
+      "category": "ship"
+    },
+    "cook": {
+      "solid": false,
+      "hazard": null,
+      "category": "ship"
+    },
+    "mechanic": {
+      "solid": false,
+      "hazard": null,
+      "category": "ship"
+    },
+    "analyst": {
+      "solid": false,
+      "hazard": null,
+      "category": "ship"
+    },
+    "pilot": {
+      "solid": false,
+      "hazard": null,
+      "category": "ship"
+    },
+    "hubDoor": {
+      "solid": false,
+      "hazard": null,
+      "category": "ship"
+    },
+    "lockedDoor": {
+      "solid": true,
+      "hazard": null,
+      "category": "ship"
+    },
+    "workDesk": {
+      "solid": true,
+      "hazard": null,
+      "category": "ship"
+    },
+    "couch": {
+      "solid": true,
+      "hazard": null,
+      "category": "ship"
+    },
+    "stool": {
+      "solid": true,
+      "hazard": null,
+      "category": "ship"
+    },
+    "workChair": {
+      "solid": true,
+      "hazard": null,
+      "category": "ship"
+    },
+    "barTable": {
+      "solid": true,
+      "hazard": null,
+      "category": "ship"
+    },
+    "pottedPlant": {
+      "solid": true,
+      "hazard": null,
+      "category": "ship"
+    },
+    "fernPlanter": {
+      "solid": true,
+      "hazard": null,
+      "category": "ship"
+    },
+    "spawn": {
+      "solid": false,
+      "hazard": null,
+      "category": "marker"
+    },
+    "exit": {
+      "solid": false,
+      "hazard": null,
+      "category": "marker"
+    }
+  }
+}
