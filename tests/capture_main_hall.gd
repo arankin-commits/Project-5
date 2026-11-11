@@ -17,7 +17,7 @@ func _capture() -> void:
 	camera.force_update_scroll()
 	await process_frame
 	await process_frame
-	print("WORKSHOP_DOOR_SCREENSHOT=", root.get_texture().get_image().save_png("res://reviews/main_hall_workshop_door.png"))
+	print("WORKSHOP_ENTRANCE_SCREENSHOT=", root.get_texture().get_image().save_png("res://reviews/main_hall_workshop_entrance.png"))
 	player.position = Vector2(2040, 365)
 	camera.reset_smoothing()
 	camera.force_update_scroll()

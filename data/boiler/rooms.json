@@ -1,0 +1,359 @@
+{
+  "area": "The Boiler Below",
+  "rooms": [
+    {
+      "name": "Cinder Vestibule",
+      "subtitle": "Wake the pressure line",
+      "tint": "ffffff",
+      "props": [
+        [
+          "boiler",
+          260,
+          430
+        ],
+        [
+          "boiler",
+          430,
+          260
+        ]
+      ],
+      "vents": [
+        [
+          650,
+          380
+        ]
+      ],
+      "waves": [
+        [
+          "crawler",
+          "crawler",
+          "crawler"
+        ]
+      ]
+    },
+    {
+      "name": "Coal Exchange",
+      "background": "coal",
+      "subtitle": "Between coal and copper",
+      "tint": "ffe4c9",
+      "props": [
+        [
+          "coal",
+          300,
+          340
+        ],
+        [
+          "coal",
+          340,
+          560
+        ],
+        [
+          "coal",
+          560,
+          340
+        ],
+        [
+          "coal",
+          650,
+          650
+        ]
+      ],
+      "vents": [
+        [
+          400,
+          720
+        ],
+        [
+          720,
+          400
+        ]
+      ],
+      "waves": [
+        [
+          "crawler",
+          "crawler",
+          "sentry",
+          "crawler"
+        ]
+      ]
+    },
+    {
+      "name": "Condensate Crossing",
+      "background": "condensate",
+      "subtitle": "A cold current in the pipes",
+      "tint": "cce9ec",
+      "props": [
+        [
+          "condenser",
+          260,
+          340
+        ],
+        [
+          "condenser",
+          340,
+          700
+        ],
+        [
+          "condenser",
+          700,
+          340
+        ],
+        [
+          "condenser",
+          700,
+          700
+        ]
+      ],
+      "vents": [
+        [
+          510,
+          510
+        ]
+      ],
+      "waves": [
+        [
+          "sentry",
+          "sentry",
+          "crawler",
+          "crawler"
+        ]
+      ]
+    },
+    {
+      "name": "Furnace Gallery",
+      "subtitle": "The furnace is listening",
+      "tint": "ffd5af",
+      "props": [
+        [
+          "boiler",
+          260,
+          300
+        ],
+        [
+          "boiler",
+          490,
+          300
+        ],
+        [
+          "boiler",
+          720,
+          300
+        ],
+        [
+          "coal",
+          350,
+          680
+        ]
+      ],
+      "vents": [
+        [
+          460,
+          540
+        ],
+        [
+          690,
+          610
+        ]
+      ],
+      "waves": [
+        [
+          "crawler",
+          "sentry",
+          "crawler"
+        ],
+        [
+          "crawler",
+          "crawler",
+          "sentry"
+        ]
+      ]
+    },
+    {
+      "name": "Piston Works",
+      "background": "coal",
+      "subtitle": "Break the iron rhythm",
+      "tint": "eadbc8",
+      "props": [
+        [
+          "condenser",
+          490,
+          490
+        ],
+        [
+          "coal",
+          240,
+          600
+        ],
+        [
+          "coal",
+          600,
+          240
+        ],
+        [
+          "boiler",
+          730,
+          660
+        ]
+      ],
+      "vents": [
+        [
+          250,
+          320
+        ],
+        [
+          680,
+          450
+        ]
+      ],
+      "waves": [
+        [
+          "brute",
+          "crawler",
+          "crawler",
+          "sentry"
+        ]
+      ]
+    },
+    {
+      "name": "Steam Junction",
+      "background": "condensate",
+      "subtitle": "Watch the pressure beneath your feet",
+      "tint": "cfdfd7",
+      "props": [
+        [
+          "boiler",
+          270,
+          460
+        ],
+        [
+          "condenser",
+          620,
+          330
+        ],
+        [
+          "coal",
+          600,
+          720
+        ]
+      ],
+      "vents": [
+        [
+          380,
+          650
+        ],
+        [
+          500,
+          500
+        ],
+        [
+          740,
+          500
+        ],
+        [
+          300,
+          260
+        ]
+      ],
+      "waves": [
+        [
+          "sentry",
+          "crawler",
+          "brute"
+        ],
+        [
+          "crawler",
+          "sentry",
+          "crawler"
+        ]
+      ]
+    },
+    {
+      "name": "Pressure Lock",
+      "subtitle": "The last line of defense",
+      "tint": "ffcfaa",
+      "props": [
+        [
+          "boiler",
+          260,
+          300
+        ],
+        [
+          "boiler",
+          300,
+          720
+        ],
+        [
+          "boiler",
+          720,
+          300
+        ],
+        [
+          "boiler",
+          700,
+          700
+        ]
+      ],
+      "vents": [
+        [
+          490,
+          330
+        ],
+        [
+          330,
+          490
+        ],
+        [
+          620,
+          620
+        ]
+      ],
+      "waves": [
+        [
+          "brute",
+          "sentry",
+          "crawler"
+        ],
+        [
+          "brute",
+          "sentry",
+          "crawler",
+          "crawler"
+        ]
+      ]
+    },
+    {
+      "name": "Heart of the Boiler",
+      "background": "heart",
+      "subtitle": "THE FURNACE WARDEN",
+      "tint": "ffca9e",
+      "props": [
+        [
+          "coal",
+          240,
+          600
+        ],
+        [
+          "coal",
+          600,
+          240
+        ]
+      ],
+      "vents": [
+        [
+          300,
+          320
+        ],
+        [
+          680,
+          620
+        ]
+      ],
+      "waves": [
+        [
+          "boss"
+        ]
+      ],
+      "boss": true
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 extends Node2D
 
 const DOOR := preload("res://scripts/cockpit_door.gd")
+const PASSAGE := preload("res://scripts/room_passage.gd")
 const WING_START_X := 1590.0
 const WING_TOP_Y := 175.0
 const WING_TILE_WIDTH := 225.0
@@ -21,10 +22,10 @@ func _ready() -> void:
 		player.position = Vector2(170, 550)
 	else:
 		player.position = Vector2(844, 315)
-	_build_left_workshop_door()
 	_build_right_wing()
 	_build_collision()
 	_build_doors()
+	_build_passages()
 	_build_ui()
 	$Player/Camera2D.make_current()
 	$Player/Camera2D.reset_smoothing()
@@ -43,22 +44,18 @@ func _build_doors() -> void:
 	# Left to right in the supplied hall painting: the second top door is the cockpit.
 	_add_door("FirstTopDoor", Vector2(521, 282), "Enter Sync Chamber", "fly_sync", "res://scenes/FlyingLibertySyncChamber.tscn", false)
 	_add_door("CockpitDoor", Vector2(844, 277), "Enter Cockpit", "fly_cockpit", "res://scenes/FlyingLibertyCockpit.tscn", false)
-	_add_door("WorkshopDoor", Vector2(115, 535), "Enter Engineering Workshop", "fly_workshop", "res://scenes/FlyingLibertyWorkshop.tscn", false)
 	for i in BEDROOM_COUNT:
 		var number := i + 1
 		_add_door("BedroomDoor%d" % number, Vector2(WING_START_X + 140.0 + i * WING_TILE_WIDTH, WING_TOP_Y + 190.0), "Enter Bedroom %d" % number, "bedroom_%02d" % number, "", false)
 
-func _build_left_workshop_door() -> void:
-	# The source hall has no doorway at this end, so reuse its painted top-door region.
-	var door_art := Sprite2D.new()
-	door_art.name = "WorkshopDoorArt"
-	door_art.texture = $HallArtwork.texture
-	door_art.region_enabled = true
-	door_art.region_rect = Rect2(445, 22, 165, 265)
-	door_art.centered = false
-	door_art.scale = Vector2(0.72, 0.72)
-	door_art.position = Vector2(52, 355)
-	$LeftWorkshopDoorVisual.add_child(door_art)
+func _build_passages() -> void:
+	var workshop_entrance := PASSAGE.new()
+	workshop_entrance.name = "WorkshopEntrance"
+	workshop_entrance.position = Vector2(100, 550)
+	workshop_entrance.half_extent = Vector2(35, 45)
+	workshop_entrance.target_scene = "res://scenes/FlyingLibertyWorkshop.tscn"
+	workshop_entrance.target_entry_id = "from_hall"
+	$Passages.add_child(workshop_entrance)
 
 func _build_right_wing() -> void:
 	# Reuse the existing painted left corridor and its top-door artwork as texture regions.

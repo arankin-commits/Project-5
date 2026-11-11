@@ -12,13 +12,13 @@ script = ExtResource("2")
 texture = ExtResource("1")
 centered = false
 
-[node name="LeftWorkshopDoorVisual" type="Node2D" parent="."]
-
 [node name="RightBedroomWing" type="Node2D" parent="."]
 
 [node name="Collision" type="Node2D" parent="."]
 
 [node name="Doors" type="Node2D" parent="."]
+
+[node name="Passages" type="Node2D" parent="."]
 
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(844, 315)

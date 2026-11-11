@@ -18,6 +18,11 @@ config/name="Flying Liberty"
 run/main_scene="res://scenes/FlyingLibertyMainHall.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 
+[autoload]
+
+CoreProgression="*res://scripts/core_progression.gd"
+RunConfig="*res://scripts/run_config.gd"
+
 [display]
 
 window/size/viewport_width=1280
@@ -25,6 +30,19 @@ window/size/viewport_height=720
 window/stretch/mode="canvas_items"
 
 [input]
+
+attack={
+"deadzone": 0.2,
+"events": [Object(InputEventMouseButton,"button_index":1), Object(InputEventKey,"physical_keycode":74)]
+}
+special={
+"deadzone": 0.2,
+"events": [Object(InputEventMouseButton,"button_index":2), Object(InputEventKey,"physical_keycode":75)]
+}
+dash={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"physical_keycode":32)]
+}
 
 move_up={
 "deadzone": 0.2,

@@ -1,9 +1,11 @@
 extends Node2D
 
-const DOOR := preload("res://scripts/cockpit_door.gd")
 const INTERACTABLE := preload("res://scripts/cockpit_interactable.gd")
+const CORE_INTERACTABLE := preload("res://scripts/core_interactable.gd")
+const PASSAGE := preload("res://scripts/room_passage.gd")
 
 @onready var player: CharacterBody2D = $Player
+@onready var core_terminal: CanvasLayer = $CoreTerminal
 var interactables: Array[CockpitInteractable] = []
 var prompt: Label
 var panel: PanelContainer
@@ -13,13 +15,20 @@ var panel_text: Label
 func _ready() -> void:
 	_build_collision()
 	_build_interactions()
+	_build_passage()
 	_build_ui()
+	core_terminal.connect("closed", Callable(self, "_on_core_terminal_closed"))
 	player.position = Vector2(1445, 490)
 	$Player/Camera2D.make_current()
 	$Player/Camera2D.reset_smoothing()
 	$Player/Camera2D.force_update_scroll()
 
 func _process(_delta: float) -> void:
+	if core_terminal.visible:
+		prompt.text = ""
+		if Input.is_action_just_pressed("interact"):
+			core_terminal.call("close_terminal")
+		return
 	var nearest := _nearest_interaction()
 	prompt.text = "[E] %s" % nearest.prompt if nearest != null and not panel.visible else ""
 	if Input.is_action_just_pressed("interact"):
@@ -29,24 +38,37 @@ func _process(_delta: float) -> void:
 			nearest.activate(self)
 
 func _build_interactions() -> void:
-	var exit_door := DOOR.new() as CockpitDoor
-	exit_door.name = "MainHallDoor"
-	exit_door.position = Vector2(1500, 485)
-	exit_door.prompt = "Return to Main Hall"
-	exit_door.radius = 100.0
-	exit_door.target_room_id = "fly_hall"
-	exit_door.target_scene = "res://scenes/FlyingLibertyMainHall.tscn"
-	exit_door.target_entry_id = "from_workshop"
-	$Interactions.add_child(exit_door)
-	interactables.append(exit_door)
+	var core := CORE_INTERACTABLE.new() as CoreInteractable
+	core.name = "PowerCoreTerminal"
+	core.position = Vector2(800, 610)
+	core.prompt = "Open Core / Skill Tree"
+	core.radius = 100.0
+	$Interactions.add_child(core)
+	interactables.append(core)
 	var station := INTERACTABLE.new() as CockpitInteractable
 	station.name = "AutomatonStation"
-	station.position = Vector2(810, 625)
+	station.position = Vector2(1110, 810)
 	station.prompt = "Inspect Automaton Station"
 	station.message = "The engineering benches are ready for automaton work."
 	station.radius = 100.0
 	$Interactions.add_child(station)
 	interactables.append(station)
+
+func open_core_terminal() -> void:
+	player.set("controls_enabled", false)
+	core_terminal.call("open_terminal")
+
+func _on_core_terminal_closed() -> void:
+	player.set("controls_enabled", true)
+
+func _build_passage() -> void:
+	var return_passage := PASSAGE.new()
+	return_passage.name = "MainHallReturn"
+	return_passage.position = Vector2(1495, 490)
+	return_passage.half_extent = Vector2(28, 65)
+	return_passage.target_scene = "res://scenes/FlyingLibertyMainHall.tscn"
+	return_passage.target_entry_id = "from_workshop"
+	$Passages.add_child(return_passage)
 
 func _nearest_interaction() -> CockpitInteractable:
 	var nearest: CockpitInteractable

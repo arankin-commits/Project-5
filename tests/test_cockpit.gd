@@ -4,11 +4,17 @@ func _initialize() -> void:
 	call_deferred("_run")
 
 func _run() -> void:
+	if root.get_node_or_null("CoreProgression") == null:
+		var progression: Node = load("res://scripts/core_progression.gd").new()
+		progression.name = "CoreProgression"
+		root.add_child(progression)
 	var room: Node2D = load("res://scenes/FlyingLibertyCockpit.tscn").instantiate()
 	root.add_child(room)
 	current_scene = room
 	await physics_frame
 	var player: CharacterBody2D = room.get_node("PlayerAndNPCs/Player")
+	assert(player.get_node("CharacterVisual").sprite_frames.get_frame_count("walk") == 8, "Main character animation was not loaded")
+	assert(room.get_node("PlayerAndNPCs/PilotNPC/PilotVisual").texture != null, "Pilot artwork was not loaded")
 	var spawn := player.position
 	assert(spawn.distance_to(Vector2(811.8, 809.2)) < 3.0, "Spawn mapping is wrong")
 	Input.action_press("move_up")
@@ -94,8 +100,11 @@ func _run() -> void:
 	var sync_pod = sync_room.get_node("Interactions/SyncPod")
 	assert(sync_pod.in_range(sync_player.position), "Sync pod is not approachable")
 	sync_pod.activate(sync_room)
-	assert(sync_room.panel.visible and sync_room.panel_title.text == "Inspect Sync Pod", "Sync pod interaction failed")
-	sync_room.panel.hide()
+	var run_setup = sync_room.get_node("RunSetup")
+	assert(run_setup.visible and not sync_player.get("controls_enabled"), "Sync pod setup did not open or pause movement")
+	assert(run_setup.robot_choice.is_item_disabled(1) and run_setup.robot_choice.is_item_disabled(2), "Unavailable robot types can be selected")
+	run_setup.close_setup()
+	assert(not run_setup.visible and sync_player.get("controls_enabled"), "Sync pod setup did not close")
 	sync_player.position = Vector2(793, 825)
 	var sync_exit = sync_room.get_node("Interactions/MainHallDoor")
 	assert(sync_exit.in_range(sync_player.position), "Sync Chamber exit is not approachable")
@@ -106,13 +115,15 @@ func _run() -> void:
 	hall = current_scene
 	hall_player = hall.get_node("Player")
 	assert(hall_player.position.distance_to(Vector2(521, 315)) < 1.0, "Sync Chamber returned to the wrong Main Hall door")
-	var workshop_door = hall.get_node("Doors/WorkshopDoor")
-	assert(workshop_door.target_room_id == "fly_workshop" and not workshop_door.locked, "Left hallway workshop door is missing")
+	var workshop_entrance = hall.get_node("Passages/WorkshopEntrance")
+	assert(workshop_entrance.target_scene == "res://scenes/FlyingLibertyWorkshop.tscn", "Left hallway workshop entrance is missing")
 	hall_player.position = Vector2(170, 550)
-	assert(workshop_door.in_range(hall_player.position), "Workshop door is not approachable")
-	workshop_door.activate(hall)
-	for i in 6:
-		await process_frame
+	Input.action_press("move_left")
+	for i in 40:
+		await physics_frame
+		if current_scene != null and current_scene.name == "FlyingLibertyWorkshop":
+			break
+	Input.action_release("move_left")
 	assert(current_scene != null and current_scene.name == "FlyingLibertyWorkshop", "Main Hall to Workshop transition failed")
 	var workshop := current_scene
 	var workshop_player: CharacterBody2D = workshop.get_node("Player")
@@ -123,17 +134,35 @@ func _run() -> void:
 		await physics_frame
 	Input.action_release("move_up")
 	assert(workshop_player.position.y >= 608, "Workshop power core collision failed")
+	var core_interaction = workshop.get_node("Interactions/PowerCoreTerminal")
+	assert(core_interaction.in_range(workshop_player.position), "Workshop core cannot be approached")
+	assert(workshop._nearest_interaction() == core_interaction, "Core interaction is obscured by another prompt")
+	core_interaction.activate(workshop)
+	var core_terminal = workshop.get_node("CoreTerminal")
+	assert(core_terminal.visible and not workshop_player.get("controls_enabled"), "Core terminal did not open or pause movement")
+	assert(core_terminal.tabs.get_tab_count() == 2 and core_terminal.core_buttons["core_02"].disabled and core_terminal.core_buttons["core_03"].disabled, "Core selection did not lock unavailable slots")
+	assert(core_terminal.skill_buttons["power_routing"].text.contains("UNLOCKED") and core_terminal.unlock_button.disabled, "Starting skill tree state is wrong")
+	var progression: Node = root.get_node("CoreProgression")
+	assert(progression.get("unlocked_cores").size() == 1 and progression.get("equipped_core") == "standard", "Starting core state is wrong")
+	assert(not progression.call("equip_core", "core_02"), "Locked core could be equipped")
+	assert(progression.get("equipped_core") == "standard", "Locked core changed the equipped core")
+	core_terminal.close_terminal()
+	assert(not core_terminal.visible and workshop_player.get("controls_enabled"), "Core terminal did not restore movement")
 	var station = workshop.get_node("Interactions/AutomatonStation")
+	workshop_player.position = Vector2(1110, 810)
 	assert(station.in_range(workshop_player.position), "Automaton station is not approachable")
 	station.activate(workshop)
 	assert(workshop.panel.visible, "Automaton station interaction failed")
 	workshop.panel.hide()
 	workshop_player.position = Vector2(1445, 490)
-	var workshop_exit = workshop.get_node("Interactions/MainHallDoor")
-	assert(workshop_exit.in_range(workshop_player.position), "Workshop exit is not approachable")
-	workshop_exit.activate(workshop)
-	for i in 6:
-		await process_frame
+	var workshop_exit = workshop.get_node("Passages/MainHallReturn")
+	assert(workshop_exit.target_entry_id == "from_workshop", "Workshop return passage is missing")
+	Input.action_press("move_right")
+	for i in 40:
+		await physics_frame
+		if current_scene != null and current_scene.name == "FlyingLibertyMainHall":
+			break
+	Input.action_release("move_right")
 	assert(current_scene != null and current_scene.name == "FlyingLibertyMainHall", "Workshop to Main Hall transition failed")
 	hall = current_scene
 	hall_player = hall.get_node("Player")

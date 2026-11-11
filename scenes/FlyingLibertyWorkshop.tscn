@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Texture2D" path="res://rooms/Steampunk Automaton Engineering Workshop.png" id="1"]
 [ext_resource type="Script" path="res://scripts/workshop.gd" id="2"]
 [ext_resource type="Script" path="res://scripts/cockpit_player.gd" id="3"]
+[ext_resource type="PackedScene" path="res://scenes/ui/CoreTerminal.tscn" id="4"]
 
 [node name="FlyingLibertyWorkshop" type="Node2D"]
 texture_filter = 2
@@ -15,6 +16,8 @@ centered = false
 [node name="Collision" type="Node2D" parent="."]
 
 [node name="Interactions" type="Node2D" parent="."]
+
+[node name="Passages" type="Node2D" parent="."]
 
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(1445, 490)
@@ -32,3 +35,5 @@ limit_right = 1586
 limit_bottom = 992
 
 [node name="InteractionUI" type="CanvasLayer" parent="."]
+
+[node name="CoreTerminal" parent="." instance=ExtResource("4")]

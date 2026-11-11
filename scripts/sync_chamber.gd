@@ -2,8 +2,10 @@ extends Node2D
 
 const DOOR := preload("res://scripts/cockpit_door.gd")
 const INTERACTABLE := preload("res://scripts/cockpit_interactable.gd")
+const SYNC_POD := preload("res://scripts/sync_pod_interactable.gd")
 
 @onready var player: CharacterBody2D = $Player
+@onready var run_setup: CanvasLayer = $RunSetup
 var interactables: Array[CockpitInteractable] = []
 var prompt: Label
 var panel: PanelContainer
@@ -14,12 +16,19 @@ func _ready() -> void:
 	_build_collision()
 	_build_interactions()
 	_build_ui()
+	run_setup.connect("closed", Callable(self, "_on_setup_closed"))
+	run_setup.connect("start_requested", Callable(self, "_on_start_requested"))
 	player.position = Vector2(793, 825)
 	$Player/Camera2D.make_current()
 	$Player/Camera2D.reset_smoothing()
 	$Player/Camera2D.force_update_scroll()
 
 func _process(_delta: float) -> void:
+	if run_setup.visible:
+		prompt.text = ""
+		if Input.is_action_just_pressed("interact"):
+			run_setup.call("close_setup")
+		return
 	var nearest := _nearest_interaction()
 	prompt.text = "[E] %s" % nearest.prompt if nearest != null and not panel.visible else ""
 	if Input.is_action_just_pressed("interact"):
@@ -39,14 +48,25 @@ func _build_interactions() -> void:
 	exit_door.target_entry_id = "from_sync"
 	$Interactions.add_child(exit_door)
 	interactables.append(exit_door)
-	var pod := INTERACTABLE.new() as CockpitInteractable
+	var pod := SYNC_POD.new() as SyncPodInteractable
 	pod.name = "SyncPod"
 	pod.position = Vector2(650, 630)
-	pod.prompt = "Inspect Sync Pod"
-	pod.message = "The sync chamber is powered and ready."
+	pod.prompt = "Configure Roguelike Run"
 	pod.radius = 95.0
 	$Interactions.add_child(pod)
 	interactables.append(pod)
+
+func open_run_setup() -> void:
+	player.set("controls_enabled", false)
+	run_setup.call("open_setup")
+
+func _on_setup_closed() -> void:
+	player.set("controls_enabled", true)
+
+func _on_start_requested(modifiers: Dictionary) -> void:
+	var run_config: Node = get_node("/root/RunConfig")
+	if run_config.call("start_run", "medium", modifiers):
+		get_tree().change_scene_to_file("res://scenes/RoguelikeRun.tscn")
 
 func _nearest_interaction() -> CockpitInteractable:
 	var nearest: CockpitInteractable
