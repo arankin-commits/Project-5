@@ -12,6 +12,8 @@ script = ExtResource("2")
 texture = ExtResource("1")
 centered = false
 
+[node name="RightBedroomWing" type="Node2D" parent="."]
+
 [node name="Collision" type="Node2D" parent="."]
 
 [node name="Doors" type="Node2D" parent="."]
@@ -28,7 +30,7 @@ position_smoothing_enabled = true
 position_smoothing_speed = 5.0
 limit_left = 0
 limit_top = 0
-limit_right = 1624
+limit_right = 2940
 limit_bottom = 969
 
 [node name="InteractionUI" type="CanvasLayer" parent="."]

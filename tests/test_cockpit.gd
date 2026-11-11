@@ -52,9 +52,61 @@ func _run() -> void:
 	var hall_player: CharacterBody2D = hall.get_node("Player")
 	assert(hall_player.position.distance_to(Vector2(844, 315)) < 1.0, "Main Hall entrance spawn failed")
 	var first_door = hall.get_node("Doors/FirstTopDoor")
-	assert(first_door.locked, "First top door should remain locked")
+	assert(not first_door.locked and first_door.target_room_id == "fly_sync", "First top door should enter the Sync Chamber")
 	var second_door = hall.get_node("Doors/CockpitDoor")
 	assert(not second_door.locked and second_door.in_range(hall_player.position), "Second top door is not the cockpit entrance")
+	for i in range(1, 7):
+		var bedroom = hall.get_node("Doors/BedroomDoor%d" % i)
+		assert(bedroom != null and bedroom.target_room_id == "bedroom_%02d" % i, "Bedroom door %d is missing" % i)
+		assert(bedroom.in_range(bedroom.position + Vector2(0, 40)), "Bedroom door %d cannot be approached" % i)
+	hall_player.position = Vector2(1510, 365)
+	Input.action_press("move_right")
+	for i in 70:
+		await physics_frame
+	Input.action_release("move_right")
+	assert(hall_player.position.x > 1700, "Right bedroom wing is not walkable")
+	hall_player.position = Vector2(2875, 365)
+	Input.action_press("move_right")
+	for i in 35:
+		await physics_frame
+	Input.action_release("move_right")
+	assert(hall_player.position.x <= 2942, "Bedroom wing end boundary failed")
+	var bedroom_one = hall.get_node("Doors/BedroomDoor1")
+	hall_player.position = bedroom_one.position + Vector2(0, 25)
+	bedroom_one.activate(hall)
+	assert(hall.panel.visible and hall.panel_title.text.contains("room pending"), "Bedroom placeholder interaction failed")
+	hall.panel.hide()
+	hall_player.position = Vector2(521, 315)
+	assert(first_door.in_range(hall_player.position), "Sync Chamber door is not approachable")
+	first_door.activate(hall)
+	for i in 6:
+		await process_frame
+	assert(current_scene != null and current_scene.name == "FlyingLibertySyncChamber", "Main Hall to Sync Chamber transition failed")
+	var sync_room := current_scene
+	var sync_player: CharacterBody2D = sync_room.get_node("Player")
+	assert(sync_player.position.distance_to(Vector2(793, 825)) < 1.0, "Sync Chamber entrance spawn failed")
+	sync_player.position = Vector2(650, 650)
+	Input.action_press("move_up")
+	for i in 40:
+		await physics_frame
+	Input.action_release("move_up")
+	assert(sync_player.position.y >= 608, "Sync machine collision failed")
+	var sync_pod = sync_room.get_node("Interactions/SyncPod")
+	assert(sync_pod.in_range(sync_player.position), "Sync pod is not approachable")
+	sync_pod.activate(sync_room)
+	assert(sync_room.panel.visible and sync_room.panel_title.text == "Inspect Sync Pod", "Sync pod interaction failed")
+	sync_room.panel.hide()
+	sync_player.position = Vector2(793, 825)
+	var sync_exit = sync_room.get_node("Interactions/MainHallDoor")
+	assert(sync_exit.in_range(sync_player.position), "Sync Chamber exit is not approachable")
+	sync_exit.activate(sync_room)
+	for i in 6:
+		await process_frame
+	assert(current_scene != null and current_scene.name == "FlyingLibertyMainHall", "Sync Chamber return transition failed")
+	hall = current_scene
+	hall_player = hall.get_node("Player")
+	assert(hall_player.position.distance_to(Vector2(521, 315)) < 1.0, "Sync Chamber returned to the wrong Main Hall door")
+	second_door = hall.get_node("Doors/CockpitDoor")
 	second_door.activate(hall)
 	for i in 6:
 		await process_frame
