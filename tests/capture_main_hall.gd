@@ -12,6 +12,12 @@ func _capture() -> void:
 	print("MAIN_HALL_SCREENSHOT=", root.get_texture().get_image().save_png("res://reviews/main_hall_cockpit_door.png"))
 	var player: CharacterBody2D = hall.get_node("Player")
 	var camera: Camera2D = player.get_node("Camera2D")
+	player.position = Vector2(170, 550)
+	camera.reset_smoothing()
+	camera.force_update_scroll()
+	await process_frame
+	await process_frame
+	print("WORKSHOP_DOOR_SCREENSHOT=", root.get_texture().get_image().save_png("res://reviews/main_hall_workshop_door.png"))
 	player.position = Vector2(2040, 365)
 	camera.reset_smoothing()
 	camera.force_update_scroll()

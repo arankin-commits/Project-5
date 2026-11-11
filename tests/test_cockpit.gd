@@ -106,6 +106,38 @@ func _run() -> void:
 	hall = current_scene
 	hall_player = hall.get_node("Player")
 	assert(hall_player.position.distance_to(Vector2(521, 315)) < 1.0, "Sync Chamber returned to the wrong Main Hall door")
+	var workshop_door = hall.get_node("Doors/WorkshopDoor")
+	assert(workshop_door.target_room_id == "fly_workshop" and not workshop_door.locked, "Left hallway workshop door is missing")
+	hall_player.position = Vector2(170, 550)
+	assert(workshop_door.in_range(hall_player.position), "Workshop door is not approachable")
+	workshop_door.activate(hall)
+	for i in 6:
+		await process_frame
+	assert(current_scene != null and current_scene.name == "FlyingLibertyWorkshop", "Main Hall to Workshop transition failed")
+	var workshop := current_scene
+	var workshop_player: CharacterBody2D = workshop.get_node("Player")
+	assert(workshop_player.position.distance_to(Vector2(1445, 490)) < 1.0, "Workshop entrance spawn failed")
+	workshop_player.position = Vector2(800, 630)
+	Input.action_press("move_up")
+	for i in 40:
+		await physics_frame
+	Input.action_release("move_up")
+	assert(workshop_player.position.y >= 608, "Workshop power core collision failed")
+	var station = workshop.get_node("Interactions/AutomatonStation")
+	assert(station.in_range(workshop_player.position), "Automaton station is not approachable")
+	station.activate(workshop)
+	assert(workshop.panel.visible, "Automaton station interaction failed")
+	workshop.panel.hide()
+	workshop_player.position = Vector2(1445, 490)
+	var workshop_exit = workshop.get_node("Interactions/MainHallDoor")
+	assert(workshop_exit.in_range(workshop_player.position), "Workshop exit is not approachable")
+	workshop_exit.activate(workshop)
+	for i in 6:
+		await process_frame
+	assert(current_scene != null and current_scene.name == "FlyingLibertyMainHall", "Workshop to Main Hall transition failed")
+	hall = current_scene
+	hall_player = hall.get_node("Player")
+	assert(hall_player.position.distance_to(Vector2(170, 550)) < 1.0, "Workshop returned to the wrong Main Hall doorway")
 	second_door = hall.get_node("Doors/CockpitDoor")
 	second_door.activate(hall)
 	for i in 6:

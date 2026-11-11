@@ -10,6 +10,8 @@ The Main Hall uses the supplied `rooms/Steampunk Victorian Hall Without Labels.p
 
 The Sync Chamber uses the supplied `rooms/Empty Sync Chamber Steampunk Lab.png`. Its central machine, tanks, console, and crates have calibrated blocking footprints.
 
+The Engineering Workshop uses the supplied `rooms/Steampunk Automaton Engineering Workshop.png`. Enter through the new door at the far left end of the hall's left corridor; the workshop's right-side doorway returns to that hall entrance. Major robots, machinery, and benches have blocking footprints.
+
 The upper-right bedroom corridor continues from the hall's right passage using wall, carpet, trim, and doorway regions from that same painting. It has six interactable bedroom doors. Their destination scenes are placeholders until bedroom rooms are added.
 
 `tests/capture_cockpit.gd` saves game and native art screenshots in `reviews/`. `tests/test_cockpit.gd` checks movement, seat and wall collisions, Pilot dialogue, and travel in both directions between the cockpit and hall.
