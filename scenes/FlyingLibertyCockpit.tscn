@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/cockpit_room.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/cockpit_player.gd" id="2"]
+
+[node name="FlyingLibertyCockpit" type="Node2D"]
+texture_filter = 2
+script = ExtResource("1")
+
+[node name="BackgroundShellAndDeck" type="Node2D" parent="."]
+
+[node name="WindowsAndWalls" type="Node2D" parent="."]
+
+[node name="PermanentMachinery" type="Node2D" parent="."]
+
+[node name="InteractiveFurniture" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="PlayerAndNPCs" type="Node2D" parent="."]
+
+[node name="Player" type="CharacterBody2D" parent="PlayerAndNPCs"]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("2")
+
+[node name="Camera2D" type="Camera2D" parent="PlayerAndNPCs/Player"]
+position_smoothing_enabled = true
+position_smoothing_speed = 5.0
+limit_left = 0
+limit_top = 0
+limit_right = 1672
+limit_bottom = 941
+
+[node name="ForegroundArchitecture" type="Node2D" parent="."]
+
+[node name="GameplayCollision" type="Node2D" parent="."]
+
+[node name="Interactions" type="Node2D" parent="."]
+
+[node name="DebugOverlay" type="Node2D" parent="."]
+
+[node name="InteractionUI" type="CanvasLayer" parent="."]

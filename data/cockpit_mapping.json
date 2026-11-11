@@ -1,0 +1,8 @@
+{
+  "art_canvas": [1672, 941],
+  "chamberforge_canvas": [1280, 800],
+  "x_scale": 1.45,
+  "x_offset": -122.0,
+  "y_anchors": [[120, 290], [240, 320], [320, 365], [440, 490], [650, 850], [680, 895]],
+  "note": "Adjust these anchors to tune gameplay markers without changing the artwork. Furniture collision uses separate calibrated art-space footprints."
+}
