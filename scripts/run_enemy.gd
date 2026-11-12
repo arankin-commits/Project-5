@@ -21,6 +21,8 @@ var attack_kind := "slam"
 var attack_point := Vector2.ZERO
 var attack_direction := Vector2.DOWN
 var facing := Vector2.DOWN
+var wall_stun_timer := 0.0
+var slow_timer := 0.0
 var phase_two := false
 var hit_flash := 0.0
 var path_timer := 0.0
@@ -64,6 +66,12 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if not active or not is_instance_valid(target) or health <= 0:
+		return
+	slow_timer = maxf(0, slow_timer - delta)
+	if wall_stun_timer > 0:
+		wall_stun_timer = maxf(0, wall_stun_timer - delta)
+		velocity = Vector2.ZERO
+		queue_redraw()
 		return
 	cooldown -= delta
 	hit_flash = maxf(0,hit_flash-delta)
@@ -109,6 +117,8 @@ func _physics_process(delta: float) -> void:
 						velocity += offset.normalized()*30
 	if state == "chase" and velocity.length_squared() > 1:
 		facing = facing.slerp(velocity.normalized(), minf(1.0, delta * 5.0)).normalized()
+	if slow_timer > 0:
+		velocity *= 0.5
 	move_and_slide()
 	queue_redraw()
 
@@ -161,13 +171,23 @@ func is_backstab(origin: Vector2) -> bool:
 	var to_attacker := global_position.direction_to(origin)
 	return to_attacker.dot(facing.normalized()) < -0.5
 
-func take_damage(amount: float, knockback: Vector2 = Vector2.ZERO) -> void:
+func apply_knockback(direction: Vector2, distance: float) -> void:
+	if kind == "boss" or health <= 0:
+		return
+	var collision := move_and_collide(direction.normalized() * distance)
+	if collision != null:
+		wall_stun_timer = 1.5
+		state = "chase"
+		cooldown = 1.0
+	queue_redraw()
+
+func take_damage(amount: float, knockback: Vector2 = Vector2.ZERO, push_distance := 12.0) -> void:
 	if health <= 0:
 		return
 	health = maxf(0,health-amount)
 	hit_flash = 0.12
 	if kind != "boss" and knockback.length_squared() > 0:
-		move_and_collide(knockback.normalized()*12)
+		apply_knockback(knockback, push_distance)
 	if health <= 0:
 		active = false
 		defeated.emit(self)
@@ -175,6 +195,8 @@ func take_damage(amount: float, knockback: Vector2 = Vector2.ZERO) -> void:
 	queue_redraw()
 
 func _draw() -> void:
+	if wall_stun_timer > 0:
+		draw_arc(Vector2(0,-95), 18, 0, TAU, 24, Color("fff0a0"), 3, true)
 	draw_set_transform(Vector2.ZERO,0,Vector2(1,0.5))
 	draw_circle(Vector2.ZERO,30 if kind != "boss" else 70,Color(0,0,0,0.45))
 	draw_arc(Vector2.ZERO,23 if kind != "boss" else 65,0,TAU,32,Color(1,0.3,0.1,0.65),2,true)

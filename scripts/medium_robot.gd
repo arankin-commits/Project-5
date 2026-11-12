@@ -7,6 +7,9 @@ const STRIKE_ART := preload("res://art/characters/medium_v2/strike.png")
 signal attack_requested(origin: Vector2, direction: Vector2, damage: float, reach: float, heavy: bool)
 signal damaged(amount: float)
 signal dashed
+signal grapple_requested(direction: Vector2)
+signal core_requested
+signal perfect_dodged
 
 var controls_enabled := true
 var appearance := "medium"
@@ -27,6 +30,24 @@ var walk_clock := 0.0
 var attack_pose := 0.0
 var visual: Sprite2D
 var base_scale := Vector2(0.32, 0.32)
+var skills: Array[String] = []
+var energy := 0.0
+var charge_time := 0.0
+var charging := false
+var charged_strike := false
+var perfect_damage_timer := 0.0
+var dash_elapsed := 0.0
+var perfect_triggered := false
+var dash_charges := 1
+var grapple_cooldown := 0.0
+var core_cooldown := 0.0
+
+func configure_skills(unlocked: Array) -> void:
+	skills.assign(unlocked)
+	dash_charges = 2 if skills.has("double_dodge") else 1
+
+func gain_hit_energy() -> void:
+	energy = minf(100.0, energy + (10.0 if skills.has("energy_hit") else 5.0))
 
 func _ready() -> void:
 	collision_layer = 2
@@ -47,6 +68,12 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	dash_cooldown = maxf(0, dash_cooldown - delta)
+	if dash_cooldown <= 0:
+		dash_charges = 2 if skills.has("double_dodge") else 1
+	dash_elapsed += delta
+	perfect_damage_timer = maxf(0, perfect_damage_timer - delta)
+	grapple_cooldown = maxf(0, grapple_cooldown - delta)
+	core_cooldown = maxf(0, core_cooldown - delta)
 	attack_cooldown = maxf(0, attack_cooldown - delta)
 	special_cooldown = maxf(0, special_cooldown - delta)
 	invulnerability = maxf(0, invulnerability - delta)
@@ -57,9 +84,17 @@ func _physics_process(delta: float) -> void:
 	if not controls_enabled:
 		velocity = Vector2.ZERO
 		dash_timer = 0
+		charging = false
+		charge_time = 0
 		_update_visual(delta)
 		return
 	var input := Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	if Input.is_action_just_pressed("dash"):
+		start_dash(input)
+	if Input.is_action_just_pressed("grapple") and grapple_cooldown <= 0:
+		grapple_requested.emit(_aim_direction())
+	if Input.is_action_just_pressed("core_power"):
+		core_requested.emit()
 	if dash_timer > 0:
 		dash_timer -= delta
 		velocity = dash_direction * 850.0
@@ -67,9 +102,14 @@ func _physics_process(delta: float) -> void:
 		velocity = input * speed
 		if input.length_squared() > 0.01 and attack_pose <= 0:
 			facing = input
-		if Input.is_action_just_pressed("dash"):
-			start_dash(input)
-		if Input.is_action_pressed("attack"):
+		if skills.has("charged_attack"):
+			if Input.is_action_pressed("attack"):
+				charging = true
+				facing = _aim_direction()
+				charge_time = minf(1.2, charge_time + delta)
+			elif charging:
+				release_charge(_aim_direction())
+		elif Input.is_action_pressed("attack"):
 			var direction := facing
 			if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 				direction = global_position.direction_to(get_global_mouse_position())
@@ -84,8 +124,15 @@ func _physics_process(delta: float) -> void:
 	queue_redraw()
 
 func start_dash(direction: Vector2) -> bool:
-	if not controls_enabled or dash_cooldown > 0:
+	if dash_cooldown <= 0:
+		dash_charges = 2 if skills.has("double_dodge") else 1
+	if not controls_enabled or dash_charges <= 0:
 		return false
+	dash_charges -= 1
+	dash_elapsed = 0
+	perfect_triggered = false
+	charging = false
+	charge_time = 0
 	dash_direction = direction.normalized() if direction.length_squared() > 0.01 else facing
 	facing = dash_direction
 	dash_timer = 0.18
@@ -110,10 +157,29 @@ func perform_attack(direction: Vector2, heavy := false) -> bool:
 		reach = 155
 		attack_cooldown = 0.55
 		special_cooldown = 1.8
-	attack_requested.emit(global_position, facing, damage * damage_multiplier, reach, heavy)
+	if charged_strike:
+		damage *= 2.0
+		reach = 155.0
+	attack_requested.emit(global_position, facing, damage * damage_multiplier * (1.25 if perfect_damage_timer > 0 else 1.0), reach, heavy)
 	return true
 
+func _aim_direction() -> Vector2:
+	return global_position.direction_to(get_global_mouse_position()) if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) else facing
+
+func release_charge(direction: Vector2) -> bool:
+	charged_strike = skills.has("charged_attack") and charge_time >= 0.6
+	var success := perform_attack(direction)
+	charged_strike = false
+	charging = false
+	charge_time = 0
+	return success
+
 func take_damage(amount: float) -> bool:
+	if controls_enabled and dash_timer > 0 and dash_elapsed <= 0.12 and not perfect_triggered:
+		perfect_triggered = true
+		if skills.has("perfect_dodge"):
+			perfect_damage_timer = 5.0
+			perfect_dodged.emit()
 	if not controls_enabled or invulnerability > 0:
 		return false
 	invulnerability = 0.7
@@ -146,6 +212,8 @@ func _update_visual(delta: float) -> void:
 	visual.modulate = Color(1.2, 1.5, 1.5, 0.8) if invulnerability > 0.25 else Color.WHITE
 
 func _draw() -> void:
+	if charging:
+		draw_arc(Vector2(0,-45), 34, -PI / 2, -PI / 2 + TAU * minf(charge_time / 0.6, 1.0), 32, Color("ffce83"), 4, true)
 	draw_set_transform(Vector2(0,-2), 0, Vector2(1,0.45))
 	draw_circle(Vector2.ZERO, 22, Color(0,0,0,0.5))
 	draw_arc(Vector2.ZERO, 24, 0, TAU, 40, Color(0.3,0.95,0.9,0.8), 2, true)

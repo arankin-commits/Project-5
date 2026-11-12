@@ -21,6 +21,7 @@ var modal_description: Label
 var modal_actions: HBoxContainer
 var footer: Label
 var pause_menu: Control
+var progression_label: Label
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -71,6 +72,9 @@ func _ready() -> void:
 	footer.offset_bottom = -8
 	footer.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	root.add_child(footer)
+	progression_label = label("", 15, Color("8ee8d0"))
+	progression_label.position = Vector2(24,110)
+	root.add_child(progression_label)
 	boss_box = VBoxContainer.new()
 	boss_box.position = Vector2(330,615)
 	boss_box.size = Vector2(620,48)
@@ -158,7 +162,7 @@ func _clear_actions() -> void:
 func show_rewards(choices: Array) -> void:
 	_clear_actions()
 	modal_title.text = "PRESSURE RELEASED"
-	modal_description.text = "Choose one salvage upgrade for this run. Hull repaired by 12."
+	modal_description.text = "Choose one core or salvage upgrade for this run. Hull repaired by 12."
 	for choice in choices:
 		var button := Button.new()
 		button.text = choice["name"] + "\n\n" + choice["description"]
@@ -184,6 +188,11 @@ func hide_pause() -> void:
 	pause_menu.hide()
 	if modal.visible and modal_actions.get_child_count() > 0:
 		modal_actions.get_child(0).grab_focus()
+
+func update_progression(energy: float, elements: Array, capacity: int, xp: int, items: int, buff: float) -> void:
+	progression_label.text = "ENERGY %d/100  |  CORES %d/%d: %s\n+%d XP  |  +%d Aether Gears  |  F Grapple  |  Q Core burst" % [int(energy),elements.size(),capacity,", ".join(elements).to_upper() if not elements.is_empty() else "NONE",xp,items]
+	if buff > 0:
+		progression_label.text += "  |  PERFECT +25%% %.1fs" % buff
 
 func add_button(text: String, callback: Callable) -> void:
 	var button := Button.new()

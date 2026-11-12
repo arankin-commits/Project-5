@@ -33,6 +33,13 @@ var boss: CharacterBody2D
 var reward_choices: Array = []
 var debug_enabled := false
 var camera_shake := 0.0
+var progression: Node
+var final_stand_used := false
+var nanobot_healing := 0
+var wall_damage_bonus := 0.0
+var run_xp := 0
+var run_items := 0
+var visited_rooms: Array[int] = []
 
 func _ready() -> void:
 	config = get_node("/root/RunConfig")
@@ -43,11 +50,18 @@ func _ready() -> void:
 	rooms = parsed["rooms"]
 	maximum_health = config.call("max_health")
 	health = maximum_health
+	progression = get_node("/root/CoreProgression")
+	player.configure_skills(progression.unlocked_skills)
+	nanobot_healing = progression.rank("nanobots") * 5
+	wall_damage_bonus = progression.rank("wall") * 0.15
 	var stats: Dictionary = config.call("robot_stats")
 	player.set("appearance", config.get("robot_type"))
 	player.set("speed", 265.0 * stats["speed"])
 	player.set("damage_multiplier", stats["damage"])
-	player.set("backstab_multiplier", stats["backstab"])
+	player.set("backstab_multiplier", stats["backstab"] * (1.0 + progression.rank("backstab") * 0.2))
+	player.grapple_requested.connect(use_grapple)
+	player.core_requested.connect(use_core_power)
+	player.perfect_dodged.connect(func(): _effect(player.position, "ring", 90, Color("ffce83")))
 	player.attack_requested.connect(_on_attack)
 	player.damaged.connect(_on_damage)
 	player.dashed.connect(func(): _effect(player.position, "ring", 55, Color("73f7e4")))
@@ -62,6 +76,10 @@ func _ready() -> void:
 	$Camera2D.force_update_scroll()
 
 func _load_room(index: int) -> void:
+	if not visited_rooms.has(index):
+		if not visited_rooms.is_empty():
+			health = minf(maximum_health, health + nanobot_healing)
+		visited_rooms.append(index)
 	if is_instance_valid(room):
 		room.free()
 	for enemy in enemies.get_children():
@@ -123,6 +141,7 @@ func _process(delta: float) -> void:
 		hud.objective.text = "E  CONTINUE" if player.position.distance_to(room.get("exit_position")) < 85 else "REACH THE TEAL LIFT MARKER"
 	hud.call("update_stats",health,maximum_health,player.get("dash_cooldown"),player.get("special_cooldown"))
 	hud.call("set_boss",boss if is_instance_valid(boss) else null)
+	hud.call("update_progression", player.energy, config.core_elements, config.core_limit, run_xp, run_items, player.perfect_damage_timer)
 	var desired := Vector2(768,545)+(player.position-Vector2(768,610))*Vector2(0.17,0.12)
 	$Camera2D.position = $Camera2D.position.lerp(desired,1-exp(-delta*4))
 	camera_shake = maxf(0,camera_shake-delta*25)
@@ -159,9 +178,12 @@ func _on_attack(origin: Vector2, direction: Vector2, damage: float, reach: float
 		if not get_world_2d().direct_space_state.intersect_ray(query).is_empty():
 			continue
 		var hit_damage := damage
+		if enemy.wall_stun_timer > 0:
+			hit_damage *= 1.0 + wall_damage_bonus
 		if enemy.call("is_backstab", origin):
 			hit_damage *= float(player.get("backstab_multiplier"))
-		enemy.call("take_damage",hit_damage,direction)
+		enemy.call("take_damage",hit_damage,direction,180.0 if player.charged_strike else (65.0 if heavy else 12.0))
+		player.gain_hit_energy()
 		_damage_number(enemy.position-Vector2(0,70),hit_damage)
 		_effect(enemy.position-Vector2(0,35),"burst",35,Color("ffe0a0"))
 		camera_shake = 3 if not heavy else 6
@@ -174,12 +196,19 @@ func _on_damage(amount: float) -> void:
 	camera_shake = 8
 	_effect(player.position,"burst",45,Color("ff7654"))
 	if health <= 0:
-		_finish(false)
+		if player.skills.has("final_stand") and not final_stand_used:
+			final_stand_used = true
+			health = maximum_health * 0.5
+			player.invulnerability = 2.0
+			_effect(player.position,"ring",120,Color("7bffbc"))
+		else:
+			_finish(false)
 
 func _on_enemy_defeated(enemy: CharacterBody2D) -> void:
 	if enemy == boss:
 		boss = null
 	kills += 1
+	_award_progress(100 if enemy.kind == "boss" else 10, 1 if enemy.kind == "boss" else 0)
 	living_enemies -= 1
 	_effect(enemy.position,"burst",85,Color("ffa44f"))
 	call_deferred("_check_clear")
@@ -193,6 +222,7 @@ func _check_clear() -> void:
 		return
 	_clear_projectiles()
 	room.set("hazards_enabled",false)
+	_award_progress(25, 1 if room_index == 3 else 0)
 	if room_index == 7:
 		_finish(true)
 		return
@@ -207,6 +237,11 @@ func _check_clear() -> void:
 		var pick := rng.randi_range(0,available.size()-1)
 		reward_choices.append(available[pick])
 		available.remove_at(pick)
+	var elements: Array[String] = config.available_elements()
+	if not elements.is_empty():
+		var element: String = elements[rng.randi_range(0, elements.size() - 1)]
+		var effect_text: String = {"fire": "High-damage burst", "water": "Burst + 3s slow", "lightning": "Burst + knockback"}[element]
+		reward_choices[0] = {"id": "core_" + element, "name": element.to_upper() + " CORE", "description": "%s\nBind slot %d/%d\nQ / 25 energy" % [effect_text, config.core_elements.size() + 1, config.core_limit]}
 	hud.call("show_rewards",reward_choices)
 
 func choose_reward(id: String) -> bool:
@@ -216,6 +251,8 @@ func choose_reward(id: String) -> bool:
 	for choice in reward_choices:
 		valid = valid or choice["id"] == id
 	if not valid:
+		return false
+	if id.begins_with("core_") and not config.pick_element(id.trim_prefix("core_")):
 		return false
 	match id:
 		"power": player.set("damage_multiplier",float(player.get("damage_multiplier"))+0.2 * config.call("robot_stats")["damage"])
@@ -229,6 +266,60 @@ func choose_reward(id: String) -> bool:
 	room.set("exit_enabled",true)
 	player.set("controls_enabled",true)
 	hud.modal.hide()
+	return true
+
+func _award_progress(amount: int, items := 0) -> void:
+	run_xp += amount
+	run_items += items
+	progression.award(amount, items)
+
+func use_grapple(direction: Vector2) -> bool:
+	if state != "combat" or not player.controls_enabled or player.grapple_cooldown > 0:
+		return false
+	var target: CharacterBody2D
+	var nearest := 360.0
+	for enemy in enemies.get_children():
+		if enemy.health <= 0 or enemy.kind == "boss" or (enemy.kind == "brute" and not player.skills.has("heavy_grapple")):
+			continue
+		var offset: Vector2 = enemy.position - player.position
+		if offset.length() < nearest and offset.normalized().dot(direction.normalized()) > 0.65:
+			if get_world_2d().direct_space_state.intersect_ray(PhysicsRayQueryParameters2D.create(player.position, enemy.position, 1)).is_empty():
+				target = enemy
+				nearest = offset.length()
+	if target == null:
+		return false
+	player.grapple_cooldown = 2.0
+	var line := Line2D.new()
+	line.points = PackedVector2Array([player.position, target.position])
+	line.width = 4
+	line.default_color = Color("ffce83")
+	$Effects.add_child(line)
+	var tween := create_tween()
+	tween.tween_property(line,"modulate:a",0.0,0.25)
+	tween.tween_callback(line.queue_free)
+	target.apply_knockback(target.position.direction_to(player.position), maxf(0, nearest - 65))
+	return true
+
+func use_core_power() -> bool:
+	if state != "combat" or not player.controls_enabled or player.energy < 25 or player.core_cooldown > 0 or config.core_elements.is_empty():
+		return false
+	player.energy -= 25
+	player.core_cooldown = 1.0
+	for element in config.core_elements:
+		var tint: Color = {"fire": Color("ff9955"), "water": Color("55ccff"), "lightning": Color("df88ff")}[element]
+		_effect(player.position, "ring", 240, tint)
+		for enemy in enemies.get_children():
+			if enemy.health <= 0 or enemy.position.distance_to(player.position) > 240:
+				continue
+			if not get_world_2d().direct_space_state.intersect_ray(PhysicsRayQueryParameters2D.create(player.position,enemy.position,1)).is_empty():
+				continue
+			var damage := (40.0 if element == "fire" else 25.0) * float(player.damage_multiplier) * (1.25 if player.perfect_damage_timer > 0 else 1.0)
+			enemy.take_damage(damage)
+			if element == "water":
+				enemy.slow_timer = 3.0
+			elif element == "lightning":
+				enemy.apply_knockback(player.position.direction_to(enemy.position), 90)
+			_damage_number(enemy.position - Vector2(0,70), damage)
 	return true
 
 func _spawn_projectile(origin: Vector2, direction: Vector2, damage: float) -> void:

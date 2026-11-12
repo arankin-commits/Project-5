@@ -84,6 +84,15 @@ toggle_debug={
 ]
 }
 
+grapple={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"physical_keycode":70)]
+}
+core_power={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"physical_keycode":81)]
+}
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

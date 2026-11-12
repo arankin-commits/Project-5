@@ -1,22 +1,19 @@
 extends CanvasLayer
 
 signal closed
-
-const PROGRESSION_DATA := preload("res://scripts/core_progression.gd")
-
+const DATA := preload("res://scripts/core_progression.gd")
+const ART := preload("res://Steampunk Elemental Skill Tree.png")
+const TREE_SCALE := 0.46
 @onready var progression: Node = get_node("/root/CoreProgression")
-
-var core_status: Label
-var tabs: TabContainer
+var skill_buttons: Dictionary = {}
 var skill_points_label: Label
 var skill_detail: Label
 var unlock_button: Button
-var core_buttons: Dictionary = {}
-var skill_buttons: Dictionary = {}
-var selected_skill := "power_routing"
+var selected_skill := "root"
 
 func _ready() -> void:
 	_build_ui()
+	progression.changed.connect(_refresh)
 	visible = false
 
 func open_terminal() -> void:
@@ -29,131 +26,98 @@ func close_terminal() -> void:
 
 func _build_ui() -> void:
 	var shade := ColorRect.new()
-	shade.name = "Dimmer"
+	shade.color = Color(0.01,0.02,0.025,0.97)
 	shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	shade.color = Color(0.02, 0.01, 0.02, 0.82)
-	shade.mouse_filter = Control.MOUSE_FILTER_STOP
 	add_child(shade)
-	var center := CenterContainer.new()
-	center.name = "Center"
-	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	add_child(center)
-	var panel := PanelContainer.new()
-	panel.custom_minimum_size = Vector2(840, 540)
-	var style := StyleBoxFlat.new()
-	style.bg_color = Color("211c20")
-	style.border_color = Color("c8994d")
-	style.set_border_width_all(3)
-	style.set_content_margin_all(22)
-	panel.add_theme_stylebox_override("panel", style)
-	center.add_child(panel)
-	var content := VBoxContainer.new()
-	content.add_theme_constant_override("separation", 12)
-	panel.add_child(content)
-	var header := HBoxContainer.new()
-	content.add_child(header)
-	var title := Label.new()
-	title.text = "CORE INTERFACE"
-	title.add_theme_font_size_override("font_size", 29)
-	title.add_theme_color_override("font_color", Color("ffd488"))
-	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	header.add_child(title)
-	var close_button := Button.new()
-	close_button.text = "Close [E]"
-	close_button.pressed.connect(close_terminal)
-	header.add_child(close_button)
-	core_status = Label.new()
-	core_status.add_theme_font_size_override("font_size", 18)
-	content.add_child(core_status)
-	tabs = TabContainer.new()
-	tabs.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	content.add_child(tabs)
-	_build_core_tab(tabs)
-	_build_skill_tab(tabs)
-
-func _build_core_tab(tabs: TabContainer) -> void:
-	var page := VBoxContainer.new()
-	page.name = "Cores"
-	page.add_theme_constant_override("separation", 12)
-	tabs.add_child(page)
-	var heading := Label.new()
-	heading.text = "Choose an unlocked core"
-	heading.add_theme_font_size_override("font_size", 21)
-	page.add_child(heading)
-	for core_id in ["standard", "core_02", "core_03"]:
+	var layout := HBoxContainer.new()
+	layout.position = Vector2(28,24)
+	layout.size = Vector2(1224,672)
+	layout.add_theme_constant_override("separation",32)
+	add_child(layout)
+	var scroll := ScrollContainer.new()
+	scroll.custom_minimum_size = Vector2(540,672)
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	layout.add_child(scroll)
+	var canvas := Control.new()
+	canvas.custom_minimum_size = ART.get_size() * TREE_SCALE
+	scroll.add_child(canvas)
+	var art := TextureRect.new()
+	art.texture = ART
+	art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	art.size = canvas.custom_minimum_size
+	art.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	canvas.add_child(art)
+	for id in DATA.SKILLS:
+		var skill: Dictionary = DATA.SKILLS[id]
 		var button := Button.new()
-		button.name = core_id
-		button.custom_minimum_size.y = 58
-		button.pressed.connect(_equip_core.bind(core_id))
-		page.add_child(button)
-		core_buttons[core_id] = button
-	var note := Label.new()
-	note.text = "1 of 3 core slots unlocked"
-	note.add_theme_color_override("font_color", Color("d7b981"))
-	page.add_child(note)
-
-func _build_skill_tab(tabs: TabContainer) -> void:
-	var page := VBoxContainer.new()
-	page.name = "Skill Tree"
-	page.add_theme_constant_override("separation", 13)
-	tabs.add_child(page)
+		var radius: float = skill.radius * TREE_SCALE
+		button.position = skill.at * TREE_SCALE - Vector2.ONE * radius
+		button.size = Vector2.ONE * radius * 2
+		button.tooltip_text = skill.name + "\n" + skill.description
+		button.pressed.connect(_select_skill.bind(id))
+		canvas.add_child(button)
+		skill_buttons[id] = button
+	var side := VBoxContainer.new()
+	side.custom_minimum_size.x = 630
+	side.add_theme_constant_override("separation",22)
+	layout.add_child(side)
+	var title := Label.new()
+	title.text = "ELEMENTAL SKILL TREE"
+	title.add_theme_font_size_override("font_size",28)
+	title.add_theme_color_override("font_color",Color("ffd488"))
+	side.add_child(title)
 	skill_points_label = Label.new()
-	skill_points_label.add_theme_font_size_override("font_size", 20)
-	page.add_child(skill_points_label)
-	var root := _skill_button("power_routing")
-	page.add_child(root)
-	var connector := Label.new()
-	connector.text = "                 ↓                 ↓                 ↓"
-	connector.add_theme_color_override("font_color", Color("c8994d"))
-	page.add_child(connector)
-	var branches := HBoxContainer.new()
-	branches.add_theme_constant_override("separation", 10)
-	page.add_child(branches)
-	for skill_id in ["drive_tuning", "capacitor_bank", "armor_lattice"]:
-		var button := _skill_button(skill_id)
-		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		branches.add_child(button)
+	side.add_child(skill_points_label)
+	var legend := Label.new()
+	legend.text = "TEAL  Unlocked   |   GOLD  Available\nDIM  Locked   |   Select a node to inspect\n\nRegular nodes: XP only\nSpecial nodes: Aether Gears only\n\nEarn XP by defeating enemies and clearing rooms.\nFind an Aether Gear in chamber 4 and from the boss."
+	legend.add_theme_font_size_override("font_size",16)
+	side.add_child(legend)
 	skill_detail = Label.new()
 	skill_detail.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	skill_detail.custom_minimum_size.y = 55
-	page.add_child(skill_detail)
+	skill_detail.custom_minimum_size.y = 175
+	skill_detail.add_theme_font_size_override("font_size",20)
+	side.add_child(skill_detail)
 	unlock_button = Button.new()
-	unlock_button.text = "Unlock selected skill (1 point)"
+	unlock_button.custom_minimum_size.y = 54
 	unlock_button.pressed.connect(_unlock_selected_skill)
-	page.add_child(unlock_button)
-
-func _skill_button(skill_id: String) -> Button:
-	var button := Button.new()
-	button.custom_minimum_size.y = 62
-	button.pressed.connect(_select_skill.bind(skill_id))
-	skill_buttons[skill_id] = button
-	return button
-
-func _equip_core(core_id: String) -> void:
-	progression.call("equip_core", core_id)
+	side.add_child(unlock_button)
+	var close := Button.new()
+	close.text = "Close [E]"
+	close.custom_minimum_size.y = 44
+	close.pressed.connect(close_terminal)
+	side.add_child(close)
 	_refresh()
 
-func _select_skill(skill_id: String) -> void:
-	selected_skill = skill_id
+func _select_skill(id: String) -> void:
+	selected_skill = id
 	_refresh()
 
 func _unlock_selected_skill() -> void:
-	progression.call("unlock_skill", selected_skill)
+	progression.unlock_skill(selected_skill)
 	_refresh()
 
 func _refresh() -> void:
-	var equipped_core: String = progression.get("equipped_core")
-	var unlocked_cores: Array = progression.get("unlocked_cores")
-	var unlocked_skills: Array = progression.get("unlocked_skills")
-	core_status.text = "Equipped: %s" % PROGRESSION_DATA.CORE_NAMES[equipped_core]
-	for core_id in ["standard", "core_02", "core_03"]:
-		var button: Button = core_buttons[core_id]
-		var unlocked := unlocked_cores.has(core_id)
-		button.disabled = not unlocked
-		button.text = "%s     %s" % [PROGRESSION_DATA.CORE_NAMES[core_id], "EQUIPPED" if core_id == equipped_core else ("Select" if unlocked else "LOCKED")]
-	skill_points_label.text = "Standard Core • Skill points: %d" % progression.get("skill_points")
-	for skill_id in skill_buttons:
-		var button: Button = skill_buttons[skill_id]
-		button.text = "%s\n%s" % [PROGRESSION_DATA.SKILLS[skill_id]["name"], "UNLOCKED" if unlocked_skills.has(skill_id) else "LOCKED"]
-	skill_detail.text = PROGRESSION_DATA.SKILLS[selected_skill]["description"]
-	unlock_button.disabled = not progression.call("can_unlock_skill", selected_skill)
+	if skill_points_label == null:
+		return
+	skill_points_label.text = "%d XP     |     %d Aether Gears     |     %d core slots" % [progression.xp,progression.special_items,progression.core_capacity()]
+	for id in skill_buttons:
+		var owned: bool = progression.has_skill(id)
+		var available: bool = progression.can_unlock_skill(id)
+		var style := StyleBoxFlat.new()
+		style.bg_color = Color(0,0,0,0.05 if owned or available else 0.55)
+		style.border_color = Color("6fffe0") if owned else (Color("ffcd6c") if available else Color("71665b"))
+		style.set_border_width_all(4 if id == selected_skill else 2)
+		style.set_corner_radius_all(100)
+		skill_buttons[id].add_theme_stylebox_override("normal",style)
+		var hover := style.duplicate()
+		hover.bg_color = Color(0.8,0.6,0.2,0.2)
+		skill_buttons[id].add_theme_stylebox_override("hover",hover)
+		skill_buttons[id].add_theme_stylebox_override("pressed",hover)
+	var skill: Dictionary = DATA.SKILLS[selected_skill]
+	var cost := "%d Aether Gear(s)" % skill.item if skill.item > 0 else "%d XP" % skill.xp
+	var requirement := ""
+	if skill.requires != "" and not progression.has_skill(skill.requires):
+		requirement = "\nRequires: " + DATA.SKILLS[skill.requires].name
+	skill_detail.text = skill.name + "\n\n" + skill.description + "\n\n" + ("SPECIAL | " if skill.item > 0 else "REGULAR | ") + cost + requirement
+	unlock_button.text = "Unlocked" if progression.has_skill(selected_skill) else "Unlock | " + cost
+	unlock_button.disabled = not progression.can_unlock_skill(selected_skill)

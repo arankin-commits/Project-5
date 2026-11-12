@@ -112,7 +112,7 @@ func show_settings() -> void:
 func show_controls() -> void:
 	_page("controls", "CONTROLS")
 	var instructions := Label.new()
-	instructions.text = "Move                 WASD / Arrow keys\n\nStrike                Left mouse / J\n\nHeavy strike      Right mouse / K\n\nDash                  Space\n\nInteract              E\n\nMenu / Back      Esc"
-	instructions.add_theme_font_size_override("font_size", 20)
+	instructions.text = "Move                 WASD / Arrow keys\n\nStrike                Left mouse / J\n\nHeavy strike      Right mouse / K\n\nDash                  Space\n\nInteract              E\n\nGrapple              F\n\nCore burst         Q (25 energy)\n\nMenu / Back      Esc"
+	instructions.add_theme_font_size_override("font_size", 17)
 	stack.add_child(instructions)
 	_button("Back", back).grab_focus()

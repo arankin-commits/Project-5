@@ -23,7 +23,7 @@ func _capture() -> void:
 	await process_frame
 	await process_frame
 	print("CORE_TERMINAL_SCREENSHOT=", root.get_texture().get_image().save_png("res://reviews/workshop_core_skill_tree.png"))
-	workshop.get_node("CoreTerminal").tabs.current_tab = 1
+	workshop.get_node("CoreTerminal")._select_skill("power_two")
 	await process_frame
 	await process_frame
 	print("SKILL_TREE_SCREENSHOT=", root.get_texture().get_image().save_png("res://reviews/workshop_skill_tree.png"))

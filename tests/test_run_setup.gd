@@ -155,6 +155,8 @@ func _run() -> void:
 			await frames(2)
 	check(run.state == "result" and run.outcome == "BOILER DISTRICT CLEARED","Eight-room victory missing")
 	check(config.victories == 1,"Victory counted incorrectly")
+	check(root.get_node("CoreProgression").xp > 0,"Run did not award XP")
+	check(root.get_node("CoreProgression").special_items == 2,"Chamber 4 and boss did not award special items")
 	check(run.hud.modal.visible and not run.player.controls_enabled,"Victory UI/control lock missing")
 	# Victory returns automatically, plays the pod exit, and restores control.
 	await scene_changed

@@ -42,7 +42,7 @@ func _build_interactions() -> void:
 	var core := CORE_INTERACTABLE.new() as CoreInteractable
 	core.name = "PowerCoreTerminal"
 	core.position = Vector2(800, 610)
-	core.prompt = "Open Core / Skill Tree"
+	core.prompt = "Open Skill Tree"
 	core.radius = 100.0
 	$Interactions.add_child(core)
 	interactables.append(core)

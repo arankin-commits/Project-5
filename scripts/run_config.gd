@@ -17,6 +17,9 @@ var run_seed := 0
 var best_room := 0
 var victories := 0
 var sync_return_pending := false
+const ELEMENTS := ["fire", "water", "lightning"]
+var core_elements: Array[String] = []
+var core_limit := 1
 
 func start_run(selected_robot: String, selected_modifiers: Dictionary) -> bool:
 	if not ROBOT_STATS.has(selected_robot):
@@ -25,6 +28,8 @@ func start_run(selected_robot: String, selected_modifiers: Dictionary) -> bool:
 	for key in modifiers:
 		modifiers[key] = bool(selected_modifiers.get(key, false))
 	active = true
+	core_elements.clear()
+	core_limit = get_node("/root/CoreProgression").core_capacity()
 	sync_return_pending = false
 	run_seed = randi()
 	return true
@@ -43,6 +48,20 @@ func max_health() -> int:
 
 func robot_stats() -> Dictionary:
 	return ROBOT_STATS[robot_type]
+
+func available_elements() -> Array[String]:
+	var available: Array[String] = []
+	if core_elements.size() < core_limit:
+		for element in ELEMENTS:
+			if not core_elements.has(element):
+				available.append(element)
+	return available
+
+func pick_element(element: String) -> bool:
+	if not available_elements().has(element):
+		return false
+	core_elements.append(element)
+	return true
 
 func enemy_count() -> int:
 	return 5 if modifiers["reinforcements"] else 3
