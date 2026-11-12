@@ -156,8 +156,17 @@ func _run() -> void:
 	check(run.state == "result" and run.outcome == "BOILER DISTRICT CLEARED","Eight-room victory missing")
 	check(config.victories == 1,"Victory counted incorrectly")
 	check(run.hud.modal.visible and not run.player.controls_enabled,"Victory UI/control lock missing")
-	# Retry clears run-only upgrades, then death displays a result and return works.
-	run._retry()
+	# Victory returns automatically, plays the pod exit, and restores control.
+	await scene_changed
+	await process_frame
+	chamber = current_scene
+	check(chamber.returning and not chamber.player.controls_enabled,"Victory return cinematic missing")
+	check(not config.active and not config.sync_return_pending,"Return state was not consumed")
+	await create_timer(3.5).timeout
+	check(not chamber.returning and chamber.player.controls_enabled,"Cinematic did not restore controls")
+	check(chamber.player.position.distance_to(Vector2(648,625)) < 2,"Character did not exit machine")
+	chamber.open_run_setup()
+	chamber._on_start_requested(config.modifiers.duplicate())
 	await scene_changed
 	await process_frame
 	run = current_scene
@@ -165,10 +174,16 @@ func _run() -> void:
 	run.player.invulnerability = 0
 	run.player.take_damage(1000)
 	check(run.outcome == "FRAME LOST" and run.hud.modal.visible,"Death result missing")
-	run.return_to_sync_chamber()
 	await scene_changed
 	await process_frame
 	check(current_scene.name == "FlyingLibertySyncChamber" and not config.active,"Return to Sync Chamber failed")
+	check(current_scene.returning and not current_scene.player.controls_enabled,"Death return cinematic missing")
+	await create_timer(3.5).timeout
+	check(current_scene.player.controls_enabled,"Death return left controls locked")
+	change_scene_to_file("res://scenes/FlyingLibertySyncChamber.tscn")
+	await scene_changed
+	check(not current_scene.returning,"Ordinary room entry replayed return cinematic")
+	check(ProjectSettings.get_setting("application/run/main_scene") == "res://scenes/RoguelikeRun.tscn","Game does not start in roguelite")
 	print("BOILER_RUN_CHECKS=",checks," FAILURES=",failures)
 	if failures == 0:
 		print("RUN_SETUP_TESTS_PASSED")

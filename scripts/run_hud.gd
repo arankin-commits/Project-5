@@ -158,11 +158,8 @@ func show_rewards(choices: Array) -> void:
 func show_result(title: String, description: String) -> void:
 	_clear_actions()
 	modal_title.text = title
-	modal_description.text = description
-	add_button("New run",retry_requested.emit)
-	add_button("Return to Sync Chamber",return_requested.emit)
+	modal_description.text = description + "\n\nReturning to the ship..."
 	modal.show()
-	modal_actions.get_child(0).grab_focus()
 
 func show_pause() -> void:
 	_clear_actions()

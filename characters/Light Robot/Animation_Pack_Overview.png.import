@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://csiptdxwsosr8"
-path="res://.godot/imported/Animation_Pack_Overview.png-cdeef7bf0bf3e7c2bf47c94943703137.ctex"
+path="res://.godot/imported/Animation_Pack_Overview.png-02b73fae258398faa4c7f640330c968a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://characters/Animation_Pack_Overview.png"
-dest_files=["res://.godot/imported/Animation_Pack_Overview.png-cdeef7bf0bf3e7c2bf47c94943703137.ctex"]
+source_file="res://characters/Light Robot/Animation_Pack_Overview.png"
+dest_files=["res://.godot/imported/Animation_Pack_Overview.png-02b73fae258398faa4c7f640330c968a.ctex"]
 
 [params]
 

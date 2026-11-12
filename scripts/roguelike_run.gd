@@ -277,6 +277,8 @@ func _finish(won: bool) -> void:
 	if won:
 		config.set("victories",int(config.get("victories"))+1)
 	hud.call("show_result",outcome,"Chamber %d / 8   |   %d hostiles dismantled   |   %d:%02d\n%s" % [room_index+1,kills,int(elapsed)/60,int(elapsed)%60,"The Furnace Warden is silent. The pressure line is yours." if won else "Your core is safe aboard the Flying Liberty. Rebuild and try again."])
+	await get_tree().create_timer(2.0).timeout
+	return_to_sync_chamber()
 
 func _toggle_pause() -> void:
 	if state in ["reward","result"]:

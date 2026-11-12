@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dvfme8uvuejwl"
-path="res://.godot/imported/Hades-Style Character and Robot Sprite Sheet.png-6cf889d221edfd2a6e5ab5330cc798b8.ctex"
+path="res://.godot/imported/Hades-Style Character and Robot Sprite Sheet.png-64e9f506c9ba80ae8719bfceb96fecd4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://characters/Hades-Style Character and Robot Sprite Sheet.png"
-dest_files=["res://.godot/imported/Hades-Style Character and Robot Sprite Sheet.png-6cf889d221edfd2a6e5ab5330cc798b8.ctex"]
+source_file="res://characters/Light Robot/Hades-Style Character and Robot Sprite Sheet.png"
+dest_files=["res://.godot/imported/Hades-Style Character and Robot Sprite Sheet.png-64e9f506c9ba80ae8719bfceb96fecd4.ctex"]
 
 [params]
 
