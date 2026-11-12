@@ -15,6 +15,7 @@ var panel_title: Label
 var panel_text: Label
 
 func _ready() -> void:
+	add_child(preload("res://scripts/ship_menu.gd").new())
 	var entry_id := CockpitDoor.take_entry_id()
 	if entry_id == "from_sync":
 		player.position = Vector2(521, 315)

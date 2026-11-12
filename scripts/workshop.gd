@@ -13,6 +13,7 @@ var panel_title: Label
 var panel_text: Label
 
 func _ready() -> void:
+	add_child(preload("res://scripts/ship_menu.gd").new())
 	_build_collision()
 	_build_interactions()
 	_build_passage()

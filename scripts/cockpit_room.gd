@@ -24,6 +24,7 @@ var panel_title: Label
 var panel_text: Label
 
 func _ready() -> void:
+	add_child(preload("res://scripts/ship_menu.gd").new())
 	layout = _read_json(LAYOUT)
 	mapping = _read_json(MAPPING)
 	actors.y_sort_enabled = true

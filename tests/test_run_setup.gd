@@ -105,9 +105,9 @@ func _run() -> void:
 	check(not run.room.footprints[0].has_point(Space.unproject(player.position)),"Player crossed boiler footprint")
 	# Pausing freezes the simulation and resumes through the shared HUD.
 	run._toggle_pause()
-	check(paused and run.hud.modal.visible,"Pause did not freeze run")
+	check(paused and run.hud.pause_menu.visible,"Pause did not freeze run")
 	run._toggle_pause()
-	check(not paused and not run.hud.modal.visible,"Resume failed")
+	check(not paused and not run.hud.pause_menu.visible,"Resume failed")
 	# Clear every wave through damage/death callbacks, then collect a valid reward
 	# and use the range-gated exit. No direct room loads in this progression test.
 	for index in 8:

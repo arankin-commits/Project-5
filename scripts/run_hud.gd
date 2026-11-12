@@ -20,6 +20,7 @@ var modal_title: Label
 var modal_description: Label
 var modal_actions: HBoxContainer
 var footer: Label
+var pause_menu: Control
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -108,10 +109,25 @@ func _ready() -> void:
 	modal_actions.add_theme_constant_override("separation",18)
 	stack.add_child(modal_actions)
 	modal.hide()
+	pause_menu = preload("res://scripts/run_menu.gd").new()
+	root.add_child(pause_menu)
+	pause_menu.resume_requested.connect(func(): pause_requested.emit())
+	pause_menu.give_up_requested.connect(func(): return_requested.emit())
+	var menu_button := Button.new()
+	menu_button.text = "Menu [Esc]"
+	menu_button.position = Vector2(1110, 108)
+	menu_button.size = Vector2(145, 40)
+	menu_button.pressed.connect(func(): pause_requested.emit())
+	root.add_child(menu_button)
+	# The menu overlay must remain above the HUD button.
+	root.move_child(pause_menu, -1)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
-		pause_requested.emit()
+		if pause_menu.visible:
+			pause_menu.back()
+		else:
+			pause_requested.emit()
 		get_viewport().set_input_as_handled()
 
 func set_room(index: int, data: Dictionary, run_seed: int) -> void:
@@ -162,13 +178,12 @@ func show_result(title: String, description: String) -> void:
 	modal.show()
 
 func show_pause() -> void:
-	_clear_actions()
-	modal_title.text = "PRESSURE ON HOLD"
-	modal_description.text = "Run paused"
-	add_button("Resume",pause_requested.emit)
-	add_button("Return to Sync Chamber",return_requested.emit)
-	modal.show()
-	modal_actions.get_child(0).grab_focus()
+	pause_menu.show_menu()
+
+func hide_pause() -> void:
+	pause_menu.hide()
+	if modal.visible and modal_actions.get_child_count() > 0:
+		modal_actions.get_child(0).grab_focus()
 
 func add_button(text: String, callback: Callable) -> void:
 	var button := Button.new()

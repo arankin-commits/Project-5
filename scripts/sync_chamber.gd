@@ -16,6 +16,7 @@ var pod_doors: Array[Sprite2D] = []
 var pod_interior: Polygon2D
 
 func _ready() -> void:
+	add_child(preload("res://scripts/ship_menu.gd").new())
 	_build_collision()
 	_build_interactions()
 	_build_ui()

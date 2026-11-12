@@ -126,7 +126,7 @@ func _process(delta: float) -> void:
 	var desired := Vector2(768,545)+(player.position-Vector2(768,610))*Vector2(0.17,0.12)
 	$Camera2D.position = $Camera2D.position.lerp(desired,1-exp(-delta*4))
 	camera_shake = maxf(0,camera_shake-delta*25)
-	$Camera2D.offset = Vector2(sin(elapsed*91),cos(elapsed*107))*camera_shake
+	$Camera2D.offset = Vector2(sin(elapsed*91),cos(elapsed*107))*camera_shake if get_node("/root/GameSettings").screen_shake else Vector2.ZERO
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") and state == "exit":
@@ -289,13 +289,13 @@ func _finish(won: bool) -> void:
 	return_to_sync_chamber()
 
 func _toggle_pause() -> void:
-	if state in ["reward","result"]:
+	if state == "result":
 		return
 	get_tree().paused = not get_tree().paused
 	if get_tree().paused:
 		hud.call("show_pause")
 	else:
-		hud.modal.hide()
+		hud.call("hide_pause")
 
 func _retry() -> void:
 	get_tree().paused = false

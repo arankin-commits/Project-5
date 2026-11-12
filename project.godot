@@ -22,6 +22,7 @@ config/features=PackedStringArray("4.7", "GL Compatibility")
 
 CoreProgression="*res://scripts/core_progression.gd"
 RunConfig="*res://scripts/run_config.gd"
+GameSettings="*res://scripts/game_settings.gd"
 
 [display]
 
