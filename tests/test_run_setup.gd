@@ -23,7 +23,7 @@ func _run() -> void:
 		config.name = "RunConfig"
 		root.add_child(config)
 	var config: Node = root.get_node("RunConfig")
-	check(not config.call("start_run","heavy",{}),"Locked robot type accepted")
+	check(not config.call("start_run","invalid",{}),"Invalid robot type accepted")
 	var chamber: Node2D = load("res://scenes/FlyingLibertySyncChamber.tscn").instantiate()
 	root.add_child(chamber)
 	current_scene = chamber
@@ -32,7 +32,7 @@ func _run() -> void:
 	chamber.get_node("Interactions/SyncPod").activate(chamber)
 	var setup = chamber.get_node("RunSetup")
 	check(setup.visible and not chamber.get_node("Player").controls_enabled,"Pod did not lock player/open UI")
-	check(setup.robot_choice.is_item_disabled(1) and setup.robot_choice.is_item_disabled(2),"Unavailable robot enabled")
+	check(not setup.robot_choice.is_item_disabled(1) and not setup.robot_choice.is_item_disabled(2),"Robot choices locked")
 	setup.overclock_checkbox.button_pressed = true
 	setup.reinforcements_checkbox.button_pressed = true
 	setup.fragile_checkbox.button_pressed = true

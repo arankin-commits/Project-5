@@ -65,11 +65,9 @@ func _build_ui() -> void:
 	robot_label.add_theme_font_size_override("font_size", 21)
 	content.add_child(robot_label)
 	robot_choice = OptionButton.new()
-	robot_choice.add_item("Medium Robot — available", 0)
-	robot_choice.add_item("Light Robot — locked", 1)
-	robot_choice.add_item("Heavy Robot — locked", 2)
-	robot_choice.set_item_disabled(1, true)
-	robot_choice.set_item_disabled(2, true)
+	robot_choice.add_item("Medium | Speed 100% | Health 100% | Damage 100% | Backstab 2x", 0)
+	robot_choice.add_item("Light | Speed 125% | Health 60% | Damage 70% | Backstab 6x", 1)
+	robot_choice.add_item("Heavy | Speed 70% | Health 150% | Damage 130% | Backstab 2x", 2)
 	robot_choice.select(0)
 	robot_choice.custom_minimum_size.y = 46
 	content.add_child(robot_choice)
@@ -99,7 +97,8 @@ func _build_ui() -> void:
 	start_button.pressed.connect(_on_start_pressed)
 	content.add_child(start_button)
 
+func selected_robot() -> String:
+	return ["medium", "light", "heavy"][robot_choice.selected]
+
 func _on_start_pressed() -> void:
-	if robot_choice.selected != 0:
-		return
 	start_requested.emit(selected_modifiers())

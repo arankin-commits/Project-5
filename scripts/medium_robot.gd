@@ -12,6 +12,7 @@ var controls_enabled := true
 var appearance := "medium"
 var speed := 265.0
 var damage_multiplier := 1.0
+var backstab_multiplier := 2.0
 var dash_recharge := 0.7
 var facing := Vector2.DOWN
 var dash_direction := Vector2.DOWN

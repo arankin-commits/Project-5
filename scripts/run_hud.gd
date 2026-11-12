@@ -122,7 +122,7 @@ func set_room(index: int, data: Dictionary, run_seed: int) -> void:
 	modal.hide()
 
 func update_stats(health: float, maximum: float, dash: float, special: float) -> void:
-	health_label.text = "MEDIUM     HULL %d / %d" % [ceili(health),ceili(maximum)]
+	health_label.text = "%s     HULL %d / %d" % [str(get_node("/root/RunConfig").get("robot_type")).to_upper(),ceili(health),ceili(maximum)]
 	health_bar.max_value = maximum
 	health_bar.value = health
 	dash_label.text = ("DASH READY" if dash <= 0 else "DASH %.1fs" % dash) + "    /    " + ("HEAVY READY" if special <= 0 else "HEAVY %.1fs" % special)

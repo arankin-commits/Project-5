@@ -20,6 +20,7 @@ var attack_number := 0
 var attack_kind := "slam"
 var attack_point := Vector2.ZERO
 var attack_direction := Vector2.DOWN
+var facing := Vector2.DOWN
 var phase_two := false
 var hit_flash := 0.0
 var path_timer := 0.0
@@ -71,7 +72,7 @@ func _physics_process(delta: float) -> void:
 	if kind == "brute":
 		visual.modulate *= Color(1.2,0.72,0.65)
 	visual.position.y = -absf(sin(stride))*1.8 if velocity.length() > 5 else 0
-	visual.flip_h = target.position.x > position.x
+	visual.flip_h = facing.x > 0
 	velocity = Vector2.ZERO
 	phase_two = kind == "boss" and health <= max_health * 0.5
 	if state == "windup":
@@ -106,6 +107,8 @@ func _physics_process(delta: float) -> void:
 					var offset: Vector2 = global_position-other.global_position
 					if offset.length() < 40 and offset.length() > 1:
 						velocity += offset.normalized()*30
+	if state == "chase" and velocity.length_squared() > 1:
+		facing = facing.slerp(velocity.normalized(), minf(1.0, delta * 5.0)).normalized()
 	move_and_slide()
 	queue_redraw()
 
@@ -114,6 +117,7 @@ func _begin_attack() -> void:
 	attack_number += 1
 	attack_point = target.global_position
 	attack_direction = global_position.direction_to(attack_point)
+	facing = attack_direction
 	attack_kind = "shot" if kind == "sentry" else "slam"
 	windup = 0.65
 	if kind == "boss":
@@ -151,6 +155,11 @@ func attack_radius() -> float:
 	if kind == "boss":
 		return 180.0 if phase_two else 145.0
 	return 105.0 if kind == "brute" else 78.0
+
+func is_backstab(origin: Vector2) -> bool:
+	# Rear 120-degree cone; windups and charges retain their committed facing.
+	var to_attacker := global_position.direction_to(origin)
+	return to_attacker.dot(facing.normalized()) < -0.5
 
 func take_damage(amount: float, knockback: Vector2 = Vector2.ZERO) -> void:
 	if health <= 0:

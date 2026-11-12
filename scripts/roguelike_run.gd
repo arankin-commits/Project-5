@@ -43,6 +43,11 @@ func _ready() -> void:
 	rooms = parsed["rooms"]
 	maximum_health = config.call("max_health")
 	health = maximum_health
+	var stats: Dictionary = config.call("robot_stats")
+	player.set("appearance", config.get("robot_type"))
+	player.set("speed", 265.0 * stats["speed"])
+	player.set("damage_multiplier", stats["damage"])
+	player.set("backstab_multiplier", stats["backstab"])
 	player.attack_requested.connect(_on_attack)
 	player.damaged.connect(_on_damage)
 	player.dashed.connect(func(): _effect(player.position, "ring", 55, Color("73f7e4")))
@@ -153,8 +158,11 @@ func _on_attack(origin: Vector2, direction: Vector2, damage: float, reach: float
 		var query := PhysicsRayQueryParameters2D.create(origin,enemy.position,1)
 		if not get_world_2d().direct_space_state.intersect_ray(query).is_empty():
 			continue
-		enemy.call("take_damage",damage,direction)
-		_damage_number(enemy.position-Vector2(0,70),damage)
+		var hit_damage := damage
+		if enemy.call("is_backstab", origin):
+			hit_damage *= float(player.get("backstab_multiplier"))
+		enemy.call("take_damage",hit_damage,direction)
+		_damage_number(enemy.position-Vector2(0,70),hit_damage)
 		_effect(enemy.position-Vector2(0,35),"burst",35,Color("ffe0a0"))
 		camera_shake = 3 if not heavy else 6
 
@@ -210,7 +218,7 @@ func choose_reward(id: String) -> bool:
 	if not valid:
 		return false
 	match id:
-		"power": player.set("damage_multiplier",float(player.get("damage_multiplier"))+0.2)
+		"power": player.set("damage_multiplier",float(player.get("damage_multiplier"))+0.2 * config.call("robot_stats")["damage"])
 		"hull":
 			maximum_health += 20
 			health = minf(maximum_health,health+25)
@@ -291,7 +299,7 @@ func _toggle_pause() -> void:
 
 func _retry() -> void:
 	get_tree().paused = false
-	config.call("start_run","medium",config.get("modifiers").duplicate())
+	config.call("start_run",config.get("robot_type"),config.get("modifiers").duplicate())
 	get_tree().change_scene_to_file("res://scenes/RoguelikeRun.tscn")
 
 func return_to_sync_chamber() -> void:

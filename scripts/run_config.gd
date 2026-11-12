@@ -1,5 +1,11 @@
 extends Node
 
+const ROBOT_STATS := {
+	"heavy": {"speed": 0.7, "health": 1.5, "damage": 1.3, "backstab": 2.0},
+	"light": {"speed": 1.25, "health": 0.6, "damage": 0.7, "backstab": 6.0},
+	"medium": {"speed": 1.0, "health": 1.0, "damage": 1.0, "backstab": 2.0}
+}
+
 var robot_type := "medium"
 var modifiers := {
 	"overclocked_enemies": false,
@@ -13,7 +19,7 @@ var victories := 0
 var sync_return_pending := false
 
 func start_run(selected_robot: String, selected_modifiers: Dictionary) -> bool:
-	if selected_robot != "medium":
+	if not ROBOT_STATS.has(selected_robot):
 		return false
 	robot_type = selected_robot
 	for key in modifiers:
@@ -33,7 +39,10 @@ func consume_sync_return() -> bool:
 	return pending
 
 func max_health() -> int:
-	return 70 if modifiers["fragile_frame"] else 100
+	return roundi(100 * ROBOT_STATS[robot_type]["health"]) - (30 if modifiers["fragile_frame"] else 0)
+
+func robot_stats() -> Dictionary:
+	return ROBOT_STATS[robot_type]
 
 func enemy_count() -> int:
 	return 5 if modifiers["reinforcements"] else 3
