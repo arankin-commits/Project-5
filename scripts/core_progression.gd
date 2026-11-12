@@ -12,7 +12,7 @@ const SKILLS := {
 	"wall_2": {"name":"Wall Stun II", "description":"+30% damage against wall-stunned enemies total.", "requires":"wall_1", "xp":150, "item":0, "at":Vector2(275,881), "radius":58},
 	"wall_3": {"name":"Wall Stun III", "description":"+45% damage against wall-stunned enemies total.", "requires":"wall_2", "xp":200, "item":0, "at":Vector2(126,881), "radius":58},
 	"double_dodge": {"name":"Chain Dodge", "description":"Chain two dodges before recharging.", "requires":"wall_3", "xp":0, "item":1, "at":Vector2(164,630), "radius":70},
-	"perfect_dodge": {"name":"Perfect Reprisal", "description":"Evade a hit in the first 0.12s of a dodge: +25% damage for 5 seconds.", "requires":"wall_3", "xp":0, "item":1, "at":Vector2(350,630), "radius":70},
+	"perfect_dodge": {"name":"Perfect Fortune", "description":"Evade a hit in the first 0.12s of a dodge: double XP and Aether Gear rewards for 5 seconds. Another perfect dodge refreshes the timer.", "requires":"wall_3", "xp":0, "item":1, "at":Vector2(350,630), "radius":70},
 	"energy_hit": {"name":"Energy Siphon", "description":"Gain 5 more energy per enemy hit (10 instead of 5).", "requires":"double_dodge", "xp":0, "item":1, "at":Vector2(160,440), "radius":74},
 	"charged_attack": {"name":"Charged Strike", "description":"Hold strike for 0.6s, then release for double damage and powerful knockback. Tap for a normal strike.", "requires":"perfect_dodge", "xp":0, "item":1, "at":Vector2(350,440), "radius":74},
 	"heavy_grapple": {"name":"Heavy Grapple", "description":"Your grappling hook can also pull large brutes. Bosses remain anchored.", "requires":"charged_attack", "xp":0, "item":1, "at":Vector2(272,234), "radius":90},

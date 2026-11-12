@@ -15,7 +15,9 @@ These are defaults for values not specified in the design request:
 - Special abilities cost one gear. Power of Two costs two; Power of Three costs three.
 - Regular ranks cost 100/150/200 XP; Nanobots extends to 250/300 XP. Final Stand costs 150 XP.
 - Perfect dodge: evade an incoming hit within the first 0.12 seconds of a dash;
-  gain 25% damage for five seconds. Repeated perfect dodges refresh, rather than stack.
+  gain double XP and Aether Gear rewards for five seconds. Another perfect dodge
+  during the bonus resets it to five seconds; the multiplier never stacks.
+  This replaces the previous damage bonus.
 - Chain Dodge: two uses, with both restored after the normal recharge period.
 - Charged Strike: hold primary attack for at least 0.6 seconds, then release;
   double strike damage and 180-pixel collision-aware knockback.
@@ -38,6 +40,6 @@ Capacity is 1, 2 with Power of Two, or 3 with Power of Three.
 Q spends 25 energy to activate all equipped elements within 240 pixels, with a
 one-second cooldown and wall occlusion. Fire deals 40 base damage; Water deals
 25 and slows for three seconds; Lightning deals 25 and knocks enemies back.
-Class damage and the perfect-dodge buff scale these initial core effects.
+Class damage scales these initial core effects.
 
 Run headless tests with `-- --test-mode` to avoid loading or writing player saves.

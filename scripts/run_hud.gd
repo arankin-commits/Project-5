@@ -192,7 +192,7 @@ func hide_pause() -> void:
 func update_progression(energy: float, elements: Array, capacity: int, xp: int, items: int, buff: float) -> void:
 	progression_label.text = "ENERGY %d/100  |  CORES %d/%d: %s\n+%d XP  |  +%d Aether Gears  |  F Grapple  |  Q Core burst" % [int(energy),elements.size(),capacity,", ".join(elements).to_upper() if not elements.is_empty() else "NONE",xp,items]
 	if buff > 0:
-		progression_label.text += "  |  PERFECT +25%% %.1fs" % buff
+		progression_label.text += "  |  PERFECT 2x XP / GEARS %.1fs" % buff
 
 func add_button(text: String, callback: Callable) -> void:
 	var button := Button.new()

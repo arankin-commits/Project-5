@@ -141,7 +141,7 @@ func _process(delta: float) -> void:
 		hud.objective.text = "E  CONTINUE" if player.position.distance_to(room.get("exit_position")) < 85 else "REACH THE TEAL LIFT MARKER"
 	hud.call("update_stats",health,maximum_health,player.get("dash_cooldown"),player.get("special_cooldown"))
 	hud.call("set_boss",boss if is_instance_valid(boss) else null)
-	hud.call("update_progression", player.energy, config.core_elements, config.core_limit, run_xp, run_items, player.perfect_damage_timer)
+	hud.call("update_progression", player.energy, config.core_elements, config.core_limit, run_xp, run_items, player.perfect_reward_timer)
 	var desired := Vector2(768,545)+(player.position-Vector2(768,610))*Vector2(0.17,0.12)
 	$Camera2D.position = $Camera2D.position.lerp(desired,1-exp(-delta*4))
 	camera_shake = maxf(0,camera_shake-delta*25)
@@ -269,6 +269,9 @@ func choose_reward(id: String) -> bool:
 	return true
 
 func _award_progress(amount: int, items := 0) -> void:
+	if player.perfect_reward_timer > 0:
+		amount *= 2
+		items *= 2
 	run_xp += amount
 	run_items += items
 	progression.award(amount, items)
@@ -313,7 +316,7 @@ func use_core_power() -> bool:
 				continue
 			if not get_world_2d().direct_space_state.intersect_ray(PhysicsRayQueryParameters2D.create(player.position,enemy.position,1)).is_empty():
 				continue
-			var damage := (40.0 if element == "fire" else 25.0) * float(player.damage_multiplier) * (1.25 if player.perfect_damage_timer > 0 else 1.0)
+			var damage := (40.0 if element == "fire" else 25.0) * float(player.damage_multiplier)
 			enemy.take_damage(damage)
 			if element == "water":
 				enemy.slow_timer = 3.0

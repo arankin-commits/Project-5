@@ -76,7 +76,26 @@ func _run() -> void:
 	check(player.start_dash(Vector2.RIGHT), "First dodge rejected")
 	check(player.start_dash(Vector2.LEFT), "Chained dodge rejected")
 	check(not player.start_dash(Vector2.RIGHT), "Third dodge accepted")
-	check(not player.take_damage(10) and player.perfect_damage_timer == 5, "Perfect dodge did not grant buff")
+	check(not player.take_damage(10) and player.perfect_reward_timer == 5, "Perfect dodge did not grant buff")
+	var initial_xp: int = progress.xp
+	var initial_items: int = progress.special_items
+	run._award_progress(10,1)
+	check(progress.xp == initial_xp+20 and progress.special_items == initial_items+2, "Perfect dodge did not double rewards")
+	check(run.run_xp == 20 and run.run_items == 2, "Run reward counters did not double")
+	player.perfect_reward_timer = 1.0
+	player.dash_cooldown = 0
+	player.start_dash(Vector2.RIGHT)
+	player.take_damage(10)
+	check(player.perfect_reward_timer == 5.0, "Second perfect dodge did not reset timer")
+	run._award_progress(10,1)
+	check(progress.xp == initial_xp+40 and progress.special_items == initial_items+4, "Reward multiplier stacked above 2x")
+	player.perfect_reward_timer = 0.01
+	player.set_physics_process(false)
+	player._physics_process(0.02)
+	run._award_progress(10,1)
+	check(player.perfect_reward_timer == 0 and progress.xp == initial_xp+50 and progress.special_items == initial_items+5, "Rewards stayed doubled after expiration")
+	player.set_physics_process(true)
+	player.perfect_reward_timer = 5.0
 	player.dash_timer = 0
 	var enemy = run.enemies.get_child(0)
 	for other in run.enemies.get_children():
@@ -89,8 +108,8 @@ func _run() -> void:
 	player.combo = 0
 	player.attack_cooldown = 0
 	player.perform_attack(Vector2.RIGHT)
-	check(is_equal_approx(1000-enemy.health,24*1.25*1.45), "Perfect dodge and wall damage bonuses wrong")
-	player.perfect_damage_timer = 0
+	check(is_equal_approx(1000-enemy.health,24*1.45), "Perfect dodge must not boost damage; wall bonus wrong")
+	player.perfect_reward_timer = 0
 	enemy.wall_stun_timer = 0
 	enemy.position = player.position + Vector2(70,0)
 	enemy.health = 1000
