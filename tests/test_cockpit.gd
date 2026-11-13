@@ -14,7 +14,7 @@ func _run() -> void:
 	await physics_frame
 	var player: CharacterBody2D = room.get_node("PlayerAndNPCs/Player")
 	assert(player.get_node("CharacterVisual").sprite_frames.get_frame_count("walk") == 8, "Main character animation was not loaded")
-	assert(room.get_node("PlayerAndNPCs/PilotNPC/PilotVisual").texture != null, "Pilot artwork was not loaded")
+	assert(not room.has_node("PlayerAndNPCs/PilotNPC"), "Placeholder player sprite remains on chair")
 	var spawn := player.position
 	assert(spawn.distance_to(Vector2(811.8, 809.2)) < 3.0, "Spawn mapping is wrong")
 	Input.action_press("move_up")
@@ -38,13 +38,7 @@ func _run() -> void:
 	var door = room.get_node("Interactions/MainHallDoor")
 	player.position = Vector2(800, 780)
 	assert(door.in_range(player.position), "Door should be in range")
-	var pilot = room.get_node("Interactions/TalktoPilot")
-	assert(not pilot.in_range(player.position), "Pilot should be out of range")
-	player.position = pilot.position + Vector2(0, 80)
-	assert(pilot.in_range(player.position), "Pilot should be approachable")
-	pilot.activate(room)
-	assert(room.panel.visible and room.panel_title.text == "Talk to Pilot", "Pilot dialogue failed")
-	room.panel.hide()
+	assert(not room.has_node("Interactions/TalktoPilot"), "Removed pilot still has dialogue")
 	door.locked = true
 	door.activate(room)
 	assert(room.panel_title.text == "Door locked", "Locked door failed")

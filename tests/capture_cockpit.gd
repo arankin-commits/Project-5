@@ -11,8 +11,7 @@ func _capture() -> void:
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path("res://reviews"))
 	var game_image := root.get_texture().get_image()
 	print("GAME_SCREENSHOT=", game_image.save_png("res://reviews/cockpit_playable.png"))
-	var pilot = scene.get_node("PlayerAndNPCs/PilotNPC")
-	scene.get_node("PlayerAndNPCs/Player").position = pilot.position + Vector2(0, 135)
+	scene.get_node("PlayerAndNPCs/Player").position = Vector2(690, 600)
 	scene.get_node("PlayerAndNPCs/Player/Camera2D").reset_smoothing()
 	scene.get_node("PlayerAndNPCs/Player/Camera2D").force_update_scroll()
 	await process_frame
@@ -27,7 +26,6 @@ func _capture() -> void:
 	var art_scene: Node2D = load("res://scenes/FlyingLibertyCockpit.tscn").instantiate()
 	viewport.add_child(art_scene)
 	art_scene.get_node("PlayerAndNPCs/Player").hide()
-	art_scene.get_node("PlayerAndNPCs/PilotNPC").hide()
 	art_scene.get_node("InteractionUI").hide()
 	art_scene.get_node("PlayerAndNPCs/Player/Camera2D").enabled = false
 	await process_frame

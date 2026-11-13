@@ -157,14 +157,6 @@ func _add_wall(a: Vector2, b: Vector2) -> void:
 	body.set_meta("outline", PackedVector2Array([a, b]))
 
 func _build_actors_and_interactions() -> void:
-	var pilot_data := _object("pilot")
-	var pilot := Node2D.new()
-	pilot.name = "PilotNPC"
-	pilot.position = map_gameplay(Vector2(pilot_data["x"], pilot_data["y"]))
-	pilot.z_index = 1
-	pilot.set_script(load("res://scripts/cockpit_pilot.gd"))
-	actors.add_child(pilot)
-	_add_interaction("Talk to Pilot", "Pilot: Clear skies ahead, captain.", pilot.position + Vector2(0, 38), 105)
 	_add_interaction("Inspect Helm", "The Flying Liberty answers to the helm.", Vector2(835, 445), 95)
 	_add_interaction("View Navigation", "Routes and weather charts cover the navigation desk.", Vector2(310, 588), 85)
 	_add_interaction("Inspect Controls", "Pressure steady. All engines responding.", Vector2(1080, 450), 90)
