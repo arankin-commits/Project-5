@@ -35,6 +35,8 @@ func start_run(selected_robot: String, selected_modifiers: Dictionary) -> bool:
 	return true
 
 func end_run() -> void:
+	if active:
+		get_node("/root/ShipCrew").returned_from_run()
 	active = false
 	sync_return_pending = true
 

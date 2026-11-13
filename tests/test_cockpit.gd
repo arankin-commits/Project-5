@@ -14,7 +14,7 @@ func _run() -> void:
 	await physics_frame
 	var player: CharacterBody2D = room.get_node("PlayerAndNPCs/Player")
 	assert(player.get_node("CharacterVisual").sprite_frames.get_frame_count("walk") == 8, "Main character animation was not loaded")
-	assert(not room.has_node("PlayerAndNPCs/PilotNPC"), "Placeholder player sprite remains on chair")
+	assert(room.get_node("PlayerAndNPCs/PilotNPC").position == Vector2(540,555), "New pilot is not at the marked floor position")
 	var spawn := player.position
 	assert(spawn.distance_to(Vector2(811.8, 809.2)) < 3.0, "Spawn mapping is wrong")
 	Input.action_press("move_up")

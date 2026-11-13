@@ -14,6 +14,8 @@ var panel: PanelContainer
 var panel_title: Label
 var panel_text: Label
 
+var npc_controller: Node
+
 func _ready() -> void:
 	add_child(preload("res://scripts/ship_menu.gd").new())
 	var entry_id := CockpitDoor.take_entry_id()
@@ -28,11 +30,16 @@ func _ready() -> void:
 	_build_doors()
 	_build_passages()
 	_build_ui()
+	npc_controller = preload("res://scripts/ship_npcs.gd").new()
+	npc_controller.room_id = "hall"
+	add_child(npc_controller)
 	$Player/Camera2D.make_current()
 	$Player/Camera2D.reset_smoothing()
 	$Player/Camera2D.force_update_scroll()
 
 func _process(_delta: float) -> void:
+	if npc_controller.blocks_room_input():
+		return
 	var nearest := _nearest_door()
 	prompt.text = "[E] %s" % nearest.prompt if nearest != null and not panel.visible else ""
 	if Input.is_action_just_pressed("interact"):

@@ -23,6 +23,8 @@ var panel: PanelContainer
 var panel_title: Label
 var panel_text: Label
 
+var npc_controller: Node
+
 func _ready() -> void:
 	add_child(preload("res://scripts/ship_menu.gd").new())
 	layout = _read_json(LAYOUT)
@@ -32,6 +34,9 @@ func _ready() -> void:
 	_build_collisions()
 	_build_actors_and_interactions()
 	_build_ui()
+	npc_controller = preload("res://scripts/ship_npcs.gd").new()
+	npc_controller.room_id = "cockpit"
+	add_child(npc_controller)
 	var spawn := _object("spawn")
 	player.position = map_gameplay(Vector2(spawn["x"], spawn["y"]))
 	var camera: Camera2D = player.get_node("Camera2D")
@@ -46,6 +51,8 @@ func _ready() -> void:
 			debug_overlay.boundaries.append(child.get_meta("outline"))
 
 func _process(_delta: float) -> void:
+	if npc_controller.blocks_room_input():
+		return
 	var nearest := _nearest_interactable()
 	prompt_label.text = "[E] %s" % nearest.prompt if nearest != null and not panel.visible else ""
 	if Input.is_action_just_pressed("interact"):

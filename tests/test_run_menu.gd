@@ -50,5 +50,6 @@ func _run() -> void:
 	await scene_changed
 	check(not paused and current_scene.name == "FlyingLibertySyncChamber", "Give Up failed to return to ship")
 	check(current_scene.returning and not root.get_node("RunConfig").active, "Give Up skipped sync return")
+	check(root.get_node("ShipCrew").return_count == 1, "Give Up did not update cockpit crew")
 	print("RUN_MENU_FAILURES=", failures)
 	quit(1 if failures else 0)

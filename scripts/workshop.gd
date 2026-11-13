@@ -12,12 +12,17 @@ var panel: PanelContainer
 var panel_title: Label
 var panel_text: Label
 
+var npc_controller: Node
+
 func _ready() -> void:
 	add_child(preload("res://scripts/ship_menu.gd").new())
 	_build_collision()
 	_build_interactions()
 	_build_passage()
 	_build_ui()
+	npc_controller = preload("res://scripts/ship_npcs.gd").new()
+	npc_controller.room_id = "workshop"
+	add_child(npc_controller)
 	core_terminal.connect("closed", Callable(self, "_on_core_terminal_closed"))
 	player.position = Vector2(1445, 490)
 	$Player/Camera2D.make_current()
@@ -25,6 +30,8 @@ func _ready() -> void:
 	$Player/Camera2D.force_update_scroll()
 
 func _process(_delta: float) -> void:
+	if npc_controller.blocks_room_input():
+		return
 	if core_terminal.visible:
 		prompt.text = ""
 		if Input.is_action_just_pressed("interact"):

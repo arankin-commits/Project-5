@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3]
 
-[ext_resource type="Texture2D" path="res://rooms/Steampunk Automaton Engineering Workshop.png" id="1"]
+[ext_resource type="Texture2D" path="res://rooms/Engineering Workshop Without Engineer.png" id="1"]
 [ext_resource type="Script" path="res://scripts/workshop.gd" id="2"]
 [ext_resource type="Script" path="res://scripts/cockpit_player.gd" id="3"]
 [ext_resource type="PackedScene" path="res://scenes/ui/CoreTerminal.tscn" id="4"]

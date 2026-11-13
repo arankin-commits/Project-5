@@ -163,6 +163,7 @@ func _run() -> void:
 	await process_frame
 	chamber = current_scene
 	check(chamber.returning and not chamber.player.controls_enabled,"Victory return cinematic missing")
+	check(root.get_node("ShipCrew").return_count == 1,"Victory did not update crew placement")
 	check(not config.active and not config.sync_return_pending,"Return state was not consumed")
 	await create_timer(3.5).timeout
 	check(not chamber.returning and chamber.player.controls_enabled,"Cinematic did not restore controls")
@@ -180,6 +181,7 @@ func _run() -> void:
 	await process_frame
 	check(current_scene.name == "FlyingLibertySyncChamber" and not config.active,"Return to Sync Chamber failed")
 	check(current_scene.returning and not current_scene.player.controls_enabled,"Death return cinematic missing")
+	check(root.get_node("ShipCrew").return_count == 2,"Death did not update crew placement")
 	await create_timer(3.5).timeout
 	check(current_scene.player.controls_enabled,"Death return left controls locked")
 	change_scene_to_file("res://scenes/FlyingLibertySyncChamber.tscn")
