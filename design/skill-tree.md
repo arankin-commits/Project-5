@@ -14,10 +14,13 @@ These are defaults for values not specified in the design request:
 - Chamber 4 and the boss each award one Aether Gear, retained even if the run is lost.
 - Special abilities cost one gear. Power of Two costs two; Power of Three costs three.
 - Regular ranks cost 100/150/200 XP; Nanobots extends to 250/300 XP. Final Stand costs 150 XP.
-- Perfect dodge: evade an incoming hit within the first 0.12 seconds of a dash;
-  gain double XP and Aether Gear rewards for five seconds. Another perfect dodge
-  during the bonus resets it to five seconds; the multiplier never stacks.
-  This replaces the previous damage bonus.
+- Perfect dodge is base kit: evade a hit within the first 0.12 seconds of a dash;
+  earn double XP for five seconds. Aether Gears are never multiplied.
+  Every new perfect dodge resets the XP timer to five seconds.
+  It also slows gameplay to 25% speed for 0.3 real seconds with a PERFECT DASH indicator.
+- Perfect Reprisal replaces Perfect Fortune: gain 25% damage for five seconds
+  after a perfect dodge. New perfect dodges refresh the timer without stacking.
+  Previously purchased Perfect Fortune nodes migrate to this damage upgrade.
 - Chain Dodge: two uses, with both restored after the normal recharge period.
 - Charged Strike: hold primary attack for at least 0.6 seconds, then release;
   double strike damage and 180-pixel collision-aware knockback.
@@ -40,6 +43,6 @@ Capacity is 1, 2 with Power of Two, or 3 with Power of Three.
 Q spends 25 energy to activate all equipped elements within 240 pixels, with a
 one-second cooldown and wall occlusion. Fire deals 40 base damage; Water deals
 25 and slows for three seconds; Lightning deals 25 and knocks enemies back.
-Class damage scales these initial core effects.
+Class damage and an active Perfect Reprisal buff scale these initial core effects.
 
 Run headless tests with `-- --test-mode` to avoid loading or writing player saves.

@@ -50,10 +50,18 @@ func _run() -> void:
 	# Persistence uses a workspace fixture, never the player's save.
 	progress.persistence_enabled = true
 	progress.save_progress("res://reviews/skill-test-save.cfg")
+	var legacy := ConfigFile.new()
+	legacy.load("res://reviews/skill-test-save.cfg")
+	var legacy_skills: Array = progress.unlocked_skills.duplicate()
+	legacy_skills.erase("perfect_reprisal")
+	legacy_skills.append("perfect_dodge")
+	legacy.set_value("progress", "skills", legacy_skills)
+	legacy.save("res://reviews/skill-test-save.cfg")
 	progress.unlocked_skills.assign(["root"])
 	progress.xp = 0
 	progress.load_progress("res://reviews/skill-test-save.cfg")
 	check(progress.has_skill("heavy_grapple") and progress.xp > 0, "Save/load lost progression")
+	check(progress.has_skill("perfect_reprisal") and not progress.has_skill("perfect_dodge"), "Perfect Fortune purchase was not migrated")
 	progress.persistence_enabled = false
 	config.start_run("medium",{})
 	var run = load("res://scenes/RoguelikeRun.tscn").instantiate()
@@ -80,22 +88,25 @@ func _run() -> void:
 	var initial_xp: int = progress.xp
 	var initial_items: int = progress.special_items
 	run._award_progress(10,1)
-	check(progress.xp == initial_xp+20 and progress.special_items == initial_items+2, "Perfect dodge did not double rewards")
-	check(run.run_xp == 20 and run.run_items == 2, "Run reward counters did not double")
+	check(progress.xp == initial_xp+20 and progress.special_items == initial_items+1, "Perfect dodge did not double rewards")
+	check(run.run_xp == 20 and run.run_items == 1, "Run reward counters did not double")
 	player.perfect_reward_timer = 1.0
+	player.perfect_damage_timer = 1.0
 	player.dash_cooldown = 0
 	player.start_dash(Vector2.RIGHT)
 	player.take_damage(10)
-	check(player.perfect_reward_timer == 5.0, "Second perfect dodge did not reset timer")
+	check(player.perfect_reward_timer == 5.0 and player.perfect_damage_timer == 5.0, "Second perfect dodge did not reset timer")
 	run._award_progress(10,1)
-	check(progress.xp == initial_xp+40 and progress.special_items == initial_items+4, "Reward multiplier stacked above 2x")
+	check(progress.xp == initial_xp+40 and progress.special_items == initial_items+2, "Reward multiplier stacked above 2x")
 	player.perfect_reward_timer = 0.01
+	player.perfect_damage_timer = 0.01
 	player.set_physics_process(false)
 	player._physics_process(0.02)
 	run._award_progress(10,1)
-	check(player.perfect_reward_timer == 0 and progress.xp == initial_xp+50 and progress.special_items == initial_items+5, "Rewards stayed doubled after expiration")
+	check(player.perfect_reward_timer == 0 and player.perfect_damage_timer == 0 and progress.xp == initial_xp+50 and progress.special_items == initial_items+3, "Rewards stayed doubled after expiration")
 	player.set_physics_process(true)
 	player.perfect_reward_timer = 5.0
+	player.perfect_damage_timer = 5.0
 	player.dash_timer = 0
 	var enemy = run.enemies.get_child(0)
 	for other in run.enemies.get_children():
@@ -108,8 +119,9 @@ func _run() -> void:
 	player.combo = 0
 	player.attack_cooldown = 0
 	player.perform_attack(Vector2.RIGHT)
-	check(is_equal_approx(1000-enemy.health,24*1.45), "Perfect dodge must not boost damage; wall bonus wrong")
+	check(is_equal_approx(1000-enemy.health,24*1.25*1.45), "Perfect Reprisal and wall damage bonuses wrong")
 	player.perfect_reward_timer = 0
+	player.perfect_damage_timer = 0
 	enemy.wall_stun_timer = 0
 	enemy.position = player.position + Vector2(70,0)
 	enemy.health = 1000

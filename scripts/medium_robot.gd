@@ -36,6 +36,7 @@ var charge_time := 0.0
 var charging := false
 var charged_strike := false
 var perfect_reward_timer := 0.0
+var perfect_damage_timer := 0.0
 var dash_elapsed := 0.0
 var perfect_triggered := false
 var dash_charges := 1
@@ -72,6 +73,7 @@ func _physics_process(delta: float) -> void:
 		dash_charges = 2 if skills.has("double_dodge") else 1
 	dash_elapsed += delta
 	perfect_reward_timer = maxf(0, perfect_reward_timer - delta)
+	perfect_damage_timer = maxf(0, perfect_damage_timer - delta)
 	grapple_cooldown = maxf(0, grapple_cooldown - delta)
 	core_cooldown = maxf(0, core_cooldown - delta)
 	attack_cooldown = maxf(0, attack_cooldown - delta)
@@ -160,8 +162,11 @@ func perform_attack(direction: Vector2, heavy := false) -> bool:
 	if charged_strike:
 		damage *= 2.0
 		reach = 155.0
-	attack_requested.emit(global_position, facing, damage * damage_multiplier, reach, heavy)
+	attack_requested.emit(global_position, facing, damage * combat_damage_multiplier(), reach, heavy)
 	return true
+
+func combat_damage_multiplier() -> float:
+	return damage_multiplier * (1.25 if perfect_damage_timer > 0 else 1.0)
 
 func _aim_direction() -> Vector2:
 	return global_position.direction_to(get_global_mouse_position()) if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) else facing
@@ -177,9 +182,10 @@ func release_charge(direction: Vector2) -> bool:
 func take_damage(amount: float) -> bool:
 	if controls_enabled and dash_timer > 0 and dash_elapsed <= 0.12 and not perfect_triggered:
 		perfect_triggered = true
-		if skills.has("perfect_dodge"):
-			perfect_reward_timer = 5.0
-			perfect_dodged.emit()
+		perfect_reward_timer = 5.0
+		if skills.has("perfect_reprisal"):
+			perfect_damage_timer = 5.0
+		perfect_dodged.emit()
 	if not controls_enabled or invulnerability > 0:
 		return false
 	invulnerability = 0.7

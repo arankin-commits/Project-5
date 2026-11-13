@@ -22,6 +22,7 @@ var modal_actions: HBoxContainer
 var footer: Label
 var pause_menu: Control
 var progression_label: Label
+var perfect_dash_indicator: Label
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -75,6 +76,13 @@ func _ready() -> void:
 	progression_label = label("", 15, Color("8ee8d0"))
 	progression_label.position = Vector2(24,110)
 	root.add_child(progression_label)
+	perfect_dash_indicator = label("PERFECT DASH", 30, Color("ffce83"))
+	perfect_dash_indicator.position = Vector2(440, 175)
+	perfect_dash_indicator.size = Vector2(400, 48)
+	perfect_dash_indicator.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	perfect_dash_indicator.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root.add_child(perfect_dash_indicator)
+	perfect_dash_indicator.hide()
 	boss_box = VBoxContainer.new()
 	boss_box.position = Vector2(330,615)
 	boss_box.size = Vector2(620,48)
@@ -189,10 +197,12 @@ func hide_pause() -> void:
 	if modal.visible and modal_actions.get_child_count() > 0:
 		modal_actions.get_child(0).grab_focus()
 
-func update_progression(energy: float, elements: Array, capacity: int, xp: int, items: int, buff: float) -> void:
+func update_progression(energy: float, elements: Array, capacity: int, xp: int, items: int, buff: float, damage_buff := 0.0) -> void:
 	progression_label.text = "ENERGY %d/100  |  CORES %d/%d: %s\n+%d XP  |  +%d Aether Gears  |  F Grapple  |  Q Core burst" % [int(energy),elements.size(),capacity,", ".join(elements).to_upper() if not elements.is_empty() else "NONE",xp,items]
 	if buff > 0:
-		progression_label.text += "  |  PERFECT 2x XP / GEARS %.1fs" % buff
+		progression_label.text += "  |  PERFECT 2x XP %.1fs" % buff
+	if damage_buff > 0:
+		progression_label.text += "  |  +25%% DAMAGE %.1fs" % damage_buff
 
 func add_button(text: String, callback: Callable) -> void:
 	var button := Button.new()

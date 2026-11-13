@@ -40,6 +40,9 @@ var wall_damage_bonus := 0.0
 var run_xp := 0
 var run_items := 0
 var visited_rooms: Array[int] = []
+var perfect_slow_active := false
+var perfect_slow_generation := 0
+var previous_time_scale := 1.0
 
 func _ready() -> void:
 	config = get_node("/root/RunConfig")
@@ -61,7 +64,7 @@ func _ready() -> void:
 	player.set("backstab_multiplier", stats["backstab"] * (1.0 + progression.rank("backstab") * 0.2))
 	player.grapple_requested.connect(use_grapple)
 	player.core_requested.connect(use_core_power)
-	player.perfect_dodged.connect(func(): _effect(player.position, "ring", 90, Color("ffce83")))
+	player.perfect_dodged.connect(_on_perfect_dodge)
 	player.attack_requested.connect(_on_attack)
 	player.damaged.connect(_on_damage)
 	player.dashed.connect(func(): _effect(player.position, "ring", 55, Color("73f7e4")))
@@ -75,7 +78,35 @@ func _ready() -> void:
 	$Camera2D.reset_smoothing()
 	$Camera2D.force_update_scroll()
 
+func _on_perfect_dodge() -> void:
+	if state != "combat":
+		return
+	_effect(player.position, "ring", 90, Color("ffce83"))
+	if not perfect_slow_active:
+		previous_time_scale = Engine.time_scale
+	perfect_slow_active = true
+	perfect_slow_generation += 1
+	var generation := perfect_slow_generation
+	Engine.time_scale = previous_time_scale * 0.25
+	hud.perfect_dash_indicator.show()
+	# Real-time duration, unaffected by the slowdown or opening the pause menu.
+	await get_tree().create_timer(0.3, true, false, true).timeout
+	if generation == perfect_slow_generation:
+		_end_perfect_slow()
+
+func _end_perfect_slow() -> void:
+	perfect_slow_generation += 1
+	if perfect_slow_active:
+		Engine.time_scale = previous_time_scale
+		perfect_slow_active = false
+	if is_instance_valid(hud) and is_instance_valid(hud.perfect_dash_indicator):
+		hud.perfect_dash_indicator.hide()
+
+func _exit_tree() -> void:
+	_end_perfect_slow()
+
 func _load_room(index: int) -> void:
+	_end_perfect_slow()
 	if not visited_rooms.has(index):
 		if not visited_rooms.is_empty():
 			health = minf(maximum_health, health + nanobot_healing)
@@ -141,7 +172,7 @@ func _process(delta: float) -> void:
 		hud.objective.text = "E  CONTINUE" if player.position.distance_to(room.get("exit_position")) < 85 else "REACH THE TEAL LIFT MARKER"
 	hud.call("update_stats",health,maximum_health,player.get("dash_cooldown"),player.get("special_cooldown"))
 	hud.call("set_boss",boss if is_instance_valid(boss) else null)
-	hud.call("update_progression", player.energy, config.core_elements, config.core_limit, run_xp, run_items, player.perfect_reward_timer)
+	hud.call("update_progression", player.energy, config.core_elements, config.core_limit, run_xp, run_items, player.perfect_reward_timer, player.perfect_damage_timer)
 	var desired := Vector2(768,545)+(player.position-Vector2(768,610))*Vector2(0.17,0.12)
 	$Camera2D.position = $Camera2D.position.lerp(desired,1-exp(-delta*4))
 	camera_shake = maxf(0,camera_shake-delta*25)
@@ -271,7 +302,6 @@ func choose_reward(id: String) -> bool:
 func _award_progress(amount: int, items := 0) -> void:
 	if player.perfect_reward_timer > 0:
 		amount *= 2
-		items *= 2
 	run_xp += amount
 	run_items += items
 	progression.award(amount, items)
@@ -316,7 +346,7 @@ func use_core_power() -> bool:
 				continue
 			if not get_world_2d().direct_space_state.intersect_ray(PhysicsRayQueryParameters2D.create(player.position,enemy.position,1)).is_empty():
 				continue
-			var damage := (40.0 if element == "fire" else 25.0) * float(player.damage_multiplier)
+			var damage := (40.0 if element == "fire" else 25.0) * float(player.combat_damage_multiplier())
 			enemy.take_damage(damage)
 			if element == "water":
 				enemy.slow_timer = 3.0
@@ -369,6 +399,7 @@ func _finish(won: bool) -> void:
 	if state == "result":
 		return
 	state = "result"
+	_end_perfect_slow()
 	outcome = "BOILER DISTRICT CLEARED" if won else "FRAME LOST"
 	hud.objective.text = "DISTRICT CLEARED" if won else "CORE RECOVERED"
 	player.set("controls_enabled",false)
