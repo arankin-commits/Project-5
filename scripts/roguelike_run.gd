@@ -45,6 +45,7 @@ var perfect_slow_generation := 0
 var previous_time_scale := 1.0
 
 func _ready() -> void:
+	get_node("/root/BackgroundMusic").play_boiler()
 	config = get_node("/root/RunConfig")
 	if not config.get("active"):
 		config.call("start_run", "medium", {})

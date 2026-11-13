@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://na1hlosnp41i"
+path="res://.godot/imported/Flying Liberty music.mp3-28efa5165752cc0a36c141bf0b73bcc1.mp3str"
+
+[deps]
+
+source_file="res://Music/Flying Liberty music.mp3"
+dest_files=["res://.godot/imported/Flying Liberty music.mp3-28efa5165752cc0a36c141bf0b73bcc1.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

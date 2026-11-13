@@ -18,6 +18,7 @@ var pod_interior: Polygon2D
 var npc_controller: Node
 
 func _ready() -> void:
+	get_node("/root/BackgroundMusic").play_ship()
 	add_child(preload("res://scripts/ship_menu.gd").new())
 	_build_collision()
 	_build_interactions()

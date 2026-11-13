@@ -26,6 +26,7 @@ var panel_text: Label
 var npc_controller: Node
 
 func _ready() -> void:
+	get_node("/root/BackgroundMusic").play_ship()
 	add_child(preload("res://scripts/ship_menu.gd").new())
 	layout = _read_json(LAYOUT)
 	mapping = _read_json(MAPPING)
