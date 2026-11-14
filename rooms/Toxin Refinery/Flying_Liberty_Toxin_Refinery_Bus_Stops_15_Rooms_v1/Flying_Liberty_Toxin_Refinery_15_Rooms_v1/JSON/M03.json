@@ -1,0 +1,107 @@
+{
+  "id": "M03",
+  "name": "Quarantine Transfer Platform",
+  "size_class": "medium",
+  "area_tiles_squared": 399.42,
+  "bounds_tiles": {
+    "width": 25,
+    "height": 19
+  },
+  "outline_polygon_tiles": [
+    [
+      3.0,
+      2.28
+    ],
+    [
+      3.0,
+      8.17
+    ],
+    [
+      0.0,
+      8.17
+    ],
+    [
+      0.0,
+      16.0
+    ],
+    [
+      3.0,
+      19.0
+    ],
+    [
+      16.75,
+      19.0
+    ],
+    [
+      16.75,
+      16.0
+    ],
+    [
+      21.0,
+      16.0
+    ],
+    [
+      21.0,
+      11.02
+    ],
+    [
+      25.0,
+      11.02
+    ],
+    [
+      25.0,
+      3.0
+    ],
+    [
+      22.0,
+      0.0
+    ],
+    [
+      3.0,
+      0.0
+    ],
+    [
+      0.72,
+      2.28
+    ]
+  ],
+  "bus_stops": [
+    {
+      "id": "M03_EXIT_1",
+      "type": "exit",
+      "x": 6.25,
+      "y": 0,
+      "edge": "north straight boundary",
+      "orientation": "north",
+      "board_side": "upper",
+      "mirrored_variant": "top-left",
+      "reward_preview": "Aether Cores",
+      "transport": "High-Speed Control Bus"
+    },
+    {
+      "id": "M03_EXIT_2",
+      "type": "exit",
+      "x": 18.75,
+      "y": 0,
+      "edge": "north straight boundary",
+      "orientation": "north",
+      "board_side": "upper",
+      "mirrored_variant": "top-right",
+      "reward_preview": "Fire Core",
+      "transport": "High-Speed Control Bus"
+    },
+    {
+      "id": "M03_ENTRANCE",
+      "type": "entrance",
+      "x": 14.25,
+      "y": 19,
+      "edge": "south straight boundary",
+      "orientation": "south",
+      "mirrored_variant": "bottom-right",
+      "transport": "High-Speed Control Bus"
+    }
+  ],
+  "feature": "quarantine",
+  "unique_seed": 6,
+  "area_ratio_to_S01": 3.15
+}

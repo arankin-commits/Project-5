@@ -1,0 +1,119 @@
+{
+  "id": "M07",
+  "name": "Neutralizer Pump Annex",
+  "size_class": "medium",
+  "area_tiles_squared": 410.08,
+  "bounds_tiles": {
+    "width": 26,
+    "height": 19
+  },
+  "outline_polygon_tiles": [
+    [
+      4.0,
+      2.85
+    ],
+    [
+      4.0,
+      8.55
+    ],
+    [
+      0.0,
+      8.55
+    ],
+    [
+      0.0,
+      15.9
+    ],
+    [
+      3.1,
+      19.0
+    ],
+    [
+      18.2,
+      19.0
+    ],
+    [
+      18.2,
+      15.3
+    ],
+    [
+      22.0,
+      15.3
+    ],
+    [
+      22.0,
+      10.83
+    ],
+    [
+      26.0,
+      10.83
+    ],
+    [
+      26.0,
+      3.1
+    ],
+    [
+      22.9,
+      0.0
+    ],
+    [
+      3.1,
+      0.0
+    ],
+    [
+      0.25,
+      2.85
+    ]
+  ],
+  "bus_stops": [
+    {
+      "id": "M07_EXIT_1",
+      "type": "exit",
+      "x": 5.98,
+      "y": 0,
+      "edge": "north straight boundary",
+      "orientation": "north",
+      "board_side": "upper",
+      "mirrored_variant": "top-left",
+      "reward_preview": "Information",
+      "transport": "High-Speed Control Bus"
+    },
+    {
+      "id": "M07_EXIT_2",
+      "type": "exit",
+      "x": 13.0,
+      "y": 0,
+      "edge": "north straight boundary",
+      "orientation": "north",
+      "board_side": "upper",
+      "mirrored_variant": "top-right",
+      "reward_preview": "Secret Room",
+      "transport": "High-Speed Control Bus"
+    },
+    {
+      "id": "M07_EXIT_3",
+      "type": "exit",
+      "x": 20.02,
+      "y": 0,
+      "edge": "north straight boundary",
+      "orientation": "north",
+      "board_side": "upper",
+      "mirrored_variant": "top-right",
+      "reward_preview": "Aether Cores",
+      "transport": "High-Speed Control Bus"
+    },
+    {
+      "id": "M07_ENTRANCE",
+      "type": "entrance",
+      "x": 14.82,
+      "y": 19,
+      "edge": "south straight boundary",
+      "orientation": "south",
+      "mirrored_variant": "bottom-right",
+      "transport": "High-Speed Control Bus"
+    }
+  ],
+  "feature": "pumps",
+  "unique_seed": 10,
+  "area_ratio_to_S01": 3.24
+}

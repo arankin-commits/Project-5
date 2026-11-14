@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6ne21ooguk8k"
-path="res://.godot/imported/Engineering Workshop Without Engineer.png-1bc3e316cc60bf2eb4bcbd7f74f069f1.ctex"
+uid="uid://brudjlqidnjup"
+path="res://.godot/imported/F-M02_Conveyor_Split.png-9b5a728e34378886697f7c79d4cb30a1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://rooms/Engineering Workshop Without Engineer.png"
-dest_files=["res://.godot/imported/Engineering Workshop Without Engineer.png-1bc3e316cc60bf2eb4bcbd7f74f069f1.ctex"]
+source_file="res://rooms/Factory/Flying_Liberty_Factory_Biome_15_Rooms_v1/Flying_Liberty_Factory_Rooms_v1/Footprints/F-M02_Conveyor_Split.png"
+dest_files=["res://.godot/imported/F-M02_Conveyor_Split.png-9b5a728e34378886697f7c79d4cb30a1.ctex"]
 
 [params]
 

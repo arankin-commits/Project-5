@@ -1,0 +1,143 @@
+{
+  "id": "M04",
+  "name": "Pipe-Siphon Bend",
+  "size_class": "medium",
+  "area_tiles_squared": 420.96,
+  "bounds_tiles": {
+    "width": 26,
+    "height": 19
+  },
+  "outline_polygon_tiles": [
+    [
+      0.0,
+      5.89
+    ],
+    [
+      4.5,
+      5.89
+    ],
+    [
+      4.5,
+      12.35
+    ],
+    [
+      0.0,
+      12.35
+    ],
+    [
+      0.0,
+      16.8
+    ],
+    [
+      2.2,
+      19.0
+    ],
+    [
+      18.2,
+      19.0
+    ],
+    [
+      18.2,
+      15.4
+    ],
+    [
+      22.88,
+      15.4
+    ],
+    [
+      22.88,
+      19.0
+    ],
+    [
+      23.8,
+      19.0
+    ],
+    [
+      26.0,
+      16.8
+    ],
+    [
+      26.0,
+      8.55
+    ],
+    [
+      22.6,
+      8.55
+    ],
+    [
+      22.6,
+      3.42
+    ],
+    [
+      26.0,
+      3.42
+    ],
+    [
+      26.0,
+      2.2
+    ],
+    [
+      23.8,
+      0.0
+    ],
+    [
+      2.2,
+      0.0
+    ],
+    [
+      0.0,
+      2.2
+    ]
+  ],
+  "bus_stops": [
+    {
+      "id": "M04_EXIT_1",
+      "type": "exit",
+      "x": 5.98,
+      "y": 0,
+      "edge": "north straight boundary",
+      "orientation": "north",
+      "board_side": "upper",
+      "mirrored_variant": "top-left",
+      "reward_preview": "Fire Core",
+      "transport": "High-Speed Control Bus"
+    },
+    {
+      "id": "M04_EXIT_2",
+      "type": "exit",
+      "x": 13.0,
+      "y": 0,
+      "edge": "north straight boundary",
+      "orientation": "north",
+      "board_side": "upper",
+      "mirrored_variant": "top-right",
+      "reward_preview": "Core XP",
+      "transport": "High-Speed Control Bus"
+    },
+    {
+      "id": "M04_EXIT_3",
+      "type": "exit",
+      "x": 20.02,
+      "y": 0,
+      "edge": "north straight boundary",
+      "orientation": "north",
+      "board_side": "upper",
+      "mirrored_variant": "top-right",
+      "reward_preview": "Shop",
+      "transport": "High-Speed Control Bus"
+    },
+    {
+      "id": "M04_ENTRANCE",
+      "type": "entrance",
+      "x": 11.18,
+      "y": 19,
+      "edge": "south straight boundary",
+      "orientation": "south",
+      "mirrored_variant": "bottom-left",
+      "transport": "High-Speed Control Bus"
+    }
+  ],
+  "feature": "pipes",
+  "unique_seed": 7,
+  "area_ratio_to_S01": 3.32
+}

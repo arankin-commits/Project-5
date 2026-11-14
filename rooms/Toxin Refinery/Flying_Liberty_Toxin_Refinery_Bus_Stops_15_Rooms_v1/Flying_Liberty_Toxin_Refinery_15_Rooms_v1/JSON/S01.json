@@ -1,0 +1,115 @@
+{
+  "id": "S01",
+  "name": "Filter Inspection Landing",
+  "size_class": "small",
+  "area_tiles_squared": 126.74,
+  "bounds_tiles": {
+    "width": 14,
+    "height": 10
+  },
+  "outline_polygon_tiles": [
+    [
+      0.0,
+      1.5
+    ],
+    [
+      0.0,
+      1.8
+    ],
+    [
+      1.8,
+      1.8
+    ],
+    [
+      1.8,
+      4.5
+    ],
+    [
+      0.0,
+      4.5
+    ],
+    [
+      0.0,
+      8.5
+    ],
+    [
+      1.5,
+      10.0
+    ],
+    [
+      12.5,
+      10.0
+    ],
+    [
+      14.0,
+      8.5
+    ],
+    [
+      14.0,
+      8.3
+    ],
+    [
+      12.5,
+      8.3
+    ],
+    [
+      12.5,
+      5.7
+    ],
+    [
+      14.0,
+      5.7
+    ],
+    [
+      14.0,
+      1.5
+    ],
+    [
+      12.5,
+      0.0
+    ],
+    [
+      1.5,
+      0.0
+    ]
+  ],
+  "bus_stops": [
+    {
+      "id": "S01_EXIT_1",
+      "type": "exit",
+      "x": 3.5,
+      "y": 0,
+      "edge": "north straight boundary",
+      "orientation": "north",
+      "board_side": "upper",
+      "mirrored_variant": "top-left",
+      "reward_preview": "Fire Core",
+      "transport": "High-Speed Control Bus"
+    },
+    {
+      "id": "S01_EXIT_2",
+      "type": "exit",
+      "x": 10.5,
+      "y": 0,
+      "edge": "north straight boundary",
+      "orientation": "north",
+      "board_side": "upper",
+      "mirrored_variant": "top-right",
+      "reward_preview": "Core XP",
+      "transport": "High-Speed Control Bus"
+    },
+    {
+      "id": "S01_ENTRANCE",
+      "type": "entrance",
+      "x": 6.02,
+      "y": 10,
+      "edge": "south straight boundary",
+      "orientation": "south",
+      "mirrored_variant": "bottom-left",
+      "transport": "High-Speed Control Bus"
+    }
+  ],
+  "feature": "filter",
+  "unique_seed": 1,
+  "area_ratio_to_S01": 1.0
+}

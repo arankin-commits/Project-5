@@ -1,0 +1,1911 @@
+{
+  "title": "Flying Liberty | Factory Biome: 15 Chamber Blockouts",
+  "unit": "one logical tile, independent of sprite scale",
+  "reference_small_mean_area": 119.3,
+  "door_asset_rule": "Exit roll-up doors closed until room cleared; entrance roll-up doors open on arrival; mirrored variants inserted in straight upper/bottom wall segments.",
+  "rooms": [
+    {
+      "id": "F-S01",
+      "name": "Parts Checkpoint",
+      "tier": "small",
+      "footprint_area_tiles": 116.0,
+      "bounding_size_tiles": [
+        12,
+        10
+      ],
+      "outer_wall_polygon_tiles": [
+        [
+          5.0,
+          0.0
+        ],
+        [
+          5.0,
+          1.0
+        ],
+        [
+          3.0,
+          1.0
+        ],
+        [
+          3.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          9.0
+        ],
+        [
+          1.0,
+          10.0
+        ],
+        [
+          11.0,
+          10.0
+        ],
+        [
+          12.0,
+          9.0
+        ],
+        [
+          12.0,
+          1.0
+        ],
+        [
+          11.0,
+          0.0
+        ]
+      ],
+      "exit_doors": [
+        {
+          "x": 8.0,
+          "y": 0.0,
+          "wall": "horizontal",
+          "variant": "right",
+          "type": "exit_rollup_closed"
+        }
+      ],
+      "entrance_door": {
+        "x": 6.0,
+        "y": 10.0,
+        "wall": "horizontal",
+        "variant": "right",
+        "type": "entrance_rollup_open"
+      },
+      "feature": "Crate stacks, inspection plate, narrow clear fighting area",
+      "biome": "Factory",
+      "palette": {
+        "shadow": "#292F33",
+        "steel": "#62696C",
+        "brass": "#A7793E",
+        "light": "#A7A6A0",
+        "accent": "#EEAE52",
+        "bg": "#14191D",
+        "grid": "#4B5153",
+        "text": "#DFD8C9",
+        "cyan": "#728F91"
+      },
+      "door_family": "Factory_RollUp_Mirrored_v1",
+      "relative_to_avg_small": 0.97
+    },
+    {
+      "id": "F-S02",
+      "name": "Gear Locker",
+      "tier": "small",
+      "footprint_area_tiles": 120.0,
+      "bounding_size_tiles": [
+        13,
+        10
+      ],
+      "outer_wall_polygon_tiles": [
+        [
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          3.0
+        ],
+        [
+          2.0,
+          3.0
+        ],
+        [
+          2.0,
+          6.0
+        ],
+        [
+          0.0,
+          6.0
+        ],
+        [
+          0.0,
+          9.0
+        ],
+        [
+          1.0,
+          10.0
+        ],
+        [
+          8.0,
+          10.0
+        ],
+        [
+          8.0,
+          9.0
+        ],
+        [
+          10.0,
+          9.0
+        ],
+        [
+          10.0,
+          10.0
+        ],
+        [
+          12.0,
+          10.0
+        ],
+        [
+          13.0,
+          9.0
+        ],
+        [
+          13.0,
+          1.0
+        ],
+        [
+          12.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0
+        ]
+      ],
+      "exit_doors": [
+        {
+          "x": 6.5,
+          "y": 0.0,
+          "wall": "horizontal",
+          "variant": "right",
+          "type": "exit_rollup_closed"
+        }
+      ],
+      "entrance_door": {
+        "x": 11.0,
+        "y": 10.0,
+        "wall": "horizontal",
+        "variant": "right",
+        "type": "entrance_rollup_open"
+      },
+      "feature": "Gear bins, slim side alcove, overhead hoist",
+      "biome": "Factory",
+      "palette": {
+        "shadow": "#292F33",
+        "steel": "#62696C",
+        "brass": "#A7793E",
+        "light": "#A7A6A0",
+        "accent": "#EEAE52",
+        "bg": "#14191D",
+        "grid": "#4B5153",
+        "text": "#DFD8C9",
+        "cyan": "#728F91"
+      },
+      "door_family": "Factory_RollUp_Mirrored_v1",
+      "relative_to_avg_small": 1.01
+    },
+    {
+      "id": "F-S03",
+      "name": "Switchboard Corner",
+      "tier": "small",
+      "footprint_area_tiles": 122.0,
+      "bounding_size_tiles": [
+        12,
+        11
+      ],
+      "outer_wall_polygon_tiles": [
+        [
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          10.0
+        ],
+        [
+          1.0,
+          11.0
+        ],
+        [
+          11.0,
+          11.0
+        ],
+        [
+          12.0,
+          10.0
+        ],
+        [
+          12.0,
+          6.0
+        ],
+        [
+          10.0,
+          6.0
+        ],
+        [
+          10.0,
+          3.0
+        ],
+        [
+          12.0,
+          3.0
+        ],
+        [
+          12.0,
+          1.0
+        ],
+        [
+          11.0,
+          0.0
+        ],
+        [
+          9.0,
+          0.0
+        ],
+        [
+          9.0,
+          1.0
+        ],
+        [
+          7.0,
+          1.0
+        ],
+        [
+          7.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0
+        ]
+      ],
+      "exit_doors": [
+        {
+          "x": 4.0,
+          "y": 0.0,
+          "wall": "horizontal",
+          "variant": "left",
+          "type": "exit_rollup_closed"
+        },
+        {
+          "x": 10.0,
+          "y": 0.0,
+          "wall": "horizontal",
+          "variant": "right",
+          "type": "exit_rollup_closed"
+        }
+      ],
+      "entrance_door": {
+        "x": 6.0,
+        "y": 11.0,
+        "wall": "horizontal",
+        "variant": "right",
+        "type": "entrance_rollup_open"
+      },
+      "feature": "Switchgear and floor inspection grille",
+      "biome": "Factory",
+      "palette": {
+        "shadow": "#292F33",
+        "steel": "#62696C",
+        "brass": "#A7793E",
+        "light": "#A7A6A0",
+        "accent": "#EEAE52",
+        "bg": "#14191D",
+        "grid": "#4B5153",
+        "text": "#DFD8C9",
+        "cyan": "#728F91"
+      },
+      "door_family": "Factory_RollUp_Mirrored_v1",
+      "relative_to_avg_small": 1.02
+    },
+    {
+      "id": "F-M01",
+      "name": "Stamping Junction",
+      "tier": "medium",
+      "footprint_area_tiles": 398.0,
+      "bounding_size_tiles": [
+        23,
+        19
+      ],
+      "outer_wall_polygon_tiles": [
+        [
+          0.0,
+          2.0
+        ],
+        [
+          0.0,
+          5.0
+        ],
+        [
+          3.0,
+          5.0
+        ],
+        [
+          3.0,
+          12.0
+        ],
+        [
+          0.0,
+          12.0
+        ],
+        [
+          0.0,
+          17.0
+        ],
+        [
+          2.0,
+          19.0
+        ],
+        [
+          8.0,
+          19.0
+        ],
+        [
+          8.0,
+          17.0
+        ],
+        [
+          13.0,
+          17.0
+        ],
+        [
+          13.0,
+          19.0
+        ],
+        [
+          21.0,
+          19.0
+        ],
+        [
+          23.0,
+          17.0
+        ],
+        [
+          23.0,
+          2.0
+        ],
+        [
+          21.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ]
+      ],
+      "exit_doors": [
+        {
+          "x": 11.5,
+          "y": 0.0,
+          "wall": "horizontal",
+          "variant": "right",
+          "type": "exit_rollup_closed"
+        },
+        {
+          "x": 0.0,
+          "y": 3.5,
+          "wall": "vertical",
+          "variant": "left",
+          "type": "exit_rollup_closed"
+        }
+      ],
+      "entrance_door": {
+        "x": 5.0,
+        "y": 19.0,
+        "wall": "horizontal",
+        "variant": "left",
+        "type": "entrance_rollup_open"
+      },
+      "feature": "Two press machines along opposite walls; open center",
+      "biome": "Factory",
+      "palette": {
+        "shadow": "#292F33",
+        "steel": "#62696C",
+        "brass": "#A7793E",
+        "light": "#A7A6A0",
+        "accent": "#EEAE52",
+        "bg": "#14191D",
+        "grid": "#4B5153",
+        "text": "#DFD8C9",
+        "cyan": "#728F91"
+      },
+      "door_family": "Factory_RollUp_Mirrored_v1",
+      "relative_to_avg_small": 3.34
+    },
+    {
+      "id": "F-M02",
+      "name": "Conveyor Split",
+      "tier": "medium",
+      "footprint_area_tiles": 404.0,
+      "bounding_size_tiles": [
+        24,
+        18
+      ],
+      "outer_wall_polygon_tiles": [
+        [
+          9.0,
+          2.0
+        ],
+        [
+          5.0,
+          2.0
+        ],
+        [
+          5.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ],
+        [
+          0.0,
+          2.0
+        ],
+        [
+          0.0,
+          16.0
+        ],
+        [
+          2.0,
+          18.0
+        ],
+        [
+          22.0,
+          18.0
+        ],
+        [
+          24.0,
+          16.0
+        ],
+        [
+          24.0,
+          11.0
+        ],
+        [
+          22.0,
+          11.0
+        ],
+        [
+          22.0,
+          5.0
+        ],
+        [
+          24.0,
+          5.0
+        ],
+        [
+          24.0,
+          2.0
+        ],
+        [
+          22.0,
+          0.0
+        ],
+        [
+          9.0,
+          0.0
+        ]
+      ],
+      "exit_doors": [
+        {
+          "x": 15.5,
+          "y": 0.0,
+          "wall": "horizontal",
+          "variant": "right",
+          "type": "exit_rollup_closed"
+        },
+        {
+          "x": 3.5,
+          "y": 0.0,
+          "wall": "horizontal",
+          "variant": "left",
+          "type": "exit_rollup_closed"
+        }
+      ],
+      "entrance_door": {
+        "x": 12.0,
+        "y": 18.0,
+        "wall": "horizontal",
+        "variant": "right",
+        "type": "entrance_rollup_open"
+      },
+      "feature": "Branching conveyor belts with two traversal lanes",
+      "biome": "Factory",
+      "palette": {
+        "shadow": "#292F33",
+        "steel": "#62696C",
+        "brass": "#A7793E",
+        "light": "#A7A6A0",
+        "accent": "#EEAE52",
+        "bg": "#14191D",
+        "grid": "#4B5153",
+        "text": "#DFD8C9",
+        "cyan": "#728F91"
+      },
+      "door_family": "Factory_RollUp_Mirrored_v1",
+      "relative_to_avg_small": 3.39
+    },
+    {
+      "id": "F-M03",
+      "name": "Boiler Freight",
+      "tier": "medium",
+      "footprint_area_tiles": 399.0,
+      "bounding_size_tiles": [
+        23,
+        19
+      ],
+      "outer_wall_polygon_tiles": [
+        [
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          4.0
+        ],
+        [
+          3.0,
+          4.0
+        ],
+        [
+          3.0,
+          11.0
+        ],
+        [
+          0.0,
+          11.0
+        ],
+        [
+          0.0,
+          18.0
+        ],
+        [
+          1.0,
+          19.0
+        ],
+        [
+          22.0,
+          19.0
+        ],
+        [
+          23.0,
+          18.0
+        ],
+        [
+          23.0,
+          14.0
+        ],
+        [
+          20.0,
+          14.0
+        ],
+        [
+          20.0,
+          9.0
+        ],
+        [
+          23.0,
+          9.0
+        ],
+        [
+          23.0,
+          1.0
+        ],
+        [
+          22.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0
+        ]
+      ],
+      "exit_doors": [
+        {
+          "x": 11.5,
+          "y": 0.0,
+          "wall": "horizontal",
+          "variant": "right",
+          "type": "exit_rollup_closed"
+        },
+        {
+          "x": 0.0,
+          "y": 2.5,
+          "wall": "vertical",
+          "variant": "left",
+          "type": "exit_rollup_closed"
+        }
+      ],
+      "entrance_door": {
+        "x": 11.5,
+        "y": 19.0,
+        "wall": "horizontal",
+        "variant": "right",
+        "type": "entrance_rollup_open"
+      },
+      "feature": "Pallets and pressure cylinders, broken line of sight",
+      "biome": "Factory",
+      "palette": {
+        "shadow": "#292F33",
+        "steel": "#62696C",
+        "brass": "#A7793E",
+        "light": "#A7A6A0",
+        "accent": "#EEAE52",
+        "bg": "#14191D",
+        "grid": "#4B5153",
+        "text": "#DFD8C9",
+        "cyan": "#728F91"
+      },
+      "door_family": "Factory_RollUp_Mirrored_v1",
+      "relative_to_avg_small": 3.34
+    },
+    {
+      "id": "F-M04",
+      "name": "Coil Transfer",
+      "tier": "medium",
+      "footprint_area_tiles": 420.0,
+      "bounding_size_tiles": [
+        24,
+        19
+      ],
+      "outer_wall_polygon_tiles": [
+        [
+          15.0,
+          3.0
+        ],
+        [
+          9.0,
+          3.0
+        ],
+        [
+          9.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ],
+        [
+          0.0,
+          2.0
+        ],
+        [
+          0.0,
+          17.0
+        ],
+        [
+          2.0,
+          19.0
+        ],
+        [
+          11.0,
+          19.0
+        ],
+        [
+          11.0,
+          17.0
+        ],
+        [
+          16.0,
+          17.0
+        ],
+        [
+          16.0,
+          19.0
+        ],
+        [
+          22.0,
+          19.0
+        ],
+        [
+          24.0,
+          17.0
+        ],
+        [
+          24.0,
+          2.0
+        ],
+        [
+          22.0,
+          0.0
+        ],
+        [
+          15.0,
+          0.0
+        ]
+      ],
+      "exit_doors": [
+        {
+          "x": 18.5,
+          "y": 0.0,
+          "wall": "horizontal",
+          "variant": "right",
+          "type": "exit_rollup_closed"
+        },
+        {
+          "x": 5.5,
+          "y": 0.0,
+          "wall": "horizontal",
+          "variant": "left",
+          "type": "exit_rollup_closed"
+        },
+        {
+          "x": 12.0,
+          "y": 3.0,
+          "wall": "horizontal",
+          "variant": "right",
+          "type": "exit_rollup_closed"
+        }
+      ],
+      "entrance_door": {
+        "x": 19.0,
+        "y": 19.0,
+        "wall": "horizontal",
+        "variant": "right",
+        "type": "entrance_rollup_open"
+      },
+      "feature": "Giant cable reels and narrow side routes",
+      "biome": "Factory",
+      "palette": {
+        "shadow": "#292F33",
+        "steel": "#62696C",
+        "brass": "#A7793E",
+        "light": "#A7A6A0",
+        "accent": "#EEAE52",
+        "bg": "#14191D",
+        "grid": "#4B5153",
+        "text": "#DFD8C9",
+        "cyan": "#728F91"
+      },
+      "door_family": "Factory_RollUp_Mirrored_v1",
+      "relative_to_avg_small": 3.52
+    },
+    {
+      "id": "F-M05",
+      "name": "Gear Calibration",
+      "tier": "medium",
+      "footprint_area_tiles": 412.0,
+      "bounding_size_tiles": [
+        23,
+        20
+      ],
+      "outer_wall_polygon_tiles": [
+        [
+          0.0,
+          7.0
+        ],
+        [
+          3.0,
+          7.0
+        ],
+        [
+          3.0,
+          13.0
+        ],
+        [
+          0.0,
+          13.0
+        ],
+        [
+          0.0,
+          19.0
+        ],
+        [
+          1.0,
+          20.0
+        ],
+        [
+          9.0,
+          20.0
+        ],
+        [
+          9.0,
+          18.0
+        ],
+        [
+          14.0,
+          18.0
+        ],
+        [
+          14.0,
+          20.0
+        ],
+        [
+          22.0,
+          20.0
+        ],
+        [
+          23.0,
+          19.0
+        ],
+        [
+          23.0,
+          9.0
+        ],
+        [
+          20.0,
+          9.0
+        ],
+        [
+          20.0,
+          3.0
+        ],
+        [
+          23.0,
+          3.0
+        ],
+        [
+          23.0,
+          1.0
+        ],
+        [
+          22.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "exit_doors": [
+        {
+          "x": 11.5,
+          "y": 0.0,
+          "wall": "horizontal",
+          "variant": "right",
+          "type": "exit_rollup_closed"
+        },
+        {
+          "x": 23.0,
+          "y": 2.0,
+          "wall": "vertical",
+          "variant": "right",
+          "type": "exit_rollup_closed"
+        }
+      ],
+      "entrance_door": {
+        "x": 18.0,
+        "y": 20.0,
+        "wall": "horizontal",
+        "variant": "right",
+        "type": "entrance_rollup_open"
+      },
+      "feature": "Calibration platform and four machine islands",
+      "biome": "Factory",
+      "palette": {
+        "shadow": "#292F33",
+        "steel": "#62696C",
+        "brass": "#A7793E",
+        "light": "#A7A6A0",
+        "accent": "#EEAE52",
+        "bg": "#14191D",
+        "grid": "#4B5153",
+        "text": "#DFD8C9",
+        "cyan": "#728F91"
+      },
+      "door_family": "Factory_RollUp_Mirrored_v1",
+      "relative_to_avg_small": 3.45
+    },
+    {
+      "id": "F-M06",
+      "name": "Rail Loader",
+      "tier": "medium",
+      "footprint_area_tiles": 426.0,
+      "bounding_size_tiles": [
+        25,
+        19
+      ],
+      "outer_wall_polygon_tiles": [
+        [
+          6.0,
+          2.0
+        ],
+        [
+          6.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ],
+        [
+          0.0,
+          2.0
+        ],
+        [
+          0.0,
+          17.0
+        ],
+        [
+          2.0,
+          19.0
+        ],
+        [
+          3.0,
+          19.0
+        ],
+        [
+          3.0,
+          16.0
+        ],
+        [
+          10.0,
+          16.0
+        ],
+        [
+          10.0,
+          19.0
+        ],
+        [
+          23.0,
+          19.0
+        ],
+        [
+          25.0,
+          17.0
+        ],
+        [
+          25.0,
+          15.0
+        ],
+        [
+          22.0,
+          15.0
+        ],
+        [
+          22.0,
+          11.0
+        ],
+        [
+          25.0,
+          11.0
+        ],
+        [
+          25.0,
+          2.0
+        ],
+        [
+          23.0,
+          0.0
+        ],
+        [
+          10.0,
+          0.0
+        ],
+        [
+          10.0,
+          2.0
+        ]
+      ],
+      "exit_doors": [
+        {
+          "x": 16.5,
+          "y": 0.0,
+          "wall": "horizontal",
+          "variant": "right",
+          "type": "exit_rollup_closed"
+        },
+        {
+          "x": 4.0,
+          "y": 0.0,
+          "wall": "horizontal",
+          "variant": "left",
+          "type": "exit_rollup_closed"
+        },
+        {
+          "x": 10.0,
+          "y": 1.0,
+          "wall": "vertical",
+          "variant": "left",
+          "type": "exit_rollup_closed"
+        }
+      ],
+      "entrance_door": {
+        "x": 16.5,
+        "y": 19.0,
+        "wall": "horizontal",
+        "variant": "right",
+        "type": "entrance_rollup_open"
+      },
+      "feature": "Track guides, loading platform, narrow diagonal cut-through",
+      "biome": "Factory",
+      "palette": {
+        "shadow": "#292F33",
+        "steel": "#62696C",
+        "brass": "#A7793E",
+        "light": "#A7A6A0",
+        "accent": "#EEAE52",
+        "bg": "#14191D",
+        "grid": "#4B5153",
+        "text": "#DFD8C9",
+        "cyan": "#728F91"
+      },
+      "door_family": "Factory_RollUp_Mirrored_v1",
+      "relative_to_avg_small": 3.57
+    },
+    {
+      "id": "F-M07",
+      "name": "Piston Workshop",
+      "tier": "medium",
+      "footprint_area_tiles": 400.0,
+      "bounding_size_tiles": [
+        24,
+        19
+      ],
+      "outer_wall_polygon_tiles": [
+        [
+          0.0,
+          4.0
+        ],
+        [
+          4.0,
+          4.0
+        ],
+        [
+          4.0,
+          11.0
+        ],
+        [
+          0.0,
+          11.0
+        ],
+        [
+          0.0,
+          18.0
+        ],
+        [
+          1.0,
+          19.0
+        ],
+        [
+          10.0,
+          19.0
+        ],
+        [
+          10.0,
+          17.0
+        ],
+        [
+          14.0,
+          17.0
+        ],
+        [
+          14.0,
+          19.0
+        ],
+        [
+          23.0,
+          19.0
+        ],
+        [
+          24.0,
+          18.0
+        ],
+        [
+          24.0,
+          16.0
+        ],
+        [
+          21.0,
+          16.0
+        ],
+        [
+          21.0,
+          10.0
+        ],
+        [
+          24.0,
+          10.0
+        ],
+        [
+          24.0,
+          1.0
+        ],
+        [
+          23.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "exit_doors": [
+        {
+          "x": 12.0,
+          "y": 0.0,
+          "wall": "horizontal",
+          "variant": "right",
+          "type": "exit_rollup_closed"
+        },
+        {
+          "x": 0.0,
+          "y": 2.5,
+          "wall": "vertical",
+          "variant": "left",
+          "type": "exit_rollup_closed"
+        }
+      ],
+      "entrance_door": {
+        "x": 18.5,
+        "y": 19.0,
+        "wall": "horizontal",
+        "variant": "right",
+        "type": "entrance_rollup_open"
+      },
+      "feature": "Tandem piston bays and service tool station",
+      "biome": "Factory",
+      "palette": {
+        "shadow": "#292F33",
+        "steel": "#62696C",
+        "brass": "#A7793E",
+        "light": "#A7A6A0",
+        "accent": "#EEAE52",
+        "bg": "#14191D",
+        "grid": "#4B5153",
+        "text": "#DFD8C9",
+        "cyan": "#728F91"
+      },
+      "door_family": "Factory_RollUp_Mirrored_v1",
+      "relative_to_avg_small": 3.35
+    },
+    {
+      "id": "F-L01",
+      "name": "Grand Assembly Line",
+      "tier": "large",
+      "footprint_area_tiles": 726.0,
+      "bounding_size_tiles": [
+        34,
+        24
+      ],
+      "outer_wall_polygon_tiles": [
+        [
+          0.0,
+          5.0
+        ],
+        [
+          4.0,
+          5.0
+        ],
+        [
+          4.0,
+          14.0
+        ],
+        [
+          0.0,
+          14.0
+        ],
+        [
+          0.0,
+          22.0
+        ],
+        [
+          2.0,
+          24.0
+        ],
+        [
+          11.0,
+          24.0
+        ],
+        [
+          11.0,
+          21.0
+        ],
+        [
+          17.0,
+          21.0
+        ],
+        [
+          17.0,
+          24.0
+        ],
+        [
+          32.0,
+          24.0
+        ],
+        [
+          34.0,
+          22.0
+        ],
+        [
+          34.0,
+          15.0
+        ],
+        [
+          30.0,
+          15.0
+        ],
+        [
+          30.0,
+          8.0
+        ],
+        [
+          34.0,
+          8.0
+        ],
+        [
+          34.0,
+          2.0
+        ],
+        [
+          32.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ],
+        [
+          0.0,
+          2.0
+        ]
+      ],
+      "exit_doors": [
+        {
+          "x": 17.0,
+          "y": 0.0,
+          "wall": "horizontal",
+          "variant": "right",
+          "type": "exit_rollup_closed"
+        },
+        {
+          "x": 0.0,
+          "y": 3.5,
+          "wall": "vertical",
+          "variant": "left",
+          "type": "exit_rollup_closed"
+        },
+        {
+          "x": 34.0,
+          "y": 5.0,
+          "wall": "vertical",
+          "variant": "right",
+          "type": "exit_rollup_closed"
+        }
+      ],
+      "entrance_door": {
+        "x": 6.5,
+        "y": 24.0,
+        "wall": "horizontal",
+        "variant": "left",
+        "type": "entrance_rollup_open"
+      },
+      "feature": "Three conveyor lanes, movable lift machinery, side flanks",
+      "biome": "Factory",
+      "palette": {
+        "shadow": "#292F33",
+        "steel": "#62696C",
+        "brass": "#A7793E",
+        "light": "#A7A6A0",
+        "accent": "#EEAE52",
+        "bg": "#14191D",
+        "grid": "#4B5153",
+        "text": "#DFD8C9",
+        "cyan": "#728F91"
+      },
+      "door_family": "Factory_RollUp_Mirrored_v1",
+      "relative_to_avg_small": 6.08
+    },
+    {
+      "id": "F-L02",
+      "name": "Twin Press Hall",
+      "tier": "large",
+      "footprint_area_tiles": 746.0,
+      "bounding_size_tiles": [
+        35,
+        25
+      ],
+      "outer_wall_polygon_tiles": [
+        [
+          10.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ],
+        [
+          0.0,
+          2.0
+        ],
+        [
+          0.0,
+          5.0
+        ],
+        [
+          4.0,
+          5.0
+        ],
+        [
+          4.0,
+          13.0
+        ],
+        [
+          0.0,
+          13.0
+        ],
+        [
+          0.0,
+          23.0
+        ],
+        [
+          2.0,
+          25.0
+        ],
+        [
+          13.0,
+          25.0
+        ],
+        [
+          13.0,
+          22.0
+        ],
+        [
+          20.0,
+          22.0
+        ],
+        [
+          20.0,
+          25.0
+        ],
+        [
+          33.0,
+          25.0
+        ],
+        [
+          35.0,
+          23.0
+        ],
+        [
+          35.0,
+          19.0
+        ],
+        [
+          31.0,
+          19.0
+        ],
+        [
+          31.0,
+          10.0
+        ],
+        [
+          35.0,
+          10.0
+        ],
+        [
+          35.0,
+          2.0
+        ],
+        [
+          33.0,
+          0.0
+        ],
+        [
+          18.0,
+          0.0
+        ],
+        [
+          18.0,
+          4.0
+        ],
+        [
+          10.0,
+          4.0
+        ]
+      ],
+      "exit_doors": [
+        {
+          "x": 25.5,
+          "y": 0.0,
+          "wall": "horizontal",
+          "variant": "right",
+          "type": "exit_rollup_closed"
+        },
+        {
+          "x": 6.0,
+          "y": 0.0,
+          "wall": "horizontal",
+          "variant": "left",
+          "type": "exit_rollup_closed"
+        },
+        {
+          "x": 18.0,
+          "y": 2.0,
+          "wall": "vertical",
+          "variant": "right",
+          "type": "exit_rollup_closed"
+        }
+      ],
+      "entrance_door": {
+        "x": 7.5,
+        "y": 25.0,
+        "wall": "horizontal",
+        "variant": "left",
+        "type": "entrance_rollup_open"
+      },
+      "feature": "Two massive stamping presses and two combat wings",
+      "biome": "Factory",
+      "palette": {
+        "shadow": "#292F33",
+        "steel": "#62696C",
+        "brass": "#A7793E",
+        "light": "#A7A6A0",
+        "accent": "#EEAE52",
+        "bg": "#14191D",
+        "grid": "#4B5153",
+        "text": "#DFD8C9",
+        "cyan": "#728F91"
+      },
+      "door_family": "Factory_RollUp_Mirrored_v1",
+      "relative_to_avg_small": 6.25
+    },
+    {
+      "id": "F-L03",
+      "name": "Foundry Dispatch",
+      "tier": "large",
+      "footprint_area_tiles": 760.0,
+      "bounding_size_tiles": [
+        34,
+        25
+      ],
+      "outer_wall_polygon_tiles": [
+        [
+          8.0,
+          3.0
+        ],
+        [
+          8.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ],
+        [
+          0.0,
+          2.0
+        ],
+        [
+          0.0,
+          23.0
+        ],
+        [
+          2.0,
+          25.0
+        ],
+        [
+          5.0,
+          25.0
+        ],
+        [
+          5.0,
+          21.0
+        ],
+        [
+          13.0,
+          21.0
+        ],
+        [
+          13.0,
+          25.0
+        ],
+        [
+          32.0,
+          25.0
+        ],
+        [
+          34.0,
+          23.0
+        ],
+        [
+          34.0,
+          16.0
+        ],
+        [
+          30.0,
+          16.0
+        ],
+        [
+          30.0,
+          8.0
+        ],
+        [
+          34.0,
+          8.0
+        ],
+        [
+          34.0,
+          2.0
+        ],
+        [
+          32.0,
+          0.0
+        ],
+        [
+          14.0,
+          0.0
+        ],
+        [
+          14.0,
+          3.0
+        ]
+      ],
+      "exit_doors": [
+        {
+          "x": 23.0,
+          "y": 0.0,
+          "wall": "horizontal",
+          "variant": "right",
+          "type": "exit_rollup_closed"
+        },
+        {
+          "x": 5.0,
+          "y": 0.0,
+          "wall": "horizontal",
+          "variant": "left",
+          "type": "exit_rollup_closed"
+        },
+        {
+          "x": 14.0,
+          "y": 1.5,
+          "wall": "vertical",
+          "variant": "left",
+          "type": "exit_rollup_closed"
+        },
+        {
+          "x": 34.0,
+          "y": 5.0,
+          "wall": "vertical",
+          "variant": "right",
+          "type": "exit_rollup_closed"
+        }
+      ],
+      "entrance_door": {
+        "x": 3.5,
+        "y": 25.0,
+        "wall": "horizontal",
+        "variant": "left",
+        "type": "entrance_rollup_open"
+      },
+      "feature": "Large pallet yards with long travel lanes and central lift",
+      "biome": "Factory",
+      "palette": {
+        "shadow": "#292F33",
+        "steel": "#62696C",
+        "brass": "#A7793E",
+        "light": "#A7A6A0",
+        "accent": "#EEAE52",
+        "bg": "#14191D",
+        "grid": "#4B5153",
+        "text": "#DFD8C9",
+        "cyan": "#728F91"
+      },
+      "door_family": "Factory_RollUp_Mirrored_v1",
+      "relative_to_avg_small": 6.37
+    },
+    {
+      "id": "F-L04",
+      "name": "Overhead Gantry",
+      "tier": "large",
+      "footprint_area_tiles": 735.0,
+      "bounding_size_tiles": [
+        36,
+        24
+      ],
+      "outer_wall_polygon_tiles": [
+        [
+          0.0,
+          5.0
+        ],
+        [
+          5.0,
+          5.0
+        ],
+        [
+          5.0,
+          15.0
+        ],
+        [
+          0.0,
+          15.0
+        ],
+        [
+          0.0,
+          22.0
+        ],
+        [
+          2.0,
+          24.0
+        ],
+        [
+          15.0,
+          24.0
+        ],
+        [
+          15.0,
+          21.0
+        ],
+        [
+          22.0,
+          21.0
+        ],
+        [
+          22.0,
+          24.0
+        ],
+        [
+          34.0,
+          24.0
+        ],
+        [
+          36.0,
+          22.0
+        ],
+        [
+          36.0,
+          17.0
+        ],
+        [
+          31.0,
+          17.0
+        ],
+        [
+          31.0,
+          7.0
+        ],
+        [
+          36.0,
+          7.0
+        ],
+        [
+          36.0,
+          2.0
+        ],
+        [
+          34.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ],
+        [
+          0.0,
+          2.0
+        ]
+      ],
+      "exit_doors": [
+        {
+          "x": 18.0,
+          "y": 0.0,
+          "wall": "horizontal",
+          "variant": "right",
+          "type": "exit_rollup_closed"
+        },
+        {
+          "x": 0.0,
+          "y": 3.5,
+          "wall": "vertical",
+          "variant": "left",
+          "type": "exit_rollup_closed"
+        },
+        {
+          "x": 36.0,
+          "y": 4.5,
+          "wall": "vertical",
+          "variant": "right",
+          "type": "exit_rollup_closed"
+        }
+      ],
+      "entrance_door": {
+        "x": 28.0,
+        "y": 24.0,
+        "wall": "horizontal",
+        "variant": "right",
+        "type": "entrance_rollup_open"
+      },
+      "feature": "Raised service gantry edges, open main floor, forklifts",
+      "biome": "Factory",
+      "palette": {
+        "shadow": "#292F33",
+        "steel": "#62696C",
+        "brass": "#A7793E",
+        "light": "#A7A6A0",
+        "accent": "#EEAE52",
+        "bg": "#14191D",
+        "grid": "#4B5153",
+        "text": "#DFD8C9",
+        "cyan": "#728F91"
+      },
+      "door_family": "Factory_RollUp_Mirrored_v1",
+      "relative_to_avg_small": 6.16
+    },
+    {
+      "id": "F-L05",
+      "name": "Turbine Assembly",
+      "tier": "large",
+      "footprint_area_tiles": 736.0,
+      "bounding_size_tiles": [
+        35,
+        24
+      ],
+      "outer_wall_polygon_tiles": [
+        [
+          13.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ],
+        [
+          0.0,
+          2.0
+        ],
+        [
+          0.0,
+          6.0
+        ],
+        [
+          3.0,
+          6.0
+        ],
+        [
+          3.0,
+          14.0
+        ],
+        [
+          0.0,
+          14.0
+        ],
+        [
+          0.0,
+          22.0
+        ],
+        [
+          2.0,
+          24.0
+        ],
+        [
+          10.0,
+          24.0
+        ],
+        [
+          10.0,
+          21.0
+        ],
+        [
+          18.0,
+          21.0
+        ],
+        [
+          18.0,
+          24.0
+        ],
+        [
+          33.0,
+          24.0
+        ],
+        [
+          35.0,
+          22.0
+        ],
+        [
+          35.0,
+          17.0
+        ],
+        [
+          32.0,
+          17.0
+        ],
+        [
+          32.0,
+          9.0
+        ],
+        [
+          35.0,
+          9.0
+        ],
+        [
+          35.0,
+          2.0
+        ],
+        [
+          33.0,
+          0.0
+        ],
+        [
+          21.0,
+          0.0
+        ],
+        [
+          21.0,
+          3.0
+        ],
+        [
+          13.0,
+          3.0
+        ]
+      ],
+      "exit_doors": [
+        {
+          "x": 27.0,
+          "y": 0.0,
+          "wall": "horizontal",
+          "variant": "right",
+          "type": "exit_rollup_closed"
+        },
+        {
+          "x": 7.5,
+          "y": 0.0,
+          "wall": "horizontal",
+          "variant": "left",
+          "type": "exit_rollup_closed"
+        },
+        {
+          "x": 21.0,
+          "y": 1.5,
+          "wall": "vertical",
+          "variant": "right",
+          "type": "exit_rollup_closed"
+        },
+        {
+          "x": 13.0,
+          "y": 1.5,
+          "wall": "vertical",
+          "variant": "left",
+          "type": "exit_rollup_closed"
+        }
+      ],
+      "entrance_door": {
+        "x": 6.0,
+        "y": 24.0,
+        "wall": "horizontal",
+        "variant": "left",
+        "type": "entrance_rollup_open"
+      },
+      "feature": "Turbine islands, floor pipe trenches and rear dispatch bays",
+      "biome": "Factory",
+      "palette": {
+        "shadow": "#292F33",
+        "steel": "#62696C",
+        "brass": "#A7793E",
+        "light": "#A7A6A0",
+        "accent": "#EEAE52",
+        "bg": "#14191D",
+        "grid": "#4B5153",
+        "text": "#DFD8C9",
+        "cyan": "#728F91"
+      },
+      "door_family": "Factory_RollUp_Mirrored_v1",
+      "relative_to_avg_small": 6.17
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "id": "M06",
+  "name": "Toxic Overflow Basin",
+  "size_class": "medium",
+  "area_tiles_squared": 405.29,
+  "bounds_tiles": {
+    "width": 25,
+    "height": 19
+  },
+  "outline_polygon_tiles": [
+    [
+      0.0,
+      3.23
+    ],
+    [
+      3.0,
+      3.23
+    ],
+    [
+      3.0,
+      8.93
+    ],
+    [
+      0.0,
+      8.93
+    ],
+    [
+      0.0,
+      16.4
+    ],
+    [
+      2.6,
+      19.0
+    ],
+    [
+      3.25,
+      19.0
+    ],
+    [
+      3.25,
+      15.6
+    ],
+    [
+      8.5,
+      15.6
+    ],
+    [
+      8.5,
+      19.0
+    ],
+    [
+      22.4,
+      19.0
+    ],
+    [
+      25.0,
+      16.4
+    ],
+    [
+      25.0,
+      15.96
+    ],
+    [
+      20.7,
+      15.96
+    ],
+    [
+      20.7,
+      11.02
+    ],
+    [
+      25.0,
+      11.02
+    ],
+    [
+      25.0,
+      2.6
+    ],
+    [
+      22.4,
+      0.0
+    ],
+    [
+      2.6,
+      0.0
+    ],
+    [
+      0.0,
+      2.6
+    ]
+  ],
+  "bus_stops": [
+    {
+      "id": "M06_EXIT_1",
+      "type": "exit",
+      "x": 6.25,
+      "y": 0,
+      "edge": "north straight boundary",
+      "orientation": "north",
+      "board_side": "upper",
+      "mirrored_variant": "top-left",
+      "reward_preview": "Shop",
+      "transport": "High-Speed Control Bus"
+    },
+    {
+      "id": "M06_EXIT_2",
+      "type": "exit",
+      "x": 18.75,
+      "y": 0,
+      "edge": "north straight boundary",
+      "orientation": "north",
+      "board_side": "upper",
+      "mirrored_variant": "top-right",
+      "reward_preview": "Information",
+      "transport": "High-Speed Control Bus"
+    },
+    {
+      "id": "M06_ENTRANCE",
+      "type": "entrance",
+      "x": 10.75,
+      "y": 19,
+      "edge": "south straight boundary",
+      "orientation": "south",
+      "mirrored_variant": "bottom-left",
+      "transport": "High-Speed Control Bus"
+    }
+  ],
+  "feature": "basin",
+  "unique_seed": 9,
+  "area_ratio_to_S01": 3.2
+}

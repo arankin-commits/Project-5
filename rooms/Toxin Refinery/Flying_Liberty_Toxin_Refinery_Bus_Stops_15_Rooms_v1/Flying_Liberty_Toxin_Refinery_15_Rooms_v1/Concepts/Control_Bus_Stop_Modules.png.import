@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dkaclqfsu0f28"
-path="res://.godot/imported/Steampunk Automaton Engineering Workshop.png-e3903aa433a876b9ff7662fe590da3bb.ctex"
+uid="uid://pj5721ny3csl"
+path="res://.godot/imported/Control_Bus_Stop_Modules.png-bf06bc5f56eaa99273385da2b0b9464a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://rooms/Steampunk Automaton Engineering Workshop.png"
-dest_files=["res://.godot/imported/Steampunk Automaton Engineering Workshop.png-e3903aa433a876b9ff7662fe590da3bb.ctex"]
+source_file="res://rooms/Toxin Refinery/Flying_Liberty_Toxin_Refinery_Bus_Stops_15_Rooms_v1/Flying_Liberty_Toxin_Refinery_15_Rooms_v1/Concepts/Control_Bus_Stop_Modules.png"
+dest_files=["res://.godot/imported/Control_Bus_Stop_Modules.png-bf06bc5f56eaa99273385da2b0b9464a.ctex"]
 
 [params]
 

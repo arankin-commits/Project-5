@@ -1,0 +1,171 @@
+{
+  "id": "L02",
+  "name": "Refinery Distribution Fork",
+  "size_class": "large",
+  "area_tiles_squared": 807.25,
+  "bounds_tiles": {
+    "width": 36,
+    "height": 27
+  },
+  "outline_polygon_tiles": [
+    [
+      6.0,
+      5.13
+    ],
+    [
+      6.0,
+      13.5
+    ],
+    [
+      0.0,
+      13.5
+    ],
+    [
+      0.0,
+      23.7
+    ],
+    [
+      3.3,
+      27.0
+    ],
+    [
+      5.76,
+      27.0
+    ],
+    [
+      5.76,
+      21.5
+    ],
+    [
+      12.24,
+      21.5
+    ],
+    [
+      12.24,
+      27.0
+    ],
+    [
+      32.7,
+      27.0
+    ],
+    [
+      36.0,
+      23.7
+    ],
+    [
+      36.0,
+      22.95
+    ],
+    [
+      30.5,
+      22.95
+    ],
+    [
+      30.5,
+      14.04
+    ],
+    [
+      36.0,
+      14.04
+    ],
+    [
+      36.0,
+      8.1
+    ],
+    [
+      33.5,
+      8.1
+    ],
+    [
+      33.5,
+      4.86
+    ],
+    [
+      36.0,
+      4.86
+    ],
+    [
+      36.0,
+      3.3
+    ],
+    [
+      32.7,
+      0.0
+    ],
+    [
+      3.3,
+      0.0
+    ],
+    [
+      0.0,
+      3.3
+    ],
+    [
+      0.0,
+      5.13
+    ]
+  ],
+  "bus_stops": [
+    {
+      "id": "L02_EXIT_1",
+      "type": "exit",
+      "x": 6.48,
+      "y": 0,
+      "edge": "north straight boundary",
+      "orientation": "north",
+      "board_side": "upper",
+      "mirrored_variant": "top-left",
+      "reward_preview": "Aether Cores",
+      "transport": "High-Speed Control Bus"
+    },
+    {
+      "id": "L02_EXIT_2",
+      "type": "exit",
+      "x": 13.68,
+      "y": 0,
+      "edge": "north straight boundary",
+      "orientation": "north",
+      "board_side": "upper",
+      "mirrored_variant": "top-left",
+      "reward_preview": "Fire Core",
+      "transport": "High-Speed Control Bus"
+    },
+    {
+      "id": "L02_EXIT_3",
+      "type": "exit",
+      "x": 22.32,
+      "y": 0,
+      "edge": "north straight boundary",
+      "orientation": "north",
+      "board_side": "upper",
+      "mirrored_variant": "top-right",
+      "reward_preview": "Core XP",
+      "transport": "High-Speed Control Bus"
+    },
+    {
+      "id": "L02_EXIT_4",
+      "type": "exit",
+      "x": 29.52,
+      "y": 0,
+      "edge": "north straight boundary",
+      "orientation": "north",
+      "board_side": "upper",
+      "mirrored_variant": "top-right",
+      "reward_preview": "Shop",
+      "transport": "High-Speed Control Bus"
+    },
+    {
+      "id": "L02_ENTRANCE",
+      "type": "entrance",
+      "x": 20.52,
+      "y": 27,
+      "edge": "south straight boundary",
+      "orientation": "south",
+      "mirrored_variant": "bottom-right",
+      "transport": "High-Speed Control Bus"
+    }
+  ],
+  "feature": "fork",
+  "unique_seed": 12,
+  "area_ratio_to_S01": 6.37
+}

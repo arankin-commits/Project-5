@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://drhm2kmnc0srt"
-path="res://.godot/imported/Empty Sync Chamber Steampunk Lab.png-06836215404863b528a9a53d05a86aa5.ctex"
+uid="uid://bigty2ppvbar7"
+path="res://.godot/imported/Toxin_Refinery_15_Room_Concepts.png-19d534f891a9990ac13e67363af4f821.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://rooms/Empty Sync Chamber Steampunk Lab.png"
-dest_files=["res://.godot/imported/Empty Sync Chamber Steampunk Lab.png-06836215404863b528a9a53d05a86aa5.ctex"]
+source_file="res://rooms/Toxin Refinery/Flying_Liberty_Toxin_Refinery_Bus_Stops_15_Rooms_v1/Flying_Liberty_Toxin_Refinery_15_Rooms_v1/Concepts/Toxin_Refinery_15_Room_Concepts.png"
+dest_files=["res://.godot/imported/Toxin_Refinery_15_Room_Concepts.png-19d534f891a9990ac13e67363af4f821.ctex"]
 
 [params]
 

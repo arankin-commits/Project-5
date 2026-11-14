@@ -1,0 +1,123 @@
+{
+  "id": "M01",
+  "name": "Twin Vat Walk",
+  "size_class": "medium",
+  "area_tiles_squared": 411.46,
+  "bounds_tiles": {
+    "width": 25,
+    "height": 19
+  },
+  "outline_polygon_tiles": [
+    [
+      3.5,
+      2.47
+    ],
+    [
+      3.5,
+      8.74
+    ],
+    [
+      0.0,
+      8.74
+    ],
+    [
+      0.0,
+      16.5
+    ],
+    [
+      2.5,
+      19.0
+    ],
+    [
+      18.25,
+      19.0
+    ],
+    [
+      18.25,
+      16.2
+    ],
+    [
+      22.75,
+      16.2
+    ],
+    [
+      22.75,
+      18.75
+    ],
+    [
+      25.0,
+      16.5
+    ],
+    [
+      25.0,
+      15.39
+    ],
+    [
+      22.0,
+      15.39
+    ],
+    [
+      22.0,
+      9.88
+    ],
+    [
+      25.0,
+      9.88
+    ],
+    [
+      25.0,
+      2.5
+    ],
+    [
+      22.5,
+      0.0
+    ],
+    [
+      2.5,
+      0.0
+    ],
+    [
+      0.03,
+      2.47
+    ]
+  ],
+  "bus_stops": [
+    {
+      "id": "M01_EXIT_1",
+      "type": "exit",
+      "x": 6.25,
+      "y": 0,
+      "edge": "north straight boundary",
+      "orientation": "north",
+      "board_side": "upper",
+      "mirrored_variant": "top-left",
+      "reward_preview": "Information",
+      "transport": "High-Speed Control Bus"
+    },
+    {
+      "id": "M01_EXIT_2",
+      "type": "exit",
+      "x": 18.75,
+      "y": 0,
+      "edge": "north straight boundary",
+      "orientation": "north",
+      "board_side": "upper",
+      "mirrored_variant": "top-right",
+      "reward_preview": "Secret Room",
+      "transport": "High-Speed Control Bus"
+    },
+    {
+      "id": "M01_ENTRANCE",
+      "type": "entrance",
+      "x": 14.25,
+      "y": 19,
+      "edge": "south straight boundary",
+      "orientation": "south",
+      "mirrored_variant": "bottom-right",
+      "transport": "High-Speed Control Bus"
+    }
+  ],
+  "feature": "vat",
+  "unique_seed": 4,
+  "area_ratio_to_S01": 3.25
+}

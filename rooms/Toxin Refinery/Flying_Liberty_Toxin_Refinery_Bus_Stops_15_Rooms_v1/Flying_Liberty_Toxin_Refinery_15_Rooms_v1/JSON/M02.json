@@ -1,0 +1,135 @@
+{
+  "id": "M02",
+  "name": "Sluice Switching Yard",
+  "size_class": "medium",
+  "area_tiles_squared": 402.33,
+  "bounds_tiles": {
+    "width": 25,
+    "height": 19
+  },
+  "outline_polygon_tiles": [
+    [
+      0.0,
+      3.61
+    ],
+    [
+      4.0,
+      3.61
+    ],
+    [
+      4.0,
+      10.45
+    ],
+    [
+      0.0,
+      10.45
+    ],
+    [
+      0.0,
+      16.4
+    ],
+    [
+      2.25,
+      18.65
+    ],
+    [
+      2.25,
+      16.3
+    ],
+    [
+      6.75,
+      16.3
+    ],
+    [
+      6.75,
+      19.0
+    ],
+    [
+      22.4,
+      19.0
+    ],
+    [
+      24.49,
+      16.91
+    ],
+    [
+      21.4,
+      16.91
+    ],
+    [
+      21.4,
+      11.4
+    ],
+    [
+      25.0,
+      11.4
+    ],
+    [
+      25.0,
+      2.6
+    ],
+    [
+      22.4,
+      0.0
+    ],
+    [
+      2.6,
+      0.0
+    ],
+    [
+      0.0,
+      2.6
+    ]
+  ],
+  "bus_stops": [
+    {
+      "id": "M02_EXIT_1",
+      "type": "exit",
+      "x": 5.75,
+      "y": 0,
+      "edge": "north straight boundary",
+      "orientation": "north",
+      "board_side": "upper",
+      "mirrored_variant": "top-left",
+      "reward_preview": "Secret Room",
+      "transport": "High-Speed Control Bus"
+    },
+    {
+      "id": "M02_EXIT_2",
+      "type": "exit",
+      "x": 12.5,
+      "y": 0,
+      "edge": "north straight boundary",
+      "orientation": "north",
+      "board_side": "upper",
+      "mirrored_variant": "top-right",
+      "reward_preview": "Aether Cores",
+      "transport": "High-Speed Control Bus"
+    },
+    {
+      "id": "M02_EXIT_3",
+      "type": "exit",
+      "x": 19.25,
+      "y": 0,
+      "edge": "north straight boundary",
+      "orientation": "north",
+      "board_side": "upper",
+      "mirrored_variant": "top-right",
+      "reward_preview": "Fire Core",
+      "transport": "High-Speed Control Bus"
+    },
+    {
+      "id": "M02_ENTRANCE",
+      "type": "entrance",
+      "x": 10.75,
+      "y": 19,
+      "edge": "south straight boundary",
+      "orientation": "south",
+      "mirrored_variant": "bottom-left",
+      "transport": "High-Speed Control Bus"
+    }
+  ],
+  "feature": "sluice",
+  "unique_seed": 5,
+  "area_ratio_to_S01": 3.17
+}

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cy02ihwmomlwg"
-path="res://.godot/imported/Steampunk Victorian Hall Without Labels.png-d62677ab6f43d4efe19aa86b1fc528ef.ctex"
+uid="uid://hckvdaw2uanf"
+path="res://.godot/imported/F-L01_Grand_Assembly_Line.png-99c0d21a3cb70e80c41c78f7d071e53c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://rooms/Steampunk Victorian Hall Without Labels.png"
-dest_files=["res://.godot/imported/Steampunk Victorian Hall Without Labels.png-d62677ab6f43d4efe19aa86b1fc528ef.ctex"]
+source_file="res://rooms/Factory/Flying_Liberty_Factory_Biome_15_Rooms_v1/Flying_Liberty_Factory_Rooms_v1/Footprints/F-L01_Grand_Assembly_Line.png"
+dest_files=["res://.godot/imported/F-L01_Grand_Assembly_Line.png-99c0d21a3cb70e80c41c78f7d071e53c.ctex"]
 
 [params]
 

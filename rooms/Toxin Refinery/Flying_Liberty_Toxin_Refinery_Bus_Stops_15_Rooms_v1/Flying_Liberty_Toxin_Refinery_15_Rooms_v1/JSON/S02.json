@@ -1,0 +1,99 @@
+{
+  "id": "S02",
+  "name": "Corroded Cargo Pier",
+  "size_class": "small",
+  "area_tiles_squared": 118.95,
+  "bounds_tiles": {
+    "width": 14,
+    "height": 10
+  },
+  "outline_polygon_tiles": [
+    [
+      0.0,
+      1.6
+    ],
+    [
+      2.3,
+      1.6
+    ],
+    [
+      2.3,
+      4.2
+    ],
+    [
+      0.0,
+      4.2
+    ],
+    [
+      0.0,
+      8.7
+    ],
+    [
+      1.3,
+      10.0
+    ],
+    [
+      9.8,
+      10.0
+    ],
+    [
+      9.8,
+      8.3
+    ],
+    [
+      12.0,
+      8.3
+    ],
+    [
+      12.0,
+      5.6
+    ],
+    [
+      14.0,
+      5.6
+    ],
+    [
+      14.0,
+      1.3
+    ],
+    [
+      12.7,
+      0.0
+    ],
+    [
+      1.3,
+      0.0
+    ],
+    [
+      0.0,
+      1.3
+    ]
+  ],
+  "bus_stops": [
+    {
+      "id": "S02_EXIT_1",
+      "type": "exit",
+      "x": 7.0,
+      "y": 0,
+      "edge": "north straight boundary",
+      "orientation": "north",
+      "board_side": "upper",
+      "mirrored_variant": "top-right",
+      "reward_preview": "Core XP",
+      "transport": "High-Speed Control Bus"
+    },
+    {
+      "id": "S02_ENTRANCE",
+      "type": "entrance",
+      "x": 7.98,
+      "y": 10,
+      "edge": "south straight boundary",
+      "orientation": "south",
+      "mirrored_variant": "bottom-right",
+      "transport": "High-Speed Control Bus"
+    }
+  ],
+  "feature": "cargo",
+  "unique_seed": 2,
+  "area_ratio_to_S01": 0.94
+}

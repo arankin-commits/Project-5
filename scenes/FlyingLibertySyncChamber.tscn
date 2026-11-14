@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3]
 
-[ext_resource type="Texture2D" path="res://rooms/Empty Sync Chamber Steampunk Lab.png" id="1"]
+[ext_resource type="Texture2D" path="res://rooms/Flying liberty/Empty Sync Chamber Steampunk Lab.png" id="1"]
 [ext_resource type="Script" path="res://scripts/sync_chamber.gd" id="2"]
 [ext_resource type="Script" path="res://scripts/cockpit_player.gd" id="3"]
 [ext_resource type="PackedScene" path="res://scenes/ui/RunSetup.tscn" id="4"]

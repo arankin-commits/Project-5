@@ -1,0 +1,111 @@
+{
+  "id": "S03",
+  "name": "Spill Containment Station",
+  "size_class": "small",
+  "area_tiles_squared": 129.21,
+  "bounds_tiles": {
+    "width": 14,
+    "height": 10.5
+  },
+  "outline_polygon_tiles": [
+    [
+      0.0,
+      1.7
+    ],
+    [
+      0.0,
+      2.415
+    ],
+    [
+      1.7,
+      2.415
+    ],
+    [
+      1.7,
+      5.565
+    ],
+    [
+      0.0,
+      5.565
+    ],
+    [
+      0.0,
+      8.8
+    ],
+    [
+      1.7,
+      10.5
+    ],
+    [
+      12.3,
+      10.5
+    ],
+    [
+      13.455,
+      9.345
+    ],
+    [
+      11.6,
+      9.345
+    ],
+    [
+      11.6,
+      6.51
+    ],
+    [
+      14.0,
+      6.51
+    ],
+    [
+      14.0,
+      1.7
+    ],
+    [
+      12.3,
+      0.0
+    ],
+    [
+      1.7,
+      0.0
+    ]
+  ],
+  "bus_stops": [
+    {
+      "id": "S03_EXIT_1",
+      "type": "exit",
+      "x": 3.5,
+      "y": 0,
+      "edge": "north straight boundary",
+      "orientation": "north",
+      "board_side": "upper",
+      "mirrored_variant": "top-left",
+      "reward_preview": "Shop",
+      "transport": "High-Speed Control Bus"
+    },
+    {
+      "id": "S03_EXIT_2",
+      "type": "exit",
+      "x": 10.5,
+      "y": 0,
+      "edge": "north straight boundary",
+      "orientation": "north",
+      "board_side": "upper",
+      "mirrored_variant": "top-right",
+      "reward_preview": "Information",
+      "transport": "High-Speed Control Bus"
+    },
+    {
+      "id": "S03_ENTRANCE",
+      "type": "entrance",
+      "x": 6.02,
+      "y": 10.5,
+      "edge": "south straight boundary",
+      "orientation": "south",
+      "mirrored_variant": "bottom-left",
+      "transport": "High-Speed Control Bus"
+    }
+  ],
+  "feature": "spill",
+  "unique_seed": 3,
+  "area_ratio_to_S01": 1.02
+}
