@@ -17,6 +17,7 @@ var speed := 265.0
 var damage_multiplier := 1.0
 var backstab_multiplier := 2.0
 var dash_recharge := 0.7
+var dash_duration := 0.18
 var facing := Vector2.DOWN
 var dash_direction := Vector2.DOWN
 var dash_timer := 0.0
@@ -45,7 +46,7 @@ var core_cooldown := 0.0
 var enemy_statuses := {}
 
 func apply_enemy_status(effect: String, duration: float, source: Node, distance := 60.0) -> void:
-	if dash_timer > 0 or not controls_enabled:
+	if (dash_timer > 0 and dash_elapsed <= dash_duration * 0.5) or not controls_enabled:
 		return
 	# Refresh duration instead of stacking repeated applications.
 	var clock := float(enemy_statuses.get(effect,{}).get("clock",0))
@@ -176,9 +177,9 @@ func start_dash(direction: Vector2) -> bool:
 	charge_time = 0
 	dash_direction = direction.normalized() if direction.length_squared() > 0.01 else facing
 	facing = dash_direction
-	dash_timer = 0.18
+	dash_timer = dash_duration
 	dash_cooldown = dash_recharge
-	invulnerability = maxf(invulnerability, 0.24)
+	invulnerability = maxf(invulnerability, dash_duration * 0.5)
 	velocity = dash_direction * 850.0
 	dashed.emit()
 	return true
@@ -219,7 +220,7 @@ func release_charge(direction: Vector2) -> bool:
 	return success
 
 func take_damage(amount: float) -> bool:
-	if controls_enabled and dash_timer > 0 and dash_elapsed <= 0.12 and not perfect_triggered:
+	if controls_enabled and dash_timer > 0 and dash_elapsed <= dash_duration * 0.5 and not perfect_triggered:
 		perfect_triggered = true
 		perfect_reward_timer = 5.0
 		if skills.has("perfect_reprisal"):
