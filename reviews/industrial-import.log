@@ -1,0 +1,1103 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[   0% ] first_scan_filesystem | Started Project initialization (5 steps)
+[   0% ] first_scan_filesystem | Scanning file structure...
+[  16% ] first_scan_filesystem | Loading global class names...
+[  33% ] first_scan_filesystem | Verifying GDExtensions...
+[  50% ] first_scan_filesystem | Creating autoload scripts...
+[  66% ] first_scan_filesystem | Initializing plugins...
+[  83% ] first_scan_filesystem | Starting file scan...
+[ DONE ] first_scan_filesystem
+
+[   0% ] _update_scan_actions | Started Scanning actions... (146 steps)
+[   0% ] _update_scan_actions | industrial_00.svg
+[   0% ] _update_scan_actions | industrial_01.svg
+[   1% ] _update_scan_actions | industrial_02.svg
+[   2% ] _update_scan_actions | industrial_03.svg
+[   2% ] _update_scan_actions | industrial_04.svg
+[   3% ] _update_scan_actions | industrial_05.svg
+[   4% ] _update_scan_actions | industrial_06.svg
+[   4% ] _update_scan_actions | industrial_07.svg
+[   5% ] _update_scan_actions | industrial_08.svg
+[   6% ] _update_scan_actions | industrial_09.svg
+[   6% ] _update_scan_actions | industrial_10.svg
+[   7% ] _update_scan_actions | industrial_11.svg
+[   8% ] _update_scan_actions | industrial_12.svg
+[   8% ] _update_scan_actions | industrial_13.svg
+[   9% ] _update_scan_actions | industrial_14.svg
+[  10% ] _update_scan_actions | industrial_15.svg
+[  10% ] _update_scan_actions | industrial_16.svg
+[  11% ] _update_scan_actions | industrial_17.svg
+[  12% ] _update_scan_actions | industrial_18.svg
+[  12% ] _update_scan_actions | industrial_19.svg
+[  13% ] _update_scan_actions | industrial_20.svg
+[  14% ] _update_scan_actions | industrial_21.svg
+[  14% ] _update_scan_actions | industrial_22.svg
+[  15% ] _update_scan_actions | industrial_23.svg
+[  16% ] _update_scan_actions | industrial_24.svg
+[  17% ] _update_scan_actions | industrial_25.svg
+[  17% ] _update_scan_actions | industrial_26.svg
+[  18% ] _update_scan_actions | industrial_27.svg
+[  19% ] _update_scan_actions | industrial_28.svg
+[  19% ] _update_scan_actions | industrial_29.svg
+[  20% ] _update_scan_actions | industrial_30.svg
+[  21% ] _update_scan_actions | industrial_31.svg
+[  21% ] _update_scan_actions | industrial_32.svg
+[  22% ] _update_scan_actions | Enemy_Stats_33.csv
+[  23% ] _update_scan_actions | 01_Inspection_Wasp.obj
+[  23% ] _update_scan_actions | 02_Dust_Mites.obj
+[  24% ] _update_scan_actions | 03_Pressure_Purger.obj
+[  25% ] _update_scan_actions | 04_Spanner_Guard.obj
+[  25% ] _update_scan_actions | 05_Foreman_Node.obj
+[  26% ] _update_scan_actions | 06_Cable_Snare_Unit.obj
+[  27% ] _update_scan_actions | 07_Phase_Custodian.obj
+[  27% ] _update_scan_actions | 08_Signal_Scrambler.obj
+[  28% ] _update_scan_actions | 09_Conveyor_Hound.obj
+[  29% ] _update_scan_actions | 10_Link_Crawlers.obj
+[  29% ] _update_scan_actions | 11_Gearburst_Canister.obj
+[  30% ] _update_scan_actions | 12_Shearblade.obj
+[  31% ] _update_scan_actions | 13_Presswall_Worker.obj
+[  31% ] _update_scan_actions | 14_Torque_Thief.obj
+[  32% ] _update_scan_actions | 15_Crane_Hooker.obj
+[  33% ] _update_scan_actions | 16_Chain_Binder.obj
+[  34% ] _update_scan_actions | 17_Cinder_Kettle.obj
+[  34% ] _update_scan_actions | 18_Soot_Torpedo.obj
+[  35% ] _update_scan_actions | 19_Condensate_Mortar.obj
+[  36% ] _update_scan_actions | 20_Soot_Midges.obj
+[  36% ] _update_scan_actions | 21_Spark_Wisps.obj
+[  37% ] _update_scan_actions | 22_Grate_Mauler.obj
+[  38% ] _update_scan_actions | 23_Ash_Shunter.obj
+[  38% ] _update_scan_actions | 24_Heat_Mirage.obj
+[  39% ] _update_scan_actions | 25_Forge_Bellows.obj
+[  40% ] _update_scan_actions | 26_Corrosion_Eel.obj
+[  40% ] _update_scan_actions | 27_Rust_Lice.obj
+[  41% ] _update_scan_actions | 28_Etch_Claw.obj
+[  42% ] _update_scan_actions | 29_Leech_Harvester.obj
+[  42% ] _update_scan_actions | 30_Vapor_Walker.obj
+[  43% ] _update_scan_actions | 31_Contamination_Siren.obj
+[  44% ] _update_scan_actions | 32_Corrosion_Shellback.obj
+[  44% ] _update_scan_actions | 33_Vat_Lid_Warden.obj
+[  45% ] _update_scan_actions | 01_Inspection_Wasp_8_Directions.png
+[  46% ] _update_scan_actions | 02_Dust_Mites_8_Directions.png
+[  46% ] _update_scan_actions | 03_Pressure_Purger_8_Directions.png
+[  47% ] _update_scan_actions | 04_Spanner_Guard_8_Directions.png
+[  48% ] _update_scan_actions | 05_Foreman_Node_8_Directions.png
+[  48% ] _update_scan_actions | 06_Cable_Snare_Unit_8_Directions.png
+[  49% ] _update_scan_actions | 07_Phase_Custodian_8_Directions.png
+[  50% ] _update_scan_actions | 08_Signal_Scrambler_8_Directions.png
+[  51% ] _update_scan_actions | 09_Conveyor_Hound_8_Directions.png
+[  51% ] _update_scan_actions | 10_Link_Crawlers_8_Directions.png
+[  52% ] _update_scan_actions | 11_Gearburst_Canister_8_Directions.png
+[  53% ] _update_scan_actions | 12_Shearblade_8_Directions.png
+[  53% ] _update_scan_actions | 13_Presswall_Worker_8_Directions.png
+[  54% ] _update_scan_actions | 14_Torque_Thief_8_Directions.png
+[  55% ] _update_scan_actions | 15_Crane_Hooker_8_Directions.png
+[  55% ] _update_scan_actions | 16_Chain_Binder_8_Directions.png
+[  56% ] _update_scan_actions | 17_Cinder_Kettle_8_Directions.png
+[  57% ] _update_scan_actions | 18_Soot_Torpedo_8_Directions.png
+[  57% ] _update_scan_actions | 19_Condensate_Mortar_8_Directions.png
+[  58% ] _update_scan_actions | 20_Soot_Midges_8_Directions.png
+[  59% ] _update_scan_actions | 21_Spark_Wisps_8_Directions.png
+[  59% ] _update_scan_actions | 22_Grate_Mauler_8_Directions.png
+[  60% ] _update_scan_actions | 23_Ash_Shunter_8_Directions.png
+[  61% ] _update_scan_actions | 24_Heat_Mirage_8_Directions.png
+[  61% ] _update_scan_actions | 25_Forge_Bellows_8_Directions.png
+[  62% ] _update_scan_actions | 26_Corrosion_Eel_8_Directions.png
+[  63% ] _update_scan_actions | 27_Rust_Lice_8_Directions.png
+[  63% ] _update_scan_actions | 28_Etch_Claw_8_Directions.png
+[  64% ] _update_scan_actions | 29_Leech_Harvester_8_Directions.png
+[  65% ] _update_scan_actions | 30_Vapor_Walker_8_Directions.png
+[  65% ] _update_scan_actions | 31_Contamination_Siren_8_Directions.png
+[  66% ] _update_scan_actions | 32_Corrosion_Shellback_8_Directions.png
+[  67% ] _update_scan_actions | 33_Vat_Lid_Warden_8_Directions.png
+[  68% ] _update_scan_actions | 01_Inspection_Wasp_32_Directions.png
+[  68% ] _update_scan_actions | 02_Dust_Mites_32_Directions.png
+[  69% ] _update_scan_actions | 03_Pressure_Purger_32_Directions.png
+[  70% ] _update_scan_actions | 04_Spanner_Guard_32_Directions.png
+[  70% ] _update_scan_actions | 05_Foreman_Node_32_Directions.png
+[  71% ] _update_scan_actions | 06_Cable_Snare_Unit_32_Directions.png
+[  72% ] _update_scan_actions | 07_Phase_Custodian_32_Directions.png
+[  72% ] _update_scan_actions | 08_Signal_Scrambler_32_Directions.png
+[  73% ] _update_scan_actions | 09_Conveyor_Hound_32_Directions.png
+[  74% ] _update_scan_actions | 10_Link_Crawlers_32_Directions.png
+[  74% ] _update_scan_actions | 11_Gearburst_Canister_32_Directions.png
+[  75% ] _update_scan_actions | 12_Shearblade_32_Directions.png
+[  76% ] _update_scan_actions | 13_Presswall_Worker_32_Directions.png
+[  76% ] _update_scan_actions | 14_Torque_Thief_32_Directions.png
+[  77% ] _update_scan_actions | 15_Crane_Hooker_32_Directions.png
+[  78% ] _update_scan_actions | 16_Chain_Binder_32_Directions.png
+[  78% ] _update_scan_actions | 17_Cinder_Kettle_32_Directions.png
+[  79% ] _update_scan_actions | 18_Soot_Torpedo_32_Directions.png
+[  80% ] _update_scan_actions | 19_Condensate_Mortar_32_Directions.png
+[  80% ] _update_scan_actions | 20_Soot_Midges_32_Directions.png
+[  81% ] _update_scan_actions | 21_Spark_Wisps_32_Directions.png
+[  82% ] _update_scan_actions | 22_Grate_Mauler_32_Directions.png
+[  82% ] _update_scan_actions | 23_Ash_Shunter_32_Directions.png
+[  83% ] _update_scan_actions | 24_Heat_Mirage_32_Directions.png
+[  84% ] _update_scan_actions | 25_Forge_Bellows_32_Directions.png
+[  85% ] _update_scan_actions | 26_Corrosion_Eel_32_Directions.png
+[  85% ] _update_scan_actions | 27_Rust_Lice_32_Directions.png
+[  86% ] _update_scan_actions | 28_Etch_Claw_32_Directions.png
+[  87% ] _update_scan_actions | 29_Leech_Harvester_32_Directions.png
+[  87% ] _update_scan_actions | 30_Vapor_Walker_32_Directions.png
+[  88% ] _update_scan_actions | 31_Contamination_Siren_32_Directions.png
+[  89% ] _update_scan_actions | 32_Corrosion_Shellback_32_Directions.png
+[  89% ] _update_scan_actions | 33_Vat_Lid_Warden_32_Directions.png
+[  90% ] _update_scan_actions | Boiler_Room_Enemy_Preview.png
+[  91% ] _update_scan_actions | Factory_Enemy_Preview.png
+[  91% ] _update_scan_actions | Maintenance_Enemy_Preview.png
+[  92% ] _update_scan_actions | Original_Enemy_Stats_33.csv
+[  93% ] _update_scan_actions | Toxin_Refinery_Enemy_Preview.png
+[  93% ] _update_scan_actions | ChatGPT Image Nov 15, 2026, 04_40_37 PM-1.png
+[  94% ] _update_scan_actions | ChatGPT Image Nov 15, 2026, 04_40_38 PM-2.png
+[  95% ] _update_scan_actions | ChatGPT Image Nov 15, 2026, 04_40_39 PM-3.png
+[  95% ] _update_scan_actions | ChatGPT Image Nov 15, 2026, 04_40_39 PM-4.png
+[  96% ] _update_scan_actions | ChatGPT Image Nov 15, 2026, 04_55_28 PM.png
+[  97% ] _update_scan_actions | ChatGPT Image Nov 15, 2026, 04_55_42 PM.png
+[  97% ] _update_scan_actions | Screenshot 2026-11-15 170149.png
+[  98% ] _update_scan_actions | Screenshot 2026-11-15 170349.png
+[ DONE ] _update_scan_actions
+
+[   0% ] reimport | Started (Re)Importing Assets (146 steps)
+[   0% ] reimport | Preparing files to reimport...
+[   0% ] reimport | Preparing files to reimport...
+[   1% ] reimport | Preparing files to reimport...
+[   2% ] reimport | Preparing files to reimport...
+[   2% ] reimport | Preparing files to reimport...
+[   3% ] reimport | Preparing files to reimport...
+[   4% ] reimport | Preparing files to reimport...
+[   4% ] reimport | Preparing files to reimport...
+[   5% ] reimport | Preparing files to reimport...
+[   6% ] reimport | Preparing files to reimport...
+[   6% ] reimport | Preparing files to reimport...
+[   7% ] reimport | Preparing files to reimport...
+[   8% ] reimport | Preparing files to reimport...
+[   8% ] reimport | Preparing files to reimport...
+[   9% ] reimport | Preparing files to reimport...
+[  10% ] reimport | Preparing files to reimport...
+[  10% ] reimport | Preparing files to reimport...
+[  11% ] reimport | Preparing files to reimport...
+[  12% ] reimport | Preparing files to reimport...
+[  12% ] reimport | Preparing files to reimport...
+[  13% ] reimport | Preparing files to reimport...
+[  14% ] reimport | Preparing files to reimport...
+[  14% ] reimport | Preparing files to reimport...
+[  15% ] reimport | Preparing files to reimport...
+[  16% ] reimport | Preparing files to reimport...
+[  17% ] reimport | Preparing files to reimport...
+[  17% ] reimport | Preparing files to reimport...
+[  18% ] reimport | Preparing files to reimport...
+[  19% ] reimport | Preparing files to reimport...
+[  19% ] reimport | Preparing files to reimport...
+[  20% ] reimport | Preparing files to reimport...
+[  21% ] reimport | Preparing files to reimport...
+[  21% ] reimport | Preparing files to reimport...
+[  22% ] reimport | Preparing files to reimport...
+[  23% ] reimport | Preparing files to reimport...
+[  23% ] reimport | Preparing files to reimport...
+[  24% ] reimport | Preparing files to reimport...
+[  25% ] reimport | Preparing files to reimport...
+[  25% ] reimport | Preparing files to reimport...
+[  26% ] reimport | Preparing files to reimport...
+[  27% ] reimport | Preparing files to reimport...
+[  27% ] reimport | Preparing files to reimport...
+[  28% ] reimport | Preparing files to reimport...
+[  29% ] reimport | Preparing files to reimport...
+[  29% ] reimport | Preparing files to reimport...
+[  30% ] reimport | Preparing files to reimport...
+[  31% ] reimport | Preparing files to reimport...
+[  31% ] reimport | Preparing files to reimport...
+[  32% ] reimport | Preparing files to reimport...
+[  33% ] reimport | Preparing files to reimport...
+[  34% ] reimport | Preparing files to reimport...
+[  34% ] reimport | Preparing files to reimport...
+[  35% ] reimport | Preparing files to reimport...
+[  36% ] reimport | Preparing files to reimport...
+[  36% ] reimport | Preparing files to reimport...
+[  37% ] reimport | Preparing files to reimport...
+[  38% ] reimport | Preparing files to reimport...
+[  38% ] reimport | Preparing files to reimport...
+[  39% ] reimport | Preparing files to reimport...
+[  40% ] reimport | Preparing files to reimport...
+[  40% ] reimport | Preparing files to reimport...
+[  41% ] reimport | Preparing files to reimport...
+[  42% ] reimport | Preparing files to reimport...
+[  42% ] reimport | Preparing files to reimport...
+[  43% ] reimport | Preparing files to reimport...
+[  44% ] reimport | Preparing files to reimport...
+[  44% ] reimport | Preparing files to reimport...
+[  45% ] reimport | Preparing files to reimport...
+[  46% ] reimport | Preparing files to reimport...
+[  46% ] reimport | Preparing files to reimport...
+[  47% ] reimport | Preparing files to reimport...
+[  48% ] reimport | Preparing files to reimport...
+[  48% ] reimport | Preparing files to reimport...
+[  49% ] reimport | Preparing files to reimport...
+[  50% ] reimport | Preparing files to reimport...
+[  51% ] reimport | Preparing files to reimport...
+[  51% ] reimport | Preparing files to reimport...
+[  52% ] reimport | Preparing files to reimport...
+[  53% ] reimport | Preparing files to reimport...
+[  53% ] reimport | Preparing files to reimport...
+[  54% ] reimport | Preparing files to reimport...
+[  55% ] reimport | Preparing files to reimport...
+[  55% ] reimport | Preparing files to reimport...
+[  56% ] reimport | Preparing files to reimport...
+[  57% ] reimport | Preparing files to reimport...
+[  57% ] reimport | Preparing files to reimport...
+[  58% ] reimport | Preparing files to reimport...
+[  59% ] reimport | Preparing files to reimport...
+[  59% ] reimport | Preparing files to reimport...
+[  60% ] reimport | Preparing files to reimport...
+[  61% ] reimport | Preparing files to reimport...
+[  61% ] reimport | Preparing files to reimport...
+[  62% ] reimport | Preparing files to reimport...
+[  63% ] reimport | Preparing files to reimport...
+[  63% ] reimport | Preparing files to reimport...
+[  64% ] reimport | Preparing files to reimport...
+[  65% ] reimport | Preparing files to reimport...
+[  65% ] reimport | Preparing files to reimport...
+[  66% ] reimport | Preparing files to reimport...
+[  67% ] reimport | Preparing files to reimport...
+[  68% ] reimport | Preparing files to reimport...
+[  68% ] reimport | Preparing files to reimport...
+[  69% ] reimport | Preparing files to reimport...
+[  70% ] reimport | Preparing files to reimport...
+[  70% ] reimport | Preparing files to reimport...
+[  71% ] reimport | Preparing files to reimport...
+[  72% ] reimport | Preparing files to reimport...
+[  72% ] reimport | Preparing files to reimport...
+[  73% ] reimport | Preparing files to reimport...
+[  74% ] reimport | Preparing files to reimport...
+[  74% ] reimport | Preparing files to reimport...
+[  75% ] reimport | Preparing files to reimport...
+[  76% ] reimport | Preparing files to reimport...
+[  76% ] reimport | Preparing files to reimport...
+[  77% ] reimport | Preparing files to reimport...
+[  78% ] reimport | Preparing files to reimport...
+[  78% ] reimport | Preparing files to reimport...
+[  79% ] reimport | Preparing files to reimport...
+[  80% ] reimport | Preparing files to reimport...
+[  80% ] reimport | Preparing files to reimport...
+[  81% ] reimport | Preparing files to reimport...
+[  82% ] reimport | Preparing files to reimport...
+[  82% ] reimport | Preparing files to reimport...
+[  83% ] reimport | Preparing files to reimport...
+[  84% ] reimport | Preparing files to reimport...
+[  85% ] reimport | Preparing files to reimport...
+[  85% ] reimport | Preparing files to reimport...
+[  86% ] reimport | Preparing files to reimport...
+[  87% ] reimport | Preparing files to reimport...
+[  87% ] reimport | Preparing files to reimport...
+[  88% ] reimport | Preparing files to reimport...
+[  89% ] reimport | Preparing files to reimport...
+[  89% ] reimport | Preparing files to reimport...
+[  90% ] reimport | Preparing files to reimport...
+[  91% ] reimport | Preparing files to reimport...
+[  91% ] reimport | Preparing files to reimport...
+[  92% ] reimport | Preparing files to reimport...
+[  93% ] reimport | Preparing files to reimport...
+[  93% ] reimport | Preparing files to reimport...
+[  94% ] reimport | Preparing files to reimport...
+[  95% ] reimport | Preparing files to reimport...
+[  95% ] reimport | Preparing files to reimport...
+[  96% ] reimport | Preparing files to reimport...
+[  97% ] reimport | Preparing files to reimport...
+[  97% ] reimport | Preparing files to reimport...
+[  98% ] reimport | Preparing files to reimport...
+[   0% ] reimport | Executing pre-reimport operations...
+[   0% ] reimport | Enemy_Stats_33.csv
+ERROR: Cannot create file 'res://characters/enemies/Enemy_Designs_33_All_Files/Enemy_Stats_33.Speed (units/s).translation'.
+   at: save (core/io/resource_format_binary.cpp:2117)
+ERROR: Cannot open file 'res://characters/enemies/Enemy_Designs_33_All_Files/Enemy_Stats_33.Speed (units/s).translation'.
+   at: set_uid (core/io/resource_format_binary.cpp:2349)
+ERROR: Cannot create file 'res://characters/enemies/Industrial_33_Enemies_Full_Animation_Pack/Original_Enemy_Stats_33.Speed (units/s).translation'.
+   at: save (core/io/resource_format_binary.cpp:2117)
+ERROR: Cannot open file 'res://characters/enemies/Industrial_33_Enemies_Full_Animation_Pack/Original_Enemy_Stats_33.Speed (units/s).translation'.
+   at: set_uid (core/io/resource_format_binary.cpp:2349)
+ERROR: Condition "f.is_null()" is true. Continuing.
+   at: get_multiple_md5 (core/io/file_access.cpp:967)
+[   0% ] reimport | Original_Enemy_Stats_33.csv
+ERROR: Condition "f.is_null()" is true. Continuing.
+   at: get_multiple_md5 (core/io/file_access.cpp:967)
+[   1% ] reimport | Enemy_Stats_33.csv
+[   2% ] reimport | Original_Enemy_Stats_33.csv
+[   2% ] reimport | 26_Corrosion_Eel_8_Directions.png
+[   3% ] reimport | 27_Rust_Lice_8_Directions.png
+[   4% ] reimport | 28_Etch_Claw_8_Directions.png
+[   4% ] reimport | 29_Leech_Harvester_8_Directions.png
+[   5% ] reimport | 30_Vapor_Walker_8_Directions.png
+[   6% ] reimport | 31_Contamination_Siren_8_Directions.png
+[   6% ] reimport | 32_Corrosion_Shellback_8_Directions.png
+[   7% ] reimport | 33_Vat_Lid_Warden_8_Directions.png
+[   8% ] reimport | 01_Inspection_Wasp_32_Directions.png
+[   8% ] reimport | 02_Dust_Mites_32_Directions.png
+[   9% ] reimport | 03_Pressure_Purger_32_Directions.png
+[  10% ] reimport | 04_Spanner_Guard_32_Directions.png
+[  10% ] reimport | 05_Foreman_Node_32_Directions.png
+[  11% ] reimport | 06_Cable_Snare_Unit_32_Directions.png
+[  12% ] reimport | 07_Phase_Custodian_32_Directions.png
+[  12% ] reimport | 08_Signal_Scrambler_32_Directions.png
+[  13% ] reimport | 09_Conveyor_Hound_32_Directions.png
+[  14% ] reimport | 08_Signal_Scrambler_8_Directions.png
+[  14% ] reimport | 09_Conveyor_Hound_8_Directions.png
+[  15% ] reimport | 10_Link_Crawlers_8_Directions.png
+[  16% ] reimport | 11_Gearburst_Canister_8_Directions.png
+[  17% ] reimport | 12_Shearblade_8_Directions.png
+[  17% ] reimport | 13_Presswall_Worker_8_Directions.png
+[  18% ] reimport | 14_Torque_Thief_8_Directions.png
+[  19% ] reimport | 15_Crane_Hooker_8_Directions.png
+[  19% ] reimport | 16_Chain_Binder_8_Directions.png
+[  20% ] reimport | 17_Cinder_Kettle_8_Directions.png
+[  21% ] reimport | 18_Soot_Torpedo_8_Directions.png
+[  21% ] reimport | 19_Condensate_Mortar_8_Directions.png
+[  22% ] reimport | 20_Soot_Midges_8_Directions.png
+[  23% ] reimport | 21_Spark_Wisps_8_Directions.png
+[  23% ] reimport | 22_Grate_Mauler_8_Directions.png
+[  24% ] reimport | 23_Ash_Shunter_8_Directions.png
+[  25% ] reimport | 24_Heat_Mirage_8_Directions.png
+[  25% ] reimport | 25_Forge_Bellows_8_Directions.png
+[  26% ] reimport | 28_Etch_Claw_32_Directions.png
+[  27% ] reimport | 29_Leech_Harvester_32_Directions.png
+[  27% ] reimport | 30_Vapor_Walker_32_Directions.png
+[  28% ] reimport | 31_Contamination_Siren_32_Directions.png
+[  29% ] reimport | 32_Corrosion_Shellback_32_Directions.png
+[  29% ] reimport | 33_Vat_Lid_Warden_32_Directions.png
+[  30% ] reimport | Boiler_Room_Enemy_Preview.png
+[  31% ] reimport | Factory_Enemy_Preview.png
+[  31% ] reimport | Maintenance_Enemy_Preview.png
+[  32% ] reimport | Toxin_Refinery_Enemy_Preview.png
+[  33% ] reimport | ChatGPT Image Nov 15, 2026, 04_40_37 PM-1.png
+[  34% ] reimport | ChatGPT Image Nov 15, 2026, 04_40_38 PM-2.png
+[  34% ] reimport | ChatGPT Image Nov 15, 2026, 04_40_39 PM-3.png
+[  35% ] reimport | ChatGPT Image Nov 15, 2026, 04_40_39 PM-4.png
+[  36% ] reimport | ChatGPT Image Nov 15, 2026, 04_55_28 PM.png
+[  36% ] reimport | ChatGPT Image Nov 15, 2026, 04_55_42 PM.png
+[  37% ] reimport | Screenshot 2026-11-15 170149.png
+[  38% ] reimport | Screenshot 2026-11-15 170349.png
+[  38% ] reimport | 10_Link_Crawlers_32_Directions.png
+[  39% ] reimport | 11_Gearburst_Canister_32_Directions.png
+[  40% ] reimport | 12_Shearblade_32_Directions.png
+[  40% ] reimport | 13_Presswall_Worker_32_Directions.png
+[  41% ] reimport | 14_Torque_Thief_32_Directions.png
+[  42% ] reimport | 15_Crane_Hooker_32_Directions.png
+[  42% ] reimport | 16_Chain_Binder_32_Directions.png
+[  43% ] reimport | 17_Cinder_Kettle_32_Directions.png
+[  44% ] reimport | 18_Soot_Torpedo_32_Directions.png
+[  44% ] reimport | 19_Condensate_Mortar_32_Directions.png
+[  45% ] reimport | 20_Soot_Midges_32_Directions.png
+[  46% ] reimport | 21_Spark_Wisps_32_Directions.png
+[  46% ] reimport | 22_Grate_Mauler_32_Directions.png
+[  47% ] reimport | 23_Ash_Shunter_32_Directions.png
+[  48% ] reimport | 24_Heat_Mirage_32_Directions.png
+[  48% ] reimport | 25_Forge_Bellows_32_Directions.png
+[  49% ] reimport | 26_Corrosion_Eel_32_Directions.png
+[  49% ] reimport | 26_Corrosion_Eel_32_Directions.png
+[  49% ] reimport | 26_Corrosion_Eel_32_Directions.png
+[  49% ] reimport | 26_Corrosion_Eel_32_Directions.png
+[  49% ] reimport | 26_Corrosion_Eel_32_Directions.png
+[  50% ] reimport | 27_Rust_Lice_32_Directions.png
+[  51% ] reimport | industrial_32.svg
+[  51% ] reimport | industrial_31.svg
+[  52% ] reimport | industrial_30.svg
+[  53% ] reimport | industrial_29.svg
+[  53% ] reimport | industrial_28.svg
+[  54% ] reimport | industrial_27.svg
+[  55% ] reimport | industrial_26.svg
+[  55% ] reimport | industrial_25.svg
+[  56% ] reimport | industrial_24.svg
+[  57% ] reimport | industrial_23.svg
+[  57% ] reimport | industrial_22.svg
+[  57% ] reimport | industrial_22.svg
+[  57% ] reimport | industrial_22.svg
+[  57% ] reimport | industrial_22.svg
+[  57% ] reimport | industrial_22.svg
+[  57% ] reimport | industrial_22.svg
+[  57% ] reimport | industrial_22.svg
+[  57% ] reimport | industrial_22.svg
+[  58% ] reimport | industrial_21.svg
+[  58% ] reimport | industrial_21.svg
+[  59% ] reimport | industrial_20.svg
+[  59% ] reimport | industrial_19.svg
+[  60% ] reimport | industrial_18.svg
+[  61% ] reimport | industrial_17.svg
+[  61% ] reimport | industrial_00.svg
+[  62% ] reimport | industrial_01.svg
+[  62% ] reimport | industrial_01.svg
+[  62% ] reimport | industrial_01.svg
+[  62% ] reimport | industrial_01.svg
+[  62% ] reimport | industrial_01.svg
+[  62% ] reimport | industrial_01.svg
+[  63% ] reimport | industrial_02.svg
+[  63% ] reimport | industrial_03.svg
+[  64% ] reimport | industrial_04.svg
+[  65% ] reimport | industrial_05.svg
+[  65% ] reimport | industrial_06.svg
+[  66% ] reimport | industrial_07.svg
+[  67% ] reimport | industrial_08.svg
+[  68% ] reimport | industrial_09.svg
+[  68% ] reimport | industrial_10.svg
+[  69% ] reimport | industrial_11.svg
+[  70% ] reimport | industrial_12.svg
+[  70% ] reimport | industrial_13.svg
+[  70% ] reimport | industrial_13.svg
+[  70% ] reimport | industrial_13.svg
+[  70% ] reimport | industrial_13.svg
+[  71% ] reimport | industrial_14.svg
+[  72% ] reimport | industrial_15.svg
+[  72% ] reimport | industrial_16.svg
+[  73% ] reimport | 07_Phase_Custodian_8_Directions.png
+[  74% ] reimport | 06_Cable_Snare_Unit_8_Directions.png
+[  74% ] reimport | 06_Cable_Snare_Unit_8_Directions.png
+[  74% ] reimport | 05_Foreman_Node_8_Directions.png
+[  75% ] reimport | 04_Spanner_Guard_8_Directions.png
+[  76% ] reimport | 03_Pressure_Purger_8_Directions.png
+[  76% ] reimport | 21_Spark_Wisps.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  77% ] reimport | 22_Grate_Mauler.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  78% ] reimport | 23_Ash_Shunter.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  78% ] reimport | 24_Heat_Mirage.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  79% ] reimport | 25_Forge_Bellows.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  80% ] reimport | 26_Corrosion_Eel.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  80% ] reimport | 27_Rust_Lice.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  81% ] reimport | 28_Etch_Claw.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  82% ] reimport | 29_Leech_Harvester.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  82% ] reimport | 30_Vapor_Walker.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  83% ] reimport | 31_Contamination_Siren.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  84% ] reimport | 32_Corrosion_Shellback.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  85% ] reimport | 33_Vat_Lid_Warden.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  85% ] reimport | 07_Phase_Custodian.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  86% ] reimport | 06_Cable_Snare_Unit.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  87% ] reimport | 05_Foreman_Node.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  87% ] reimport | 04_Spanner_Guard.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  88% ] reimport | 03_Pressure_Purger.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  89% ] reimport | 02_Dust_Mites.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  89% ] reimport | 01_Inspection_Wasp.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  90% ] reimport | 08_Signal_Scrambler.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  91% ] reimport | 09_Conveyor_Hound.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  91% ] reimport | 10_Link_Crawlers.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  92% ] reimport | 11_Gearburst_Canister.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  93% ] reimport | 12_Shearblade.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  93% ] reimport | 13_Presswall_Worker.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  94% ] reimport | 14_Torque_Thief.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  95% ] reimport | 15_Crane_Hooker.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  95% ] reimport | 16_Chain_Binder.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  96% ] reimport | 17_Cinder_Kettle.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  97% ] reimport | 18_Soot_Torpedo.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  97% ] reimport | 19_Condensate_Mortar.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  98% ] reimport | 20_Soot_Midges.obj
+WARNING: OBJ: Ambient light for material 'shell' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'metal' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'top' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'dark' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'edge' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'black' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'warn' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'glass' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+WARNING: OBJ: Ambient light for material 'cable' is ignored in PBR
+   at: _parse_material_library (editor/import/3d/resource_importer_obj.cpp:60)
+[  99% ] reimport | Finalizing Asset Import...
+[ DONE ] reimport
+
+[   0% ] reimport | Started (Re)Importing Assets (146 steps)
+[   0% ] reimport | Executing post-reimport operations...
+[ DONE ] reimport
+
+[   0% ] loading_editor_layout | Started Loading editor (5 steps)
+[   0% ] loading_editor_layout | Loading editor layout...
+[  16% ] loading_editor_layout | Loading docks...
+[  33% ] loading_editor_layout | Reopening scenes...
+[  50% ] loading_editor_layout | Loading central editor layout...
+[  66% ] loading_editor_layout | Loading plugin window layout...
+[  83% ] loading_editor_layout | Editor layout ready.
+[ DONE ] loading_editor_layout
+
+ERROR: Cannot save file 'C:/Users/Aiden/AppData/Roaming/Godot/editor_settings-4.7.tres'.
+   at: save (scene/resources/resource_format_text.cpp:1768)
+ERROR: Error saving editor settings to C:/Users/Aiden/AppData/Roaming/Godot/editor_settings-4.7.tres
+   at: save (editor/settings/editor_settings.cpp:1525)

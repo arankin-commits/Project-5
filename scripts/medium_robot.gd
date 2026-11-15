@@ -42,13 +42,50 @@ var perfect_triggered := false
 var dash_charges := 1
 var grapple_cooldown := 0.0
 var core_cooldown := 0.0
+var enemy_statuses := {}
+
+func apply_enemy_status(effect: String, duration: float, source: Node, distance := 60.0) -> void:
+	if dash_timer > 0 or not controls_enabled:
+		return
+	# Refresh duration instead of stacking repeated applications.
+	var clock := float(enemy_statuses.get(effect,{}).get("clock",0))
+	enemy_statuses[effect] = {"remaining":duration,"source":weakref(source),"distance":distance,"duration":duration,"clock":clock}
+	queue_redraw()
+
+func clear_enemy_statuses() -> void:
+	enemy_statuses.clear()
+	queue_redraw()
+
+func _tick_enemy_statuses(delta: float) -> void:
+	for effect in enemy_statuses.keys():
+		var status: Dictionary = enemy_statuses[effect]
+		var source = status.source.get_ref()
+		var active_delta := minf(delta,float(status.remaining))
+		status.remaining -= delta
+		var attached: bool = effect in ["reel","siphon","cling"]
+		if attached and (not is_instance_valid(source) or source.health <= 0 or dash_timer > 0 or source.hit_flash > 0 or global_position.distance_to(source.global_position) > 180):
+			enemy_statuses.erase(effect)
+			continue
+		if effect == "reel":
+			if global_position.distance_to(source.global_position) > 35:
+				var destination: Vector2 = status.get("destination",source.global_position)
+				move_and_collide(global_position.direction_to(destination)*minf(global_position.distance_to(destination),float(status.distance)/float(status.duration)*active_delta))
+		elif effect in ["poison","cling","siphon"]:
+			status.clock += active_delta
+			if status.clock >= 1.0:
+				status.clock -= 1.0
+				var amount := 3.0 if effect == "siphon" else 2.0
+				if take_damage(amount) and effect == "siphon":
+					source.health = minf(source.max_health,source.health+amount)
+		if status.remaining <= 0:
+			enemy_statuses.erase(effect)
 
 func configure_skills(unlocked: Array) -> void:
 	skills.assign(unlocked)
 	dash_charges = 2 if skills.has("double_dodge") else 1
 
 func gain_hit_energy() -> void:
-	energy = minf(100.0, energy + (10.0 if skills.has("energy_hit") else 5.0))
+	energy = minf(100.0, energy + (10.0 if skills.has("energy_hit") else 5.0)*(0.6 if enemy_statuses.has("interference") else 1.0))
 
 func _ready() -> void:
 	collision_layer = 2
@@ -68,6 +105,8 @@ func _ready() -> void:
 	_update_visual(0.0)
 
 func _physics_process(delta: float) -> void:
+	if controls_enabled:
+		_tick_enemy_statuses(delta)
 	dash_cooldown = maxf(0, dash_cooldown - delta)
 	if dash_cooldown <= 0:
 		dash_charges = 2 if skills.has("double_dodge") else 1
@@ -166,7 +205,7 @@ func perform_attack(direction: Vector2, heavy := false) -> bool:
 	return true
 
 func combat_damage_multiplier() -> float:
-	return damage_multiplier * (1.25 if perfect_damage_timer > 0 else 1.0)
+	return damage_multiplier * (1.25 if perfect_damage_timer > 0 else 1.0) * (0.75 if enemy_statuses.has("weaken") else 1.0)
 
 func _aim_direction() -> Vector2:
 	return global_position.direction_to(get_global_mouse_position()) if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) else facing
@@ -218,6 +257,10 @@ func _update_visual(delta: float) -> void:
 	visual.modulate = Color(1.2, 1.5, 1.5, 0.8) if invulnerability > 0.25 else Color.WHITE
 
 func _draw() -> void:
+	if enemy_statuses.has("haze"):
+		draw_circle(Vector2(0,-30),65,Color(.5,.45,.4,.22))
+	if not enemy_statuses.is_empty():
+		draw_arc(Vector2(0,-55),28,0,TAU,32,Color("c8a0ff"),3,true)
 	if charging:
 		draw_arc(Vector2(0,-45), 34, -PI / 2, -PI / 2 + TAU * minf(charge_time / 0.6, 1.0), 32, Color("ffce83"), 4, true)
 	draw_set_transform(Vector2(0,-2), 0, Vector2(1,0.45))

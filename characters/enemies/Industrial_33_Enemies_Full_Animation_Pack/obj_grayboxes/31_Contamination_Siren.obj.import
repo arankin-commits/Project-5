@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://kkrvrbbtfjty"
+path="res://.godot/imported/31_Contamination_Siren.obj-6286b37851f78d8f0d8c5fa03765acd7.mesh"
+
+[deps]
+
+files=["res://.godot/imported/31_Contamination_Siren.obj-6286b37851f78d8f0d8c5fa03765acd7.mesh"]
+
+source_file="res://characters/enemies/Industrial_33_Enemies_Full_Animation_Pack/obj_grayboxes/31_Contamination_Siren.obj"
+dest_files=["res://.godot/imported/31_Contamination_Siren.obj-6286b37851f78d8f0d8c5fa03765acd7.mesh", "res://.godot/imported/31_Contamination_Siren.obj-6286b37851f78d8f0d8c5fa03765acd7.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

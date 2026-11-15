@@ -30,6 +30,7 @@ var path_timer := 0.0
 var path := PackedVector2Array()
 var stride := 0.0
 var visual: Sprite2D
+var custom_attack_warning := false
 
 func _ready() -> void:
 	collision_layer = 4
@@ -98,7 +99,7 @@ func _physics_process(delta: float) -> void:
 			cooldown = 1.0
 	else:
 		var distance := position.distance_to(target.position)
-		if cooldown <= 0 and (distance < 87 or kind in ["sentry","boss"]):
+		if cooldown <= 0 and distance < attack_reach():
 			_begin_attack()
 		elif kind != "sentry":
 			path_timer -= delta
@@ -138,6 +139,9 @@ func _begin_attack() -> void:
 		windup = 0.9
 	if kind not in ["sentry","boss"]:
 		attack_point = global_position + attack_direction*30
+
+func attack_reach() -> float:
+	return INF if kind in ["sentry","boss"] else 87.0
 
 func _release_attack() -> void:
 	state = "chase"
@@ -202,7 +206,7 @@ func _draw() -> void:
 	draw_circle(Vector2.ZERO,30 if kind != "boss" else 70,Color(0,0,0,0.45))
 	draw_arc(Vector2.ZERO,23 if kind != "boss" else 65,0,TAU,32,Color(1,0.3,0.1,0.65),2,true)
 	draw_set_transform(Vector2.ZERO)
-	if state == "windup":
+	if state == "windup" and not custom_attack_warning:
 		var p := attack_point-global_position
 		if attack_kind == "slam":
 			draw_set_transform(p,0,Vector2(1,0.65))

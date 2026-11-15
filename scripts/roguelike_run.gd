@@ -1,6 +1,7 @@
 extends Node2D
 
 const ENEMY := preload("res://scripts/run_enemy.gd")
+const INDUSTRIAL_ENEMY := preload("res://scripts/industrial_enemy.gd")
 const ROOM := preload("res://scripts/boiler_room.gd")
 const MAINTENANCE_ROOM := preload("res://scripts/maintenance_room.gd")
 const BLOCKOUT_ROOM := preload("res://scripts/blockout_room.gd")
@@ -46,6 +47,7 @@ var visited_rooms: Array[int] = []
 var perfect_slow_active := false
 var perfect_slow_generation := 0
 var previous_time_scale := 1.0
+var enemy_designs: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/enemies/industrial.json"))
 
 func _ready() -> void:
 	get_node("/root/BackgroundMusic").play_boiler()
@@ -138,6 +140,7 @@ func _exit_tree() -> void:
 
 func _load_room(index: int) -> void:
 	_end_perfect_slow()
+	player.clear_enemy_statuses()
 	if not visited_rooms.has(index):
 		if not visited_rooms.is_empty():
 			health = minf(maximum_health, health + nanobot_healing)
@@ -185,11 +188,20 @@ func _load_room(index: int) -> void:
 func _spawn_wave() -> void:
 	var kinds: Array = rooms[room_index]["waves"][wave_index].duplicate()
 	if wave_index == 0 and config.get("modifiers")["reinforcements"]:
-		kinds.append_array(["crawler","crawler"])
+		var reinforcement: String = kinds[0] if enemy_designs.has(kinds[0]) else "crawler"
+		if kinds[0] == "boss" and rooms[room_index].get("blockout",false):
+			for key in enemy_designs:
+				if enemy_designs[key].biome_key == config.biome:
+					reinforcement = key
+					break
+		kinds.append_array([reinforcement,reinforcement])
 	var points: Array[Vector2] = room.call("safe_spawns",kinds.size(),rng)
 	living_enemies = kinds.size()
 	for i in kinds.size():
-		var enemy := ENEMY.new()
+		var enemy = INDUSTRIAL_ENEMY.new() if enemy_designs.has(kinds[i]) else ENEMY.new()
+		if enemy_designs.has(kinds[i]):
+			enemy.design = enemy_designs[kinds[i]]
+			enemy.summon_requested.connect(_spawn_summons)
 		enemy.kind = kinds[i]
 		enemy.position = points[i]
 		if kinds[i] == "boss":
@@ -208,6 +220,42 @@ func _spawn_wave() -> void:
 		if room is BLOCKOUT_ROOM:
 			enemy.collision_mask = 9
 		_effect(enemy.position,"ring",60,Color("ef9353"))
+
+func _spawn_summons(summoner: CharacterBody2D, key: String, count: int) -> void:
+	if state != "combat" or summoner.health <= 0 or not enemy_designs.has(key):
+		return
+	if enemy_designs[key].biome_key != config.biome:
+		return
+	var owned := 0
+	for enemy in enemies.get_children():
+		if enemy is INDUSTRIAL_ENEMY and enemy.health > 0 and enemy.summoner != null and enemy.summoner.get_ref() == summoner:
+			owned += 1
+	var cap := 1 if key == "industrial_09" else 6
+	count = mini(count,mini(cap-owned,18-living_enemies))
+	if count <= 0:
+		return
+	var points: Array[Vector2] = room.safe_spawns(count,rng)
+	for point in points:
+		var enemy := INDUSTRIAL_ENEMY.new()
+		enemy.design = enemy_designs[key]
+		enemy.target = player
+		enemy.room = room
+		enemy.position = point
+		enemy.is_summon = true
+		enemy.summoner = weakref(summoner)
+		enemy.defeated.connect(_on_enemy_defeated)
+		enemy.projectile_requested.connect(_spawn_projectile)
+		enemy.impact_requested.connect(_on_impact)
+		living_enemies += 1
+		enemies.add_child(enemy)
+		enemy.collision_mask = 9
+		if key == "industrial_09":
+			var split_health := maxf(1,summoner.health*.5)
+			summoner.health = split_health
+			enemy.health = split_health
+			enemy.visual.scale *= .7
+			summoner.visual.scale *= .7
+		_effect(point,"ring",40,Color("c998ff"))
 
 func _process(delta: float) -> void:
 	if state == "combat":
@@ -308,6 +356,7 @@ func _check_clear() -> void:
 		return
 	_clear_projectiles()
 	room.set("hazards_enabled",false)
+	player.clear_enemy_statuses()
 	_award_progress(25, 1 if room_index == 3 else 0)
 	state = "reward"
 	hud.objective.text = "CHAMBER CLEARED"

@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dajl3a21e0jl8"
+path="res://.godot/imported/06_Cable_Snare_Unit.obj-700ffe0edbdf4984f308c20101468bfd.mesh"
+
+[deps]
+
+files=["res://.godot/imported/06_Cable_Snare_Unit.obj-700ffe0edbdf4984f308c20101468bfd.mesh"]
+
+source_file="res://characters/enemies/Industrial_33_Enemies_Full_Animation_Pack/obj_grayboxes/06_Cable_Snare_Unit.obj"
+dest_files=["res://.godot/imported/06_Cable_Snare_Unit.obj-700ffe0edbdf4984f308c20101468bfd.mesh", "res://.godot/imported/06_Cable_Snare_Unit.obj-700ffe0edbdf4984f308c20101468bfd.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

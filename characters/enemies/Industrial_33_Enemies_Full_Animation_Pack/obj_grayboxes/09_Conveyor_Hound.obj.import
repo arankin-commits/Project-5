@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cwodk42x8wbny"
+path="res://.godot/imported/09_Conveyor_Hound.obj-7531d2ed19bb3ab98356eaa3d5bd6ed5.mesh"
+
+[deps]
+
+files=["res://.godot/imported/09_Conveyor_Hound.obj-7531d2ed19bb3ab98356eaa3d5bd6ed5.mesh"]
+
+source_file="res://characters/enemies/Industrial_33_Enemies_Full_Animation_Pack/obj_grayboxes/09_Conveyor_Hound.obj"
+dest_files=["res://.godot/imported/09_Conveyor_Hound.obj-7531d2ed19bb3ab98356eaa3d5bd6ed5.mesh", "res://.godot/imported/09_Conveyor_Hound.obj-7531d2ed19bb3ab98356eaa3d5bd6ed5.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

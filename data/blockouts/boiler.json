@@ -307,12 +307,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_16",
+          "industrial_17"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_18",
+          "industrial_19"
         ]
       ]
     },
@@ -654,12 +654,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_19",
+          "industrial_20"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_21",
+          "industrial_22"
         ]
       ]
     },
@@ -970,12 +970,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_22",
+          "industrial_23"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_24",
+          "industrial_16"
         ]
       ]
     },
@@ -1314,12 +1314,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_16",
+          "industrial_17"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_18",
+          "industrial_19"
         ]
       ]
     },
@@ -1652,12 +1652,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_19",
+          "industrial_20"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_21",
+          "industrial_22"
         ]
       ]
     },
@@ -1972,12 +1972,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_22",
+          "industrial_23"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_24",
+          "industrial_16"
         ]
       ]
     },
@@ -2465,12 +2465,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_16",
+          "industrial_17"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_18",
+          "industrial_19"
         ]
       ]
     },
@@ -2969,12 +2969,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_19",
+          "industrial_20"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_21",
+          "industrial_22"
         ]
       ]
     },
@@ -3421,12 +3421,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_22",
+          "industrial_23"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_24",
+          "industrial_16"
         ]
       ]
     },
@@ -3886,12 +3886,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_16",
+          "industrial_17"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_18",
+          "industrial_19"
         ]
       ]
     },
@@ -4346,12 +4346,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_19",
+          "industrial_20"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_21",
+          "industrial_22"
         ]
       ]
     },
@@ -4859,12 +4859,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_22",
+          "industrial_23"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_24",
+          "industrial_16"
         ]
       ]
     },
@@ -5335,12 +5335,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_16",
+          "industrial_17"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_18",
+          "industrial_19"
         ]
       ]
     },
@@ -5795,12 +5795,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_19",
+          "industrial_20"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_21",
+          "industrial_22"
         ]
       ]
     },
@@ -6296,12 +6296,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_22",
+          "industrial_23"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_24",
+          "industrial_16"
         ]
       ]
     },
@@ -6789,12 +6789,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_16",
+          "industrial_17"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_18",
+          "industrial_19"
         ]
       ]
     },
@@ -7296,12 +7296,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_19",
+          "industrial_20"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_21",
+          "industrial_22"
         ]
       ]
     },
@@ -7749,12 +7749,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_22",
+          "industrial_23"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_24",
+          "industrial_16"
         ]
       ]
     },
@@ -8242,12 +8242,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_16",
+          "industrial_17"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_18",
+          "industrial_19"
         ]
       ]
     },
@@ -8698,12 +8698,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_19",
+          "industrial_20"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_21",
+          "industrial_22"
         ]
       ]
     },
@@ -9398,12 +9398,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_22",
+          "industrial_23"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_24",
+          "industrial_16"
         ]
       ]
     },
@@ -10099,12 +10099,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_16",
+          "industrial_17"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_18",
+          "industrial_19"
         ]
       ]
     },
@@ -10755,12 +10755,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_19",
+          "industrial_20"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_21",
+          "industrial_22"
         ]
       ]
     },
@@ -11412,12 +11412,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_22",
+          "industrial_23"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_24",
+          "industrial_16"
         ]
       ]
     },
@@ -12212,12 +12212,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_16",
+          "industrial_17"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_18",
+          "industrial_19"
         ]
       ]
     },
@@ -12876,12 +12876,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_19",
+          "industrial_20"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_21",
+          "industrial_22"
         ]
       ]
     },
@@ -13537,12 +13537,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_22",
+          "industrial_23"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_24",
+          "industrial_16"
         ]
       ]
     },
@@ -14262,12 +14262,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_16",
+          "industrial_17"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_18",
+          "industrial_19"
         ]
       ]
     },
@@ -14997,12 +14997,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_19",
+          "industrial_20"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_21",
+          "industrial_22"
         ]
       ]
     },
@@ -15666,12 +15666,12 @@
       "reward": "repair",
       "waves": [
         [
-          "crawler",
-          "sentry"
+          "industrial_22",
+          "industrial_23"
         ],
         [
-          "crawler",
-          "crawler"
+          "industrial_24",
+          "industrial_16"
         ]
       ]
     }

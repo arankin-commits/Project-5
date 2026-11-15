@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dy4704kithsyo"
+path="res://.godot/imported/23_Ash_Shunter.obj-c9a14b43f3fb5adc54e1af10b94206ee.mesh"
+
+[deps]
+
+files=["res://.godot/imported/23_Ash_Shunter.obj-c9a14b43f3fb5adc54e1af10b94206ee.mesh"]
+
+source_file="res://characters/enemies/Industrial_33_Enemies_Full_Animation_Pack/obj_grayboxes/23_Ash_Shunter.obj"
+dest_files=["res://.godot/imported/23_Ash_Shunter.obj-c9a14b43f3fb5adc54e1af10b94206ee.mesh", "res://.godot/imported/23_Ash_Shunter.obj-c9a14b43f3fb5adc54e1af10b94206ee.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

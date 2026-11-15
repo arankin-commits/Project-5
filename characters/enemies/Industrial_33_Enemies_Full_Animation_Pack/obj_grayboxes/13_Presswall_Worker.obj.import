@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cxuv3dsjrsu1x"
+path="res://.godot/imported/13_Presswall_Worker.obj-46f59bffa7ae2420ff762eca7699a8de.mesh"
+
+[deps]
+
+files=["res://.godot/imported/13_Presswall_Worker.obj-46f59bffa7ae2420ff762eca7699a8de.mesh"]
+
+source_file="res://characters/enemies/Industrial_33_Enemies_Full_Animation_Pack/obj_grayboxes/13_Presswall_Worker.obj"
+dest_files=["res://.godot/imported/13_Presswall_Worker.obj-46f59bffa7ae2420ff762eca7699a8de.mesh", "res://.godot/imported/13_Presswall_Worker.obj-46f59bffa7ae2420ff762eca7699a8de.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

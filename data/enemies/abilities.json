@@ -1,0 +1,1040 @@
+{
+  "industrial_00": [
+    {
+      "kind": "dash",
+      "damage": 9,
+      "reach": 130,
+      "name": "Probe Dive",
+      "tell": 0.5,
+      "recovery": 0.55,
+      "cooldown": 3.0
+    },
+    {
+      "kind": "shot",
+      "damage": 7,
+      "reach": 260,
+      "name": "Scanner Sting",
+      "tell": 0.7,
+      "recovery": 0.35,
+      "cooldown": 4.0
+    },
+    {
+      "kind": "sidestep",
+      "damage": 0,
+      "reach": 52,
+      "name": "Evasive Strafe",
+      "tell": 0.2,
+      "recovery": 0.25,
+      "cooldown": 3.2
+    }
+  ],
+  "industrial_01": [
+    {
+      "kind": "dash",
+      "damage": 4,
+      "reach": 65,
+      "name": "Brush Strike",
+      "tell": 0.35,
+      "recovery": 0.3,
+      "cooldown": 1.8
+    },
+    {
+      "kind": "dash",
+      "damage": 12,
+      "reach": 130,
+      "name": "Swarm Rush",
+      "tell": 0.8,
+      "recovery": 0.65,
+      "cooldown": 6.0
+    },
+    {
+      "kind": "regroup",
+      "damage": 0,
+      "reach": 90,
+      "name": "Regroup",
+      "tell": 0.4,
+      "recovery": 0.25,
+      "cooldown": 5.0
+    }
+  ],
+  "industrial_02": [
+    {
+      "kind": "ring",
+      "damage": 18,
+      "reach": 156,
+      "name": "Steam Ring",
+      "tell": 1.1,
+      "recovery": 0.75,
+      "cooldown": 6.0
+    },
+    {
+      "kind": "cone",
+      "damage": 12,
+      "reach": 110,
+      "arc": 90,
+      "name": "Vent Sweep",
+      "tell": 0.7,
+      "recovery": 0.6,
+      "cooldown": 4.0
+    },
+    {
+      "kind": "pool",
+      "damage": 3,
+      "reach": 65,
+      "duration": 3,
+      "name": "Chemical Overflow",
+      "tell": 0.9,
+      "recovery": 0.45,
+      "cooldown": 7.0
+    }
+  ],
+  "industrial_03": [
+    {
+      "kind": "cone",
+      "damage": 9,
+      "reach": 78,
+      "arc": 100,
+      "name": "Wrench Slash 1",
+      "tell": 0.45,
+      "recovery": 0.2,
+      "cooldown": 3
+    },
+    {
+      "kind": "cone",
+      "damage": 11,
+      "reach": 78,
+      "arc": 100,
+      "name": "Wrench Slash 2",
+      "tell": 0.3,
+      "recovery": 0.65,
+      "cooldown": 3.3
+    },
+    {
+      "kind": "disk",
+      "damage": 19,
+      "reach": 85,
+      "name": "Overhead Crush",
+      "tell": 0.9,
+      "recovery": 0.9,
+      "cooldown": 6.0
+    }
+  ],
+  "industrial_04": [
+    {
+      "kind": "summon",
+      "damage": 0,
+      "reach": 260,
+      "count": 3,
+      "enemy": "industrial_01",
+      "name": "Deploy Cleaners",
+      "tell": 1.3,
+      "recovery": 0.7,
+      "cooldown": 7.0
+    },
+    {
+      "kind": "ring",
+      "damage": 9,
+      "reach": 95,
+      "push": 45,
+      "name": "Defensive Pulse",
+      "tell": 0.85,
+      "recovery": 0.55,
+      "cooldown": 5.0
+    },
+    {
+      "kind": "shot",
+      "damage": 6,
+      "reach": 190,
+      "count": 2,
+      "name": "Assembly Barrage",
+      "tell": 0.7,
+      "recovery": 0.5,
+      "cooldown": 4.0
+    }
+  ],
+  "industrial_05": [
+    {
+      "kind": "hook",
+      "damage": 6,
+      "reach": 156,
+      "hook_duration": 4,
+      "name": "Grapple Launch",
+      "tell": 0.75,
+      "recovery": 0.55,
+      "cooldown": 5.0
+    },
+    {
+      "kind": "reel",
+      "damage": 0,
+      "reach": 156,
+      "duration": 0.75,
+      "name": "Cable Reel",
+      "tell": 0.25,
+      "recovery": 0.5,
+      "cooldown": 3
+    },
+    {
+      "kind": "cone",
+      "damage": 13,
+      "reach": 70,
+      "name": "Clamp Strike",
+      "tell": 0.4,
+      "recovery": 0.65,
+      "cooldown": 3.5
+    }
+  ],
+  "industrial_06": [
+    {
+      "kind": "teleport",
+      "damage": 0,
+      "reach": 180,
+      "name": "Phase Step",
+      "tell": 0.6,
+      "recovery": 0.25,
+      "cooldown": 5.0
+    },
+    {
+      "kind": "cone",
+      "damage": 14,
+      "reach": 85,
+      "name": "Ambush Slash",
+      "tell": 0.45,
+      "recovery": 0.65,
+      "cooldown": 4.0
+    },
+    {
+      "kind": "cone",
+      "damage": 10,
+      "reach": 70,
+      "name": "Shock Baton",
+      "tell": 0.55,
+      "recovery": 0.45,
+      "cooldown": 3.5
+    }
+  ],
+  "industrial_07": [
+    {
+      "kind": "ring",
+      "damage": 0,
+      "reach": 91,
+      "status": "interference",
+      "duration": 3,
+      "name": "Interference Pulse",
+      "tell": 0.85,
+      "recovery": 0.65,
+      "cooldown": 7.0
+    },
+    {
+      "kind": "shot",
+      "damage": 6,
+      "reach": 170,
+      "name": "Static Jitter",
+      "tell": 0.5,
+      "recovery": 0.4,
+      "cooldown": 4.5
+    },
+    {
+      "kind": "sidestep",
+      "damage": 0,
+      "reach": 52,
+      "name": "Channel Drift",
+      "tell": 0.35,
+      "recovery": 0.25,
+      "cooldown": 4.0
+    }
+  ],
+  "industrial_08": [
+    {
+      "kind": "dash",
+      "damage": 18,
+      "reach": 182,
+      "velocity": 234,
+      "name": "Belt-Line Chase",
+      "tell": 0.75,
+      "recovery": 0.85,
+      "cooldown": 5.0
+    },
+    {
+      "kind": "cone",
+      "damage": 10,
+      "reach": 65,
+      "arc": 75,
+      "name": "Roller Snap",
+      "tell": 0.4,
+      "recovery": 0.4,
+      "cooldown": 3.0
+    },
+    {
+      "kind": "sidestep",
+      "damage": 8,
+      "reach": 52,
+      "name": "Belt Shred",
+      "tell": 0.65,
+      "recovery": 0.5,
+      "cooldown": 4.2
+    }
+  ],
+  "industrial_09": [
+    {
+      "kind": "dash",
+      "damage": 11,
+      "reach": 78,
+      "name": "Linked Spear",
+      "tell": 0.65,
+      "recovery": 0.55,
+      "cooldown": 4.0
+    },
+    {
+      "kind": "cone",
+      "damage": 6,
+      "reach": 78,
+      "arc": 150,
+      "name": "Tail Whip",
+      "tell": 0.35,
+      "recovery": 0.35,
+      "cooldown": 3.0
+    },
+    {
+      "kind": "split",
+      "damage": 0,
+      "reach": 90,
+      "name": "Chain Scatter",
+      "tell": 0.4,
+      "recovery": 0.6,
+      "cooldown": 6.0
+    }
+  ],
+  "industrial_10": [
+    {
+      "kind": "radial",
+      "damage": 10,
+      "reach": 260,
+      "count": 8,
+      "name": "Eight-Gear Burst",
+      "tell": 0.95,
+      "recovery": 0.9,
+      "cooldown": 6.5
+    },
+    {
+      "kind": "dash",
+      "damage": 9,
+      "reach": 65,
+      "name": "Rolling Pinch",
+      "tell": 0.5,
+      "recovery": 0.55,
+      "cooldown": 4.0
+    },
+    {
+      "kind": "lob",
+      "damage": 8,
+      "reach": 120,
+      "radius": 26,
+      "name": "Spring Pop",
+      "tell": 0.6,
+      "recovery": 0.5,
+      "cooldown": 5.0
+    }
+  ],
+  "industrial_11": [
+    {
+      "kind": "combo",
+      "damage": 10,
+      "reach": 85,
+      "second_damage": 12,
+      "delay": 0.4,
+      "name": "Closing V",
+      "tell": 0.65,
+      "recovery": 0.8,
+      "cooldown": 4.5
+    },
+    {
+      "kind": "cone",
+      "damage": 9,
+      "reach": 70,
+      "name": "One-Side Snip",
+      "tell": 0.4,
+      "recovery": 0.4,
+      "cooldown": 3.0
+    },
+    {
+      "kind": "dash",
+      "damage": 13,
+      "reach": 65,
+      "name": "Hinge Lunge",
+      "tell": 0.65,
+      "recovery": 0.65,
+      "cooldown": 5.0
+    }
+  ],
+  "industrial_12": [
+    {
+      "kind": "dash",
+      "damage": 17,
+      "reach": 65,
+      "push": 40,
+      "name": "Press-Plate Shove",
+      "tell": 0.8,
+      "recovery": 1.0,
+      "cooldown": 5.0
+    },
+    {
+      "kind": "guard",
+      "damage": 0,
+      "reach": 90,
+      "duration": 2,
+      "arc": 140,
+      "name": "Front Guard",
+      "tell": 0.25,
+      "recovery": 0.5,
+      "cooldown": 4.0
+    },
+    {
+      "kind": "cone",
+      "damage": 12,
+      "reach": 85,
+      "arc": 150,
+      "name": "Side Track Slam",
+      "tell": 0.7,
+      "recovery": 0.7,
+      "cooldown": 4.5
+    }
+  ],
+  "industrial_13": [
+    {
+      "kind": "cone",
+      "damage": 8,
+      "reach": 70,
+      "status": "steal",
+      "name": "Torque Swipe",
+      "tell": 0.55,
+      "recovery": 0.7,
+      "cooldown": 4.0
+    },
+    {
+      "kind": "shot",
+      "damage": 9,
+      "reach": 230,
+      "name": "Charged Toss",
+      "tell": 0.75,
+      "recovery": 0.5,
+      "cooldown": 5.0
+    },
+    {
+      "kind": "sidestep",
+      "damage": 0,
+      "reach": 42,
+      "name": "Gear Feint",
+      "tell": 0.35,
+      "recovery": 0.3,
+      "cooldown": 4.0
+    }
+  ],
+  "industrial_14": [
+    {
+      "kind": "lob",
+      "damage": 8,
+      "reach": 200,
+      "radius": 35,
+      "status": "hook",
+      "name": "Overhead Grab",
+      "tell": 0.85,
+      "recovery": 0.75,
+      "cooldown": 6.0
+    },
+    {
+      "kind": "reel",
+      "damage": 0,
+      "reach": 200,
+      "duration": 0.75,
+      "distance": 65,
+      "name": "Hazard Drag",
+      "tell": 0.3,
+      "recovery": 0.65,
+      "cooldown": 3
+    },
+    {
+      "kind": "cone",
+      "damage": 14,
+      "reach": 100,
+      "arc": 130,
+      "name": "Boom Sweep",
+      "tell": 0.8,
+      "recovery": 0.7,
+      "cooldown": 5.0
+    }
+  ],
+  "industrial_15": [
+    {
+      "kind": "hook",
+      "damage": 6,
+      "reach": 91,
+      "hook_duration": 0.6,
+      "auto_reel": true,
+      "name": "Chain Loop",
+      "tell": 0.7,
+      "recovery": 0.7,
+      "cooldown": 5.0
+    },
+    {
+      "kind": "cone",
+      "damage": 11,
+      "reach": 65,
+      "arc": 80,
+      "name": "Scissor Hook",
+      "tell": 0.45,
+      "recovery": 0.5,
+      "cooldown": 3.5
+    },
+    {
+      "kind": "cone",
+      "damage": 9,
+      "reach": 90,
+      "arc": 100,
+      "name": "Chain Lash",
+      "tell": 0.65,
+      "recovery": 0.6,
+      "cooldown": 4.5
+    }
+  ],
+  "industrial_16": [
+    {
+      "kind": "dash",
+      "damage": 0,
+      "reach": 104,
+      "trail": true,
+      "name": "Ember Pour",
+      "tell": 0.65,
+      "recovery": 0.75,
+      "cooldown": 5.0
+    },
+    {
+      "kind": "shot",
+      "damage": 9,
+      "reach": 210,
+      "name": "Scalding Spit",
+      "tell": 0.55,
+      "recovery": 0.4,
+      "cooldown": 3.5
+    },
+    {
+      "kind": "sidestep",
+      "damage": 0,
+      "reach": 52,
+      "name": "Pressure Hop",
+      "tell": 0.35,
+      "recovery": 0.35,
+      "cooldown": 4.0
+    }
+  ],
+  "industrial_17": [
+    {
+      "kind": "dash",
+      "damage": 19,
+      "reach": 156,
+      "velocity": 286,
+      "bounce": true,
+      "name": "Ricochet Rocket",
+      "tell": 0.85,
+      "recovery": 1.1,
+      "cooldown": 6.0
+    },
+    {
+      "kind": "cone",
+      "damage": 10,
+      "reach": 80,
+      "arc": 100,
+      "rear": true,
+      "name": "Soot Blast",
+      "tell": 0.55,
+      "recovery": 0.55,
+      "cooldown": 4.0
+    },
+    {
+      "kind": "sidestep",
+      "damage": 0,
+      "reach": 39,
+      "name": "Ignition Skip",
+      "tell": 0.4,
+      "recovery": 0.3,
+      "cooldown": 3.5
+    }
+  ],
+  "industrial_18": [
+    {
+      "kind": "lob",
+      "damage": 12,
+      "reach": 270,
+      "radius": 39,
+      "pool": 1,
+      "name": "Scalding Lob",
+      "tell": 0.8,
+      "recovery": 0.65,
+      "cooldown": 4.5
+    },
+    {
+      "kind": "lob",
+      "damage": 7,
+      "reach": 270,
+      "radius": 32,
+      "count": 2,
+      "delay": 0.8,
+      "name": "Twin Drip",
+      "tell": 0.55,
+      "recovery": 0.55,
+      "cooldown": 5.0
+    },
+    {
+      "kind": "cone",
+      "damage": 9,
+      "reach": 70,
+      "arc": 80,
+      "name": "Safety Valve Jet",
+      "tell": 0.65,
+      "recovery": 0.6,
+      "cooldown": 4.0
+    }
+  ],
+  "industrial_19": [
+    {
+      "kind": "dash",
+      "damage": 12,
+      "reach": 104,
+      "name": "Needle Dive",
+      "tell": 0.7,
+      "recovery": 0.7,
+      "cooldown": 4.5
+    },
+    {
+      "kind": "ring",
+      "damage": 8,
+      "reach": 65,
+      "name": "Ash Burst",
+      "tell": 0.6,
+      "recovery": 0.5,
+      "cooldown": 5.0
+    },
+    {
+      "kind": "regroup",
+      "damage": 0,
+      "reach": 90,
+      "name": "Flock Fold",
+      "tell": 0.35,
+      "recovery": 0.3,
+      "cooldown": 3.5
+    }
+  ],
+  "industrial_20": [
+    {
+      "kind": "combo",
+      "damage": 8,
+      "reach": 100,
+      "second_damage": 8,
+      "delay": 0.8,
+      "name": "Linked Ignition",
+      "tell": 0.8,
+      "recovery": 0.7,
+      "cooldown": 5.0
+    },
+    {
+      "kind": "shot",
+      "damage": 6,
+      "reach": 210,
+      "name": "Spark Flick",
+      "tell": 0.4,
+      "recovery": 0.35,
+      "cooldown": 2.8
+    },
+    {
+      "kind": "sidestep",
+      "damage": 0,
+      "reach": 52,
+      "name": "Chain Rearrange",
+      "tell": 0.5,
+      "recovery": 0.35,
+      "cooldown": 4.0
+    }
+  ],
+  "industrial_21": [
+    {
+      "kind": "combo",
+      "damage": 15,
+      "reach": 85,
+      "second_damage": 15,
+      "delay": 0.4,
+      "pool": 0.7,
+      "name": "Furnace Double Punch",
+      "tell": 0.75,
+      "recovery": 0.95,
+      "cooldown": 5.0
+    },
+    {
+      "kind": "dash",
+      "damage": 13,
+      "reach": 65,
+      "name": "Hot Shoulder",
+      "tell": 0.65,
+      "recovery": 0.65,
+      "cooldown": 4.5
+    },
+    {
+      "kind": "cone",
+      "damage": 12,
+      "reach": 85,
+      "name": "Grate Flare",
+      "tell": 0.9,
+      "recovery": 0.75,
+      "cooldown": 6.0
+    }
+  ],
+  "industrial_22": [
+    {
+      "kind": "cone",
+      "damage": 12,
+      "reach": 90,
+      "arc": 35,
+      "name": "Valve Thrust",
+      "tell": 0.45,
+      "recovery": 0.25,
+      "cooldown": 3
+    },
+    {
+      "kind": "backstep",
+      "damage": 0,
+      "reach": 39,
+      "name": "Backward Step",
+      "tell": 0.2,
+      "recovery": 0.25,
+      "cooldown": 3
+    },
+    {
+      "kind": "cone",
+      "damage": 16,
+      "reach": 100,
+      "arc": 150,
+      "name": "Wide Pole Sweep",
+      "tell": 0.7,
+      "recovery": 0.85,
+      "cooldown": 4.0
+    }
+  ],
+  "industrial_23": [
+    {
+      "kind": "phantom",
+      "damage": 13,
+      "reach": 110,
+      "arc": 30,
+      "name": "False Advance",
+      "tell": 0.7,
+      "recovery": 0.7,
+      "cooldown": 5.0
+    },
+    {
+      "kind": "haze",
+      "damage": 0,
+      "reach": 115,
+      "duration": 2,
+      "name": "Heat Ripple",
+      "tell": 0.85,
+      "recovery": 0.65,
+      "cooldown": 6.5
+    },
+    {
+      "kind": "cone",
+      "damage": 8,
+      "reach": 70,
+      "name": "Radiator Jab",
+      "tell": 0.45,
+      "recovery": 0.4,
+      "cooldown": 3.5
+    }
+  ],
+  "industrial_24": [
+    {
+      "kind": "buff",
+      "damage": 0,
+      "reach": 260,
+      "duration": 4,
+      "name": "Weapon Reheat",
+      "tell": 0.95,
+      "recovery": 0.75,
+      "cooldown": 7.0
+    },
+    {
+      "kind": "cone",
+      "damage": 9,
+      "reach": 65,
+      "name": "Ember Puff",
+      "tell": 0.6,
+      "recovery": 0.5,
+      "cooldown": 4.0
+    },
+    {
+      "kind": "backstep",
+      "damage": 0,
+      "reach": 47,
+      "name": "Draft Escape",
+      "tell": 0.35,
+      "recovery": 0.35,
+      "cooldown": 4.2
+    }
+  ],
+  "industrial_25": [
+    {
+      "kind": "dash",
+      "damage": 17,
+      "reach": 156,
+      "bend": true,
+      "name": "Pivot Rush",
+      "tell": 0.75,
+      "recovery": 0.85,
+      "cooldown": 5.5
+    },
+    {
+      "kind": "cone",
+      "damage": 11,
+      "reach": 75,
+      "name": "Syringe Jab",
+      "tell": 0.45,
+      "recovery": 0.45,
+      "cooldown": 3.2
+    },
+    {
+      "kind": "pool",
+      "damage": 3,
+      "reach": 52,
+      "duration": 1,
+      "count": 2,
+      "name": "Acid Flick",
+      "tell": 0.6,
+      "recovery": 0.5,
+      "cooldown": 5.0
+    }
+  ],
+  "industrial_26": [
+    {
+      "kind": "dash",
+      "damage": 3,
+      "reach": 65,
+      "status": "cling",
+      "name": "Clinging Leap",
+      "tell": 0.5,
+      "recovery": 0.5,
+      "cooldown": 4.2
+    },
+    {
+      "kind": "cone",
+      "damage": 4,
+      "reach": 60,
+      "name": "Mandible Nibble",
+      "tell": 0.3,
+      "recovery": 0.3,
+      "cooldown": 2.2
+    },
+    {
+      "kind": "sidestep",
+      "damage": 0,
+      "reach": 52,
+      "name": "Scuttle Scatter",
+      "tell": 0.4,
+      "recovery": 0.35,
+      "cooldown": 5.0
+    }
+  ],
+  "industrial_27": [
+    {
+      "kind": "combo",
+      "damage": 10,
+      "reach": 85,
+      "second_damage": 11,
+      "delay": 0.4,
+      "pool": 1,
+      "name": "Cross-Etch",
+      "tell": 0.55,
+      "recovery": 0.8,
+      "cooldown": 4.5
+    },
+    {
+      "kind": "cone",
+      "damage": 9,
+      "reach": 65,
+      "arc": 35,
+      "name": "Acid Needle",
+      "tell": 0.5,
+      "recovery": 0.5,
+      "cooldown": 3.5
+    },
+    {
+      "kind": "sidestep",
+      "damage": 0,
+      "reach": 39,
+      "name": "Etching Step",
+      "tell": 0.35,
+      "recovery": 0.35,
+      "cooldown": 4.0
+    }
+  ],
+  "industrial_28": [
+    {
+      "kind": "hook",
+      "damage": 5,
+      "reach": 145,
+      "hook_duration": 4,
+      "auto_reel": true,
+      "distance": 47,
+      "name": "Siphon Hook",
+      "tell": 0.7,
+      "recovery": 0.6,
+      "cooldown": 5.5
+    },
+    {
+      "kind": "siphon",
+      "damage": 0,
+      "reach": 100,
+      "duration": 2,
+      "name": "Health Siphon",
+      "tell": 0.3,
+      "recovery": 0.75,
+      "cooldown": 3
+    },
+    {
+      "kind": "cone",
+      "damage": 10,
+      "reach": 70,
+      "name": "Proboscis Jab",
+      "tell": 0.45,
+      "recovery": 0.5,
+      "cooldown": 3.5
+    }
+  ],
+  "industrial_29": [
+    {
+      "kind": "teleport",
+      "damage": 0,
+      "reach": 180,
+      "transit": true,
+      "name": "Vent Transit",
+      "tell": 0.7,
+      "recovery": 0.45,
+      "cooldown": 5.5
+    },
+    {
+      "kind": "cone",
+      "damage": 12,
+      "reach": 70,
+      "status": "poison",
+      "name": "Poison Jab",
+      "tell": 0.5,
+      "recovery": 0.6,
+      "cooldown": 4.0
+    },
+    {
+      "kind": "pool",
+      "damage": 5,
+      "reach": 65,
+      "duration": 1.5,
+      "arc": 55,
+      "name": "Mist Fan",
+      "tell": 0.8,
+      "recovery": 0.6,
+      "cooldown": 6.0
+    }
+  ],
+  "industrial_30": [
+    {
+      "kind": "ring",
+      "damage": 0,
+      "reach": 117,
+      "status": "weaken",
+      "duration": 3,
+      "name": "Weakening Siren",
+      "tell": 0.9,
+      "recovery": 0.75,
+      "cooldown": 7.0
+    },
+    {
+      "kind": "shot",
+      "damage": 8,
+      "reach": 230,
+      "name": "Corrosive Ping",
+      "tell": 0.6,
+      "recovery": 0.5,
+      "cooldown": 4.2
+    },
+    {
+      "kind": "sidestep",
+      "damage": 0,
+      "reach": 39,
+      "name": "Alarm Reposition",
+      "tell": 0.5,
+      "recovery": 0.4,
+      "cooldown": 5.0
+    }
+  ],
+  "industrial_31": [
+    {
+      "kind": "dash",
+      "damage": 7,
+      "reach": 65,
+      "guard": true,
+      "arc": 150,
+      "push": 30,
+      "name": "Shell March",
+      "tell": 0.35,
+      "recovery": 0.75,
+      "cooldown": 4.0
+    },
+    {
+      "kind": "cone",
+      "damage": 12,
+      "reach": 65,
+      "arc": 140,
+      "name": "Acid Lip",
+      "tell": 0.75,
+      "recovery": 0.7,
+      "cooldown": 5.0
+    },
+    {
+      "kind": "sidestep",
+      "damage": 9,
+      "reach": 39,
+      "name": "Side Scuttle",
+      "tell": 0.4,
+      "recovery": 0.5,
+      "cooldown": 3.8
+    }
+  ],
+  "industrial_32": [
+    {
+      "kind": "guard",
+      "damage": 0,
+      "reach": 90,
+      "duration": 2,
+      "arc": 145,
+      "name": "Lid Guard",
+      "tell": 0.3,
+      "recovery": 0.45,
+      "cooldown": 3.6
+    },
+    {
+      "kind": "cone",
+      "damage": 16,
+      "reach": 90,
+      "arc": 145,
+      "push": 35,
+      "name": "Rotary Lid Shove",
+      "tell": 0.75,
+      "recovery": 0.85,
+      "cooldown": 5.0
+    },
+    {
+      "kind": "cone",
+      "damage": 11,
+      "reach": 65,
+      "arc": 90,
+      "name": "Valve Burst",
+      "tell": 0.65,
+      "recovery": 0.6,
+      "cooldown": 4.5
+    }
+  ]
+}

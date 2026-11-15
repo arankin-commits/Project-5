@@ -133,9 +133,21 @@ func _run() -> void:
 	check(is_equal_approx(1000-enemy.health,48), "Charged attack damage wrong")
 	check(enemy.position.distance_to(player.position) > 180, "Charged attack did not knock back")
 	# Collision-based wall stun, without manually setting the status.
-	enemy.position = Space.project(Vector2(915,550))
-	enemy.apply_knockback(Space.AXIS_X,250)
+	# Use an explicit wall instead of coordinates from the retired Boiler layout.
+	var wall := StaticBody2D.new()
+	wall.position = Vector2(12080,12000)
+	wall.collision_layer = 1
+	var wall_shape := CollisionShape2D.new()
+	var rectangle := RectangleShape2D.new()
+	rectangle.size = Vector2(20,200)
+	wall_shape.shape = rectangle
+	wall.add_child(wall_shape)
+	run.add_child(wall)
+	await physics_frame
+	enemy.position = Vector2(12000,12000)
+	enemy.apply_knockback(Vector2.RIGHT,250)
 	check(enemy.wall_stun_timer > 0, "Knockback against wall did not stun")
+	wall.queue_free()
 	enemy.kind = "brute"
 	enemy.position = player.position + Vector2(220,0)
 	player.grapple_cooldown = 0
