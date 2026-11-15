@@ -1,0 +1,131 @@
+{
+  "id": "L03",
+  "name": "Octagonal Central Works",
+  "biome": "Maintenance",
+  "size_class": "Large",
+  "canvas_px": [
+    3200,
+    1920
+  ],
+  "world_footprint_px": [
+    3200,
+    1920
+  ],
+  "world_polygon_px": [
+    [
+      653,
+      165
+    ],
+    [
+      1379,
+      165
+    ],
+    [
+      1631,
+      335
+    ],
+    [
+      2073,
+      127
+    ],
+    [
+      2641,
+      297
+    ],
+    [
+      2956,
+      657
+    ],
+    [
+      2956,
+      1187
+    ],
+    [
+      2672,
+      1565
+    ],
+    [
+      2168,
+      1717
+    ],
+    [
+      1789,
+      1565
+    ],
+    [
+      1095,
+      1736
+    ],
+    [
+      464,
+      1546
+    ],
+    [
+      212,
+      1187
+    ],
+    [
+      212,
+      676
+    ]
+  ],
+  "world_polygon_area_px2": 3624060,
+  "projection": "elevated_3_4_oblique_isometric_reference",
+  "wall_geometry": "straight_segments_only",
+  "palette": {
+    "shadow": "#3B4145",
+    "base": "#929799",
+    "brass": "#A7793E",
+    "light": "#DDDCD5",
+    "accent": "#85C9D0"
+  },
+  "exits": [
+    {
+      "edge_id": 13,
+      "wall_a_world_px": [
+        212,
+        676
+      ],
+      "wall_b_world_px": [
+        653,
+        165
+      ],
+      "wall_t": 0.5,
+      "type": "eight_thin_blade_fan_exit",
+      "open_condition": "stop_spinning; blades remain thin enough to slip between",
+      "position_canvas_px": [
+        1332,
+        700
+      ],
+      "radius_canvas_px": 89,
+      "orientation": "top_left"
+    },
+    {
+      "edge_id": 4,
+      "wall_a_world_px": [
+        2641,
+        297
+      ],
+      "wall_b_world_px": [
+        2956,
+        657
+      ],
+      "wall_t": 0.5,
+      "type": "eight_thin_blade_fan_exit",
+      "open_condition": "stop_spinning; blades remain thin enough to slip between",
+      "position_canvas_px": [
+        2616,
+        1088
+      ],
+      "radius_canvas_px": 58,
+      "orientation": "top_right"
+    }
+  ],
+  "entrances": [],
+  "hazard_authoring": {
+    "projectile_turret": "optional overlay",
+    "push_fan": "optional overlay",
+    "open_wires": "optional overlay"
+  },
+  "note": "Decorative art reference and layout geometry; 2D collision and door logic must be implemented in Godot."
+}

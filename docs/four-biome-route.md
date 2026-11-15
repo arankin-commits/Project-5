@@ -1,0 +1,15 @@
+# Underground blockout route
+
+The below-ground route now progresses through Maintenance, Factory, Boiler, and Toxin Refinery. Each biome draws nine distinct layouts from its thirty-room pool: eight regular encounters and a boss in the ninth. All size categories share the pool, including the first draw. Boss defeat and reward collection start the next biome in the same scene, preserving hull, upgrades, core selections, kills, and accumulated run progress. Only the Refinery boss completes the route and records victory.
+
+`tools/integrate_four_biomes.py` produces `data/blockouts/*.json` from the supplied `all_room_geometry.json`; it never modifies the source PNGs. `RunConfig.BIOME_DATA` selects these catalogs. Earlier catalogs remain on disk but are not selected by the active route.
+
+`scripts/blockout_room.gd` extends the existing room implementation. It projects source geometry using the pack generator's exact transform, crops out the PNG titles and legends, and builds movement collision for walls, obstacles, partial cover, and gaps. Partial cover and gaps use physics layer 8: actors collide with them, while the existing layer-1 projectile rays pass over them. Full obstacles and outer walls block both.
+
+The blockouts' original connectivity check did not account for character radius. Runtime artwork and geometry are uniformly scaled 2x for clearance; Pressure Nook requires 2.5x. This preserves collision alignment and source-image dimensions. A finer navigation grid and a cached entrance-connected component support enemy movement and spawning. Door approach positions are nudged into clear space where necessary.
+
+Multiple exits show distinct icons and exact reward text, rotating through repairs, hull/strike/dash/speed upgrades, and available elemental cores. Core previews account for the current room's pending core reward and remaining core capacity, preventing a promised reward from becoming unclaimable. The selected door determines the next room's reward. Exits currently share the next selected layout and encounter; this is reward choice, not separate branching room sequences.
+
+Existing enemy and boss combat is reused. Boss names identify each biome; new boss art/attack patterns are not included. Wires, Tesla fields, fire vents, and spikes reuse the existing timed ground-damage pulse (8 player damage, 32 enemy damage). Source-drawn turrets, fans, saws, presses, flame spinners/spitters, acid spitters, and explosive containers do not yet have their specialized mechanics. Authored entrance locations are used; automatic opposite-wall entrance matching, save/resume, and safe-quit locks remain separate unfinished map rules.
+
+Validation: `tests/test_four_biomes.gd` checks all 120 rooms, unique draws over 200 seeds per biome, spawn capacity, reachable exits, and unique door icons. `tests/test_underground_route.gd` clears all 36 rooms, checks gated exits and preview rewards, verifies each boss transition and preserved progress, then verifies one final victory and return to the ship. `tests/capture_four_biomes.gd` captures small, medium, and large rooms from every biome using the renderer.

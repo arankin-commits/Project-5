@@ -2,6 +2,9 @@ extends Node2D
 
 const ENEMY := preload("res://scripts/run_enemy.gd")
 const ROOM := preload("res://scripts/boiler_room.gd")
+const MAINTENANCE_ROOM := preload("res://scripts/maintenance_room.gd")
+const BLOCKOUT_ROOM := preload("res://scripts/blockout_room.gd")
+const ROOM_POOL := preload("res://scripts/room_pool.gd")
 const PROJECTILE := preload("res://scripts/run_projectile.gd")
 const EFFECT := preload("res://scripts/run_effect.gd")
 const Space := preload("res://scripts/boiler_space.gd")
@@ -49,9 +52,11 @@ func _ready() -> void:
 	config = get_node("/root/RunConfig")
 	if not config.get("active"):
 		config.call("start_run", "medium", {})
+	# Developer-only direct access for biome checks.
+	if "--boiler-preview" in OS.get_cmdline_user_args():
+		config.biome = "boiler"
 	rng.seed = int(config.get("run_seed"))
-	var parsed = JSON.parse_string(FileAccess.get_file_as_string("res://data/boiler/rooms.json"))
-	rooms = parsed["rooms"]
+	_prepare_biome()
 	maximum_health = config.call("max_health")
 	health = maximum_health
 	progression = get_node("/root/CoreProgression")
@@ -78,6 +83,31 @@ func _ready() -> void:
 	$Camera2D.make_current()
 	$Camera2D.reset_smoothing()
 	$Camera2D.force_update_scroll()
+
+func _prepare_biome() -> void:
+	var parsed = JSON.parse_string(FileAccess.get_file_as_string(config.BIOME_DATA[config.biome]))
+	rooms = ROOM_POOL.select_rooms(parsed,rng)
+	$Camera2D.zoom = Vector2.ONE * (0.7 if config.biome == "maintenance" else 0.82)
+	for i in rooms.size():
+		rooms[i]["final"] = i == rooms.size()-1
+		rooms[i]["room_count"] = rooms.size()
+		if rooms[i].get("blockout",false):
+			rooms[i]["exit_rewards"] = ["repair","hull","power"]
+			if i+1 < rooms.size():
+				rooms[i]["next_preview"] = ("BOSS: " + str(rooms[i+1].boss_name)) if rooms[i+1].get("boss",false) else "NEXT: " + str(rooms[i+1].name).to_upper()
+		elif config.biome == "maintenance" and i+1 < rooms.size():
+			var reward_text := "+20 MAX HULL / REPAIR 25" if rooms[i+1].reward == "hull" else "REPAIR 45 HULL"
+			rooms[i]["next_preview"] = ("BOSS: MAINTENANCE GUARDIAN" if rooms[i+1].get("boss",false) else "NEXT: " + str(rooms[i+1].name).to_upper()) + "\n" + reward_text
+
+func _complete_biome() -> void:
+	var next: String = config.next_biome()
+	if not next.is_empty() and config.BIOME_DATA.has(next):
+		config.biome = next
+		visited_rooms.clear()
+		_prepare_biome()
+		_load_room(0)
+	else:
+		_finish(true)
 
 func _on_perfect_dodge() -> void:
 	if state != "combat":
@@ -123,10 +153,21 @@ func _load_room(index: int) -> void:
 	wave_index = 0
 	state = "combat"
 	boss = null
-	room = ROOM.new()
+	room = BLOCKOUT_ROOM.new() if rooms[index].get("blockout",false) else (MAINTENANCE_ROOM.new() if config.biome == "maintenance" else ROOM.new())
 	room.name = "Chamber"
 	$World.add_child(room)
+	if room is BLOCKOUT_ROOM:
+		var options: Array[String] = ["repair","hull","power","dash","speed"]
+		var pending_core: String = str(rooms[index].reward).trim_prefix("core_") if str(rooms[index].reward).begins_with("core_") else ""
+		if config.core_elements.size()+(0 if pending_core.is_empty() else 1) < config.core_limit:
+			for element in config.available_elements():
+				if element != pending_core:
+					options.append("core_"+element)
+		rooms[index].exit_rewards = []
+		for door in 3:
+			rooms[index].exit_rewards.append(options[(index+door)%options.size()])
 	room.call("build",rooms[index])
+	player.collision_mask = 9 if room is BLOCKOUT_ROOM else 1
 	room.set("player",player)
 	room.set("hazards_enabled",true)
 	room.set("debug_enabled",debug_enabled)
@@ -152,7 +193,9 @@ func _spawn_wave() -> void:
 		enemy.kind = kinds[i]
 		enemy.position = points[i]
 		if kinds[i] == "boss":
-			enemy.position = Space.project(Vector2(380,380))
+			if not room is MAINTENANCE_ROOM:
+				enemy.position = Space.project(Vector2(380,380))
+			enemy.display_name = rooms[room_index].get("boss_name","FURNACE WARDEN")
 			boss = enemy
 		enemy.target = player
 		enemy.room = room
@@ -162,6 +205,8 @@ func _spawn_wave() -> void:
 		enemy.projectile_requested.connect(_spawn_projectile)
 		enemy.impact_requested.connect(_on_impact)
 		enemies.add_child(enemy)
+		if room is BLOCKOUT_ROOM:
+			enemy.collision_mask = 9
 		_effect(enemy.position,"ring",60,Color("ef9353"))
 
 func _process(delta: float) -> void:
@@ -170,11 +215,15 @@ func _process(delta: float) -> void:
 		var waves: Array = rooms[room_index]["waves"]
 		hud.objective.text = "WAVE %d/%d   /   %d HOSTILES" % [wave_index+1,waves.size(),living_enemies]
 	elif state == "exit":
+		if room is MAINTENANCE_ROOM:
+			room.exit_position = room.nearest_exit(player.position)
 		hud.objective.text = "E  CONTINUE" if player.position.distance_to(room.get("exit_position")) < 85 else "REACH THE TEAL LIFT MARKER"
 	hud.call("update_stats",health,maximum_health,player.get("dash_cooldown"),player.get("special_cooldown"))
 	hud.call("set_boss",boss if is_instance_valid(boss) else null)
 	hud.call("update_progression", player.energy, config.core_elements, config.core_limit, run_xp, run_items, player.perfect_reward_timer, player.perfect_damage_timer)
 	var desired := Vector2(768,545)+(player.position-Vector2(768,610))*Vector2(0.17,0.12)
+	if room is MAINTENANCE_ROOM:
+		desired = room.camera_target(player.position)
 	$Camera2D.position = $Camera2D.position.lerp(desired,1-exp(-delta*4))
 	camera_shake = maxf(0,camera_shake-delta*25)
 	$Camera2D.offset = Vector2(sin(elapsed*91),cos(elapsed*107))*camera_shake if get_node("/root/GameSettings").screen_shake else Vector2.ZERO
@@ -187,8 +236,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		room.set("debug_enabled",debug_enabled)
 
 func try_advance() -> bool:
+	if room is MAINTENANCE_ROOM:
+		room.exit_position = room.nearest_exit(player.position)
 	if state != "exit" or player.position.distance_to(room.get("exit_position")) >= 85:
 		return false
+	if room is BLOCKOUT_ROOM:
+		var door: int = room.exit_positions.find(room.exit_position)
+		rooms[room_index+1].reward = rooms[room_index].exit_rewards[door]
 	_load_room(room_index+1)
 	return true
 
@@ -255,15 +309,22 @@ func _check_clear() -> void:
 	_clear_projectiles()
 	room.set("hazards_enabled",false)
 	_award_progress(25, 1 if room_index == 3 else 0)
-	if room_index == 7:
-		_finish(true)
-		return
 	state = "reward"
 	hud.objective.text = "CHAMBER CLEARED"
 	$Audio.play_cue("clear")
 	player.set("controls_enabled",false)
 	health = minf(maximum_health,health+12)
 	reward_choices.clear()
+	if config.biome == "maintenance" or room is BLOCKOUT_ROOM:
+		for reward in REWARDS:
+			if reward.id == rooms[room_index].reward:
+				reward_choices.append(reward)
+		var promised: String = rooms[room_index].reward
+		if promised.begins_with("core_"):
+			var element := promised.trim_prefix("core_")
+			reward_choices.append({"id":promised,"name":element.to_upper()+" CORE","description":"Bind %s core\nQ / 25 energy" % element})
+		hud.call("show_rewards",reward_choices)
+		return
 	var available := REWARDS.duplicate(true)
 	for i in 3:
 		var pick := rng.randi_range(0,available.size()-1)
@@ -294,6 +355,10 @@ func choose_reward(id: String) -> bool:
 		"dash": player.set("dash_recharge",maxf(0.3,float(player.get("dash_recharge"))*0.85))
 		"speed": player.set("speed",float(player.get("speed"))*1.1)
 		"repair": health = minf(maximum_health,health+45)
+	if room_index == rooms.size()-1:
+		hud.modal.hide()
+		_complete_biome()
+		return true
 	state = "exit"
 	room.set("exit_enabled",true)
 	player.set("controls_enabled",true)
@@ -401,16 +466,23 @@ func _finish(won: bool) -> void:
 		return
 	state = "result"
 	_end_perfect_slow()
-	outcome = "BOILER DISTRICT CLEARED" if won else "FRAME LOST"
+	outcome = ("MAINTENANCE CLEARED" if config.biome == "maintenance" else "BOILER DISTRICT CLEARED") if won else "FRAME LOST"
+	if won and config.biome == "toxin_refinery":
+		outcome = "UNDERGROUND ROUTE CLEARED"
 	hud.objective.text = "DISTRICT CLEARED" if won else "CORE RECOVERED"
 	player.set("controls_enabled",false)
 	room.set("hazards_enabled",false)
 	for enemy in enemies.get_children():
 		enemy.set("active",false)
 	_clear_projectiles()
-	if won:
+	if won and config.next_biome().is_empty():
 		config.set("victories",int(config.get("victories"))+1)
-	hud.call("show_result",outcome,"Chamber %d / 8   |   %d hostiles dismantled   |   %d:%02d\n%s" % [room_index+1,kills,int(elapsed)/60,int(elapsed)%60,"The Furnace Warden is silent. The pressure line is yours." if won else "Your core is safe aboard the Flying Liberty. Rebuild and try again."])
+	var victory_text := "Maintenance secured. Return to the Flying Liberty." if config.biome == "maintenance" else "The Furnace Warden is silent. The pressure line is yours."
+	if config.biome == "toxin_refinery":
+		victory_text = "Toxin Refinery secured. Underground investigation complete. Return to the Flying Liberty."
+	if won and not config.next_biome().is_empty():
+		victory_text = "%s is not yet available. Returning to the Flying Liberty." % config.next_biome().replace("_"," ").capitalize()
+	hud.call("show_result",outcome,"Chamber %d / %d   |   %d hostiles dismantled   |   %d:%02d\n%s" % [room_index+1,rooms.size(),kills,int(elapsed)/60,int(elapsed)%60,victory_text if won else "Your core is safe aboard the Flying Liberty. Rebuild and try again."])
 	await get_tree().create_timer(2.0).timeout
 	return_to_sync_chamber()
 
@@ -425,7 +497,7 @@ func _toggle_pause() -> void:
 
 func _retry() -> void:
 	get_tree().paused = false
-	config.call("start_run",config.get("robot_type"),config.get("modifiers").duplicate())
+	config.call("start_run",config.get("robot_type"),config.get("modifiers").duplicate(),config.route)
 	get_tree().change_scene_to_file("res://scenes/RoguelikeRun.tscn")
 
 func return_to_sync_chamber() -> void:

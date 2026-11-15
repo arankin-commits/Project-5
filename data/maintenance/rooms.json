@@ -1,0 +1,535 @@
+{
+  "area": "Maintenance",
+  "boss_encounter": {
+    "name": "Maintenance Control",
+    "boss": true,
+    "boss_name": "MAINTENANCE GUARDIAN",
+    "reward": "hull",
+    "waves": [
+      [
+        "boss"
+      ]
+    ]
+  },
+  "rooms": [
+    {
+      "id": "S01",
+      "name": "Valve Alcove",
+      "biome": "MAINTENANCE",
+      "layout": 0,
+      "size": "small",
+      "metadata": "res://rooms/Maintenance_Rebuild_v2/metadata/S01.json",
+      "image": "res://rooms/Maintenance_Rebuild_v2/rooms/S01_Valve_Alcove.png",
+      "reward": "repair",
+      "waves": [
+        [
+          "crawler",
+          "crawler",
+          "crawler"
+        ]
+      ],
+      "obstacles": [
+        [
+          0.31,
+          0.32,
+          0.07,
+          0.06
+        ],
+        [
+          0.78,
+          0.66,
+          0.05,
+          0.06
+        ]
+      ]
+    },
+    {
+      "id": "S02",
+      "name": "Cable Recess",
+      "biome": "MAINTENANCE",
+      "layout": 1,
+      "size": "small",
+      "metadata": "res://rooms/Maintenance_Rebuild_v2/metadata/S02.json",
+      "image": "res://rooms/Maintenance_Rebuild_v2/rooms/S02_Cable_Recess.png",
+      "reward": "hull",
+      "waves": [
+        [
+          "crawler",
+          "sentry"
+        ],
+        [
+          "crawler",
+          "crawler"
+        ]
+      ],
+      "obstacles": [
+        [
+          0.26,
+          0.4,
+          0.07,
+          0.08
+        ],
+        [
+          0.74,
+          0.67,
+          0.07,
+          0.06
+        ]
+      ]
+    },
+    {
+      "id": "S03",
+      "name": "Filter Intake",
+      "biome": "MAINTENANCE",
+      "layout": 2,
+      "size": "small",
+      "metadata": "res://rooms/Maintenance_Rebuild_v2/metadata/S03.json",
+      "image": "res://rooms/Maintenance_Rebuild_v2/rooms/S03_Filter_Intake.png",
+      "reward": "repair",
+      "waves": [
+        [
+          "crawler",
+          "sentry"
+        ],
+        [
+          "crawler",
+          "crawler"
+        ]
+      ],
+      "obstacles": [
+        [
+          0.22,
+          0.3,
+          0.05,
+          0.07
+        ],
+        [
+          0.77,
+          0.62,
+          0.06,
+          0.07
+        ]
+      ]
+    },
+    {
+      "id": "M01",
+      "name": "Twin Fan Transfer",
+      "biome": "MAINTENANCE",
+      "layout": 3,
+      "size": "medium",
+      "metadata": "res://rooms/Maintenance_Rebuild_v2/metadata/M01.json",
+      "image": "res://rooms/Maintenance_Rebuild_v2/rooms/M01_Twin_Fan_Transfer.png",
+      "reward": "hull",
+      "waves": [
+        [
+          "crawler",
+          "crawler",
+          "crawler"
+        ]
+      ],
+      "obstacles": [
+        [
+          0.3,
+          0.34,
+          0.08,
+          0.08
+        ],
+        [
+          0.72,
+          0.62,
+          0.07,
+          0.08
+        ]
+      ]
+    },
+    {
+      "id": "M02",
+      "name": "Switchback Gallery",
+      "biome": "MAINTENANCE",
+      "layout": 4,
+      "size": "medium",
+      "metadata": "res://rooms/Maintenance_Rebuild_v2/metadata/M02.json",
+      "image": "res://rooms/Maintenance_Rebuild_v2/rooms/M02_Switchback_Gallery.png",
+      "reward": "repair",
+      "waves": [
+        [
+          "crawler",
+          "sentry"
+        ],
+        [
+          "crawler",
+          "crawler"
+        ]
+      ],
+      "obstacles": [
+        [
+          0.27,
+          0.33,
+          0.08,
+          0.08
+        ],
+        [
+          0.72,
+          0.68,
+          0.08,
+          0.05
+        ]
+      ]
+    },
+    {
+      "id": "M03",
+      "name": "Pressure Corridor",
+      "biome": "MAINTENANCE",
+      "layout": 5,
+      "size": "medium",
+      "metadata": "res://rooms/Maintenance_Rebuild_v2/metadata/M03.json",
+      "image": "res://rooms/Maintenance_Rebuild_v2/rooms/M03_Pressure_Corridor.png",
+      "reward": "hull",
+      "waves": [
+        [
+          "crawler",
+          "sentry"
+        ],
+        [
+          "crawler",
+          "crawler"
+        ]
+      ],
+      "obstacles": [
+        [
+          0.22,
+          0.34,
+          0.05,
+          0.08
+        ],
+        [
+          0.78,
+          0.55,
+          0.06,
+          0.07
+        ]
+      ]
+    },
+    {
+      "id": "M04",
+      "name": "Cross Service Hub",
+      "biome": "MAINTENANCE",
+      "layout": 6,
+      "size": "medium",
+      "metadata": "res://rooms/Maintenance_Rebuild_v2/metadata/M04.json",
+      "image": "res://rooms/Maintenance_Rebuild_v2/rooms/M04_Cross_Service_Hub.png",
+      "reward": "repair",
+      "waves": [
+        [
+          "crawler",
+          "crawler",
+          "crawler"
+        ]
+      ],
+      "obstacles": [
+        [
+          0.35,
+          0.39,
+          0.06,
+          0.07
+        ],
+        [
+          0.67,
+          0.61,
+          0.05,
+          0.06
+        ]
+      ]
+    },
+    {
+      "id": "M05",
+      "name": "Broken Cable Maze",
+      "biome": "MAINTENANCE",
+      "layout": 7,
+      "size": "medium",
+      "metadata": "res://rooms/Maintenance_Rebuild_v2/metadata/M05.json",
+      "image": "res://rooms/Maintenance_Rebuild_v2/rooms/M05_Broken_Cable_Maze.png",
+      "reward": "hull",
+      "waves": [
+        [
+          "crawler",
+          "sentry"
+        ],
+        [
+          "crawler",
+          "crawler"
+        ]
+      ],
+      "obstacles": [
+        [
+          0.21,
+          0.35,
+          0.06,
+          0.08
+        ],
+        [
+          0.72,
+          0.6,
+          0.08,
+          0.08
+        ]
+      ]
+    },
+    {
+      "id": "M06",
+      "name": "Coolant Pump Hall",
+      "biome": "MAINTENANCE",
+      "layout": 8,
+      "size": "medium",
+      "metadata": "res://rooms/Maintenance_Rebuild_v2/metadata/M06.json",
+      "image": "res://rooms/Maintenance_Rebuild_v2/rooms/M06_Coolant_Pump_Hall.png",
+      "reward": "repair",
+      "waves": [
+        [
+          "crawler",
+          "sentry"
+        ],
+        [
+          "crawler",
+          "crawler"
+        ]
+      ],
+      "obstacles": [
+        [
+          0.28,
+          0.3,
+          0.08,
+          0.07
+        ],
+        [
+          0.73,
+          0.6,
+          0.08,
+          0.06
+        ]
+      ]
+    },
+    {
+      "id": "M07",
+      "name": "Duct-Switch Annex",
+      "biome": "MAINTENANCE",
+      "layout": 9,
+      "size": "medium",
+      "metadata": "res://rooms/Maintenance_Rebuild_v2/metadata/M07.json",
+      "image": "res://rooms/Maintenance_Rebuild_v2/rooms/M07_Duct-Switch_Annex.png",
+      "reward": "hull",
+      "waves": [
+        [
+          "crawler",
+          "crawler",
+          "crawler"
+        ]
+      ],
+      "obstacles": [
+        [
+          0.25,
+          0.39,
+          0.06,
+          0.07
+        ],
+        [
+          0.72,
+          0.56,
+          0.08,
+          0.06
+        ]
+      ]
+    },
+    {
+      "id": "L01",
+      "name": "Grand Maintenance Transept",
+      "biome": "MAINTENANCE",
+      "layout": 10,
+      "size": "large",
+      "metadata": "res://rooms/Maintenance_Rebuild_v2/metadata/L01.json",
+      "image": "res://rooms/Maintenance_Rebuild_v2/rooms/L01_Grand_Maintenance_Transept.png",
+      "reward": "repair",
+      "waves": [
+        [
+          "crawler",
+          "sentry"
+        ],
+        [
+          "crawler",
+          "crawler"
+        ]
+      ],
+      "obstacles": [
+        [
+          0.21,
+          0.32,
+          0.07,
+          0.06
+        ],
+        [
+          0.75,
+          0.6,
+          0.07,
+          0.08
+        ],
+        [
+          0.48,
+          0.67,
+          0.06,
+          0.05
+        ]
+      ]
+    },
+    {
+      "id": "L02",
+      "name": "Turbine Array",
+      "biome": "MAINTENANCE",
+      "layout": 11,
+      "size": "large",
+      "metadata": "res://rooms/Maintenance_Rebuild_v2/metadata/L02.json",
+      "image": "res://rooms/Maintenance_Rebuild_v2/rooms/L02_Turbine_Array.png",
+      "reward": "hull",
+      "waves": [
+        [
+          "crawler",
+          "sentry"
+        ],
+        [
+          "crawler",
+          "crawler"
+        ]
+      ],
+      "obstacles": [
+        [
+          0.22,
+          0.37,
+          0.08,
+          0.07
+        ],
+        [
+          0.75,
+          0.39,
+          0.07,
+          0.08
+        ],
+        [
+          0.52,
+          0.72,
+          0.06,
+          0.06
+        ]
+      ]
+    },
+    {
+      "id": "L03",
+      "name": "Octagonal Central Works",
+      "biome": "MAINTENANCE",
+      "layout": 12,
+      "size": "large",
+      "metadata": "res://rooms/Maintenance_Rebuild_v2/metadata/L03.json",
+      "image": "res://rooms/Maintenance_Rebuild_v2/rooms/L03_Octagonal_Central_Works.png",
+      "reward": "repair",
+      "waves": [
+        [
+          "crawler",
+          "crawler",
+          "crawler"
+        ]
+      ],
+      "obstacles": [
+        [
+          0.3,
+          0.31,
+          0.07,
+          0.08
+        ],
+        [
+          0.66,
+          0.6,
+          0.08,
+          0.05
+        ]
+      ]
+    },
+    {
+      "id": "L04",
+      "name": "Double Pump Yard",
+      "biome": "MAINTENANCE",
+      "layout": 13,
+      "size": "large",
+      "metadata": "res://rooms/Maintenance_Rebuild_v2/metadata/L04.json",
+      "image": "res://rooms/Maintenance_Rebuild_v2/rooms/L04_Double_Pump_Yard.png",
+      "reward": "hull",
+      "waves": [
+        [
+          "crawler",
+          "sentry"
+        ],
+        [
+          "crawler",
+          "crawler"
+        ]
+      ],
+      "obstacles": [
+        [
+          0.28,
+          0.33,
+          0.07,
+          0.07
+        ],
+        [
+          0.66,
+          0.61,
+          0.07,
+          0.07
+        ],
+        [
+          0.5,
+          0.73,
+          0.05,
+          0.06
+        ]
+      ]
+    },
+    {
+      "id": "L05",
+      "name": "Winding Repair Concourse",
+      "biome": "MAINTENANCE",
+      "layout": 14,
+      "size": "large",
+      "metadata": "res://rooms/Maintenance_Rebuild_v2/metadata/L05.json",
+      "image": "res://rooms/Maintenance_Rebuild_v2/rooms/L05_Winding_Repair_Concourse.png",
+      "reward": "repair",
+      "waves": [
+        [
+          "crawler",
+          "sentry"
+        ],
+        [
+          "crawler",
+          "crawler"
+        ]
+      ],
+      "obstacles": [
+        [
+          0.18,
+          0.35,
+          0.06,
+          0.08
+        ],
+        [
+          0.77,
+          0.65,
+          0.08,
+          0.07
+        ],
+        [
+          0.54,
+          0.52,
+          0.07,
+          0.07
+        ]
+      ]
+    }
+  ]
+}

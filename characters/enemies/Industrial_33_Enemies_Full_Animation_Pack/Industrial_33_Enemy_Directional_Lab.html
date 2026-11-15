@@ -1,0 +1,1663 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Industrial Enemies — 33 Directional Animation Lab</title>
+<style>
+:root{color-scheme:dark;--b:#091014;--panel:#151d22;--panel2:#1e2b33;--line:#394b53;--white:#e4edef;--muted:#9eafb8;--gold:#d8ae76;--cyan:#a8c8c8}*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:var(--b);color:var(--white);font-family:Inter,Segoe UI,Arial,sans-serif;font-size:13px}
+#layout{display:flex;height:100dvh;width:100%;overflow:hidden}#canvasStage{position:relative;flex:1;min-width:0;background:radial-gradient(ellipse,#30383c,#080d10);display:flex;justify-content:center;align-items:center}
+#arena{display:block;width:100%;height:100%;max-height:100dvh;object-fit:contain;outline:none;cursor:crosshair}
+#panel{width:380px;flex:none;background:#141d22;border-left:1px solid #39505b;overflow:auto;padding:20px 19px 40px;scrollbar-color:#445963 transparent;scrollbar-width:thin}
+h1{font-size:23px;line-height:1.13;margin:6px 0 7px;letter-spacing:-.04em}h2{font-size:11px;color:#e5d2b2;letter-spacing:.14em;text-transform:uppercase;margin:0 0 11px}.eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:.19em;color:var(--gold);font-weight:800}.sub{font-size:11px;color:var(--muted);line-height:1.6;margin:7px 0}.tiny{font-size:10px;color:#8498a5}.section{border-top:1px solid #33434b;padding-top:16px;margin-top:17px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:9px}.list{display:grid;grid-template-columns:1fr 1fr;gap:7px}.list.three{grid-template-columns:repeat(3,1fr)}
+button,select{font:inherit;background:#263741;color:#dce9ea;border:1px solid #536873;border-radius:5px;padding:8px 9px;cursor:pointer;min-width:0}button:hover,select:hover{background:#304852;border-color:#91b2b5}button.active{background:#3b5056;border-color:#d6ae79;color:#ffe8c2}button:focus-visible,select:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+button.control{font-size:11px;font-weight:700}button.gold{color:#f3d9aa;border-color:#8c6e48}select{width:100%;margin:7px 0;padding:9px 10px;background:#223139}
+.labrow{display:flex;gap:6px;align-items:center;margin:7px 0}.labrow span{font-size:12px;color:#cad7db;flex:1}.labrow select{width:auto;margin:0}
+label.toggle{font-size:12px;color:#c6d4d9;display:flex;justify-content:space-between;gap:10px;margin:11px 0;align-items:center}input[type=checkbox]{accent-color:#b0cdcf;width:16px;height:16px}
+.statGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin:13px 0}.stat{border:1px solid #354850;border-radius:5px;text-align:center;padding:8px 2px;background:#0d171c}.stat b{display:block;font-size:16px;color:#e6eaea}.stat small{font-size:9px;color:#90a2ab}
+.movecard{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:10px 9px;margin:6px 0;background:#1a292f;border:1px solid #3c525b}.movecard b{font-size:12px;display:block;color:#e9edf0}.movecard small{font-size:10px;color:#9fb0ba;display:block;line-height:1.45;margin-top:3px}.moveNum{font-size:20px;color:#e7b978;font-weight:800;width:25px;text-align:center;flex-shrink:0}
+#angleStrip{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}#angleStrip button{font-size:9px;padding:2px 0;background:#0c171c;color:#c7d2d7;border:1px solid #35474f}#angleStrip canvas{width:100%;height:auto;display:block;image-rendering:auto}#angleStrip span{display:block;font-size:9px;margin:0 0 2px}
+#sortGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:5px}#sortGrid button{font-size:10px;padding:5px 4px;text-align:left;background:#18262d;color:#a6b5bf}#sortGrid button.on{border-color:#e6b77c;color:#ffe4b9}
+summary{cursor:pointer;color:#d3dce0;font-size:12px;font-weight:700}details p{font-size:11px;line-height:1.55;color:#b0c1ca}
+.footHUD{position:absolute;left:16px;bottom:17px;pointer-events:none;padding:7px 12px;border-radius:4px;background:#071015c9;border:1px solid #334852;color:#b4c1c8;font-size:10px}
+@media(max-width:950px){#panel{width:330px;padding:15px 12px 25px}.footHUD{display:none}}@media(max-width:720px){html,body{overflow:auto}#layout{display:block;min-height:100dvh;height:auto;overflow:visible}#canvasStage{width:100%;height:auto;aspect-ratio:16/9;max-height:none}#arena{height:100%;max-height:none}#panel{width:100%;max-width:none;border-left:0;border-top:1px solid #3b535d;overflow:visible}.statGrid{max-width:450px}}
+</style></head><body><div id="layout"><main id="canvasStage"><canvas width="1280" height="720" id="arena" tabindex="0" aria-label="Isometric arena, interactive 33 enemy movement and attack animations"></canvas><div class="footHUD">W A S D — MOVE · 1 / 2 / 3 — ABILITIES · CLICK — CYCLE MOVES · K — DEATH · R — RESET · T — TOUR</div></main>
+<aside id="panel"><div class="eyebrow">33 ORIGINAL ENEMIES · 4 BIOMES</div><h1 id="enemyTitle">Inspection Wasp</h1><div id="roleLabel" class="sub">Maintenance / Flying</div><p class="sub">One fixed isometric camera. Move every unique graybox through all eight directions, inspect 32 facing angles, and trigger its three distinct moves.</p>
+<div class="section"><h2>Choose an enemy</h2><select id="biomeSelect" title="Biome"></select><select id="enemySelect" title="Enemy"></select><div class="list"><button id="prevBtn">← Previous</button><button id="nextBtn">Next →</button></div><p class="tiny" id="enemyIndex">1 / 33</p></div>
+<div class="statGrid"><div class="stat"><b id="statHP">35</b><small>HP</small></div><div class="stat"><b id="statMove">4.2</b><small>Speed u/s</small></div><div class="stat"><b id="statTier">2/5</b><small>Danger</small></div><div class="stat"><b id="statSize">Small</b><small>Size</small></div></div>
+<div class="section"><h2>Movement demonstrations</h2><div class="list three"><button class="control modeBtn active" data-mode="manual">WASD</button><button class="control modeBtn" data-mode="tour">8-way tour</button><button class="control gold modeBtn" data-mode="combat">All moves</button></div><p class="sub">WASD flies, rolls, runs, or crawls based on the selected enemy. The tour moves automatically in eight directions. All Moves cycles through movement and the three documented attacks.</p></div>
+<div class="section"><h2>Attack animation viewer</h2><button id="move0" class="movecard"></button><button id="move1" class="movecard"></button><button id="move2" class="movecard"></button><div class="list"><button id="deathBtn" class="control">Death animation (K)</button><button id="resetBtn" class="control">Reset (R)</button></div></div>
+<div class="section"><h2>Directional facing system</h2><div class="labrow"><span>Facing increments</span><select id="angles"><option value="8">8 directions</option><option value="16">16 directions</option><option value="32" selected>32 directions</option></select></div><label class="toggle">Elite graybox variant <input type="checkbox" id="eliteToggle"></label><label class="toggle">Attack warning decals <input type="checkbox" id="teleToggle" checked></label><label class="toggle">Show floor shadow <input type="checkbox" id="shadowToggle" checked></label><label class="toggle">Mouse-aim when stationary <input type="checkbox" id="mouseToggle"></label><div class="statGrid"><div class="stat"><b id="currentYaw">090°</b><small>Yaw</small></div><div class="stat"><b id="spriteIndex">8/32</b><small>Slice</small></div><div class="stat"><b id="currentState" style="font-size:11px">IDLE</b><small>State</small></div><div class="stat"><b id="currentSpeed">0.00</b><small>Speed</small></div></div></div>
+<div class="section"><h2>Eight-direction turnaround</h2><div id="angleStrip"></div><p class="sub">Select a thumbnail to turn the enemy while standing still. All direction views are reconstructed from the same graybox geometry, not AI-generated character variations.</p></div>
+<div class="section"><h2>Construction & design notes</h2><details open><summary>Graybox construction</summary><p id="roleText"></p><p id="animationInfo"></p></details><details><summary>Combat AI behavior</summary><p id="aiInfo"></p></details><details><summary>Elite variant</summary><p id="eliteInfo"></p></details><details><summary>Death animation</summary><p id="deathInfo"></p></details><p class="sub">The interactive prototype visualizes the intended movements and hit areas; it does not yet implement complete enemy decision-making, combat physics, or an authored animation rig.</p></div>
+<div class="section"><h2>All 33 enemies</h2><div id="sortGrid"></div></div>
+</aside></div><script>
+const ENEMIES=[
+  {
+    "id": 0,
+    "name": "Inspection Wasp",
+    "biome": "Maintenance",
+    "role": "Flying",
+    "size": "Small",
+    "dimensions": "0.8 × 0.8 × 1.1 u; hovers 1.2 u above floor",
+    "hp": 35,
+    "speed": 4.2,
+    "danger": 2,
+    "visual": "Triangular wedge shell, one large circular camera eye, two horizontal cylinder thrusters, small stabilizer fins and a long telescoping needle under the center. Keep the entire silhouette visibly nose-down.",
+    "pivots": "Independently swivel both thrusters; telescope the needle; roll the shell into dives; eye emissive state controls warnings.",
+    "ai": "Orbits at 3–6 u range. Chooses Probe Dive when aligned, Scanner Sting at medium range, and Strafe when cornered. Body tilts with velocity, then returns upright.",
+    "moves": [
+      {
+        "name": "Probe Dive",
+        "tell": "0.50 s: nose pitches down, eye turns red and a narrow lane appears",
+        "effect": "Lunges along locked lane for 9 damage (up to 5 u).",
+        "recovery": "0.55 s wobble to stabilize with needle extended.",
+        "cooldown": "3.0 s"
+      },
+      {
+        "name": "Scanner Sting",
+        "tell": "0.70 s: thin targeting beam fixes a direction",
+        "effect": "Fires one electrical pulse for 7 damage along the beam.",
+        "recovery": "0.35 s eye shutter closes and reopens.",
+        "cooldown": "4.0 s"
+      },
+      {
+        "name": "Evasive Strafe",
+        "tell": "0.20 s: one side thruster flashes",
+        "effect": "Sideways burst 2.0 u; deals no damage.",
+        "recovery": "0.25 s hover settles; cannot attack.",
+        "cooldown": "3.2 s"
+      }
+    ],
+    "eliteName": "Hunter Wasp",
+    "elite": "Two inspection needles and orange-edged wing fins; follows the first dive with a second separately warned dive after a 0.35 s realignment. Elite HP 53.",
+    "death": "0.0–0.25 s rotor desynchronization; 0.25–0.65 s spiral drop; 0.65–1.1 s three-piece impact scatter; eye light flickers out."
+  },
+  {
+    "id": 1,
+    "name": "Dust Mites",
+    "biome": "Maintenance",
+    "role": "Swarm",
+    "size": "Tiny",
+    "dimensions": "0.35 × 0.35 × 0.35 u each; hover 0.35 u; base pack 6",
+    "hp": 12,
+    "speed": 4.0,
+    "danger": 2,
+    "visual": "Each bot is a flattened sphere, single central eye, two tiny cylinder side thrusters, and one visible circular brush disk below. Give individual bots 5–10% scale variations; six bodies form a loose flock.",
+    "pivots": "Spin brush and thrusters separately; eye is one warning element; each unit has its own hover pivot and knockback.",
+    "ai": "Loose flocking around the player; attacks staggered. Six units maximum for a standard group. No stacking contact damage in one hit window.",
+    "moves": [
+      {
+        "name": "Brush Strike",
+        "tell": "0.35 s: one eye flashes red and brush spins faster",
+        "effect": "Unit darts 0.9 u for 4 contact damage. Shared victim hit cooldown prevents simultaneous chip hits.",
+        "recovery": "0.30 s drift backward and reposition.",
+        "cooldown": "1.8 s/unit"
+      },
+      {
+        "name": "Swarm Rush",
+        "tell": "0.80 s: all surviving eyes flash in sync and group compresses",
+        "effect": "Coordinated multi-bot dive; up to 12 total damage from the entire wave.",
+        "recovery": "0.65 s flock scatters and slows.",
+        "cooldown": "6.0 s/pack"
+      },
+      {
+        "name": "Regroup",
+        "tell": "0.40 s: lights shift cyan and movement slows",
+        "effect": "Units converge into a 1.2 u formation; no damage, prepares the next Rush.",
+        "recovery": "0.25 s synchronized hover.",
+        "cooldown": "5.0 s/pack"
+      }
+    ],
+    "eliteName": "Red-Eye Cluster",
+    "elite": "One visibly larger command bot (24 HP) conducts two Rush waves separated by 0.65 s. Destroying it restores normal uncoordinated behavior.",
+    "death": "Each destroyed bot sparks, loses altitude in 0.2 s, bounces once, and rolls to rest for 0.5 s before disappearing; surviving units do not pause."
+  },
+  {
+    "id": 2,
+    "name": "Pressure Purger",
+    "biome": "Maintenance",
+    "role": "AOE",
+    "size": "Large",
+    "dimensions": "2.0 × 2.0 × 2.4 u",
+    "hp": 110,
+    "speed": 1.6,
+    "danger": 3,
+    "visual": "Tall vertical cylinder with an octagonal plinth, eight evenly spaced rectangular vents, four bracing pistons, front pressure dial and rotating warning beacon. Large circular plan-view silhouette.",
+    "pivots": "One pivot for each port flap, one for the beacon, four for stabilizer pistons, and one gauge needle.",
+    "ai": "Moves to open central space, anchors before major attacks, and cannot turn once a sweep begins. Puddles disappear clearly.",
+    "moves": [
+      {
+        "name": "Steam Ring",
+        "tell": "1.10 s: stabilizers extend; circular floor decal grows",
+        "effect": "Expanding steam ring deals 18 damage when crossed.",
+        "recovery": "0.75 s vents exhaust harmless vapor.",
+        "cooldown": "6.0 s"
+      },
+      {
+        "name": "Vent Sweep",
+        "tell": "0.70 s: front vent opens and 90° cone is marked",
+        "effect": "Sweeps hot steam through cone for 12 damage.",
+        "recovery": "0.60 s vent shutter slowly closes.",
+        "cooldown": "4.0 s"
+      },
+      {
+        "name": "Chemical Overflow",
+        "tell": "0.90 s: liquid leaks at the base inside a marked circle",
+        "effect": "Leaves a corrosive puddle for 3 s; proposed 3 damage/s, nonstacking.",
+        "recovery": "0.45 s pump drains and shuts.",
+        "cooldown": "7.0 s"
+      }
+    ],
+    "eliteName": "Double Purger",
+    "elite": "Two independently telegraphed steam rings separated by 0.70 s; second ring has a smaller safe inner radius. Elite HP 165.",
+    "death": "Gauge needle pegs; 0.25 s bolts pop; 0.4 s harmless venting; 0.5 s cylinder buckles onto its base. Final cloud cannot damage."
+  },
+  {
+    "id": 3,
+    "name": "Spanner Guard",
+    "biome": "Maintenance",
+    "role": "Close Range",
+    "size": "Medium",
+    "dimensions": "1.1 × 0.9 × 2.0 u",
+    "hp": 90,
+    "speed": 2.8,
+    "danger": 2,
+    "visual": "Rectangular chest, squat cylindrical head with visor slit, broad box shoulders, piston forearms, oversized wrench hands, short blocky shins and heavy boot prisms.",
+    "pivots": "Separate shoulder yaw, elbow hinge, wrist/tool rotation, torso twist, hips and knees. Place hitboxes on wrench arcs, not whole arms.",
+    "ai": "Closes to 1.4 u and generally uses the two-hit string. Uses overhead crush separately against a stationary target. Each slash has a discrete damage window.",
+    "moves": [
+      {
+        "name": "Wrench Slash 1",
+        "tell": "0.45 s: right wrench draws back; a 100° arc appears",
+        "effect": "Horizontal swipe for 9 damage.",
+        "recovery": "0.20 s arm follow-through; links into Slash 2.",
+        "cooldown": "Combo"
+      },
+      {
+        "name": "Wrench Slash 2",
+        "tell": "0.30 s: torso counter-rotates and left wrench cocks",
+        "effect": "Reverse swing for 11 damage.",
+        "recovery": "0.65 s dual-arm cooldown after combo.",
+        "cooldown": "3.3 s/combo"
+      },
+      {
+        "name": "Overhead Crush",
+        "tell": "0.90 s: both wrenches lift over head; short floor rectangle lights",
+        "effect": "Downward smash for 19 damage.",
+        "recovery": "0.90 s wrenches stuck briefly in floor.",
+        "cooldown": "6.0 s"
+      }
+    ],
+    "eliteName": "Master Spanner",
+    "elite": "Brass shoulder collar and longer wrench handles. Adds Overhead Crush as a delayed third strike after Slash 2 with its full 0.90 s warning. Elite HP 135.",
+    "death": "Drops one wrench first, backward torso tip, knee pistons buckle, body collapses on its side, remaining wrist opens involuntarily."
+  },
+  {
+    "id": 4,
+    "name": "Foreman Node",
+    "biome": "Maintenance",
+    "role": "Summoner",
+    "size": "Large",
+    "dimensions": "1.9 × 1.9 × 2.0 u; hovers 0.5 u",
+    "hp": 130,
+    "speed": 1.3,
+    "danger": 4,
+    "visual": "Central cylindrical command pod with one circular eye, four radiating fabrication arms and six docking bay slots underneath. Outer panel petals fold open to reveal mini-bot slots.",
+    "pivots": "Use six independently hinged docking lids, four tool-arm pivots, whole-body hover and an expanding defensive ring.",
+    "ai": "Retreats to 5–7 u. Summons only if under alive-unit cap; prioritizes pulse if approached. Existing summoned bots remain after Foreman death.",
+    "moves": [
+      {
+        "name": "Deploy Cleaners",
+        "tell": "1.30 s: lower hatches unfold and fabrication arms cycle",
+        "effect": "Summons 3 Dust Mites, no direct damage; cap 6 summons alive per Foreman.",
+        "recovery": "0.70 s doors reseal.",
+        "cooldown": "7.0 s"
+      },
+      {
+        "name": "Defensive Pulse",
+        "tell": "0.85 s: cyan perimeter ring turns red and expands",
+        "effect": "Pushes nearby player back and deals 9 damage.",
+        "recovery": "0.55 s ring contracts.",
+        "cooldown": "5.0 s"
+      },
+      {
+        "name": "Assembly Barrage",
+        "tell": "0.70 s: front arms unfold and two barrels align",
+        "effect": "Fires 2 short-range scrap projectiles for 6 damage each.",
+        "recovery": "0.50 s arm retraction.",
+        "cooldown": "4.0 s"
+      }
+    ],
+    "eliteName": "Chief Foreman",
+    "elite": "Wider command halo, orange docking doors, 4 Mites per wave, and 3 s of temporary armor on new bots. Still obeys total summon cap of 6. Elite HP 195.",
+    "death": "Doors pop open; fabrication arms lose synchronization; eye flashes red; levitation cuts and pod drops straight down. Existing summons remain alive."
+  },
+  {
+    "id": 5,
+    "name": "Cable Snare Unit",
+    "biome": "Maintenance",
+    "role": "Grappler",
+    "size": "Medium",
+    "dimensions": "1.0 × 1.0 × 1.5 u; grapple reach 6 u",
+    "hp": 80,
+    "speed": 2.5,
+    "danger": 4,
+    "visual": "Narrow rectangle chassis on three hinged legs, exposed circular cable drum, telescoping claw on one disproportionately long arm, small rear balance weight.",
+    "pivots": "Cable reel rotates; claw jaws open independently; telescope arm sections; cable is a line rendered between spool and claw.",
+    "ai": "Holds 3.5–6 u range and tries to catch the player before melee. Hook can be dodged or broken with a defined escape input; never drags through walls.",
+    "moves": [
+      {
+        "name": "Grapple Launch",
+        "tell": "0.75 s: thin targeting line locks onto one lane, claw jaws open",
+        "effect": "Fires claw up to 6 u; contact deals 6 damage and enables Cable Reel.",
+        "recovery": "0.55 s missed claw retracts.",
+        "cooldown": "5.0 s"
+      },
+      {
+        "name": "Cable Reel",
+        "tell": "0.25 s: cable tightens visibly after a successful hook",
+        "effect": "Pulls player toward unit for up to 0.75 s; stops at solid geometry; no extra damage.",
+        "recovery": "0.50 s recoil as spool resets.",
+        "cooldown": "On hook"
+      },
+      {
+        "name": "Clamp Strike",
+        "tell": "0.40 s: claw opens wide, short 70° cone appears",
+        "effect": "Short mechanical chop for 13 damage.",
+        "recovery": "0.65 s claw closes and resets.",
+        "cooldown": "3.5 s"
+      }
+    ],
+    "eliteName": "Twin-Spool Snare",
+    "elite": "Second spool and mirrored claw arm. A missed first hook can trigger a second, with its own 0.75 s targeting tell. Elite HP 120.",
+    "death": "Spool overspins, cable whips down harmlessly, drum breaks free, tripod folds and collapses into a coil of loose wire."
+  },
+  {
+    "id": 6,
+    "name": "Phase Custodian",
+    "biome": "Maintenance",
+    "role": "Teleport",
+    "size": "Medium",
+    "dimensions": "0.85 × 0.7 × 2.1 u",
+    "hp": 80,
+    "speed": 3.4,
+    "danger": 4,
+    "visual": "Slim long-limbed android: vertically stacked rectangular body panels, elongated hinge arms, rectangular head, segmented legs and narrow baton. Keep shoulder width notably narrow.",
+    "pivots": "Separate torso plates for phase effect; arm/leg joints for lunges; floor destination decal persists until arrival.",
+    "ai": "Prefers flanking, not guaranteed rear teleports. Never attacks during invisibility; the landing point and slash direction remain visible before damage.",
+    "moves": [
+      {
+        "name": "Phase Step",
+        "tell": "0.60 s: body segments flicker; a destination marker appears",
+        "effect": "Moves instantly to the selected visible floor marker; no damage.",
+        "recovery": "0.25 s solidification; no collision damage.",
+        "cooldown": "5.0 s"
+      },
+      {
+        "name": "Ambush Slash",
+        "tell": "0.45 s AFTER reappearing: shoulder winds back and arc flashes",
+        "effect": "Fast blade strike for 14 damage toward locked facing.",
+        "recovery": "0.65 s weapon passes target and pauses.",
+        "cooldown": "4.0 s"
+      },
+      {
+        "name": "Shock Baton",
+        "tell": "0.55 s: narrow baton lights cyan and a 2 u line is marked",
+        "effect": "Short electrical jab for 10 damage.",
+        "recovery": "0.45 s baton vents sparks.",
+        "cooldown": "3.5 s"
+      }
+    ],
+    "eliteName": "Phantom Custodian",
+    "elite": "Twice blinks between separate marked positions; harmless afterimage remains at each. Final Ambush Slash retains full tell. Elite HP 120.",
+    "death": "Flickers between opacity states, panels separate vertically and crumble into glowing fragments; last grounded shadow fades only after defeat."
+  },
+  {
+    "id": 7,
+    "name": "Signal Scrambler",
+    "biome": "Maintenance",
+    "role": "Disruptor",
+    "size": "Small",
+    "dimensions": "0.85 × 0.85 × 1.2 u; floats 0.6 u",
+    "hp": 60,
+    "speed": 3.0,
+    "danger": 3,
+    "visual": "Spherical switchboard core with protruding antenna needles, two rotating edge dials, and a circular projector ring. A distinct spiky ring silhouette from above.",
+    "pivots": "Antenna telescopes, dial pointers rotate separately, outer ring scales with each pulse.",
+    "ai": "Hovers behind allies; does not hide attack telegraphs, distort controls, or invert camera input. Debuff uses a visible player-status icon.",
+    "moves": [
+      {
+        "name": "Interference Pulse",
+        "tell": "0.85 s: needles align and cyan boundary turns amber",
+        "effect": "Radial 3.5 u wave; on hit, slows ability-energy regeneration 40% for 3 s.",
+        "recovery": "0.65 s dials reverse and reset.",
+        "cooldown": "7.0 s"
+      },
+      {
+        "name": "Static Jitter",
+        "tell": "0.50 s: three small marked floor disks appear",
+        "effect": "Fires short electrical arcs toward disks, 6 damage on impact.",
+        "recovery": "0.40 s antenna shutters retract.",
+        "cooldown": "4.5 s"
+      },
+      {
+        "name": "Channel Drift",
+        "tell": "0.35 s: screen flashes blue",
+        "effect": "Slides sideways 2 u, breaks target tracking; no damage.",
+        "recovery": "0.25 s reacquisition.",
+        "cooldown": "4.0 s"
+      }
+    ],
+    "eliteName": "Broadband Scrambler",
+    "elite": "Extra concentric antenna ring and amber top beacon. Sends two slower concentric pulses 0.55 s apart, each dodgeable separately. Elite HP 90.",
+    "death": "Antennas retract out of sequence, dials spin backward uncontrollably, outer ring falls, and the central sphere cracks into halves."
+  },
+  {
+    "id": 8,
+    "name": "Conveyor Hound",
+    "biome": "Factory",
+    "role": "Charging",
+    "size": "Medium",
+    "dimensions": "1.4 × 0.75 × 1.0 u",
+    "hp": 90,
+    "speed": 3.2,
+    "danger": 3,
+    "visual": "Low six-legged mechanical dog with two long conveyor belts on its flanks, a mouth of stacked feed rollers, and small square warning lamps over the jaw. Low horizontal silhouette.",
+    "pivots": "Six leg hinges; each side belt scrolls independently; roller jaws spin; chest compresses before bursts.",
+    "ai": "Tracks at 3–6 u, commits to one straight lane before chasing, and never homes during the high-speed portion.",
+    "moves": [
+      {
+        "name": "Belt-Line Chase",
+        "tell": "0.75 s: flank belts briefly reverse, jaws chatter; 1 u-wide floor lane",
+        "effect": "Accelerates to 9 u/s and runs straight up to 7 u; bites at the end for 18 damage.",
+        "recovery": "0.85 s belt overrun carries it past the target.",
+        "cooldown": "5.0 s"
+      },
+      {
+        "name": "Roller Snap",
+        "tell": "0.40 s: top roller lifts and jaw gap widens",
+        "effect": "1.4 u bite cone for 10 damage.",
+        "recovery": "0.40 s reverse-roller jaw release.",
+        "cooldown": "3.0 s"
+      },
+      {
+        "name": "Belt Shred",
+        "tell": "0.65 s: leg braces lower; side belt spins bright",
+        "effect": "Short 2 u lateral scrape dealing 8 damage along its flank.",
+        "recovery": "0.50 s belt stalls.",
+        "cooldown": "4.2 s"
+      }
+    ],
+    "eliteName": "Twin-Belt Hound",
+    "elite": "Secondary upper belt and longer jaw housing. Can follow first charge with a clearly indicated reverse charge at 70% speed. Elite HP 135.",
+    "death": "Legs mis-time; side belts spin off their shafts; jaw rollers seize and body skids forward trailing harmless sparks."
+  },
+  {
+    "id": 9,
+    "name": "Link Crawlers",
+    "biome": "Factory",
+    "role": "Swarm",
+    "size": "Tiny",
+    "dimensions": "0.22 × 0.4 × 0.25 u per link; 5 links per chain",
+    "hp": 14,
+    "speed": 4.1,
+    "danger": 2,
+    "visual": "Miniature conveyor-chain centipedes made of rectangular toothed link segments; bright exposed hinge pins and a small flat head plate. Form a narrow articulated train rather than flying discs.",
+    "pivots": "Each hinge bends independently; segment row stiffens into a single aligned spear for lunges.",
+    "ai": "Uses short straight bursts rather than surrounding the player. Chain bodies share one attack budget to avoid simultaneous multi-link hits.",
+    "moves": [
+      {
+        "name": "Linked Spear",
+        "tell": "0.65 s: segments snap rigid; straight narrow lane appears",
+        "effect": "Whole chain lunges 3 u, 11 damage if struck by head.",
+        "recovery": "0.55 s segments separate at joints.",
+        "cooldown": "4.0 s"
+      },
+      {
+        "name": "Tail Whip",
+        "tell": "0.35 s: rear links curl left, 90° arc lights",
+        "effect": "Last 3 links sweep for 6 damage.",
+        "recovery": "0.35 s tail reknits.",
+        "cooldown": "3.0 s"
+      },
+      {
+        "name": "Chain Scatter",
+        "tell": "0.40 s: hinge lights flash in sequence",
+        "effect": "Splits briefly into 2 smaller independently targetable groups, no damage.",
+        "recovery": "0.60 s reconnection at head.",
+        "cooldown": "6.0 s"
+      }
+    ],
+    "eliteName": "Ratchet Train",
+    "elite": "Six heavier links with gold hinge pins. After Linked Spear it immediately telegraphs a second Tail Whip from the other side. Elite chain 100 HP total.",
+    "death": "Hinge sparks propagate front-to-back; links release one by one and clatter into a short line of debris."
+  },
+  {
+    "id": 10,
+    "name": "Gearburst Canister",
+    "biome": "Factory",
+    "role": "AOE",
+    "size": "Medium",
+    "dimensions": "1.3 diameter × 1.15 u tall",
+    "hp": 80,
+    "speed": 2.0,
+    "danger": 3,
+    "visual": "Armored squat rolling drum with eight radial seam slots and spring-loaded toothed gears inside. Removable outer annular armor is visually obvious.",
+    "pivots": "One drum roll pivot; eight radial shutters; outer ring becomes detached during recovery.",
+    "ai": "Moves slowly toward middle of room then bursts at distance. Reliable gaps between gear rays are mandatory.",
+    "moves": [
+      {
+        "name": "Eight-Gear Burst",
+        "tell": "0.95 s: seam lines glow and gears rattle inward; eight radial lanes appear",
+        "effect": "Ejects 8 slowly traveling straight-line gears, 10 damage each (one-hit cooldown per volley).",
+        "recovery": "0.9 s outer armor ring opens exposing the center.",
+        "cooldown": "6.5 s"
+      },
+      {
+        "name": "Rolling Pinch",
+        "tell": "0.50 s: drum tips toward player, two side indicators flash",
+        "effect": "Rolls 2.5 u along a short lane, 9 collision damage.",
+        "recovery": "0.55 s axle realigns.",
+        "cooldown": "4.0 s"
+      },
+      {
+        "name": "Spring Pop",
+        "tell": "0.60 s: top hatch vibrates, small center disk glows",
+        "effect": "Vertical gear pops above unit and lands in marked 1 u circle for 8 damage.",
+        "recovery": "0.50 s lid snaps closed.",
+        "cooldown": "5.0 s"
+      }
+    ],
+    "eliteName": "Double-Indexed Drum",
+    "elite": "Ten-sided gear barrel, upgraded steel ring. Fires an initial eight-lane burst then a separately warned burst rotated by 22.5°. Elite HP 120.",
+    "death": "Ring detaches, springs discharge harmlessly, drum unrolls on its side and individual metal teeth slide free."
+  },
+  {
+    "id": 11,
+    "name": "Shearblade",
+    "biome": "Factory",
+    "role": "Close Range",
+    "size": "Medium",
+    "dimensions": "1.0 × 0.8 × 2.3 u; extended blade width 2.4 u",
+    "hp": 95,
+    "speed": 3.0,
+    "danger": 3,
+    "visual": "Tall slim automaton with two enormous crossed scissor blades as arms, exposed chest hinge, narrow piston legs and a very small faceplate.",
+    "pivots": "Big opposed shoulder hinges, rotating scissor pivot, torso tilt, knee flex. Mark narrow closing V rather than a generic circle.",
+    "ai": "Approaches diagonally and forces short dodges across a narrowing V. Vulnerable hinge is exposed during long recovery.",
+    "moves": [
+      {
+        "name": "Closing V",
+        "tell": "0.65 s: both blades open and narrow V is projected",
+        "effect": "Two-stage crossing cut aimed at the player’s previous position, 10 + 12 damage if hit twice.",
+        "recovery": "0.80 s blades lock closed, exposing hinge.",
+        "cooldown": "4.5 s"
+      },
+      {
+        "name": "One-Side Snip",
+        "tell": "0.40 s: one blade rotates 90° outward",
+        "effect": "Fast diagonal cut for 9 damage.",
+        "recovery": "0.40 s spring resets.",
+        "cooldown": "3.0 s"
+      },
+      {
+        "name": "Hinge Lunge",
+        "tell": "0.65 s: torso compresses and a thin lane appears",
+        "effect": "Stabs with joined blade tips 2.5 u forward for 13 damage.",
+        "recovery": "0.65 s tip catches in floor briefly.",
+        "cooldown": "5.0 s"
+      }
+    ],
+    "eliteName": "Double-Edge Shear",
+    "elite": "Visible four-blade scissors with red center pivot. Closing V alternates two diagonal sectors with a 0.4 s gap. Elite HP 143.",
+    "death": "Blade lock freezes; shoulder springs eject; two long blades fall outward and the central hinge splits."
+  },
+  {
+    "id": 12,
+    "name": "Presswall Worker",
+    "biome": "Factory",
+    "role": "Shield",
+    "size": "Large",
+    "dimensions": "1.8 × 1.2 × 2.2 u; shield plate 1.75 u wide",
+    "hp": 160,
+    "speed": 1.8,
+    "danger": 4,
+    "visual": "Broad heavy two-legged industrial worker holding a rectangular sliding press plate in front. Exaggerated side hydraulic pistons and tracks allow the plate to shift beyond the arms.",
+    "pivots": "Shield runs on side-mounted telescoping rails; piston legs plant; shoulder blocks show visible exposed flanks.",
+    "ai": "Moves toward allies to provide frontal cover. Cannot guard while shoving or track-slamming; player should flank rather than wait.",
+    "moves": [
+      {
+        "name": "Press-Plate Shove",
+        "tell": "0.80 s: side pistons brace; rectangular lane appears",
+        "effect": "Plate drives 2.4 u forward for 17 damage and knockback.",
+        "recovery": "1.0 s plate overshoots, exposing its left side.",
+        "cooldown": "5.0 s"
+      },
+      {
+        "name": "Front Guard",
+        "tell": "0.25 s: plate clicks into upright track",
+        "effect": "Blocks 85% frontal damage in 140° sector for up to 2.0 s.",
+        "recovery": "0.5 s plate lowers and side joints expose.",
+        "cooldown": "4.0 s"
+      },
+      {
+        "name": "Side Track Slam",
+        "tell": "0.70 s: plate slides toward one side; off-center rectangle lights",
+        "effect": "Wide side smash for 12 damage.",
+        "recovery": "0.70 s plate re-centers slowly.",
+        "cooldown": "4.5 s"
+      }
+    ],
+    "eliteName": "Forepress Worker",
+    "elite": "Thicker press plate with twin red hydraulic rails. Guard becomes 160° but after shove both lateral pistons are vulnerable. Elite HP 240.",
+    "death": "Hydraulic rails fail asymmetrically; shield slams face down, torso pitches over it, and piston legs fold."
+  },
+  {
+    "id": 13,
+    "name": "Torque Thief",
+    "biome": "Factory",
+    "role": "Disruptor",
+    "size": "Medium",
+    "dimensions": "0.9 × 0.85 × 1.7 u",
+    "hp": 75,
+    "speed": 3.1,
+    "danger": 3,
+    "visual": "Crooked short-limbed tool-stealing robot; one shoulder higher than the other, exposed oversize wrist gears and a backpack capacitor drum.",
+    "pivots": "Hands open claw fingers, wrist gears reverse, shoulder hunches and energy capacitor fills.",
+    "ai": "Uses Torque Swipe at melee range, then backs off to discharge or escape. Energy-stealing move needs an especially obvious tell.",
+    "moves": [
+      {
+        "name": "Torque Swipe",
+        "tell": "0.55 s: wrist gears reverse; narrow crescent appears",
+        "effect": "Close swipe for 8 damage and steals 12 ability-energy points on hit (never below zero).",
+        "recovery": "0.70 s gears stall storing stolen charge.",
+        "cooldown": "4.0 s"
+      },
+      {
+        "name": "Charged Toss",
+        "tell": "0.75 s: backpack capacitor glows and one gear opens",
+        "effect": "Tosses a slow charged cog for 9 damage; no energy drain.",
+        "recovery": "0.50 s capacitor cools.",
+        "cooldown": "5.0 s"
+      },
+      {
+        "name": "Gear Feint",
+        "tell": "0.35 s: one claw clicks open; no red attack decal",
+        "effect": "Quick sidestep 1.6 u; does not damage or steal.",
+        "recovery": "0.30 s brief balance correction.",
+        "cooldown": "4.0 s"
+      }
+    ],
+    "eliteName": "Double-Pawl Thief",
+    "elite": "Two enlarged geared wrists and twin capacitor lamps. Swipe steals 18 energy; Charged Toss remains unchanged. Elite HP 113.",
+    "death": "Wrist gears jam in opposite directions, energy escapes in harmless arcs, and crooked arms snap into a rigid pose as body falls."
+  },
+  {
+    "id": 14,
+    "name": "Crane Hooker",
+    "biome": "Factory",
+    "role": "Grappler",
+    "size": "Large",
+    "dimensions": "1.5 × 1.2 × 2.5 u; hanging hook reach 6 u",
+    "hp": 115,
+    "speed": 1.8,
+    "danger": 4,
+    "visual": "Ground-walking portal crane with four blocky legs, tall overhead horizontal beam, suspended iron claw on chain and winch housing. Large rectangular upper silhouette.",
+    "pivots": "Boom rotates separately; chain length adjustable; hanging claw casts a growing shadow on floor; winch drum spins.",
+    "ai": "Avoids tight corners and seeks lanes near presses. Drag terminates at obstacles and never guarantees environmental damage; claw itself is dodgeable.",
+    "moves": [
+      {
+        "name": "Overhead Grab",
+        "tell": "0.85 s: claw rises; circular floor shadow tracks, then locks",
+        "effect": "Drops claw into marked disk for 8 damage; on hit hooks player.",
+        "recovery": "0.75 s winch jams if it misses.",
+        "cooldown": "6.0 s"
+      },
+      {
+        "name": "Hazard Drag",
+        "tell": "0.30 s: hooked chain pulls taut",
+        "effect": "Drags caught player up to 2.5 u toward existing marked stamped lane; no damage from reel itself.",
+        "recovery": "0.65 s chain unwinds and releases.",
+        "cooldown": "On grab"
+      },
+      {
+        "name": "Boom Sweep",
+        "tell": "0.80 s: overhead beam turns; long narrow strip lights",
+        "effect": "Swings hanging hook through a 130° arc for 14 damage.",
+        "recovery": "0.70 s hook oscillates and slows.",
+        "cooldown": "5.0 s"
+      }
+    ],
+    "eliteName": "Forked Crane",
+    "elite": "Double cable claw and taller beam. Telegraphed two-circle drop in sequence, not simultaneous. Elite HP 173.",
+    "death": "Cable frays, top beam tips, claw lands separately and the crane body folds under the weight of its own boom."
+  },
+  {
+    "id": 15,
+    "name": "Chain Binder",
+    "biome": "Factory",
+    "role": "Grappler",
+    "size": "Medium",
+    "dimensions": "1.2 × 0.9 × 1.4 u",
+    "hp": 90,
+    "speed": 2.3,
+    "danger": 3,
+    "visual": "Squat chain-coiling machine with twin circular drums, scissoring hook arms and a low box chassis. Crossed hanging chains are clear even from above.",
+    "pivots": "Two reel pivots, both claw arms independently yaw; loop renders as a closed line for player feedback.",
+    "ai": "Tries to cut off narrow routes rather than approach directly; crossed telegraph must leave clear side openings.",
+    "moves": [
+      {
+        "name": "Chain Loop",
+        "tell": "0.70 s: twin hooks fan outward; crossed red lanes appear",
+        "effect": "Throws a short loop 3.5 u; catches and pulls for up to 0.6 s, 6 damage on impact.",
+        "recovery": "0.70 s chain snares own axle after miss.",
+        "cooldown": "5.0 s"
+      },
+      {
+        "name": "Scissor Hook",
+        "tell": "0.45 s: claws separate on two sides",
+        "effect": "Two hooks close into a 1.6 u front cone for 11 damage.",
+        "recovery": "0.50 s gear teeth release.",
+        "cooldown": "3.5 s"
+      },
+      {
+        "name": "Chain Lash",
+        "tell": "0.65 s: left reel accelerates, sideways line lights",
+        "effect": "Sweeps one tether through 100° for 9 damage.",
+        "recovery": "0.60 s reel winds slack.",
+        "cooldown": "4.5 s"
+      }
+    ],
+    "eliteName": "Triple-Reel Binder",
+    "elite": "Adds top drum and third hook forming a triangular capture zone with a marked escape wedge. Elite HP 135.",
+    "death": "Hooks cross and seize, reels overheat, one chain snaps harmlessly upward, body tips forward and settles."
+  },
+  {
+    "id": 16,
+    "name": "Cinder Kettle",
+    "biome": "Boiler Room",
+    "role": "Flying",
+    "size": "Small",
+    "dimensions": "0.95 × 0.9 × 1.0 u; hovers 1.0 u",
+    "hp": 55,
+    "speed": 3.8,
+    "danger": 2,
+    "visual": "Floating copper kettle with half-sphere lid, pointed hot spout, two steam-jet fins and one glowing firebox window beneath the belly.",
+    "pivots": "Spout yaw; hinged lid rattle; fins flap; jet nozzles expand during bursts.",
+    "ai": "Flies in lazy circles then commits to a short pour lane. Its shadow always remains visible on floor.",
+    "moves": [
+      {
+        "name": "Ember Pour",
+        "tell": "0.65 s: lid rattles and a narrow moving lane lights",
+        "effect": "Darts over a 4 u lane while laying a 1.5 s ember ribbon; crossing burns 5 damage/s.",
+        "recovery": "0.75 s kettle rattles empty and recharges.",
+        "cooldown": "5.0 s"
+      },
+      {
+        "name": "Scalding Spit",
+        "tell": "0.55 s: spout reddens and tilts downward",
+        "effect": "Short ember blob for 9 damage in targeted direction.",
+        "recovery": "0.40 s steam jet hisses.",
+        "cooldown": "3.5 s"
+      },
+      {
+        "name": "Pressure Hop",
+        "tell": "0.35 s: twin jets flare white",
+        "effect": "Repositions diagonally 2 u; deals no damage.",
+        "recovery": "0.35 s hover oscillates.",
+        "cooldown": "4.0 s"
+      }
+    ],
+    "eliteName": "Coal-Lid Kettle",
+    "elite": "Two spouts with crossed pouring lanes and a larger black lid; lanes fire sequentially with a 0.4 s gap. Elite HP 83.",
+    "death": "Lid blows open without damage, firebox flickers blue then black, steam fins sputter and the empty kettle falls and dents."
+  },
+  {
+    "id": 17,
+    "name": "Soot Torpedo",
+    "biome": "Boiler Room",
+    "role": "Charging",
+    "size": "Medium",
+    "dimensions": "1.6 × 0.8 × 0.9 u",
+    "hp": 100,
+    "speed": 2.5,
+    "danger": 3,
+    "visual": "Low charcoal-black rocket trolley with triangular nose bumper, two narrow skid runners and one massive rear furnace bell.",
+    "pivots": "Furnace bell expansion, front suspension, side exhaust flaps, body recoil after wall impact.",
+    "ai": "Seeks clear straight lanes. Ricochet direction is predictable and visible before launch; only one reflection.",
+    "moves": [
+      {
+        "name": "Ricochet Rocket",
+        "tell": "0.85 s: ignition coughs twice and a smoky straight lane appears",
+        "effect": "Rockets at 11 u/s for up to 6 u, ricochets once off wall; 19 damage on contact.",
+        "recovery": "1.1 s exhaust sputters and engine stalls.",
+        "cooldown": "6.0 s"
+      },
+      {
+        "name": "Soot Blast",
+        "tell": "0.55 s: side vents open and triangular cone appears",
+        "effect": "Point-blank rear exhaust burst for 10 damage.",
+        "recovery": "0.55 s soot settles.",
+        "cooldown": "4.0 s"
+      },
+      {
+        "name": "Ignition Skip",
+        "tell": "0.40 s: furnace flashes orange",
+        "effect": "Short fixed-angle hop 1.5 u; no contact damage.",
+        "recovery": "0.30 s stabilizers reset.",
+        "cooldown": "3.5 s"
+      }
+    ],
+    "eliteName": "Twin-Combustor Torpedo",
+    "elite": "Two rear furnace bells and bright orange exhaust shutters; gains a second short final thrust after ricochet, with new red floor lane. Elite HP 150.",
+    "death": "Rear furnace cools unevenly, wheel runners shear, exhaust bell falls off and chassis skids until it stops."
+  },
+  {
+    "id": 18,
+    "name": "Condensate Mortar",
+    "biome": "Boiler Room",
+    "role": "Projectile",
+    "size": "Medium",
+    "dimensions": "1.2 × 1.1 × 1.8 u",
+    "hp": 75,
+    "speed": 1.5,
+    "danger": 3,
+    "visual": "Copper samovar tank mounted on four insulated cuboid legs, curved swan-neck spout, pressure cap on top and a visible condensation coil.",
+    "pivots": "Spout elevation and swivel, lid lift, pressure cap rotation, droplet particles tracking projectile path.",
+    "ai": "Holds long range and attacks with parabolic projectiles. No puddle stacks damage with a second puddle.",
+    "moves": [
+      {
+        "name": "Scalding Lob",
+        "tell": "0.80 s: water beads along spout; target circle locks",
+        "effect": "Lobs a globule into a marked 1.5 u disk, 12 splash damage; leaves 1 s steam puddle.",
+        "recovery": "0.65 s pressure cap hisses.",
+        "cooldown": "4.5 s"
+      },
+      {
+        "name": "Twin Drip",
+        "tell": "0.55 s: spout points twice, two landing circles appear",
+        "effect": "Two weaker lobs for 7 damage each in successive marked locations.",
+        "recovery": "0.55 s nozzle drains.",
+        "cooldown": "5.0 s"
+      },
+      {
+        "name": "Safety Valve Jet",
+        "tell": "0.65 s: top cap lifts, 90° nearby cone glows",
+        "effect": "Close steam fan for 9 damage.",
+        "recovery": "0.60 s cap settles.",
+        "cooldown": "4.0 s"
+      }
+    ],
+    "eliteName": "Double-Spout Samovar",
+    "elite": "Two asymmetric curved spouts and larger condensation collar; alternates two different lob arcs with separate landing warnings. Elite HP 113.",
+    "death": "Pressure cap twists loose, hot reservoir leaks harmless vapor, four support legs collapse one after another."
+  },
+  {
+    "id": 19,
+    "name": "Soot Midges",
+    "biome": "Boiler Room",
+    "role": "Swarm",
+    "size": "Tiny",
+    "dimensions": "Pack ~1.2 × 1.2 × 0.8 u; 5 visual midges",
+    "hp": 14,
+    "speed": 4.1,
+    "danger": 3,
+    "visual": "Dense ash insect cloud formed from five black bead-like bodies with tiny copper wings and prominent pinprick orange eyes. Cloud has one collective hitbox rather than five invisible hits.",
+    "pivots": "Each midge wing pivots and trails particulate smoke; whole flock compresses to a thin vertical line.",
+    "ai": "Slow circling between aggressive linear dives. Damage is capped by single flock hitbox.",
+    "moves": [
+      {
+        "name": "Needle Dive",
+        "tell": "0.70 s: flock collapses into a black vertical needle with orange eyes",
+        "effect": "Dashes along a 4 u lane for 12 damage using one shared hitbox.",
+        "recovery": "0.70 s cloud loses cohesion and drifts.",
+        "cooldown": "4.5 s"
+      },
+      {
+        "name": "Ash Burst",
+        "tell": "0.60 s: wingbeats accelerate and ring appears beneath flock",
+        "effect": "Expands into 2 u smoke burst for 8 damage, then disperses.",
+        "recovery": "0.50 s swarm reforms.",
+        "cooldown": "5.0 s"
+      },
+      {
+        "name": "Flock Fold",
+        "tell": "0.35 s: cloud dims and swirls",
+        "effect": "Swaps from loose formation to narrow travel form; no damage.",
+        "recovery": "0.30 s reformation.",
+        "cooldown": "3.5 s"
+      }
+    ],
+    "eliteName": "Soot Lance",
+    "elite": "Longer spear-cloud with brighter eyes, performs two clearly warned short dives from orthogonal directions. Elite HP 100 group.",
+    "death": "Cloud collapses inward as eye sparks die; each little wing loses lift, leaving falling ash that evaporates without dealing damage."
+  },
+  {
+    "id": 20,
+    "name": "Spark Wisps",
+    "biome": "Boiler Room",
+    "role": "Swarm",
+    "size": "Small",
+    "dimensions": "0.25 u diameter each; 4–5 motes per group",
+    "hp": 18,
+    "speed": 4.0,
+    "danger": 3,
+    "visual": "Tiny bright flame motes each ringed by a brass ignition coil; thin orange lines dynamically link nearby motes into a zigzag chain.",
+    "pivots": "Mote coils orbit, link ribbons stretch, each ignition pulse alternates brightness; motes have separate shadows.",
+    "ai": "Wanders in four- or five-mote chains. Keeping motes separated stops chain attacks; all damage is cooldown-capped.",
+    "moves": [
+      {
+        "name": "Linked Ignition",
+        "tell": "0.80 s: visible orange threads link three nearby motes",
+        "effect": "One chained ignition jumps between linked members; 8 damage per touched unit, max 16 per sequence.",
+        "recovery": "0.70 s threads burn out after one pass.",
+        "cooldown": "5.0 s"
+      },
+      {
+        "name": "Spark Flick",
+        "tell": "0.40 s: one mote brightens white",
+        "effect": "Small straight bolt for 6 damage.",
+        "recovery": "0.35 s mote dims briefly.",
+        "cooldown": "2.8 s"
+      },
+      {
+        "name": "Chain Rearrange",
+        "tell": "0.50 s: threads disconnect and reform",
+        "effect": "Motes relocate within 2 u without damaging.",
+        "recovery": "0.35 s new formation settles.",
+        "cooldown": "4.0 s"
+      }
+    ],
+    "eliteName": "Flash Constellation",
+    "elite": "Six motes including a larger central conductor. Linked Ignition can extend one more hop; conductor flashes a clear second warning. Elite total HP 126.",
+    "death": "Connections snap one at a time, coils fall as tiny brass rings, flames wink out in sequence."
+  },
+  {
+    "id": 21,
+    "name": "Grate Mauler",
+    "biome": "Boiler Room",
+    "role": "Close Range",
+    "size": "Large",
+    "dimensions": "1.8 × 1.2 × 2.2 u",
+    "hp": 155,
+    "speed": 1.9,
+    "danger": 4,
+    "visual": "Massive square furnace grate torso on piston legs, two huge burning grate fists and a wide barred face with orange light behind slats.",
+    "pivots": "Fist pistons extend separately; vent slats brighten and open; legs brace widely.",
+    "ai": "Heavy plodding pursuit. Cannot rotate mid-double-punch; flanks are its weakness.",
+    "moves": [
+      {
+        "name": "Furnace Double Punch",
+        "tell": "0.75 s: both elbows spread and slats turn orange",
+        "effect": "Two slow forward punches 0.4 s apart, 15 damage each, each creating a 0.7 u hot circle.",
+        "recovery": "0.95 s fists cool, retract through grate.",
+        "cooldown": "5.0 s"
+      },
+      {
+        "name": "Hot Shoulder",
+        "tell": "0.65 s: torso leans and one side heats",
+        "effect": "Short 2 u shoulder check for 13 damage.",
+        "recovery": "0.65 s vents flare downward.",
+        "cooldown": "4.5 s"
+      },
+      {
+        "name": "Grate Flare",
+        "tell": "0.90 s: slats spread and a narrow cone lights",
+        "effect": "Front-facing burst of embers for 12 damage.",
+        "recovery": "0.75 s grate dims.",
+        "cooldown": "6.0 s"
+      }
+    ],
+    "eliteName": "White-Hot Mauler",
+    "elite": "White heated grates and twin piston braces; adds an independently telegraphed third stomp only after two punches. Elite HP 233.",
+    "death": "Fists stop mid-motion, grate light dies from white to ember, front bars separate and heavy chest falls onto knees."
+  },
+  {
+    "id": 22,
+    "name": "Ash Shunter",
+    "biome": "Boiler Room",
+    "role": "Close Range",
+    "size": "Medium",
+    "dimensions": "0.8 × 0.8 × 2.2 u; polearm reach 3.0 u",
+    "hp": 95,
+    "speed": 3.0,
+    "danger": 3,
+    "visual": "Slender soot-black service knight with cylindrical pressure joints, long valve-wheel polearm, chimney-collar shoulder plates and tiny lit visor.",
+    "pivots": "Separate polearm shaft and turning valve-wheel tip; hip-backstep pivot and two-handed sweep grips.",
+    "ai": "Engages at 2.5–3 u; alternates a three-stage thrust-backstep-sweep with independent short pokes when cornered.",
+    "moves": [
+      {
+        "name": "Valve Thrust",
+        "tell": "0.45 s: polearm spins once then aligns with a thin lane",
+        "effect": "Long 3 u thrust for 12 damage.",
+        "recovery": "0.25 s front foot returns.",
+        "cooldown": "Combo"
+      },
+      {
+        "name": "Backward Step",
+        "tell": "0.20 s: foot pistons retract",
+        "effect": "Retreats 1.5 u, no damage; leaves a visible safe interval.",
+        "recovery": "0.25 s crouched settle.",
+        "cooldown": "Combo"
+      },
+      {
+        "name": "Wide Pole Sweep",
+        "tell": "0.70 s: weapon comes to side, 160° arc appears",
+        "effect": "Large sweep for 16 damage after backstep.",
+        "recovery": "0.85 s valve-wheel tip catches briefly in floor.",
+        "cooldown": "4.0 s/string"
+      }
+    ],
+    "eliteName": "Cinder Shunter",
+    "elite": "Dual spinning valve rings on polehead; wide sweep ends in a short ember burst warned by orange wheel glow. Elite HP 143.",
+    "death": "Polearm digs into floor and stays; its neck valve vents, torso sinks and the service knight topples without creating a flame hazard."
+  },
+  {
+    "id": 23,
+    "name": "Heat Mirage",
+    "biome": "Boiler Room",
+    "role": "Disruptor",
+    "size": "Medium",
+    "dimensions": "0.7 × 0.65 × 2.0 u",
+    "hp": 70,
+    "speed": 3.2,
+    "danger": 4,
+    "visual": "Very thin glowing radiator walker with two broad horizontal refractive heat fins, a small metal core and long straight support legs.",
+    "pivots": "Fin unfold mechanism produces mirage distortion; real shadow always present beneath body.",
+    "ai": "Offsets confusion with consistent cues: only real model casts solid shadow, attack decals never distort, decoys cannot collide.",
+    "moves": [
+      {
+        "name": "False Advance",
+        "tell": "0.70 s: two refracted false silhouettes appear with no solid shadows",
+        "effect": "Harmless phantom lunges forward, then real body stabs along clearly marked line for 13 damage.",
+        "recovery": "0.70 s cooling fins open wide to clear illusion.",
+        "cooldown": "5.0 s"
+      },
+      {
+        "name": "Heat Ripple",
+        "tell": "0.85 s: ring shimmers but hazard border stays crisp",
+        "effect": "Wave reduces player visibility only inside limited local haze for 2 s; no direct damage, clear floor markers retained.",
+        "recovery": "0.65 s fins retract.",
+        "cooldown": "6.5 s"
+      },
+      {
+        "name": "Radiator Jab",
+        "tell": "0.45 s: real core glows brighter than decoys",
+        "effect": "Short metal stab for 8 damage.",
+        "recovery": "0.40 s real core flickers.",
+        "cooldown": "3.5 s"
+      }
+    ],
+    "eliteName": "Triple-Mirage Radiator",
+    "elite": "Three false silhouettes and a large red core in the real body. Only one copy produces a normal shadow; final attack retains 0.7 s telegraph. Elite HP 105.",
+    "death": "Heat fins fan fully out then shatter into harmless sparks; fake figures dissolve first; radiator core hits floor with metallic ping."
+  },
+  {
+    "id": 24,
+    "name": "Forge Bellows",
+    "biome": "Boiler Room",
+    "role": "Buffer",
+    "size": "Medium",
+    "dimensions": "1.3 × 1.0 × 1.5 u",
+    "hp": 85,
+    "speed": 2.0,
+    "danger": 3,
+    "visual": "Four-legged mobile forge bellows with accordion leather chest, metal compression frame, fan-shaped rear housing and orange vented exhaust.",
+    "pivots": "Accordion folds independently; all four legs have simple hinges; glowing heat tethers attach to buffed allies.",
+    "ai": "Tries to remain behind melee allies; active buff link is visibly breakable by killing or distancing the bellows.",
+    "moves": [
+      {
+        "name": "Weapon Reheat",
+        "tell": "0.95 s: bellows pull wide and target weapon turns amber",
+        "effect": "Heats one allied melee weapon for 4 s: +25% attack damage and a purely visual ember trail.",
+        "recovery": "0.75 s bellows fold flat and relight slowly.",
+        "cooldown": "7.0 s"
+      },
+      {
+        "name": "Ember Puff",
+        "tell": "0.60 s: back nozzle swells, short cone appears",
+        "effect": "Blows embers 2 u for 9 damage.",
+        "recovery": "0.50 s exhaust rattles.",
+        "cooldown": "4.0 s"
+      },
+      {
+        "name": "Draft Escape",
+        "tell": "0.35 s: leg pistons flare",
+        "effect": "Backsteps 1.8 u with no damage.",
+        "recovery": "0.35 s bellows rebalancing.",
+        "cooldown": "4.2 s"
+      }
+    ],
+    "eliteName": "Master Bellows",
+    "elite": "Twin accordion chambers and two visible orange hoses. Can heat two allies at once, no stacking bonuses. Elite HP 128.",
+    "death": "Leather folds burst, rear fan wobbles free, orange exhaust fades to black and all four legs flatten."
+  },
+  {
+    "id": 25,
+    "name": "Corrosion Eel",
+    "biome": "Toxin Refinery",
+    "role": "Charging",
+    "size": "Medium",
+    "dimensions": "2.4 × 0.55 × 0.65 u body length",
+    "hp": 95,
+    "speed": 3.6,
+    "danger": 3,
+    "visual": "Serpentine line of 7 linked corroded pipe segments, syringe-shaped iron head, thin elbow joint fins and luminous acid flowing along transparent slots.",
+    "pivots": "Seven rotating pipe hinges; head syringe plunger telescopes; head-to-tail glow travels during startup.",
+    "ai": "Occupies narrow lanes and turns only at indicated bend. Never spontaneously tracks the player after charge begins.",
+    "moves": [
+      {
+        "name": "Pivot Rush",
+        "tell": "0.75 s: pipe segments stiffen and luminous fluid runs toward head; two linked floor lanes display one pivot",
+        "effect": "Head-first rush 6 u with exactly one predetermined bend, 17 damage.",
+        "recovery": "0.85 s corroded joints seize; tail is exposed.",
+        "cooldown": "5.5 s"
+      },
+      {
+        "name": "Syringe Jab",
+        "tell": "0.45 s: head piston compresses; 2.5 u line glows",
+        "effect": "Extends head syringe forward for 11 damage.",
+        "recovery": "0.45 s plunger retracts.",
+        "cooldown": "3.2 s"
+      },
+      {
+        "name": "Acid Flick",
+        "tell": "0.60 s: rear pipe twitches and droplets collect",
+        "effect": "Whips tail to scatter two small 1 s acid drops, 3 damage/s each, nonstacking.",
+        "recovery": "0.50 s body straightens.",
+        "cooldown": "5.0 s"
+      }
+    ],
+    "eliteName": "Split-Pivot Eel",
+    "elite": "Nine pipe segments and two clearly painted pivot nodes. Can make two sharp bends in a rush, each marked during windup. Elite HP 143.",
+    "death": "Fluid stops circulating; head plunger droops, hinges freeze sequentially from head to tail, body spills into a loose pile of pipes."
+  },
+  {
+    "id": 26,
+    "name": "Rust Lice",
+    "biome": "Toxin Refinery",
+    "role": "Swarm",
+    "size": "Tiny",
+    "dimensions": "0.3 × 0.2 × 0.22 u each; pack 5–7",
+    "hp": 13,
+    "speed": 3.8,
+    "danger": 2,
+    "visual": "Tiny rust-orange mechanical arthropods with spiky scrap-shell backs, four angled legs and clawed hook mandibles.",
+    "pivots": "Claws latch, individual legs kick, and shell flakes shed small harmless particles.",
+    "ai": "Group attacks are staggered and at most one louse can cling at once; a sweep or dodge dislodges attachments without ongoing lockout.",
+    "moves": [
+      {
+        "name": "Clinging Leap",
+        "tell": "0.50 s: rust flakes shake off and claws brace against floor",
+        "effect": "Leaps up to 2.2 u and attaches to player; 3 damage on hit then 2 damage/s for at most 2 s.",
+        "recovery": "0.50 s after being shaken off, lands upside down.",
+        "cooldown": "4.2 s/unit"
+      },
+      {
+        "name": "Mandible Nibble",
+        "tell": "0.30 s: front pincers chatter",
+        "effect": "Short bite for 4 damage when near player.",
+        "recovery": "0.30 s shell bobs.",
+        "cooldown": "2.2 s/unit"
+      },
+      {
+        "name": "Scuttle Scatter",
+        "tell": "0.40 s: all legs extend visibly",
+        "effect": "Rapidly breaks formation; no direct damage.",
+        "recovery": "0.35 s direction correction.",
+        "cooldown": "5.0 s/pack"
+      }
+    ],
+    "eliteName": "Oxide Brood",
+    "elite": "One larger plated louse leader with visible ocher crest; leader directs a synchronized two-unit leap, still respects single-attachment cap. Elite pack HP increased 40%.",
+    "death": "Carapace crumbles, legs curl, sparks pop from the mandibles and each louse rolls onto its back before fading."
+  },
+  {
+    "id": 27,
+    "name": "Etch Claw",
+    "biome": "Toxin Refinery",
+    "role": "Close Range",
+    "size": "Medium",
+    "dimensions": "1.2 × 0.8 × 1.75 u; claw span 2.0 u",
+    "hp": 105,
+    "speed": 3.1,
+    "danger": 3,
+    "visual": "Lean six-limbed etching frame with two large acid-filled claw tips, four smaller stabilizing legs, and chest-mounted wash vat connected by narrow tubing.",
+    "pivots": "Twin front claws have yaw/roll pivots; inner acid cylinders extend; chest rinse valves open and close.",
+    "ai": "Pursues at mid-close range, uses lateral step to find V-angle. Short-lived corrosion only where tips touch the floor, not a giant poison puddle.",
+    "moves": [
+      {
+        "name": "Cross-Etch",
+        "tell": "0.55 s: both claws spread and narrow V lights on floor",
+        "effect": "Two quick crossing slashes, 10 then 11 damage; 1 s corrosive patch only at two impact endpoints.",
+        "recovery": "0.80 s claw tips immerse in chest vat and rinse.",
+        "cooldown": "4.5 s"
+      },
+      {
+        "name": "Acid Needle",
+        "tell": "0.50 s: one claw tip extends like a lance",
+        "effect": "Short 2.4 u stab for 9 damage.",
+        "recovery": "0.50 s blade pumps back.",
+        "cooldown": "3.5 s"
+      },
+      {
+        "name": "Etching Step",
+        "tell": "0.35 s: rear legs bend laterally",
+        "effect": "Quickly sidesteps 1.5 u; no damage.",
+        "recovery": "0.35 s front claws rebalance.",
+        "cooldown": "4.0 s"
+      }
+    ],
+    "eliteName": "Precision Etcher",
+    "elite": "Three acid channels per claw and red rinse tank. Cross-Etch adds a third narrowly telegraphed finishing puncture after wash delay. Elite HP 158.",
+    "death": "Acid lines reverse into wash vat, twin claws lock open and then detach; four walking legs fold in sequence."
+  },
+  {
+    "id": 28,
+    "name": "Leech Harvester",
+    "biome": "Toxin Refinery",
+    "role": "Grappler",
+    "size": "Medium",
+    "dimensions": "0.9 × 0.8 × 1.8 u; proboscis reach 4.5 u",
+    "hp": 95,
+    "speed": 2.5,
+    "danger": 4,
+    "visual": "Slim siphon harvesting robot with four long flexible segmented proboscises, an open transparent belly pump, and short angled metal legs.",
+    "pivots": "Four independent articulated siphon tips; visible pumping diaphragm; capture tether is a physical line.",
+    "ai": "Seeks isolated targets 3–5 u away; a successful siphon never becomes indefinite immobilization. Belly pump is an exposed punish point.",
+    "moves": [
+      {
+        "name": "Siphon Hook",
+        "tell": "0.70 s: two proboscises widen and a needle-thin 4.5 u lane appears",
+        "effect": "Hooks target for 5 contact damage then slowly reels up to 1.8 u.",
+        "recovery": "0.60 s hook retracts on miss.",
+        "cooldown": "5.5 s"
+      },
+      {
+        "name": "Health Siphon",
+        "tell": "0.30 s: on successful hook belly pump flashes",
+        "effect": "Drains 3 HP/s for maximum 2 s; restored enemy HP capped at 6. Breakable by dodge or strike.",
+        "recovery": "0.75 s pump overfills and sputters on failed hold.",
+        "cooldown": "On hook"
+      },
+      {
+        "name": "Proboscis Jab",
+        "tell": "0.45 s: one tube straightens",
+        "effect": "Short puncture for 10 damage.",
+        "recovery": "0.50 s tube recoils.",
+        "cooldown": "3.5 s"
+      }
+    ],
+    "eliteName": "Quad-Harvester",
+    "elite": "Two extra transparent pump vessels and four separately aiming tubes. Hook has wider warning angle but siphon duration stays capped at 2 s. Elite HP 143.",
+    "death": "Belly pump overfills, transparent reservoir cracks, fluid pressure drops and four tubes curl inward as unit folds."
+  },
+  {
+    "id": 29,
+    "name": "Vapor Walker",
+    "biome": "Toxin Refinery",
+    "role": "Teleport",
+    "size": "Medium",
+    "dimensions": "0.75 × 0.6 × 2.0 u",
+    "hp": 75,
+    "speed": 3.0,
+    "danger": 4,
+    "visual": "Hollow chemical-protection suit silhouette with a transparent glass dome mask, visible inner framework and translucent flowing vapor inside sleeves. Heavy boots anchor materialization.",
+    "pivots": "Separate vapor layer and suit panels; mask iris; vent spawn markers projected onto floor; humanlike walking joints.",
+    "ai": "Never appears without a floor marker. Real materialized suit casts a shadow; vent transit does not permit attacks.",
+    "moves": [
+      {
+        "name": "Vent Transit",
+        "tell": "0.70 s: shell dissolves into colored vapor as TWO floor vents light",
+        "effect": "Travels between marked vent mouths; hidden during travel, cannot damage player during transit.",
+        "recovery": "0.45 s suit re-forms at destination, leaving condensate droplets.",
+        "cooldown": "5.5 s"
+      },
+      {
+        "name": "Poison Jab",
+        "tell": "0.50 s AFTER arrival: syringe baton points at player, cone appears",
+        "effect": "Short stab for 12 damage and 2 damage/s for 2 s; damage does not stack.",
+        "recovery": "0.60 s sleeve leaks visible droplets.",
+        "cooldown": "4.0 s"
+      },
+      {
+        "name": "Mist Fan",
+        "tell": "0.80 s: mask vents flare and 90° arc appears",
+        "effect": "Creates 1.5 s narrow vapor fan dealing 5 damage/s inside.",
+        "recovery": "0.60 s body re-condenses.",
+        "cooldown": "6.0 s"
+      }
+    ],
+    "eliteName": "Double-Vent Walker",
+    "elite": "Two extra gas cylinders; cycles across three marked vents but reveals the final destination before its jab. Elite HP 113.",
+    "death": "Suit loses pressure, glass visor cracks, colored vapor escapes harmlessly, empty fabric shell crumples around frame."
+  },
+  {
+    "id": 30,
+    "name": "Contamination Siren",
+    "biome": "Toxin Refinery",
+    "role": "Disruptor",
+    "size": "Medium",
+    "dimensions": "0.95 × 0.95 × 2.3 u",
+    "hp": 80,
+    "speed": 1.6,
+    "danger": 3,
+    "visual": "Tall hazard-alarm pillar with concentric black-and-yellow painted warning rings, top rotating beacon, circular speaker diaphragm and heavy bolted base.",
+    "pivots": "Top beacon rotates; concentric speaker rings expand; base stabilizers anchor during wave.",
+    "ai": "Stationary for most attacks; wave never removes player input or obscures other enemy tells. Entire ring has a deliberate escape gap.",
+    "moves": [
+      {
+        "name": "Weakening Siren",
+        "tell": "0.90 s: beacon flashes; one warning ring propagates out with a visible gap",
+        "effect": "A 4.5 u wave applies -25% player attack damage for 3 s ONLY if it connects.",
+        "recovery": "0.75 s beacon dims for chemistry reset.",
+        "cooldown": "7.0 s"
+      },
+      {
+        "name": "Corrosive Ping",
+        "tell": "0.60 s: speaker center compresses; short line lights",
+        "effect": "Straight ultrasonic dart for 8 damage.",
+        "recovery": "0.50 s loudspeaker membrane resets.",
+        "cooldown": "4.2 s"
+      },
+      {
+        "name": "Alarm Reposition",
+        "tell": "0.50 s: footing bolts retract",
+        "effect": "Slides 1.5 u to safer spot, no damage.",
+        "recovery": "0.40 s bolts anchor again.",
+        "cooldown": "5.0 s"
+      }
+    ],
+    "eliteName": "Double-Alarm Siren",
+    "elite": "Two offset rotating beacons, alternating ring gaps. Two independently warned weakening waves; debuff never stacks. Elite HP 120.",
+    "death": "Beacon cracks and dims, loudspeaker cone caves inward, warning rings detach one after another and base tips sideways."
+  },
+  {
+    "id": 31,
+    "name": "Corrosion Shellback",
+    "biome": "Toxin Refinery",
+    "role": "Shield",
+    "size": "Large",
+    "dimensions": "2.0 × 1.5 × 1.3 u",
+    "hp": 170,
+    "speed": 1.8,
+    "danger": 4,
+    "visual": "Huge broad armored crustacean-style machine with overlapping etched shell plates, thick short angled legs and a narrow acid-dripping front lip. Back is rounded rather than a flat plate.",
+    "pivots": "Shell plates slide shut or lift individually; short legs scuttle; rear breathing hinge exposed when venting.",
+    "ai": "Presses toward the player with a guarded front but slow turning speed. Rear remains fully vulnerable; cannot guard while exposing vents.",
+    "moves": [
+      {
+        "name": "Shell March",
+        "tell": "0.35 s: overlapping front plates lock and amber lights turn solid",
+        "effect": "Advances 2.5 u protected from 85% frontal damage in 150° arc; touch shove for 7 damage.",
+        "recovery": "0.75 s plates must lift to breathe, exposing rear.",
+        "cooldown": "4.0 s"
+      },
+      {
+        "name": "Acid Lip",
+        "tell": "0.75 s: front rim drips and forward semicircle is marked",
+        "effect": "Splashes 2 u 140° acid fan for 12 damage.",
+        "recovery": "0.70 s shell edges drip harmlessly.",
+        "cooldown": "5.0 s"
+      },
+      {
+        "name": "Side Scuttle",
+        "tell": "0.40 s: side legs flare and one edge lights",
+        "effect": "Side shove 1.5 u for 9 damage.",
+        "recovery": "0.50 s legs resettle.",
+        "cooldown": "3.8 s"
+      }
+    ],
+    "eliteName": "Iron-Oxide Shellback",
+    "elite": "Extra overlapping copper-etched plating; shell march now defends 170° front but vents for 1.0 s afterward. Elite HP 255.",
+    "death": "Front plates peel apart, leg joints seize one side at a time, shell settles with a hollow thud, corrosion dust puffs harmlessly."
+  },
+  {
+    "id": 32,
+    "name": "Vat Lid Warden",
+    "biome": "Toxin Refinery",
+    "role": "Shield",
+    "size": "Large",
+    "dimensions": "1.4 × 1.1 × 2.1 u; circular lid 1.6 u across",
+    "hp": 145,
+    "speed": 2.0,
+    "danger": 4,
+    "visual": "Tall refinery biped with a gigantic circular tank lid held to one side, rusted arm bracing it, narrow respirator face and visible valve on lid center.",
+    "pivots": "Circular lid rotates on arm hinge; elbow and torso pivot for shoves; expose far-side weapon arm behind shield.",
+    "ai": "Moves with shield angled toward the player, slows turning while guarding. Favors Rotary Lid Shove if flanked, opening its opposite side.",
+    "moves": [
+      {
+        "name": "Lid Guard",
+        "tell": "0.30 s: tank lid faces player and rim becomes amber",
+        "effect": "Blocks 85% frontal damage over 145° until next move or maximum 2 s.",
+        "recovery": "0.45 s shield rotates aside exposing opposite arm.",
+        "cooldown": "3.6 s"
+      },
+      {
+        "name": "Rotary Lid Shove",
+        "tell": "0.75 s: lid spins and broad 120° arc glows",
+        "effect": "Wide shield shove for 16 damage and small knockback.",
+        "recovery": "0.85 s rotating lid exposes unguarded arm.",
+        "cooldown": "5.0 s"
+      },
+      {
+        "name": "Valve Burst",
+        "tell": "0.65 s: lid valve compresses; short cone appears",
+        "effect": "Chemical vent blast for 11 damage at 2 u.",
+        "recovery": "0.60 s valve droops to stop.",
+        "cooldown": "4.5 s"
+      }
+    ],
+    "eliteName": "Cyclone Warden",
+    "elite": "Two concentric rotating lid rims and red valve hub. Rotary Lid Shove sweeps an extra 45° segment after brief pause, marked separately. Elite HP 218.",
+    "death": "Shield rim spins too fast and dislodges; lid drops and rolls in a slow harmless circle as guard slumps and visor darkens."
+  }
+];
+const ROOM_IMAGE='data:image/png;base64,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';
+// All geometry is generated here: 33 individual graybox enemy bodies.
+// World Y is vertical; local +Z is forward. No external 3D libraries.
+const PAL={shell:'#b4bcc0', top:'#d7dbdc', metal:'#939da2', dark:'#58646b', black:'#2d3940', edge:'#7f898e', detail:'#dce0de', warn:'#cc9258', glass:'#7e969d', cable:'#626b72'};
+const TAU=Math.PI*2;
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const lerp=(a,b,t)=>a+(b-a)*t;
+const I=()=>[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1];
+function MM(a,b){const m=new Array(16).fill(0);for(let j=0;j<4;j++)for(let i=0;i<4;i++)for(let k=0;k<4;k++)m[j*4+i]+=a[k*4+i]*b[j*4+k];return m;}
+function T(x=0,y=0,z=0){let a=I();a[12]=x;a[13]=y;a[14]=z;return a;}
+function RX(a=0){let c=Math.cos(a),s=Math.sin(a),m=I();m[5]=c;m[6]=s;m[9]=-s;m[10]=c;return m;}
+function RY(a=0){let c=Math.cos(a),s=Math.sin(a),m=I();m[0]=c;m[2]=-s;m[8]=s;m[10]=c;return m;}
+function RZ(a=0){let c=Math.cos(a),s=Math.sin(a),m=I();m[0]=c;m[1]=s;m[4]=-s;m[5]=c;return m;}
+const rand3=(i,t)=>Math.sin(i*31.13+t*.73)*.5+.5;
+class ModelDraw{
+ constructor(){this.polys=[];this.lines=[];this.stack=[I()];}
+ get m(){return this.stack.at(-1)}
+ push(x=0,y=0,z=0,rx=0,ry=0,rz=0){let m=MM(this.m,T(x,y,z));m=MM(m,RY(ry));m=MM(m,RX(rx));m=MM(m,RZ(rz));this.stack.push(m);}
+ pop(){this.stack.pop();}
+ v(p){const m=this.m,x=p[0],y=p[1],z=p[2];return [m[0]*x+m[4]*y+m[8]*z+m[12],m[1]*x+m[5]*y+m[9]*z+m[13],m[2]*x+m[6]*y+m[10]*z+m[14]];}
+ poly(ps,mat='shell'){this.polys.push({v:ps.map(p=>this.v(p)),mat});}
+ line(a,b,mat='edge',width=1.5){this.lines.push({a:this.v(a),b:this.v(b),mat,width});}
+ box(x,y,z,w,h,d,mat='shell'){
+  let X=w/2,Y=h/2,Z=d/2,p=[[-X,-Y,-Z],[X,-Y,-Z],[X,Y,-Z],[-X,Y,-Z],[-X,-Y,Z],[X,-Y,Z],[X,Y,Z],[-X,Y,Z]].map(q=>[q[0]+x,q[1]+y,q[2]+z]);
+  for(const [a,b,c,e] of [[0,1,2,3],[4,7,6,5],[0,3,7,4],[1,5,6,2],[3,2,6,7],[0,4,5,1]])this.poly([p[a],p[b],p[c],p[e]],mat);
+ }
+ cyl(x,y,z,r,h,axis='y',mat='metal',steps=10,r2=r){
+  const pp=(a,at,rad)=>{
+    if(axis==='y')return [x+Math.cos(a)*rad,y+at,z+Math.sin(a)*rad];
+    if(axis==='x')return [x+at,y+Math.cos(a)*rad,z+Math.sin(a)*rad];
+    return [x+Math.cos(a)*rad,y+Math.sin(a)*rad,z+at];
+  };
+  let lo=[],hi=[];for(let i=0;i<steps;i++){let a=i*TAU/steps;lo.push(pp(a,-h/2,r));hi.push(pp(a,h/2,r2));}
+  for(let i=0;i<steps;i++)this.poly([lo[i],lo[(i+1)%steps],hi[(i+1)%steps],hi[i]],mat);
+  this.poly([...lo].reverse(),mat);this.poly(hi,mat);
+ }
+ sph(x,y,z,rad,mat='shell',rings=5,slices=10){for(let j=0;j<rings;j++){const a=-Math.PI/2+j*Math.PI/rings,b=-Math.PI/2+(j+1)*Math.PI/rings;for(let k=0;k<slices;k++){let p=k*TAU/slices,q=(k+1)*TAU/slices;let f=(t,u)=>[x+rad*Math.cos(t)*Math.cos(u),y+rad*Math.sin(t),z+rad*Math.cos(t)*Math.sin(u)];this.poly([f(a,p),f(a,q),f(b,q),f(b,p)],mat);}}}
+ rod(a,b,r=.07,mat='metal',steps=7){let d=b.map((v,i)=>v-a[i]),L=Math.hypot(...d);if(!L)return;d=d.map(v=>v/L);let n=Math.abs(d[1])<.94?[0,1,0]:[1,0,0];let u=[d[1]*n[2]-d[2]*n[1],d[2]*n[0]-d[0]*n[2],d[0]*n[1]-d[1]*n[0]],ul=Math.hypot(...u);u=u.map(v=>v/ul);let v=[d[1]*u[2]-d[2]*u[1],d[2]*u[0]-d[0]*u[2],d[0]*u[1]-d[1]*u[0]];for(let k=0;k<steps;k++){let p=k*TAU/steps,q=(k+1)*TAU/steps;let pt=(c,t)=>c.map((a0,i)=>a0+r*(u[i]*Math.cos(t)+v[i]*Math.sin(t)));this.poly([pt(a,p),pt(a,q),pt(b,q),pt(b,p)],mat);}}
+ ring(x,y,z,r,axis='y',mat='metal',width=.045,steps=18){let ps=[];for(let k=0;k<=steps;k++){let a=k/steps*TAU;if(axis==='z')ps.push([x+Math.cos(a)*r,y+Math.sin(a)*r,z]);else if(axis==='x')ps.push([x,y+Math.sin(a)*r,z+Math.cos(a)*r]);else ps.push([x+Math.cos(a)*r,y,z+Math.sin(a)*r]);}for(let k=0;k<steps;k++)this.rod(ps[k],ps[k+1],width,mat,4);}
+ wedge(x,y,z,w,h,d,mat='shell'){let x1=x-w/2,x2=x+w/2,y1=y-h/2,y2=y+h/2,z1=z-d/2,z2=z+d/2;let lo=[[x1,y1,z1],[x2,y1,z1],[x2,y1,z2],[x1,y1,z2]],hi=[[x-w*.33,y2,z1],[x+w*.33,y2,z1],[x,y2,z2+.17*d]];this.poly(lo,mat);this.poly([lo[0],lo[1],hi[1],hi[0]],mat);this.poly([lo[1],lo[2],hi[2],hi[1]],mat);this.poly([lo[2],lo[3],hi[2]],mat);this.poly([lo[3],lo[0],hi[0],hi[2]],mat);this.poly(hi,mat);}
+}
+function makeModel(enemy,view={}){
+ const b=new ModelDraw(),id=enemy.id, t=view.t||0, phase=view.phase||'idle', q=view.progress||0;
+ const move=view.moving||0, elite=!!view.elite;
+ const wave=Math.sin(t*8)*move, hover=Math.sin(t*3.3)*.055;const hit=phase==='active'?1:phase==='windup'?.55:phase==='recover'?.26:0;
+ const punch=Math.sin(clamp(q,0,1)*Math.PI)*hit;
+ const cyc=t*6, arm=(Math.sin(cyc)*move*.28);const core='dark', shell='shell',steel='metal',light='top',trim='edge';
+ const B=(...a)=>b.box(...a), C=(...a)=>b.cyl(...a), S=(...a)=>b.sph(...a), R=(...a)=>b.rod(...a), ring=(...a)=>b.ring(...a),W=(...a)=>b.wedge(...a);
+ function foot(x,wide=false){b.push(x,.0,Math.sin(cyc+(x<0?0:Math.PI))*move*.13,0,0,0);B(0,.14,.07,wide?.42:.28,.27,.48,steel);b.pop();}
+ function leg(x,top=1.1,short=false){let f=Math.sin(cyc+(x<0?0:Math.PI))*move*.17;R([x,top,0],[x,top*.51,.1+f],short?.105:.115,steel);R([x,top*.51,.1+f],[x,.22,.11+f],.09,trim);foot(x);}
+ function humanoid({h=1.95,w=.75,head='box',arms=true,legs=true,feet=true,shoulders=.47}={}){
+  if(legs){leg(-w*.32,h*.47);leg(w*.32,h*.47);}
+  B(0,h*.64,0,w,h*.42,.55,shell);B(0,h*.65,-.31,w*.7,h*.26,.06,steel);
+  if(head==='box'){B(0,h-.13,.12,w*.53,.28,.4,light);B(0,h-.13,.35,w*.39,.09,.07,core);}
+  if(head==='cyl'){C(0,h-.12,.12,w*.28,.32,'y',steel,10);B(0,h-.12,.39,w*.34,.1,.06,core);}
+  if(arms)for(let s of [-1,1]){let x=s*shoulders;b.push(x,h*.77,0,arm*.22,0,s*(hit*.28+wave*.2));B(s*.11,-.14,.05,.24,.43,.26,steel);R([s*.1,-.27,.09],[s*.18,-.52,.23],.11,trim);b.pop();}
+ }
+ function fins(x,z,h=.5){b.push(x,.0,z,0,0,x<0?-.1:.1);W(0,h*.45,0,.2,h,.35,steel);b.pop();}
+ function eye(x,y,z,r=.25,axis='z'){C(x,y,z,r,.13,axis,steel,14);C(x,y,z+(axis==='z'?.083:0),r*.72,.15,axis,core,14);C(x,y,z+(axis==='z'?.17:0),r*.36,.08,axis,light,12);}
+ function claw(x,y,z,s=1){R([x,y,z],[x,y-.22*s,z+.28*s],.075,steel);R([x-.1*s,y-.12*s,z+.15*s],[x-.21*s,y-.3*s,z+.38*s],.048,trim);R([x+.1*s,y-.12*s,z+.15*s],[x+.2*s,y-.3*s,z+.38*s],.048,trim);}
+ function rotor(x,y,z,r=.27){C(x,y,z,r,.42,'z',steel,12);C(x,y,z+.25,r*.7,.045,'z',core,12);ring(x,y,z+.29,r*.55,'z',light,.018,12);for(let k=0;k<3;k++){let a=t*9+k*TAU/3;R([x,y,z+.30],[x+Math.cos(a)*r*.55,y+Math.sin(a)*r*.55,z+.30],.026,steel);}}
+ function wrench(x,y,z,s=1){R([x,y,z],[x,y-.15*s,z+.36*s],.055,light);for(let a of [-1,1])R([x+a*.1*s,y-.13*s,z+.32*s],[x+a*.13*s,y-.02*s,z+.52*s],.06,steel);}
+ function wheel(x,y,z,r=.2){C(x,y,z,r,.18,'x',steel,12);C(x,y,z,r*.56,.23,'x',core,12);ring(x,y,z,r*.78,'x',trim,.024,12);}
+ function spool(x,y,z,r=.33){C(x,y,z,r,.24,'x',steel,14);ring(x+.145,y,z,r*.8,'x',core,.042);ring(x-.145,y,z,r*.8,'x',core,.042);}
+ function pipeLimb(a,end,r=.08){R(a,end,r,steel);C(end[0],end[1],end[2],r*1.7,.13,'y',trim,8);}
+ function warning(x,y,z){B(x,y,z,.12,.07,.10,'warn');}
+ let yaw=view.yaw||0, pitch=0, roll=move*Math.sin(t*6)*.055;
+ let fly=['Inspection Wasp','Dust Mites','Foreman Node','Signal Scrambler','Cinder Kettle','Soot Midges','Spark Wisps','Heat Mirage'].includes(enemy.name);
+ if(fly){pitch=hit*.16+move*.12;roll+=Math.sin(t*4)*.05;}
+ if(['Soot Torpedo','Conveyor Hound','Corrosion Eel'].includes(enemy.name))pitch+=hit*.12;
+ if(phase==='death')pitch+=q*1.04;
+ b.push(0,(fly?.50+hover:0),0,pitch,yaw,roll);
+ switch(id){
+ case 0: // Inspection Wasp -- preserve triangular wedge eye, twin jets, fins and telescopic probe
+  W(0,1.36,.04,.94,.49,.90,shell);B(0,1.45,-.25,.67,.20,.70,light);B(0,1.24,.21,.48,.28,.35,steel);
+  for(let x of [-.59,.59]){rotor(x,1.36,-.1,.25);fins(x,-.36,.43);}eye(0,1.34,.59,.25);warning(0,1.64,-.2);
+  R([0,1.14,.23],[0,.74-hit*.18,.45],.11,steel);R([0,.74-hit*.18,.45],[0,.43-hit*.36,.58],.054,light);break;
+ case 1: // Dust Mites: hovering brush cluster
+  for(let i=0;i<6;i++){let a=i*TAU/6+t*.21,rr=i===0?0:.57;let x=Math.cos(a)*rr,z=Math.sin(a)*rr;b.push(x,.67+.07*Math.sin(t*4+i),z,0,0,.05*Math.sin(t*4+i));S(0,.12,0,.17,shell,4,8);C(0,-.02,0,.16,.07,'y',core,10);ring(0,-.065,0,.17,'y',light,.027,12);eye(0,.13,.17,.07);rotor(-.19,.14,-.06,.07);rotor(.19,.14,-.06,.07);b.pop();}break;
+ case 2: // Pressure Purger
+  C(0,.28,0,.88,.48,'y',steel,8);C(0,1.35,0,.59,1.6,'y',shell,12);C(0,2.2,0,.52,.25,'y',steel,12);C(0,2.42,0,.14,.18,'y','warn');
+  for(let k=0;k<8;k++){let a=k*TAU/8;b.push(Math.sin(a)*.62,1.28,Math.cos(a)*.62,0,a,0);B(0,0,.03,.32,.48,.15,core);B(0,0,.13,.24,.29,.03,trim);b.pop();}
+  for(let k=0;k<4;k++){let a=k*TAU/4;R([Math.sin(a)*.55,.8,Math.cos(a)*.55],[Math.sin(a)*.87,.15,Math.cos(a)*.87],.08,steel);}eye(0,1.85,.63,.16);break;
+ case 3: // Spanner Guard
+  humanoid({h:2,w:.86,head:'cyl',shoulders:.57});for(let s of [-1,1]){b.push(s*.62,1.25,.13,0,0,s*(arm*.25+hit*.65));wrench(s*.1,-.05,.10,1.5);b.pop();}break;
+ case 4: // Foreman Node
+  C(0,1.25,0,.72,.90,'y',shell,12);C(0,1.66,0,.62,.18,'y',light);eye(0,1.25,.75,.23);C(0,.75,0,.52,.2,'y',steel,12);
+  for(let k=0;k<6;k++){let a=k*TAU/6;b.push(Math.sin(a)*.63,.74,Math.cos(a)*.63,0,a,0);B(0,0,.04,.35,.18,.34,steel);B(0,-.1,.2,.25,.08,.12,core);b.pop();}
+  for(let k=0;k<4;k++){let a=k*TAU/4;R([0,1.4,0],[Math.sin(a)*1.0,1.16,Math.cos(a)*1.0],.09,steel);claw(Math.sin(a)*1.0,1.16,Math.cos(a)*1.0,.65);}break;
+ case 5: // Cable Snare Unit
+  B(0,.96,0,.73,.50,.86,shell);spool(-.42,1.09,0,.34);for(let k=0;k<3;k++){let a=k*TAU/3;R([Math.sin(a)*.22,.85,Math.cos(a)*.22],[Math.sin(a)*.62,.15,Math.cos(a)*.62],.12,steel);B(Math.sin(a)*.62,.14,Math.cos(a)*.62,.2,.18,.25,steel);}
+  R([.22,1.11,.23],[.48,1.17,.63],.12,steel);R([.48,1.17,.63],[.48+hit*.16,1.17,.92+hit*.3],.08,light);claw(.48+hit*.16,1.17,.92+hit*.3,1.1);break;
+ case 6: // Phase Custodian
+  humanoid({h:2.18,w:.53,head:'box',shoulders:.33});for(let k=0;k<3;k++)B(0,.97+k*.28,.29,.44,.07,.09,k%2?'steel':'edge');R([.38,1.20,.20],[.54,.64,.53+hit*.28],.045,core);break;
+ case 7: // Signal Scrambler
+  S(0,1.3,0,.48,shell,6,12);ring(0,1.3,0,.66,'y',steel,.05,20);ring(0,1.3,0,.58,'x',trim,.035,16);for(let k=0;k<8;k++){let a=k*TAU/8;R([Math.sin(a)*.35,1.32,Math.cos(a)*.35],[Math.sin(a)*.86,1.66,Math.cos(a)*.86],.04,steel);S(Math.sin(a)*.86,1.66,Math.cos(a)*.86,.07,core,3,7);}eye(0,1.37,.41,.15);break;
+ case 8: // Conveyor Hound
+  B(0,.77,0,.96,.55,1.28,shell);W(0,.67,.67,.78,.4,.52,steel);for(let s of [-1,1]){B(s*.55,.75,-.08,.25,.38,1.25,core);for(let z of [-.49,0,.49]){wheel(s*.62,.45,z,.19);R([s*.48,.62,z],[s*.59,.15,z+.09*Math.sin(cyc+z*8)],.065,trim);}}
+  for(let k=0;k<3;k++)R([-.24+k*.24,.63,.85],[-.24+k*.24,.73,.91],.07,'metal');warning(-.25,1.11,.51);warning(.25,1.11,.51);break;
+ case 9: // Link Crawlers
+  for(let i=0;i<5;i++){let z=.83-i*.37,x=.13*Math.sin(t*5-i*.67)*(1-hit*.8);b.push(x,.24+.04*Math.sin(t*5-i),z,0,0,0);B(0,.04,0,.35,.20,.29,i%2?'metal':'shell');for(let s of [-1,1])R([s*.15,0,0],[s*.31,-.06,.05],.045,steel);B(0,.16,0,.15,.08,.12,core);b.pop();}break;
+ case 10: // Gearburst Canister
+  C(0,.68,0,.58,.95,'y',shell,12);ring(0,1.10,0,.66,'y',steel,.07,14);ring(0,.31,0,.65,'y',steel,.07,14);for(let k=0;k<8;k++){let a=k*TAU/8;b.push(Math.sin(a)*.56,.65,Math.cos(a)*.56,0,a,0);B(0,0,.05,.18,.53,.14,core);W(0,.40,.01,.24,.22,.26,steel);b.pop();}C(0,1.27,0,.3,.13,'y',light,12);break;
+ case 11: // Shearblade
+  humanoid({h:2.28,w:.52,head:'box',arms:false,shoulders:.36});for(let s of [-1,1]){b.push(s*.32,1.72,.12,0,s*hit*.35,s*(hit*.38+.10));R([0,0,0],[s*.63,-.15,.40],.13,steel);R([s*.63,-.15,.4],[s*.91,-.36,1.1],.10,light);W(s*.91,-.36,1.15,.2,.20,.65,steel);b.pop();}C(0,1.3,.27,.18,.21,'z',core);break;
+ case 12: // Presswall Worker
+  humanoid({h:2.23,w:1.26,head:'box',arms:false,shoulders:.62});for(let s of [-1,1])R([s*.59,1.65,.25],[s*.67,1.17,.66],.13,steel);B(0,1.22,.89,1.74,1.52,.24,steel);B(0,1.25,1.03,1.51,1.2,.05,shell);for(let k=0;k<3;k++)R([-.72,1.54-k*.26,1.08],[.72,1.54-k*.26,1.08],.027,trim);break;
+ case 13: // Torque Thief
+  humanoid({h:1.79,w:.68,head:'cyl',shoulders:.43});C(0,1.25,-.39,.35,.36,'z',steel,12);for(let s of [-1,1]){spool(s*.53,.87,.27,.26);claw(s*.60,.79,.45,.95);}break;
+ case 14: // Crane Hooker
+  for(let x of [-.52,.52])for(let z of [-.44,.44])R([x,1.85,z],[x*1.25,.13,z*1.25],.13,steel);
+  B(0,2.0,0,1.38,.23,.65,steel);B(0,2.19,0,1.38,.17,.44,shell);B(0,2.25,.32,1.26,.15,.20,light);C(0,2.08,.15,.28,.35,'x',core,12);
+  R([.18,2.05,.35],[.18,.75,.79],.045,core);claw(.18,.68,.79,1.4);break;
+ case 15: // Chain Binder
+  B(0,.77,0,1.0,.55,.78,shell);spool(-.48,1.10,-.04,.4);spool(.48,1.10,-.04,.4);for(let s of [-1,1]){R([s*.35,.80,.26],[s*.72,.72,.74],.1,steel);claw(s*.72,.70,.74,1.1);}B(0,.23,.0,.78,.25,.70,steel);break;
+ case 16: // Cinder Kettle
+  S(0,1.23,0,.48,shell,6,12);C(0,1.65,0,.36,.16,'y',steel,12);C(0,1.79,0,.13,.17,'y',core,9);B(0,1.02,.45,.31,.22,.34,core);R([0,1.33,.29],[.04,1.2,.94],.11,steel);W(0,1.22,.99,.22,.15,.29,light);for(let s of [-1,1]){W(s*.56,1.15,-.14,.38,.27,.49,steel);C(s*.54,1.13,-.22,.12,.34,'z',core,10);}break;
+ case 17: // Soot Torpedo
+  W(0,.49,.46,.92,.48,1.23,shell);C(0,.57,-.62,.48,.70,'z',steel,12);C(0,.57,-1.01,.28,.10,'z',core,12);for(let s of [-1,1]){B(s*.48,.25,.02,.14,.24,1.34,steel);B(s*.34,.52,-.2,.13,.19,.6,core);}warning(0,.88,.2);break;
+ case 18: // Condensate Mortar
+  C(0,1.13,0,.47,1.20,'y',shell,12);C(0,1.79,0,.48,.20,'y',steel);for(let x of [-.42,.42])for(let z of [-.42,.42])R([x,1.15,z],[x*1.45,.15,z*1.45],.09,steel);R([0,1.54,.25],[0,1.8,.64],.14,steel);R([0,1.8,.64],[0,1.55,.97],.12,steel);C(0,1.5,1.03,.20,.14,'z',core,10);break;
+ case 19: // Soot Midges
+  for(let i=0;i<7;i++){let a=i*2.4+t*.62,rr=.2+(i%3)*.18;let x=Math.cos(a)*rr,y=1.1+Math.sin(a*2+t)*.20,z=Math.sin(a)*rr;b.push(x,y,z);S(0,0,0,.12,core,4,8);for(let s of [-1,1])W(s*.12,.03,-.03,.19,.08,.24,shell);R([0,-.02,0],[0,-.18,.09],.023,steel);b.pop();}break;
+ case 20: // Spark Wisps
+  for(let i=0;i<5;i++){let a=i*TAU/5+t*.5,x=Math.cos(a)*.48,z=Math.sin(a)*.48,y=1.25+.14*Math.sin(t*3+i);b.push(x,y,z);S(0,0,0,.16,light,5,9);ring(0,0,0,.22,'y',steel,.025,12);b.pop();R([x,y,z],[Math.cos(a+TAU/5)*.48,1.25+.14*Math.sin(t*3+i+1),Math.sin(a+TAU/5)*.48],.022,trim);}break;
+ case 21: // Grate Mauler
+  humanoid({h:2.20,w:1.20,head:'box',arms:false,shoulders:.68});B(0,1.32,.32,1.17,1.01,.18,core);for(let k=0;k<5;k++)B(0,1.0+k*.15,.45,1.1,.055,.09,steel);for(let s of [-1,1]){R([s*.69,1.54,.05],[s*.86,.9,.36+hit*.26],.17,steel);B(s*.9,.76,.40+hit*.28,.45,.39,.48,shell);}break;
+ case 22: // Ash Shunter
+  humanoid({h:2.2,w:.45,head:'cyl',shoulders:.31});R([.35,1.6,.16],[.55,.2,.80],.07,steel);ring(.55,1.65,.15,.32,'z',steel,.06);R([.55,1.65,.15],[.55,1.65,.53],.06,steel);break;
+ case 23: // Heat Mirage
+  B(0,1.15,0,.62,1.52,.43,steel);for(let k=0;k<6;k++)B(0,.60+k*.25,.28,.9,.10,.24,light);for(let s of [-1,1]){R([s*.29,.63,0],[s*.38,.15,0],.07,steel);W(s*.57,1.4,-.12,.35,.80,.38,steel);}eye(0,1.85,.30,.15);break;
+ case 24: // Forge Bellows
+  for(let x of [-.46,.46])for(let z of [-.35,.35])R([x,.85,z],[x*1.15,.16,z*1.3],.09,steel);
+  for(let k=0;k<6;k++){let y=.55+k*.17;B(0,y,0,1.12+((k%2)?-.13:.1),.13,.91, k%2?'metal':'shell');}
+  B(0,1.15,.45,.78,.33,.28,steel);C(0,.92,.64,.20,.44,'z',core,10);break;
+ case 25: // Corrosion Eel
+  for(let k=0;k<7;k++){let z=.83-k*.40,x=.27*Math.sin(k*.65+t*3)*(.5+.5*move);b.push(x,.37+.05*Math.sin(k+t*5),z,0,.11*Math.sin(k+t),0);C(0,0,0,.25-k*.014,.40,'z',k%2?'shell':'steel',10);ring(0,0,.18,.2,'z',core,.025,9);b.pop();}W(0,.42,1.15,.4,.22,.55,steel);R([0,.41,1.2],[0,.37,1.53],.07,light);break;
+ case 26: // Rust Lice
+  for(let i=0;i<6;i++){let a=i*TAU/6+t*.38,r=i%2?.42:.62,x=Math.cos(a)*r,z=Math.sin(a)*r;b.push(x,.20+.06*Math.sin(t*4+i),z);S(0,0,0,.14,steel,4,8);for(let k=0;k<4;k++)R([-.08+k*.05,-.04,-.02],[-.19+k*.08,-.13,.12],.026,core);W(0,.11,-.02,.25,.15,.21,light);b.pop();}break;
+ case 27: // Etch Claw
+  humanoid({h:1.75,w:.68,head:'cyl',arms:false,shoulders:.45});C(0,.99,.36,.32,.42,'y',core,10);for(let s of [-1,1]){for(let k=0;k<3;k++){let z=-.15+k*.22;R([s*.27,1.03,z],[s*(.70+.06*k),.45,z+.05],.063,steel);}R([s*.45,1.46,.1],[s*.86,.91,.55+hit*.24],.12,steel);claw(s*.86,.91,.55+hit*.24,1.35);}break;
+ case 28: // Leech Harvester
+  humanoid({h:1.86,w:.56,head:'box',arms:false,shoulders:.37});C(0,1.02,-.26,.36,.55,'z',steel,10);for(let k=0;k<4;k++){let x=(k-1.5)*.27;R([x*.6,1.18,.21],[x,1.08,.73],.075,steel);R([x,1.08,.73],[x*1.4,.75,1.12+hit*.17],.052,light);C(x*1.4,.75,1.17+hit*.17,.06,.20,'z',core,7);}break;
+ case 29: // Vapor Walker
+  humanoid({h:2.08,w:.57,head:'cyl',arms:true,shoulders:.38});C(0,1.88,.16,.36,.48,'y',shell,10);eye(0,1.91,.43,.19);for(let s of [-1,1]){b.poly([[s*.48,1.41,-.20],[s*.57,.25,-.18],[s*.29,.06,.15],[s*.31,1.48,.20]],'steel');}break;
+ case 30: // Contamination Siren
+  C(0,.33,0,.55,.55,'y',steel,10);C(0,1.24,0,.30,1.56,'y',shell,10);C(0,2.08,0,.47,.28,'y',steel,10);C(0,2.29,0,.31,.25,'y',light,10);for(let y of [.66,1.10,1.55])ring(0,y,0,.37,'y',core,.04,12);for(let k=0;k<4;k++)R([0,2.10,0],[Math.cos(k*TAU/4)*.43,2.12,Math.sin(k*TAU/4)*.43],.045,trim);break;
+ case 31: // Corrosion Shellback
+  B(0,.52,0,1.25,.70,1.22,shell);for(let k=0;k<5;k++){let z=-.56+k*.27;C(0,.91,z,.73-k*.05,.24,'z',k%2?'metal':'shell',12);}for(let s of [-1,1])for(let k=0;k<3;k++){let z=-.42+k*.40;R([s*.52,.47,z],[s*1.08,.23,z+.08],.115,steel);}W(0,.77,.77,.69,.24,.43,core);break;
+ case 32: // Vat Lid Warden
+  humanoid({h:2.09,w:.78,head:'cyl',arms:false,shoulders:.51});R([-.46,1.50,.15],[-.7,1.25,.44],.12,steel);C(-.72,1.32,.70,.75,.20,'z',steel,18);C(-.72,1.32,.82,.57,.12,'z',shell,18);ring(-.72,1.32,.93,.53,'z',trim,.065,18);R([.43,1.43,.12],[.68,.74,.62+hit*.26],.12,steel);claw(.66,.72,.63+hit*.26,1.20);break;
+ }
+ if(elite){ring(0,2.35,0,.30,'y','warn',.05,14);B(0,2.44,0,.16,.10,.18,'warn');}
+ b.pop();return b;
+}
+// fixed 3/4-isometric projection; same viewpoint for every enemy, no camera orbiting.
+function drawModelSprite(enemy, opts={}){
+ const cn=document.createElement('canvas');cn.width=350;cn.height=350;const g=cn.getContext('2d');g.lineJoin='round';g.lineCap='round';
+ const model=makeModel(enemy,opts);
+ const projected=p=>[175+(p[0]-p[2])*56,286+(p[0]+p[2])*25-p[1]*51];
+ let faces=model.polys.map(face=>{let cx=0,cy=0,cz=0;for(const p of face.v){cx+=p[0];cy+=p[1];cz+=p[2]};let n=face.v.length;return {...face,depth:(cx+cz+cy*.80)/n};}).sort((a,b)=>a.depth-b.depth);
+ const colors={...PAL};
+ function shade(hex,k){let m=hex.match(/[0-9a-f]{2}/gi);if(!m)return hex;return '#'+m.map(h=>clamp(Math.round(parseInt(h,16)*k),0,255).toString(16).padStart(2,'0')).join('');}
+ for(const face of faces){let ps=face.v.map(projected);if(ps.length<3)continue;let a=face.v[0],b=face.v[1],c=face.v[2],u=b.map((v,i)=>v-a[i]),v=c.map((q,i)=>q-a[i]);let norm=[u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]];let length=Math.hypot(...norm)||1;let diffuse=.79+.18*(norm[0]+norm[1]*1.6+norm[2]*.65)/length;diffuse=clamp(diffuse,.57,1.18);g.beginPath();g.moveTo(ps[0][0],ps[0][1]);for(let i=1;i<ps.length;i++)g.lineTo(ps[i][0],ps[i][1]);g.closePath();g.fillStyle=shade(colors[face.mat]||colors.shell,diffuse);g.fill();g.strokeStyle='#3d484d';g.lineWidth=.64;g.stroke();}
+ // accent edges on cylindrical body parts have already been represented by faces.
+ return cn;
+}
+
+(()=>{'use strict';
+const A=document.querySelector('#arena'),ctx=A.getContext('2d'), $=id=>document.getElementById(id);
+const floor=(x,z)=>({x:645+(x-z)*82,y:415+(x+z)*30});
+const target={x:1.25,z:.82,hp:100,max:100,flash:0};
+const state={id:0,x:-.4,z:-.38,yaw:Math.PI/2,desired:Math.PI/2,move:.0,velocity:0,angleCount:32,mode:'manual', keys:{},now:0,last:0,at:0,modeT:0,tourStep:0,phase:'idle',act:-1,phaseT:0,phaseDuration:0,progress:0,attackYaw:0,attackStart:{x:0,z:0},attacked:false,elite:false,mouseAim:false,showTele:true,showShadow:true,inspect:false, status:'Ready', fx:[],summons:[],died:false,deathT:0,angleOverride:null,comboStep:0,projectiles:[],screenMouse:null};
+const img=new Image();img.src=ROOM_IMAGE;
+function enemy(){return ENEMIES[state.id]}
+const roleTag=(r)=>r.toUpperCase();
+function text(id,s){$(id).textContent=s}
+function unitVec(y){return {x:Math.sin(y),z:Math.cos(y)}}
+function unitFromScreen(dx,dy){let x=(dx/82+dy/30)/2,z=(dy/30-dx/82)/2,L=Math.hypot(x,z);return L>1e-5?{x:x/L,z:z/L}:{x:0,z:0}}
+function isRoom(x,z){return x>-2.0&&x<1.9&&z>-1.84&&z<1.68&&!(x<-1.1&&z<-1.12)&&!(x>1.25&&z>.82)}
+function canMove(x,z){if(isRoom(x,z)){state.x=x;state.z=z;return}if(isRoom(x,state.z))state.x=x;if(isRoom(state.x,z))state.z=z}
+const startPos=()=>{state.x=-.40;state.z=-.38;state.yaw=Math.PI/2;state.desired=state.yaw;state.died=false;state.phase='idle';state.act=-1;state.phaseT=0;state.fx=[];state.summons=[];state.projectiles=[];target.hp=100;target.flash=0;state.comboStep=0;};
+function switchEnemy(i){state.id=clamp(Number(i)||0,0,ENEMIES.length-1);startPos();state.mode='manual';state.modeT=0;state.tourStep=0;state.angleOverride=null;state.inspectionCache=new Map();state.sprites=new Map();state.status='Ready';$('enemySelect').value=state.id;$('eliteToggle').checked=state.elite;document.querySelectorAll('.modeBtn').forEach(b=>b.classList.toggle('active',b.dataset.mode==='manual'));updatePanel();refreshTurnaround();}
+function updatePanel(){let e=enemy(),grp=ENEMIES.filter(v=>v.biome===e.biome);$('enemyTitle').textContent=e.name;$('roleLabel').textContent=e.biome+'  /  '+e.role;$('roleText').textContent=e.visual;$('statHP').textContent=e.hp+(state.elite?' +50%':'');$('statMove').textContent=e.speed.toFixed(1);$('statTier').textContent=e.danger+'/5';$('statSize').textContent=e.size;$('animationInfo').textContent=e.pivots;$('aiInfo').textContent=e.ai;$('eliteInfo').innerHTML='<b>'+e.eliteName+'</b> — '+e.elite;$('deathInfo').textContent=e.death;for(let i=0;i<3;i++){let m=e.moves[i];$('move'+i).innerHTML='<span class="moveNum">'+(i+1)+'</span><span><b>'+m.name+'</b><small>'+m.tell+' · '+m.effect+'</small></span>';}text('enemyIndex',(state.id+1)+' / 33');$('biomeSelect').value=e.biome;document.querySelectorAll('#sortGrid button').forEach(b=>b.classList.toggle('on',b.dataset.enemyid==state.id));}
+function makeBiomeFilters(){let bsel=$('biomeSelect');for(let biome of ['All biomes','Maintenance','Factory','Boiler Room','Toxin Refinery']){let a=document.createElement('option');a.value=biome;a.textContent=biome;bsel.appendChild(a);}for(let e of ENEMIES){let a=document.createElement('option');a.value=e.id;a.textContent=String(e.id+1).padStart(2,'0')+'  '+e.name+' — '+e.role;$('enemySelect').appendChild(a);}bsel.onchange=()=>{const b=bsel.value;if(b==='All biomes')return;let e=ENEMIES.find(v=>v.biome===b);if(e)switchEnemy(e.id);};$('enemySelect').onchange=e=>switchEnemy(e.target.value);}
+function refreshTurnaround(){const strip=$('angleStrip');strip.textContent='';for(let i=0;i<8;i++){let angle=i*Math.PI/4;let b=document.createElement('button');b.className='turn';b.innerHTML='<canvas width="90" height="90"></canvas><span>'+i*45+'°</span>';let canvas=b.querySelector('canvas'),g=canvas.getContext('2d');let sprite=drawModelSprite(enemy(),{yaw:angle,t:1.5,elite:state.elite});g.drawImage(sprite,0,0,350,350,0,0,90,90);b.onclick=()=>{state.mode='manual';document.querySelectorAll('.modeBtn').forEach(v=>v.classList.toggle('active',v.dataset.mode==='manual'));state.desired=angle;state.yaw=angle;state.angleOverride=angle;state.move=0;};strip.appendChild(b);}}
+function parseTime(s,def=.6){let m=(s||'').match(/(\d+(?:\.\d+)?)\s*s\b/i);return m?Number(m[1]):def}
+function startAction(i){if(state.died)return;if(state.phase!=='idle'&&state.phase!=='recover')return;let m=enemy().moves[i];state.act=i;state.phase='windup';state.phaseT=0;state.phaseDuration=parseTime(m.tell,.65);state.progress=0;state.attacked=false;state.attackYaw=state.yaw;state.attackStart={x:state.x,z:state.z};state.status=m.name+' • WINDUP';state.fx.length=0;state.angleOverride=null;}
+function spawnText(msg,world=target,color='#f2ba80'){state.fx.push({type:'text',msg,x:world.x,z:world.z,color,t:0,duration:.92});}
+function impactDamage(amount=10){target.hp=Math.max(0,target.hp-amount);target.flash=.38;spawnText('-'+amount+' HP');if(target.hp<=0){spawnText('TARGET RESET',target,'#b9d8da');target.hp=100;}}
+function doAction(e,m){let name=m.name.toLowerCase(),role=e.role;
+ if(/hop|strafe|drift|feint|scatter|regroup|reverse/.test(name)){let s=unitVec(state.attackYaw+Math.PI/2);canMove(state.x+s.x*.65,state.z+s.z*.65);spawnText('REPOSITION',{x:state.x,z:state.z},'#a0ccd2');return;}
+ if(/step|skip|walker|phase/.test(name)&&role==='Teleport'){state.x=target.x-.65;state.z=target.z-.43;spawnText('REPOSITION',{x:state.x,z:state.z},'#a0ccd2');return;}
+ if(/summon|deploy|release|fabricat|breed/.test(name)||role==='Summoner'&&state.act===0){state.summons.push({x:state.x+.55,z:state.z+.5,t:0},{x:state.x-.45,z:state.z+.4,t:0},{x:state.x,z:state.z+.7,t:0});spawnText('SUMMONED');return;}
+ if(/guard|shield|armor|boost|overclock|link/.test(name)&&role==='Buffer'){spawnText('ALLY BUFF', {x:state.x,z:state.z},'#c8d4d9');return;}
+ const dist=Math.hypot(state.x-target.x,state.z-target.z),dir=unitVec(state.attackYaw);
+ if(role==='Charging'||/chase|ram|torpedo|lunge|rush|pierc/.test(name)&&role!=='Swarm'){canMove(state.x+dir.x*1.45,state.z+dir.z*1.45);}
+ if(role==='Teleport'&&/slash|jab|sting/.test(name)){/* attack at newly arrived destination */}
+ if(role==='Grappler'&&/grab|grapple|hook|loop|reel|drag|siphon/.test(name)){spawnText('HOOK!',target,'#eac18a');}
+ if(role==='AOE'||role==='Disruptor'||/ring|pulse|burst|sweep|shock|mirage/.test(name)){if(dist<3.6)impactDamage(9+e.danger*2);else spawnText('DODGED',target,'#c5d5dc');return;}
+ if(role==='Projectile'||/spit|toss|shot|mortar|barrage|spray|dart/.test(name)){state.projectiles.push({x:state.x,z:state.z,tx:target.x,tz:target.z,t:0,duration:.42,color:'#ed9b72'});return;}
+ if(dist<2.6)impactDamage(5+e.danger*3);else spawnText('OUT OF RANGE',target,'#b2bec4');
+}
+function actionUpdate(dt){if(state.phase==='idle')return;state.phaseT+=dt;state.progress=clamp(state.phaseT/(state.phaseDuration||1),0,1);
+ if(state.phase==='death'){if(state.phaseT>=2.2){startPos();}return;}
+ if(state.phaseT<state.phaseDuration)return;
+ let e=enemy(),m=e.moves[state.act];
+ if(state.phase==='windup'){state.phase='active';state.phaseT=0;state.phaseDuration=(e.role==='Charging'?.48:e.role==='Grappler'?.5:.36);state.status=m.name+' • ACTIVE';state.progress=0;doAction(e,m);}
+ else if(state.phase==='active'){state.phase='recover';state.phaseT=0;state.phaseDuration=parseTime(m.recovery,.60);state.status=m.name+' • RECOVERY';state.progress=0;}
+ else if(state.phase==='recover'){state.phase='idle';state.phaseT=0;state.act=-1;state.status='Ready';state.progress=0;}
+}
+function setMode(mode){state.mode=mode;state.modeT=0;state.tourStep=0;state.angleOverride=null;state.phase='idle';state.act=-1;document.querySelectorAll('.modeBtn').forEach(b=>b.classList.toggle('active',b.dataset.mode===mode));}
+function worldMove(dt){let dx=0,dy=0;
+ if(state.mode==='manual'){let k=state.keys;dx=(k.d||k.arrowright?1:0)-(k.a||k.arrowleft?1:0);dy=(k.s||k.arrowdown?1:0)-(k.w||k.arrowup?1:0);}
+ else if(state.mode==='tour'){let vectors=[[0,-1],[1,-1],[1,0],[1,1],[0,1],[-1,1],[-1,0],[-1,-1]];let step=Math.floor(state.modeT/1.40)%8;state.tourStep=step;[dx,dy]=vectors[step];if(state.modeT>=11.2)state.modeT=0;}
+ else if(state.mode==='combat'){
+   let phase=(state.modeT%19);if(phase<3.2){dx=1;dy=0;}else if(phase<6.3){dx=0;dy=1;}else if(phase<9.3){dx=-1;dy=0;}else if(phase<12){dx=0;dy=-1;}else{dx=dy=0;}
+   let actionPhase=phase;for(let [t,a] of [[2.5,0],[6.2,1],[10.5,2],[15.1,0]])if(actionPhase>=t&&actionPhase<t+dt+.02&&state.phase==='idle')startAction(a);
+   if(state.modeT>40)state.modeT=0;
+ }
+ if(state.phase==='windup'||state.phase==='active'||state.phase==='death'){dx=dy=0;}
+ if(dx||dy){let length=Math.hypot(dx,dy);dx/=length;dy/=length;let dir=unitFromScreen(dx,dy);let scale=enemy().speed*.42*dt; // room is designed as a compact animation lab, speeds normalized
+  if(state.mode==='tour'){scale=Math.min(scale,.017);if(Math.hypot(state.x,state.z)>1.15){dir.x=-state.x;dir.z=-state.z;let L=Math.hypot(dir.x,dir.z)||1;dir.x/=L;dir.z/=L;}}
+  canMove(state.x+dir.x*scale,state.z+dir.z*scale);state.desired=Math.atan2(dir.x,dir.z);state.move=lerp(state.move,1,clamp(dt*8,0,1));state.velocity=enemy().speed*.42;state.angleOverride=null;
+ }else{state.move=lerp(state.move,0,clamp(dt*7,0,1));state.velocity=0;}
+ if(state.mouseAim&&state.mode==='manual'&&state.screenMouse&&!dx&&!dy){let p=floor(state.x,state.z);let dir=unitFromScreen(state.screenMouse.x-p.x,state.screenMouse.y-p.y);state.desired=Math.atan2(dir.x,dir.z);state.angleOverride=null;}
+ let yawDiff=((state.desired-state.yaw+Math.PI*3)%(Math.PI*2))-Math.PI;
+ // Discrete multi-view behavior with continuous travel and limited turn lag for secondary bank.
+ state.yaw+=clamp(yawDiff,-dt*10,dt*10);
+}
+function bg(){ctx.fillStyle='#0c1216';ctx.fillRect(0,0,1280,720);if(img.complete&&img.naturalWidth){ctx.drawImage(img,0,0,1280,720);}else{ctx.fillStyle='#5c6367';ctx.fillRect(0,0,1280,720);}}
+function dot(x,z,r=10,color='#d5aa77',alpha=.6){const p=floor(x,z);ctx.save();ctx.globalAlpha=alpha;ctx.fillStyle=color;ctx.beginPath();ctx.ellipse(p.x,p.y,r,r*.38,0,0,Math.PI*2);ctx.fill();ctx.restore();}
+function circle(x,z,r,color='#e5a05b',fill=false){const p=floor(x,z);ctx.beginPath();ctx.ellipse(p.x,p.y,r*82,r*30,0,0,Math.PI*2);ctx.strokeStyle=color;ctx.lineWidth=2.4;ctx.stroke();if(fill){ctx.fillStyle='rgba(216,105,73,.12)';ctx.fill();}}
+function lineWorld(x,z,x2,z2,col='#e7aa72',w=3){let a=floor(x,z),b=floor(x2,z2);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=col;ctx.lineWidth=w;ctx.stroke();}
+function arc(x,z,r,yaw,span=Math.PI*.78,col='#e7ab70',fill=false){let p=floor(x,z);ctx.save();ctx.beginPath();let n=32;for(let k=0;k<=n;k++){let angle=yaw-span/2+span*k/n,v=unitVec(angle),q=floor(x+v.x*r,z+v.z*r);if(k===0)ctx.moveTo(q.x,q.y);else ctx.lineTo(q.x,q.y);}ctx.strokeStyle=col;ctx.lineWidth=3;ctx.stroke();if(fill){ctx.lineTo(p.x,p.y);ctx.closePath();ctx.fillStyle='#d9866040';ctx.fill();}ctx.restore();}
+function FXGround(){let e=enemy();if(state.phase==='idle'||state.phase==='death'||state.act<0)return;let m=e.moves[state.act],n=m.name.toLowerCase(),p=state.progress,tele=state.phase==='windup';const col=tele?'#df965d':'#f1ca91';if(!state.showTele)return;
+ ctx.save();ctx.globalAlpha=tele?.66+Math.sin(state.now*14)*.12:.95;const y=state.attackYaw,v=unitVec(y),ox=state.x,oz=state.z;
+ if(e.role==='AOE'||e.role==='Disruptor'||e.role==='Buffer'||/ring|burst|pulse|overclock|guard/.test(n)){circle(ox,oz,1.0+2*p,col,true);if(/eight|gear|wave/.test(n))for(let k=0;k<8;k++){let a=y+k*Math.PI/4,dir=unitVec(a);lineWorld(ox,oz,ox+dir.x*3,oz+dir.z*3,col,1.6);}}
+ else if(e.role==='Projectile'||/spit|shot|spray|toss|barrage/.test(n)){lineWorld(ox,oz,ox+v.x*3.6,oz+v.z*3.6,col,2);circle(target.x,target.z,.42,col,true);}
+ else if(e.role==='Grappler'||/hook|grab|reel|tether|chain/.test(n)){lineWorld(ox,oz,target.x,target.z,col,tele?2:5);circle(target.x,target.z,.40,col,true);}
+ else if(e.role==='Charging'||/dive|lunge|chase|torpedo|ram/.test(n)){let q=floor(ox+v.x*4,oz+v.z*4),a=floor(ox,oz);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(q.x,q.y);ctx.strokeStyle=col;ctx.lineWidth=8;ctx.globalAlpha=.35;ctx.stroke();ctx.globalAlpha=.8;ctx.lineWidth=2;ctx.stroke();}
+ else if(e.role==='Teleport'||/phase|vapor|flicker/.test(n)){circle(target.x-.65,target.z-.43,.65,col,true);}
+ else{arc(ox,oz,1.35,y,Math.PI*.73,col,true);}
+ ctx.restore();}
+function drawTarget(){let p=floor(target.x,target.z);dot(target.x,target.z,30,'#000000',.33);ctx.save();ctx.translate(p.x,p.y);ctx.strokeStyle='#26333d';ctx.lineWidth=1.5;ctx.fillStyle=target.flash>0?'#f6c1a9':'#8f9ca0';ctx.fillRect(-16,-64,32,47);ctx.strokeRect(-16,-64,32,47);ctx.fillStyle='#d3d7d6';ctx.beginPath();ctx.arc(0,-76,12,0,Math.PI*2);ctx.fill();ctx.stroke();ctx.strokeStyle='#53616b';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(-12,-44);ctx.lineTo(-26,-19);ctx.moveTo(12,-44);ctx.lineTo(26,-19);ctx.moveTo(-6,-19);ctx.lineTo(-11,0);ctx.moveTo(6,-19);ctx.lineTo(11,0);ctx.stroke();ctx.restore();
+ ctx.fillStyle='#1c2529';ctx.fillRect(p.x-35,p.y-106,70,8);ctx.fillStyle='#b78b72';ctx.fillRect(p.x-34,p.y-105,68*(target.hp/target.max),6);ctx.font='bold 10px system-ui';ctx.textAlign='center';ctx.fillStyle='#d0d8dc';ctx.fillText('TEST TARGET',p.x,p.y-115);}
+const sprites=new Map();
+function frameSprite(){let e=enemy(),a=state.yaw,N=state.angleCount,index=((Math.round(a/TAU*N)%N)+N)%N,quant=index*TAU/N;
+ let idle=(state.phase==='idle')&&!state.move&&!state.elite?Math.floor(state.now*3)%2:Math.floor(state.now*8)%4;
+ let phase=state.phase,prog=phase==='idle'?0:Math.floor(state.progress*5)/5;
+ let key=[e.id,index,phase,prog,idle,Math.round(state.move*2),state.elite].join(':');if(sprites.has(key))return {sprite:sprites.get(key),index,quant};
+ let image=drawModelSprite(e,{yaw:quant,t:state.now,moving:state.move,phase:phase==='death'?'death':phase,progress:state.progress,elite:state.elite});
+ sprites.set(key,image);if(sprites.size>170){let first=sprites.keys().next().value;sprites.delete(first);}return {sprite:image,index,quant};}
+function drawEnemy(){let p=floor(state.x,state.z),float=['Flying','Swarm'].includes(enemy().role)?1:0;const h=enemy().size==='Tiny'?.90:enemy().size==='Large'?1.27:enemy().size==='Small'?1.14:1.16;
+ if(state.showShadow)dot(state.x,state.z,44*h,'#071215',.34);
+ const {sprite,index,quant}=frameSprite();let alpha=state.died?clamp(1-state.phaseT/2.1,0,1):1;
+ if(state.phase==='windup'&&enemy().role==='Teleport'&&state.progress>.62)alpha=.38;
+ ctx.save();ctx.globalAlpha=alpha;ctx.translate(p.x,p.y);ctx.scale(h,h);ctx.drawImage(sprite,-175,-286);ctx.restore();
+ if(state.showTele&&state.move>.18&&state.phase==='idle'){let v=unitVec(state.yaw),pp=floor(state.x+v.x*.75,state.z+v.z*.75);ctx.strokeStyle='#d8b27a98';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(pp.x,pp.y);ctx.stroke();}
+ text('currentYaw',Math.round((state.yaw%TAU+TAU)%TAU*180/Math.PI).toString().padStart(3,'0')+'°');text('spriteIndex',index+'/'+state.angleCount);text('currentState',state.phase.toUpperCase());text('currentSpeed',state.velocity.toFixed(2));
+}
+function drawFX(dt){for(let f of state.fx){f.t+=dt;let p=floor(f.x,f.z);ctx.globalAlpha=clamp(1-f.t/f.duration,0,1);ctx.textAlign='center';ctx.font='bold 14px system-ui';ctx.fillStyle=f.color;ctx.fillText(f.msg,p.x,p.y-110-f.t*35);ctx.globalAlpha=1;}state.fx=state.fx.filter(f=>f.t<f.duration);
+ for(let p of state.projectiles){p.t+=dt;let t=clamp(p.t/p.duration,0,1),q=floor(lerp(p.x,p.tx,t),lerp(p.z,p.tz,t));ctx.fillStyle='#e4a97d';ctx.strokeStyle='#f1d4b5';ctx.lineWidth=2;ctx.beginPath();ctx.arc(q.x,q.y-40-30*Math.sin(t*Math.PI),8,0,TAU);ctx.fill();ctx.stroke();if(p.t>=p.duration){impactDamage(8+enemy().danger*2);}}state.projectiles=state.projectiles.filter(p=>p.t<p.duration);
+ for(let s of state.summons){s.t+=dt;let p=floor(s.x+.19*Math.sin(s.t*3),s.z+.15*Math.cos(s.t*4));ctx.globalAlpha=clamp(1-s.t/5.5,0,.85);ctx.fillStyle='#98a3a8';ctx.strokeStyle='#283137';ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(p.x,p.y-32+Math.sin(s.t*4)*3,12,8,0,0,TAU);ctx.fill();ctx.stroke();ctx.globalAlpha=1;}state.summons=state.summons.filter(s=>s.t<5.5);}
+function HUD(){ctx.save();let grad=ctx.createLinearGradient(0,0,570,0);grad.addColorStop(0,'rgba(6,12,18,.88)');grad.addColorStop(1,'rgba(6,12,18,0)');ctx.fillStyle=grad;ctx.fillRect(0,0,750,115);ctx.textAlign='left';ctx.fillStyle='#d8b47f';ctx.font='bold 12px system-ui';ctx.fillText('ISOMETRIC ANIMATION LAB  /  '+enemy().biome.toUpperCase(),28,35);ctx.fillStyle='#ecf1f0';ctx.font='bold 27px system-ui';ctx.fillText(enemy().name,28,68);ctx.fillStyle='#a9b9bf';ctx.font='12px system-ui';ctx.fillText(enemy().role.toUpperCase()+'   •   '+(state.elite?enemy().eliteName.toUpperCase()+'   •   ':'')+state.status,29,94);
+ ctx.font='11px system-ui';ctx.textAlign='left';ctx.fillStyle='#fff';ctx.fillText('33 ORIGINAL GRAYBOX MODELS  ·  '+state.angleCount+' DIRECTIONAL VIEWS  ·  FIXED CAMERA',24,696);
+ if(state.mode==='tour'){ctx.textAlign='right';ctx.fillStyle='#ecc696';ctx.font='bold 18px system-ui';ctx.fillText(['N','NE','E','SE','S','SW','W','NW'][state.tourStep]+' FACING',1230,50);}
+ ctx.restore();}
+let last=performance.now();function loop(ts){let dt=clamp((ts-last)/1000,0,.05);last=ts;state.now+=dt;state.modeT+=dt;target.flash=Math.max(0,target.flash-dt);worldMove(dt);actionUpdate(dt);bg();FXGround();drawTarget();drawEnemy();drawFX(dt);HUD();requestAnimationFrame(loop);}
+function keymap(ev){const t=ev.target?.tagName;if(t==='INPUT'||t==='TEXTAREA'||t==='SELECT')return;let k=ev.key.toLowerCase();if(['w','a','s','d',' ','arrowup','arrowdown','arrowleft','arrowright','1','2','3','r','k','t'].includes(k))ev.preventDefault();state.keys[k===' '?'space':k]=true;if(ev.repeat)return;
+ if(k==='1'||k==='2'||k==='3')startAction(Number(k)-1);
+ if(k==='r')startPos();if(k==='k'){state.phase='death';state.act=0;state.phaseT=0;state.phaseDuration=2.2;state.died=true;state.progress=0;state.status='DEATH ANIMATION';}
+ if(k==='t')setMode(state.mode==='tour'?'manual':'tour');
+ if(k===' '&&state.phase==='idle')startAction(0);
+}
+window.addEventListener('keydown',keymap);window.addEventListener('keyup',e=>{state.keys[e.key.toLowerCase()=== ' '?'space':e.key.toLowerCase()]=false});window.addEventListener('blur',()=>state.keys={});
+A.addEventListener('mousemove',ev=>{const rect=A.getBoundingClientRect();state.screenMouse={x:(ev.clientX-rect.left)/rect.width*1280,y:(ev.clientY-rect.top)/rect.height*720};});
+A.addEventListener('click',()=>{if(state.phase==='idle')startAction(state.comboStep++%3);A.focus();});
+$('prevBtn').onclick=()=>switchEnemy((state.id+32)%33);$('nextBtn').onclick=()=>switchEnemy((state.id+1)%33);
+for(let i=0;i<3;i++)$('move'+i).onclick=()=>{setMode('manual');startAction(i);};
+$('deathBtn').onclick=()=>{state.died=true;state.phase='death';state.phaseT=0;state.phaseDuration=2.2;state.status='DEATH ANIMATION';};
+$('resetBtn').onclick=()=>{startPos();setMode('manual')};
+document.querySelectorAll('.modeBtn').forEach(b=>b.onclick=()=>{setMode(b.dataset.mode);A.focus();});
+$('angles').onchange=ev=>{state.angleCount=Number(ev.target.value);sprites.clear();};
+$('eliteToggle').onchange=ev=>{state.elite=ev.target.checked;sprites.clear();updatePanel();refreshTurnaround();};
+$('teleToggle').onchange=ev=>state.showTele=ev.target.checked;
+$('shadowToggle').onchange=ev=>state.showShadow=ev.target.checked;
+$('mouseToggle').onchange=ev=>state.mouseAim=ev.target.checked;
+
+function buildGrid(){let grid=$('sortGrid');grid.innerHTML='';for(let e of ENEMIES){let b=document.createElement('button');b.textContent=e.name;b.title=e.role+' / '+e.biome;b.dataset.enemyid=e.id;b.onclick=()=>switchEnemy(e.id);grid.appendChild(b);}}
+// Export and scripted screenshot API for model atlas generation and regression tests.
+window.GreyboxLab={
+ setEnemy:switchEnemy,
+ setYaw:(angle)=>{state.yaw=angle;state.desired=angle;state.angleOverride=angle;state.move=0;},
+ setPhase:(phase,progress=.5,move=0)=>{state.phase=phase;state.phaseDuration=1;state.phaseT=progress;state.progress=progress;state.move=move;state.act=0;state.status=phase.toUpperCase();},
+ setMode,
+ triggerMove:startAction,
+ reset:startPos,
+ getState:()=>({...state,name:enemy().name}),
+ spriteData:(id,angle,phase='idle',progress=.4)=>drawModelSprite(ENEMIES[id],{yaw:angle,phase,progress,t:1.5,moving:phase==='idle'?.65:0}).toDataURL('image/png'),
+ previewFrame:(i)=>{const step=i%20;state.now=i*.145+1.0;state.mode='manual';state.modeT=0;state.angleOverride=null;state.summons=[];state.projectiles=[];state.fx=[];state.x=-.40;state.z=-.38;if(step<8){state.yaw=step*Math.PI/4;state.desired=state.yaw;state.move=.85;state.phase='idle';state.act=-1;state.progress=0;let p=unitVec(state.yaw);state.x+=p.x*.36;state.z+=p.z*.30;}else{state.yaw=Math.PI/4;state.desired=state.yaw;state.move=0;state.act=Math.floor((step-8)/4);let stage=(step-8)%4;state.phase=['windup','windup','active','recover'][stage];state.progress=[.25,.75,.52,.58][stage];if(stage===2){const role=enemy().role;if(role==='Projectile')state.projectiles=[{x:state.x,z:state.z,tx:target.x,tz:target.z,t:.20,duration:.42}];if(role==='Summoner')state.summons=[{x:state.x+.5,z:state.z+.5,t:0},{x:state.x-.4,z:state.z+.3,t:0}];if(role==='Charging'){state.x+=.46;state.z+=.46;}if(role==='Teleport'){state.x=target.x-.56;state.z=target.z-.65;}}}bg();FXGround();drawTarget();drawEnemy();drawFX(0);HUD();return A.toDataURL('image/png');},
+ screenshot:()=>A.toDataURL('image/png'),
+ screenshotSprite:()=>frameSprite().sprite.toDataURL('image/png'),
+ roster:ENEMIES,
+ meshData:(i)=>makeModel(ENEMIES[i],{yaw:0,t:0,phase:'idle',progress:0,moving:0}).polys,
+};
+makeBiomeFilters();buildGrid();switchEnemy(0);requestAnimationFrame(loop);
+})();
+
+</script></body></html>

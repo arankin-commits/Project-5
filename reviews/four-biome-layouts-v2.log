@@ -1,0 +1,24 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+BIOME_LAYOUTS_CHECKED=maintenance
+BIOME_LAYOUTS_CHECKED=factory
+ERROR: Exit disconnected: boi_05
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:48)
+ERROR: Not enough safe enemy spawns: boi_05
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:52)
+BIOME_LAYOUTS_CHECKED=boiler
+ERROR: Entry blocked: tox_03
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:45)
+BIOME_LAYOUTS_CHECKED=toxin_refinery
+FOUR_BIOME_CHECKS=16456 FAILURES=3

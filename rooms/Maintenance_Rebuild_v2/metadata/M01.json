@@ -1,0 +1,135 @@
+{
+  "id": "M01",
+  "name": "Twin Fan Transfer",
+  "biome": "Maintenance",
+  "size_class": "Medium",
+  "canvas_px": [
+    2560,
+    1620
+  ],
+  "world_footprint_px": [
+    2560,
+    1620
+  ],
+  "world_polygon_px": [
+    [
+      224,
+      364
+    ],
+    [
+      576,
+      205
+    ],
+    [
+      1029,
+      205
+    ],
+    [
+      1205,
+      126
+    ],
+    [
+      1632,
+      126
+    ],
+    [
+      1858,
+      285
+    ],
+    [
+      2285,
+      285
+    ],
+    [
+      2411,
+      539
+    ],
+    [
+      2411,
+      1096
+    ],
+    [
+      2034,
+      1319
+    ],
+    [
+      1481,
+      1319
+    ],
+    [
+      1356,
+      1478
+    ],
+    [
+      702,
+      1478
+    ],
+    [
+      551,
+      1303
+    ],
+    [
+      224,
+      1191
+    ]
+  ],
+  "world_polygon_area_px2": 2447804,
+  "projection": "elevated_3_4_oblique_isometric_reference",
+  "wall_geometry": "straight_segments_only",
+  "palette": {
+    "shadow": "#3B4145",
+    "base": "#929799",
+    "brass": "#A7793E",
+    "light": "#DDDCD5",
+    "accent": "#85C9D0"
+  },
+  "exits": [
+    {
+      "edge_id": 0,
+      "wall_a_world_px": [
+        224,
+        364
+      ],
+      "wall_b_world_px": [
+        576,
+        205
+      ],
+      "wall_t": 0.5,
+      "type": "eight_thin_blade_fan_exit",
+      "open_condition": "stop_spinning; blades remain thin enough to slip between",
+      "position_canvas_px": [
+        1144,
+        556
+      ],
+      "radius_canvas_px": 95,
+      "orientation": "top_left"
+    },
+    {
+      "edge_id": 6,
+      "wall_a_world_px": [
+        2285,
+        285
+      ],
+      "wall_b_world_px": [
+        2411,
+        539
+      ],
+      "wall_t": 0.5,
+      "type": "eight_thin_blade_fan_exit",
+      "open_condition": "stop_spinning; blades remain thin enough to slip between",
+      "position_canvas_px": [
+        2148,
+        919
+      ],
+      "radius_canvas_px": 45,
+      "orientation": "top_right"
+    }
+  ],
+  "entrances": [],
+  "hazard_authoring": {
+    "projectile_turret": "optional overlay",
+    "push_fan": "optional overlay",
+    "open_wires": "optional overlay"
+  },
+  "note": "Decorative art reference and layout geometry; 2D collision and door logic must be implemented in Godot."
+}

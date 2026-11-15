@@ -8,6 +8,7 @@ const Space := preload("res://scripts/boiler_space.gd")
 var target: CharacterBody2D
 var room: Node2D
 var kind := "crawler"
+var display_name := "FURNACE WARDEN"
 var speed := 104.0
 var health := 60.0
 var max_health := 60.0

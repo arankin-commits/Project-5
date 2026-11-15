@@ -60,8 +60,8 @@ func _ready() -> void:
 	progress.alignment = BoxContainer.ALIGNMENT_END
 	progress.add_theme_constant_override("separation",10)
 	right.add_child(progress)
-	for i in 8:
-		var item := label(str(i+1) if i<7 else "VIII",18)
+	for i in 9:
+		var item := label(str(i+1) if i<8 else "B",18)
 		progress.add_child(item)
 		progress_labels.append(item)
 	objective = label("",14,Color("b3d9d0"))
@@ -144,8 +144,10 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func set_room(index: int, data: Dictionary, run_seed: int) -> void:
 	room_label.text = str(data["name"]).to_upper()
-	room_subtitle.text = "THE BOILER BELOW  /  %02d OF 08  /  SEED %d" % [index+1,run_seed%100000]
-	for i in 8:
+	var count: int = data.get("room_count",9)
+	room_subtitle.text = "%s  /  %02d OF %02d  /  SEED %d" % [data.get("biome","THE BOILER BELOW"),index+1,count,run_seed%100000]
+	for i in progress_labels.size():
+		progress_labels[i].visible = i < count
 		progress_labels[i].modulate = Color("72e8d2") if i < index else (Color("ffce83") if i == index else Color("766757"))
 	modal.hide()
 
@@ -160,7 +162,7 @@ func set_boss(boss: Node) -> void:
 	if boss_box.visible:
 		boss_bar.max_value = boss.get("max_health")
 		boss_bar.value = boss.get("health")
-		boss_title.text = "FURNACE WARDEN" + ("  /  OVERPRESSURE" if boss.get("phase_two") else "")
+		boss_title.text = boss.display_name + ("  /  OVERPRESSURE" if boss.get("phase_two") else "")
 
 func _clear_actions() -> void:
 	for child in modal_actions.get_children():

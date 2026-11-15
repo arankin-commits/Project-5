@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://jsvdkg8yunry"
+
+[deps]
+
+files=["res://rooms/Maintenance_Rebuild_v2/room_sizes.size.translation", "res://rooms/Maintenance_Rebuild_v2/room_sizes.name.translation", "res://rooms/Maintenance_Rebuild_v2/room_sizes.canvas.translation", "res://rooms/Maintenance_Rebuild_v2/room_sizes.canvas.translation", "res://rooms/Maintenance_Rebuild_v2/room_sizes.canvas.translation", "res://rooms/Maintenance_Rebuild_v2/room_sizes.floor.translation", "res://rooms/Maintenance_Rebuild_v2/room_sizes.exit.translation", "res://rooms/Maintenance_Rebuild_v2/room_sizes.file.translation"]
+
+source_file="res://rooms/Maintenance_Rebuild_v2/room_sizes.csv"
+dest_files=["res://rooms/Maintenance_Rebuild_v2/room_sizes.size.translation", "res://rooms/Maintenance_Rebuild_v2/room_sizes.name.translation", "res://rooms/Maintenance_Rebuild_v2/room_sizes.canvas.translation", "res://rooms/Maintenance_Rebuild_v2/room_sizes.canvas.translation", "res://rooms/Maintenance_Rebuild_v2/room_sizes.canvas.translation", "res://rooms/Maintenance_Rebuild_v2/room_sizes.floor.translation", "res://rooms/Maintenance_Rebuild_v2/room_sizes.exit.translation", "res://rooms/Maintenance_Rebuild_v2/room_sizes.file.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

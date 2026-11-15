@@ -1,0 +1,151 @@
+{
+  "id": "M05",
+  "name": "Broken Cable Maze",
+  "biome": "Maintenance",
+  "size_class": "Medium",
+  "canvas_px": [
+    2560,
+    1620
+  ],
+  "world_footprint_px": [
+    2560,
+    1620
+  ],
+  "world_polygon_px": [
+    [
+      305,
+      161
+    ],
+    [
+      1101,
+      161
+    ],
+    [
+      1229,
+      339
+    ],
+    [
+      1639,
+      339
+    ],
+    [
+      1793,
+      193
+    ],
+    [
+      2255,
+      193
+    ],
+    [
+      2383,
+      453
+    ],
+    [
+      2152,
+      631
+    ],
+    [
+      2383,
+      810
+    ],
+    [
+      2383,
+      1118
+    ],
+    [
+      1998,
+      1362
+    ],
+    [
+      1383,
+      1362
+    ],
+    [
+      1229,
+      1492
+    ],
+    [
+      664,
+      1492
+    ],
+    [
+      562,
+      1281
+    ],
+    [
+      203,
+      1281
+    ],
+    [
+      126,
+      972
+    ],
+    [
+      331,
+      761
+    ],
+    [
+      126,
+      534
+    ]
+  ],
+  "world_polygon_area_px2": 2446860,
+  "projection": "elevated_3_4_oblique_isometric_reference",
+  "wall_geometry": "straight_segments_only",
+  "palette": {
+    "shadow": "#3B4145",
+    "base": "#929799",
+    "brass": "#A7793E",
+    "light": "#DDDCD5",
+    "accent": "#85C9D0"
+  },
+  "exits": [
+    {
+      "edge_id": 18,
+      "wall_a_world_px": [
+        126,
+        534
+      ],
+      "wall_b_world_px": [
+        305,
+        161
+      ],
+      "wall_t": 0.5,
+      "type": "eight_thin_blade_fan_exit",
+      "open_condition": "stop_spinning; blades remain thin enough to slip between",
+      "position_canvas_px": [
+        998,
+        546
+      ],
+      "radius_canvas_px": 95,
+      "orientation": "top_left"
+    },
+    {
+      "edge_id": 5,
+      "wall_a_world_px": [
+        2255,
+        193
+      ],
+      "wall_b_world_px": [
+        2383,
+        453
+      ],
+      "wall_t": 0.5,
+      "type": "eight_thin_blade_fan_exit",
+      "open_condition": "stop_spinning; blades remain thin enough to slip between",
+      "position_canvas_px": [
+        2192,
+        884
+      ],
+      "radius_canvas_px": 46,
+      "orientation": "top_right"
+    }
+  ],
+  "entrances": [],
+  "hazard_authoring": {
+    "projectile_turret": "optional overlay",
+    "push_fan": "optional overlay",
+    "open_wires": "optional overlay"
+  },
+  "note": "Decorative art reference and layout geometry; 2D collision and door logic must be implemented in Godot."
+}

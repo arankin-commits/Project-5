@@ -9,6 +9,7 @@ func _capture() -> void:
 		config.name = "RunConfig"
 		root.add_child(config)
 	root.get_node("RunConfig").call("start_run", "medium", {})
+	root.get_node("RunConfig").biome = "boiler"
 	root.get_node("RunConfig").set("run_seed", 38417)
 	var run: Node2D = load("res://scenes/RoguelikeRun.tscn").instantiate()
 	root.add_child(run)
@@ -16,7 +17,7 @@ func _capture() -> void:
 	await process_frame
 	await process_frame
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path("res://reviews"))
-	for i in 8:
+	for i in 9:
 		if i > 0:
 			run.call("_load_room",i)
 		for enemy in run.enemies.get_children():

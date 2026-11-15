@@ -4,6 +4,8 @@ signal closed
 signal start_requested(modifiers: Dictionary)
 
 var robot_choice: OptionButton
+var route_choice: OptionButton
+var route_note: Label
 var overclock_checkbox: CheckBox
 var reinforcements_checkbox: CheckBox
 var fragile_checkbox: CheckBox
@@ -71,6 +73,13 @@ func _build_ui() -> void:
 	robot_choice.select(0)
 	robot_choice.custom_minimum_size.y = 46
 	content.add_child(robot_choice)
+	route_choice = OptionButton.new()
+	route_choice.add_item("Above ground | Confront the upper brass")
+	route_choice.add_item("Below ground | Investigate tech")
+	route_choice.select(1)
+	route_choice.custom_minimum_size.y = 46
+	route_choice.item_selected.connect(_update_route)
+	content.add_child(route_choice)
 	var modifier_label := Label.new()
 	modifier_label.text = "Difficulty modifiers"
 	modifier_label.add_theme_font_size_override("font_size", 21)
@@ -87,18 +96,31 @@ func _build_ui() -> void:
 	var spacer := Control.new()
 	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	content.add_child(spacer)
-	var note := Label.new()
-	note.text = "The Boiler Below: 8 chambers. Defeat the Furnace Warden.\nWASD move | LMB / J attack | RMB / K heavy | Space dash"
-	note.add_theme_color_override("font_color", Color("d7b981"))
-	content.add_child(note)
+	route_note = Label.new()
+	route_note.add_theme_font_size_override("font_size",16)
+	route_note.add_theme_color_override("font_color", Color("d7b981"))
+	content.add_child(route_note)
 	start_button = Button.new()
 	start_button.text = "START ROGUELIKE RUN"
 	start_button.custom_minimum_size.y = 52
 	start_button.pressed.connect(_on_start_pressed)
 	content.add_child(start_button)
+	_update_route(route_choice.selected)
+
+func selected_route() -> String:
+	return "above_ground" if route_choice.selected == 0 else "below_ground"
+
+func _update_route(index: int) -> void:
+	start_button.disabled = index == 0
+	if index == 0:
+		route_note.text = "Above-ground route is not yet available."
+	else:
+		route_note.text = "Investigate tech below ground."
 
 func selected_robot() -> String:
 	return ["medium", "light", "heavy"][robot_choice.selected]
 
 func _on_start_pressed() -> void:
+	if selected_route() == "above_ground":
+		return
 	start_requested.emit(selected_modifiers())

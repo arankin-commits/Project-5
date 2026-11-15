@@ -1,0 +1,103 @@
+{
+  "id": "S02",
+  "name": "Cable Recess",
+  "biome": "Maintenance",
+  "size_class": "Small",
+  "canvas_px": [
+    1280,
+    720
+  ],
+  "world_footprint_px": [
+    1280,
+    720
+  ],
+  "world_polygon_px": [
+    [
+      121,
+      51
+    ],
+    [
+      534,
+      51
+    ],
+    [
+      616,
+      121
+    ],
+    [
+      974,
+      121
+    ],
+    [
+      1125,
+      206
+    ],
+    [
+      1166,
+      516
+    ],
+    [
+      1001,
+      632
+    ],
+    [
+      534,
+      632
+    ],
+    [
+      410,
+      570
+    ],
+    [
+      162,
+      570
+    ],
+    [
+      52,
+      454
+    ],
+    [
+      52,
+      152
+    ]
+  ],
+  "world_polygon_area_px2": 544132,
+  "projection": "elevated_3_4_oblique_isometric_reference",
+  "wall_geometry": "straight_segments_only",
+  "palette": {
+    "shadow": "#3B4145",
+    "base": "#929799",
+    "brass": "#A7793E",
+    "light": "#DDDCD5",
+    "accent": "#85C9D0"
+  },
+  "exits": [
+    {
+      "edge_id": 11,
+      "wall_a_world_px": [
+        52,
+        152
+      ],
+      "wall_b_world_px": [
+        121,
+        51
+      ],
+      "wall_t": 0.5,
+      "type": "eight_thin_blade_fan_exit",
+      "open_condition": "stop_spinning; blades remain thin enough to slip between",
+      "position_canvas_px": [
+        527,
+        197
+      ],
+      "radius_canvas_px": 37,
+      "orientation": "top_left"
+    }
+  ],
+  "entrances": [],
+  "hazard_authoring": {
+    "projectile_turret": "optional overlay",
+    "push_fan": "optional overlay",
+    "open_wires": "optional overlay"
+  },
+  "note": "Decorative art reference and layout geometry; 2D collision and door logic must be implemented in Godot."
+}

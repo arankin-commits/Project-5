@@ -23,8 +23,14 @@ Underground progression, from start to end:
 
 ## Why
 
-The user established these two routes, their objectives, and their area order as durable project decisions.
+The user established these two routes, their objectives, and their area order as durable project decisions. They corrected the biome dropdown: players select a route, not an individual biome.
 
 ## How to apply
 
-Use these objectives and start-to-end sequences when planning or changing route selection, area progression, maps, or story content. This note records intended design, not verified implementation.
+Use these objectives and start-to-end sequences when planning or changing route selection, area progression, maps, or story content.
+
+Each biome contains eight regular maps followed by a boss in the ninth room. Defeating the boss and claiming its reward advances the same run: Maintenance boss → Factory; Factory boss → Boiler; Boiler boss → Toxin Refinery. Defeating the Toxin Refinery boss completes the underground route. Preserve the player's run upgrades and progress between biomes.
+
+The route dropdown shows only the two directions and their objectives. Do not display the ordered biome lists in the dropdown or accompanying route-selection UI; the order is internal progression information.
+
+All four underground biomes use the thirty-room pools from `rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS`. No above-ground biome exists yet; above ground remains unavailable until Storage exists.

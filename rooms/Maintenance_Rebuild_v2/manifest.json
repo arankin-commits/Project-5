@@ -1,0 +1,2025 @@
+{
+  "project": "Flying Liberty",
+  "biome": "Maintenance",
+  "count": 15,
+  "palette": {
+    "shadow": "#3B4145",
+    "base": "#929799",
+    "brass": "#A7793E",
+    "light": "#DDDCD5",
+    "accent": "#85C9D0"
+  },
+  "sizes": {
+    "small": [
+      1280,
+      720
+    ],
+    "medium": [
+      2560,
+      1620
+    ],
+    "large": [
+      3200,
+      1920
+    ]
+  },
+  "room_designs": [
+    {
+      "id": "S01",
+      "name": "Valve Alcove",
+      "biome": "Maintenance",
+      "size_class": "Small",
+      "canvas_px": [
+        1280,
+        720
+      ],
+      "world_footprint_px": [
+        1280,
+        720
+      ],
+      "world_polygon_px": [
+        [
+          151,
+          114
+        ],
+        [
+          357,
+          56
+        ],
+        [
+          923,
+          56
+        ],
+        [
+          1116,
+          129
+        ],
+        [
+          1167,
+          309
+        ],
+        [
+          1103,
+          555
+        ],
+        [
+          936,
+          635
+        ],
+        [
+          396,
+          635
+        ],
+        [
+          138,
+          505
+        ],
+        [
+          100,
+          259
+        ]
+      ],
+      "world_polygon_area_px2": 543750,
+      "projection": "elevated_3_4_oblique_isometric_reference",
+      "wall_geometry": "straight_segments_only",
+      "palette": {
+        "shadow": "#3B4145",
+        "base": "#929799",
+        "brass": "#A7793E",
+        "light": "#DDDCD5",
+        "accent": "#85C9D0"
+      },
+      "exits": [
+        {
+          "edge_id": 9,
+          "wall_a_world_px": [
+            100,
+            259
+          ],
+          "wall_b_world_px": [
+            151,
+            114
+          ],
+          "wall_t": 0.5,
+          "type": "eight_thin_blade_fan_exit",
+          "open_condition": "stop_spinning; blades remain thin enough to slip between",
+          "position_canvas_px": [
+            484,
+            230
+          ],
+          "radius_canvas_px": 45,
+          "orientation": "top_left"
+        }
+      ],
+      "entrances": [],
+      "hazard_authoring": {
+        "projectile_turret": "optional overlay",
+        "push_fan": "optional overlay",
+        "open_wires": "optional overlay"
+      },
+      "note": "Decorative art reference and layout geometry; 2D collision and door logic must be implemented in Godot."
+    },
+    {
+      "id": "S02",
+      "name": "Cable Recess",
+      "biome": "Maintenance",
+      "size_class": "Small",
+      "canvas_px": [
+        1280,
+        720
+      ],
+      "world_footprint_px": [
+        1280,
+        720
+      ],
+      "world_polygon_px": [
+        [
+          121,
+          51
+        ],
+        [
+          534,
+          51
+        ],
+        [
+          616,
+          121
+        ],
+        [
+          974,
+          121
+        ],
+        [
+          1125,
+          206
+        ],
+        [
+          1166,
+          516
+        ],
+        [
+          1001,
+          632
+        ],
+        [
+          534,
+          632
+        ],
+        [
+          410,
+          570
+        ],
+        [
+          162,
+          570
+        ],
+        [
+          52,
+          454
+        ],
+        [
+          52,
+          152
+        ]
+      ],
+      "world_polygon_area_px2": 544132,
+      "projection": "elevated_3_4_oblique_isometric_reference",
+      "wall_geometry": "straight_segments_only",
+      "palette": {
+        "shadow": "#3B4145",
+        "base": "#929799",
+        "brass": "#A7793E",
+        "light": "#DDDCD5",
+        "accent": "#85C9D0"
+      },
+      "exits": [
+        {
+          "edge_id": 11,
+          "wall_a_world_px": [
+            52,
+            152
+          ],
+          "wall_b_world_px": [
+            121,
+            51
+          ],
+          "wall_t": 0.5,
+          "type": "eight_thin_blade_fan_exit",
+          "open_condition": "stop_spinning; blades remain thin enough to slip between",
+          "position_canvas_px": [
+            527,
+            197
+          ],
+          "radius_canvas_px": 37,
+          "orientation": "top_left"
+        }
+      ],
+      "entrances": [],
+      "hazard_authoring": {
+        "projectile_turret": "optional overlay",
+        "push_fan": "optional overlay",
+        "open_wires": "optional overlay"
+      },
+      "note": "Decorative art reference and layout geometry; 2D collision and door logic must be implemented in Godot."
+    },
+    {
+      "id": "S03",
+      "name": "Filter Intake",
+      "biome": "Maintenance",
+      "size_class": "Small",
+      "canvas_px": [
+        1280,
+        720
+      ],
+      "world_footprint_px": [
+        1280,
+        720
+      ],
+      "world_polygon_px": [
+        [
+          184,
+          125
+        ],
+        [
+          386,
+          60
+        ],
+        [
+          906,
+          60
+        ],
+        [
+          1096,
+          160
+        ],
+        [
+          1096,
+          274
+        ],
+        [
+          1210,
+          274
+        ],
+        [
+          1210,
+          495
+        ],
+        [
+          1020,
+          588
+        ],
+        [
+          741,
+          588
+        ],
+        [
+          615,
+          645
+        ],
+        [
+          298,
+          645
+        ],
+        [
+          107,
+          538
+        ],
+        [
+          107,
+          296
+        ]
+      ],
+      "world_polygon_area_px2": 543828,
+      "projection": "elevated_3_4_oblique_isometric_reference",
+      "wall_geometry": "straight_segments_only",
+      "palette": {
+        "shadow": "#3B4145",
+        "base": "#929799",
+        "brass": "#A7793E",
+        "light": "#DDDCD5",
+        "accent": "#85C9D0"
+      },
+      "exits": [
+        {
+          "edge_id": 12,
+          "wall_a_world_px": [
+            107,
+            296
+          ],
+          "wall_b_world_px": [
+            184,
+            125
+          ],
+          "wall_t": 0.5,
+          "type": "eight_thin_blade_fan_exit",
+          "open_condition": "stop_spinning; blades remain thin enough to slip between",
+          "position_canvas_px": [
+            477,
+            241
+          ],
+          "radius_canvas_px": 56,
+          "orientation": "top_left"
+        }
+      ],
+      "entrances": [],
+      "hazard_authoring": {
+        "projectile_turret": "optional overlay",
+        "push_fan": "optional overlay",
+        "open_wires": "optional overlay"
+      },
+      "note": "Decorative art reference and layout geometry; 2D collision and door logic must be implemented in Godot."
+    },
+    {
+      "id": "M01",
+      "name": "Twin Fan Transfer",
+      "biome": "Maintenance",
+      "size_class": "Medium",
+      "canvas_px": [
+        2560,
+        1620
+      ],
+      "world_footprint_px": [
+        2560,
+        1620
+      ],
+      "world_polygon_px": [
+        [
+          224,
+          364
+        ],
+        [
+          576,
+          205
+        ],
+        [
+          1029,
+          205
+        ],
+        [
+          1205,
+          126
+        ],
+        [
+          1632,
+          126
+        ],
+        [
+          1858,
+          285
+        ],
+        [
+          2285,
+          285
+        ],
+        [
+          2411,
+          539
+        ],
+        [
+          2411,
+          1096
+        ],
+        [
+          2034,
+          1319
+        ],
+        [
+          1481,
+          1319
+        ],
+        [
+          1356,
+          1478
+        ],
+        [
+          702,
+          1478
+        ],
+        [
+          551,
+          1303
+        ],
+        [
+          224,
+          1191
+        ]
+      ],
+      "world_polygon_area_px2": 2447804,
+      "projection": "elevated_3_4_oblique_isometric_reference",
+      "wall_geometry": "straight_segments_only",
+      "palette": {
+        "shadow": "#3B4145",
+        "base": "#929799",
+        "brass": "#A7793E",
+        "light": "#DDDCD5",
+        "accent": "#85C9D0"
+      },
+      "exits": [
+        {
+          "edge_id": 0,
+          "wall_a_world_px": [
+            224,
+            364
+          ],
+          "wall_b_world_px": [
+            576,
+            205
+          ],
+          "wall_t": 0.5,
+          "type": "eight_thin_blade_fan_exit",
+          "open_condition": "stop_spinning; blades remain thin enough to slip between",
+          "position_canvas_px": [
+            1144,
+            556
+          ],
+          "radius_canvas_px": 95,
+          "orientation": "top_left"
+        },
+        {
+          "edge_id": 6,
+          "wall_a_world_px": [
+            2285,
+            285
+          ],
+          "wall_b_world_px": [
+            2411,
+            539
+          ],
+          "wall_t": 0.5,
+          "type": "eight_thin_blade_fan_exit",
+          "open_condition": "stop_spinning; blades remain thin enough to slip between",
+          "position_canvas_px": [
+            2148,
+            919
+          ],
+          "radius_canvas_px": 45,
+          "orientation": "top_right"
+        }
+      ],
+      "entrances": [],
+      "hazard_authoring": {
+        "projectile_turret": "optional overlay",
+        "push_fan": "optional overlay",
+        "open_wires": "optional overlay"
+      },
+      "note": "Decorative art reference and layout geometry; 2D collision and door logic must be implemented in Godot."
+    },
+    {
+      "id": "M02",
+      "name": "Switchback Gallery",
+      "biome": "Maintenance",
+      "size_class": "Medium",
+      "canvas_px": [
+        2560,
+        1620
+      ],
+      "world_footprint_px": [
+        2560,
+        1620
+      ],
+      "world_polygon_px": [
+        [
+          237,
+          183
+        ],
+        [
+          994,
+          183
+        ],
+        [
+          1150,
+          348
+        ],
+        [
+          1672,
+          348
+        ],
+        [
+          1881,
+          133
+        ],
+        [
+          2324,
+          133
+        ],
+        [
+          2429,
+          529
+        ],
+        [
+          2194,
+          645
+        ],
+        [
+          2194,
+          1107
+        ],
+        [
+          2429,
+          1240
+        ],
+        [
+          2037,
+          1454
+        ],
+        [
+          1489,
+          1454
+        ],
+        [
+          1307,
+          1306
+        ],
+        [
+          654,
+          1306
+        ],
+        [
+          472,
+          1487
+        ],
+        [
+          159,
+          1306
+        ],
+        [
+          159,
+          596
+        ]
+      ],
+      "world_polygon_area_px2": 2446310,
+      "projection": "elevated_3_4_oblique_isometric_reference",
+      "wall_geometry": "straight_segments_only",
+      "palette": {
+        "shadow": "#3B4145",
+        "base": "#929799",
+        "brass": "#A7793E",
+        "light": "#DDDCD5",
+        "accent": "#85C9D0"
+      },
+      "exits": [
+        {
+          "edge_id": 16,
+          "wall_a_world_px": [
+            159,
+            596
+          ],
+          "wall_b_world_px": [
+            237,
+            183
+          ],
+          "wall_t": 0.5,
+          "type": "eight_thin_blade_fan_exit",
+          "open_condition": "stop_spinning; blades remain thin enough to slip between",
+          "position_canvas_px": [
+            960,
+            557
+          ],
+          "radius_canvas_px": 95,
+          "orientation": "top_left"
+        },
+        {
+          "edge_id": 5,
+          "wall_a_world_px": [
+            2324,
+            133
+          ],
+          "wall_b_world_px": [
+            2429,
+            529
+          ],
+          "wall_t": 0.5,
+          "type": "eight_thin_blade_fan_exit",
+          "open_condition": "stop_spinning; blades remain thin enough to slip between",
+          "position_canvas_px": [
+            2218,
+            897
+          ],
+          "radius_canvas_px": 80,
+          "orientation": "top_right"
+        }
+      ],
+      "entrances": [],
+      "hazard_authoring": {
+        "projectile_turret": "optional overlay",
+        "push_fan": "optional overlay",
+        "open_wires": "optional overlay"
+      },
+      "note": "Decorative art reference and layout geometry; 2D collision and door logic must be implemented in Godot."
+    },
+    {
+      "id": "M03",
+      "name": "Pressure Corridor",
+      "biome": "Maintenance",
+      "size_class": "Medium",
+      "canvas_px": [
+        2560,
+        1620
+      ],
+      "world_footprint_px": [
+        2560,
+        1620
+      ],
+      "world_polygon_px": [
+        [
+          209,
+          293
+        ],
+        [
+          617,
+          148
+        ],
+        [
+          1790,
+          148
+        ],
+        [
+          1968,
+          310
+        ],
+        [
+          2325,
+          310
+        ],
+        [
+          2402,
+          665
+        ],
+        [
+          2249,
+          810
+        ],
+        [
+          2402,
+          1068
+        ],
+        [
+          1994,
+          1407
+        ],
+        [
+          1484,
+          1407
+        ],
+        [
+          1254,
+          1229
+        ],
+        [
+          872,
+          1229
+        ],
+        [
+          693,
+          1407
+        ],
+        [
+          260,
+          1407
+        ],
+        [
+          158,
+          1003
+        ]
+      ],
+      "world_polygon_area_px2": 2446736,
+      "projection": "elevated_3_4_oblique_isometric_reference",
+      "wall_geometry": "straight_segments_only",
+      "palette": {
+        "shadow": "#3B4145",
+        "base": "#929799",
+        "brass": "#A7793E",
+        "light": "#DDDCD5",
+        "accent": "#85C9D0"
+      },
+      "exits": [
+        {
+          "edge_id": 14,
+          "wall_a_world_px": [
+            158,
+            1003
+          ],
+          "wall_b_world_px": [
+            209,
+            293
+          ],
+          "wall_t": 0.5,
+          "type": "eight_thin_blade_fan_exit",
+          "open_condition": "stop_spinning; blades remain thin enough to slip between",
+          "position_canvas_px": [
+            776,
+            640
+          ],
+          "radius_canvas_px": 95,
+          "orientation": "top_left"
+        },
+        {
+          "edge_id": 4,
+          "wall_a_world_px": [
+            2325,
+            310
+          ],
+          "wall_b_world_px": [
+            2402,
+            665
+          ],
+          "wall_t": 0.5,
+          "type": "eight_thin_blade_fan_exit",
+          "open_condition": "stop_spinning; blades remain thin enough to slip between",
+          "position_canvas_px": [
+            2106,
+            946
+          ],
+          "radius_canvas_px": 73,
+          "orientation": "top_right"
+        }
+      ],
+      "entrances": [],
+      "hazard_authoring": {
+        "projectile_turret": "optional overlay",
+        "push_fan": "optional overlay",
+        "open_wires": "optional overlay"
+      },
+      "note": "Decorative art reference and layout geometry; 2D collision and door logic must be implemented in Godot."
+    },
+    {
+      "id": "M04",
+      "name": "Cross Service Hub",
+      "biome": "Maintenance",
+      "size_class": "Medium",
+      "canvas_px": [
+        2560,
+        1620
+      ],
+      "world_footprint_px": [
+        2560,
+        1620
+      ],
+      "world_polygon_px": [
+        [
+          867,
+          75
+        ],
+        [
+          1667,
+          75
+        ],
+        [
+          1796,
+          303
+        ],
+        [
+          2261,
+          303
+        ],
+        [
+          2416,
+          565
+        ],
+        [
+          2416,
+          1088
+        ],
+        [
+          2003,
+          1235
+        ],
+        [
+          1745,
+          1235
+        ],
+        [
+          1745,
+          1513
+        ],
+        [
+          893,
+          1513
+        ],
+        [
+          763,
+          1268
+        ],
+        [
+          273,
+          1268
+        ],
+        [
+          144,
+          1006
+        ],
+        [
+          144,
+          516
+        ],
+        [
+          557,
+          369
+        ],
+        [
+          867,
+          369
+        ]
+      ],
+      "world_polygon_area_px2": 2446475,
+      "projection": "elevated_3_4_oblique_isometric_reference",
+      "wall_geometry": "straight_segments_only",
+      "palette": {
+        "shadow": "#3B4145",
+        "base": "#929799",
+        "brass": "#A7793E",
+        "light": "#DDDCD5",
+        "accent": "#85C9D0"
+      },
+      "exits": [
+        {
+          "edge_id": 13,
+          "wall_a_world_px": [
+            144,
+            516
+          ],
+          "wall_b_world_px": [
+            557,
+            369
+          ],
+          "wall_t": 0.5,
+          "type": "eight_thin_blade_fan_exit",
+          "open_condition": "stop_spinning; blades remain thin enough to slip between",
+          "position_canvas_px": [
+            1008,
+            600
+          ],
+          "radius_canvas_px": 95,
+          "orientation": "top_left"
+        },
+        {
+          "edge_id": 3,
+          "wall_a_world_px": [
+            2261,
+            303
+          ],
+          "wall_b_world_px": [
+            2416,
+            565
+          ],
+          "wall_t": 0.5,
+          "type": "eight_thin_blade_fan_exit",
+          "open_condition": "stop_spinning; blades remain thin enough to slip between",
+          "position_canvas_px": [
+            2128,
+            924
+          ],
+          "radius_canvas_px": 45,
+          "orientation": "top_right"
+        }
+      ],
+      "entrances": [],
+      "hazard_authoring": {
+        "projectile_turret": "optional overlay",
+        "push_fan": "optional overlay",
+        "open_wires": "optional overlay"
+      },
+      "note": "Decorative art reference and layout geometry; 2D collision and door logic must be implemented in Godot."
+    },
+    {
+      "id": "M05",
+      "name": "Broken Cable Maze",
+      "biome": "Maintenance",
+      "size_class": "Medium",
+      "canvas_px": [
+        2560,
+        1620
+      ],
+      "world_footprint_px": [
+        2560,
+        1620
+      ],
+      "world_polygon_px": [
+        [
+          305,
+          161
+        ],
+        [
+          1101,
+          161
+        ],
+        [
+          1229,
+          339
+        ],
+        [
+          1639,
+          339
+        ],
+        [
+          1793,
+          193
+        ],
+        [
+          2255,
+          193
+        ],
+        [
+          2383,
+          453
+        ],
+        [
+          2152,
+          631
+        ],
+        [
+          2383,
+          810
+        ],
+        [
+          2383,
+          1118
+        ],
+        [
+          1998,
+          1362
+        ],
+        [
+          1383,
+          1362
+        ],
+        [
+          1229,
+          1492
+        ],
+        [
+          664,
+          1492
+        ],
+        [
+          562,
+          1281
+        ],
+        [
+          203,
+          1281
+        ],
+        [
+          126,
+          972
+        ],
+        [
+          331,
+          761
+        ],
+        [
+          126,
+          534
+        ]
+      ],
+      "world_polygon_area_px2": 2446860,
+      "projection": "elevated_3_4_oblique_isometric_reference",
+      "wall_geometry": "straight_segments_only",
+      "palette": {
+        "shadow": "#3B4145",
+        "base": "#929799",
+        "brass": "#A7793E",
+        "light": "#DDDCD5",
+        "accent": "#85C9D0"
+      },
+      "exits": [
+        {
+          "edge_id": 18,
+          "wall_a_world_px": [
+            126,
+            534
+          ],
+          "wall_b_world_px": [
+            305,
+            161
+          ],
+          "wall_t": 0.5,
+          "type": "eight_thin_blade_fan_exit",
+          "open_condition": "stop_spinning; blades remain thin enough to slip between",
+          "position_canvas_px": [
+            998,
+            546
+          ],
+          "radius_canvas_px": 95,
+          "orientation": "top_left"
+        },
+        {
+          "edge_id": 5,
+          "wall_a_world_px": [
+            2255,
+            193
+          ],
+          "wall_b_world_px": [
+            2383,
+            453
+          ],
+          "wall_t": 0.5,
+          "type": "eight_thin_blade_fan_exit",
+          "open_condition": "stop_spinning; blades remain thin enough to slip between",
+          "position_canvas_px": [
+            2192,
+            884
+          ],
+          "radius_canvas_px": 46,
+          "orientation": "top_right"
+        }
+      ],
+      "entrances": [],
+      "hazard_authoring": {
+        "projectile_turret": "optional overlay",
+        "push_fan": "optional overlay",
+        "open_wires": "optional overlay"
+      },
+      "note": "Decorative art reference and layout geometry; 2D collision and door logic must be implemented in Godot."
+    },
+    {
+      "id": "M06",
+      "name": "Coolant Pump Hall",
+      "biome": "Maintenance",
+      "size_class": "Medium",
+      "canvas_px": [
+        2560,
+        1620
+      ],
+      "world_footprint_px": [
+        2560,
+        1620
+      ],
+      "world_polygon_px": [
+        [
+          206,
+          330
+        ],
+        [
+          597,
+          191
+        ],
+        [
+          1183,
+          191
+        ],
+        [
+          1329,
+          330
+        ],
+        [
+          1768,
+          191
+        ],
+        [
+          2232,
+          191
+        ],
+        [
+          2403,
+          531
+        ],
+        [
+          2403,
+          1087
+        ],
+        [
+          2208,
+          1319
+        ],
+        [
+          1622,
+          1319
+        ],
+        [
+          1427,
+          1442
+        ],
+        [
+          914,
+          1442
+        ],
+        [
+          768,
+          1303
+        ],
+        [
+          279,
+          1303
+        ],
+        [
+          157,
+          1041
+        ]
+      ],
+      "world_polygon_area_px2": 2446880,
+      "projection": "elevated_3_4_oblique_isometric_reference",
+      "wall_geometry": "straight_segments_only",
+      "palette": {
+        "shadow": "#3B4145",
+        "base": "#929799",
+        "brass": "#A7793E",
+        "light": "#DDDCD5",
+        "accent": "#85C9D0"
+      },
+      "exits": [
+        {
+          "edge_id": 0,
+          "wall_a_world_px": [
+            206,
+            330
+          ],
+          "wall_b_world_px": [
+            597,
+            191
+          ],
+          "wall_t": 0.5,
+          "type": "eight_thin_blade_fan_exit",
+          "open_condition": "stop_spinning; blades remain thin enough to slip between",
+          "position_canvas_px": [
+            1160,
+            548
+          ],
+          "radius_canvas_px": 95,
+          "orientation": "top_left"
+        },
+        {
+          "edge_id": 5,
+          "wall_a_world_px": [
+            2232,
+            191
+          ],
+          "wall_b_world_px": [
+            2403,
+            531
+          ],
+          "wall_t": 0.5,
+          "type": "eight_thin_blade_fan_exit",
+          "open_condition": "stop_spinning; blades remain thin enough to slip between",
+          "position_canvas_px": [
+            2166,
+            897
+          ],
+          "radius_canvas_px": 60,
+          "orientation": "top_right"
+        }
+      ],
+      "entrances": [],
+      "hazard_authoring": {
+        "projectile_turret": "optional overlay",
+        "push_fan": "optional overlay",
+        "open_wires": "optional overlay"
+      },
+      "note": "Decorative art reference and layout geometry; 2D collision and door logic must be implemented in Godot."
+    },
+    {
+      "id": "M07",
+      "name": "Duct-Switch Annex",
+      "biome": "Maintenance",
+      "size_class": "Medium",
+      "canvas_px": [
+        2560,
+        1620
+      ],
+      "world_footprint_px": [
+        2560,
+        1620
+      ],
+      "world_polygon_px": [
+        [
+          274,
+          239
+        ],
+        [
+          713,
+          92
+        ],
+        [
+          1358,
+          92
+        ],
+        [
+          1564,
+          288
+        ],
+        [
+          2055,
+          288
+        ],
+        [
+          2364,
+          516
+        ],
+        [
+          2364,
+          778
+        ],
+        [
+          2184,
+          892
+        ],
+        [
+          2364,
+          1169
+        ],
+        [
+          1951,
+          1431
+        ],
+        [
+          1461,
+          1431
+        ],
+        [
+          1203,
+          1284
+        ],
+        [
+          687,
+          1431
+        ],
+        [
+          248,
+          1267
+        ],
+        [
+          119,
+          876
+        ],
+        [
+          223,
+          631
+        ]
+      ],
+      "world_polygon_area_px2": 2446730,
+      "projection": "elevated_3_4_oblique_isometric_reference",
+      "wall_geometry": "straight_segments_only",
+      "palette": {
+        "shadow": "#3B4145",
+        "base": "#929799",
+        "brass": "#A7793E",
+        "light": "#DDDCD5",
+        "accent": "#85C9D0"
+      },
+      "exits": [
+        {
+          "edge_id": 15,
+          "wall_a_world_px": [
+            223,
+            631
+          ],
+          "wall_b_world_px": [
+            274,
+            239
+          ],
+          "wall_t": 0.5,
+          "type": "eight_thin_blade_fan_exit",
+          "open_condition": "stop_spinning; blades remain thin enough to slip between",
+          "position_canvas_px": [
+            956,
+            580
+          ],
+          "radius_canvas_px": 95,
+          "orientation": "top_left"
+        },
+        {
+          "edge_id": 5,
+          "wall_a_world_px": [
+            2364,
+            516
+          ],
+          "wall_b_world_px": [
+            2364,
+            778
+          ],
+          "wall_t": 0.5,
+          "type": "eight_thin_blade_fan_exit",
+          "open_condition": "stop_spinning; blades remain thin enough to slip between",
+          "position_canvas_px": [
+            1998,
+            999
+          ],
+          "radius_canvas_px": 61,
+          "orientation": "top_right"
+        }
+      ],
+      "entrances": [],
+      "hazard_authoring": {
+        "projectile_turret": "optional overlay",
+        "push_fan": "optional overlay",
+        "open_wires": "optional overlay"
+      },
+      "note": "Decorative art reference and layout geometry; 2D collision and door logic must be implemented in Godot."
+    },
+    {
+      "id": "L01",
+      "name": "Grand Maintenance Transept",
+      "biome": "Maintenance",
+      "size_class": "Large",
+      "canvas_px": [
+        3200,
+        1920
+      ],
+      "world_footprint_px": [
+        3200,
+        1920
+      ],
+      "world_polygon_px": [
+        [
+          236,
+          439
+        ],
+        [
+          763,
+          234
+        ],
+        [
+          1165,
+          234
+        ],
+        [
+          1351,
+          104
+        ],
+        [
+          1877,
+          104
+        ],
+        [
+          2032,
+          272
+        ],
+        [
+          2558,
+          272
+        ],
+        [
+          2930,
+          495
+        ],
+        [
+          2930,
+          829
+        ],
+        [
+          2682,
+          959
+        ],
+        [
+          2961,
+          1182
+        ],
+        [
+          2775,
+          1535
+        ],
+        [
+          2218,
+          1702
+        ],
+        [
+          1784,
+          1572
+        ],
+        [
+          1382,
+          1720
+        ],
+        [
+          887,
+          1572
+        ],
+        [
+          453,
+          1646
+        ],
+        [
+          205,
+          1275
+        ]
+      ],
+      "world_polygon_area_px2": 3625676,
+      "projection": "elevated_3_4_oblique_isometric_reference",
+      "wall_geometry": "straight_segments_only",
+      "palette": {
+        "shadow": "#3B4145",
+        "base": "#929799",
+        "brass": "#A7793E",
+        "light": "#DDDCD5",
+        "accent": "#85C9D0"
+      },
+      "exits": [
+        {
+          "edge_id": 0,
+          "wall_a_world_px": [
+            236,
+            439
+          ],
+          "wall_b_world_px": [
+            763,
+            234
+          ],
+          "wall_t": 0.5,
+          "type": "eight_thin_blade_fan_exit",
+          "open_condition": "stop_spinning; blades remain thin enough to slip between",
+          "position_canvas_px": [
+            1430,
+            683
+          ],
+          "radius_canvas_px": 89,
+          "orientation": "top_left"
+        },
+        {
+          "edge_id": 7,
+          "wall_a_world_px": [
+            2930,
+            495
+          ],
+          "wall_b_world_px": [
+            2930,
+            829
+          ],
+          "wall_t": 0.5,
+          "type": "eight_thin_blade_fan_exit",
+          "open_condition": "stop_spinning; blades remain thin enough to slip between",
+          "position_canvas_px": [
+            2558,
+            1169
+          ],
+          "radius_canvas_px": 82,
+          "orientation": "top_right"
+        }
+      ],
+      "entrances": [],
+      "hazard_authoring": {
+        "projectile_turret": "optional overlay",
+        "push_fan": "optional overlay",
+        "open_wires": "optional overlay"
+      },
+      "note": "Decorative art reference and layout geometry; 2D collision and door logic must be implemented in Godot."
+    },
+    {
+      "id": "L02",
+      "name": "Turbine Array",
+      "biome": "Maintenance",
+      "size_class": "Large",
+      "canvas_px": [
+        3200,
+        1920
+      ],
+      "world_footprint_px": [
+        3200,
+        1920
+      ],
+      "world_polygon_px": [
+        [
+          349,
+          247
+        ],
+        [
+          912,
+          153
+        ],
+        [
+          1318,
+          322
+        ],
+        [
+          1818,
+          153
+        ],
+        [
+          2412,
+          153
+        ],
+        [
+          2818,
+          359
+        ],
+        [
+          2912,
+          734
+        ],
+        [
+          2662,
+          866
+        ],
+        [
+          2912,
+          1222
+        ],
+        [
+          2881,
+          1484
+        ],
+        [
+          2381,
+          1709
+        ],
+        [
+          1818,
+          1597
+        ],
+        [
+          1349,
+          1766
+        ],
+        [
+          787,
+          1634
+        ],
+        [
+          287,
+          1484
+        ],
+        [
+          256,
+          1016
+        ],
+        [
+          443,
+          809
+        ],
+        [
+          224,
+          528
+        ]
+      ],
+      "world_polygon_area_px2": 3625468,
+      "projection": "elevated_3_4_oblique_isometric_reference",
+      "wall_geometry": "straight_segments_only",
+      "palette": {
+        "shadow": "#3B4145",
+        "base": "#929799",
+        "brass": "#A7793E",
+        "light": "#DDDCD5",
+        "accent": "#85C9D0"
+      },
+      "exits": [
+        {
+          "edge_id": 17,
+          "wall_a_world_px": [
+            224,
+            528
+          ],
+          "wall_b_world_px": [
+            349,
+            247
+          ],
+          "wall_t": 0.5,
+          "type": "eight_thin_blade_fan_exit",
+          "open_condition": "stop_spinning; blades remain thin enough to slip between",
+          "position_canvas_px": [
+            1274,
+            666
+          ],
+          "radius_canvas_px": 87,
+          "orientation": "top_left"
+        },
+        {
+          "edge_id": 5,
+          "wall_a_world_px": [
+            2818,
+            359
+          ],
+          "wall_b_world_px": [
+            2912,
+            734
+          ],
+          "wall_t": 0.5,
+          "type": "eight_thin_blade_fan_exit",
+          "open_condition": "stop_spinning; blades remain thin enough to slip between",
+          "position_canvas_px": [
+            2604,
+            1121
+          ],
+          "radius_canvas_px": 80,
+          "orientation": "top_right"
+        }
+      ],
+      "entrances": [],
+      "hazard_authoring": {
+        "projectile_turret": "optional overlay",
+        "push_fan": "optional overlay",
+        "open_wires": "optional overlay"
+      },
+      "note": "Decorative art reference and layout geometry; 2D collision and door logic must be implemented in Godot."
+    },
+    {
+      "id": "L03",
+      "name": "Octagonal Central Works",
+      "biome": "Maintenance",
+      "size_class": "Large",
+      "canvas_px": [
+        3200,
+        1920
+      ],
+      "world_footprint_px": [
+        3200,
+        1920
+      ],
+      "world_polygon_px": [
+        [
+          653,
+          165
+        ],
+        [
+          1379,
+          165
+        ],
+        [
+          1631,
+          335
+        ],
+        [
+          2073,
+          127
+        ],
+        [
+          2641,
+          297
+        ],
+        [
+          2956,
+          657
+        ],
+        [
+          2956,
+          1187
+        ],
+        [
+          2672,
+          1565
+        ],
+        [
+          2168,
+          1717
+        ],
+        [
+          1789,
+          1565
+        ],
+        [
+          1095,
+          1736
+        ],
+        [
+          464,
+          1546
+        ],
+        [
+          212,
+          1187
+        ],
+        [
+          212,
+          676
+        ]
+      ],
+      "world_polygon_area_px2": 3624060,
+      "projection": "elevated_3_4_oblique_isometric_reference",
+      "wall_geometry": "straight_segments_only",
+      "palette": {
+        "shadow": "#3B4145",
+        "base": "#929799",
+        "brass": "#A7793E",
+        "light": "#DDDCD5",
+        "accent": "#85C9D0"
+      },
+      "exits": [
+        {
+          "edge_id": 13,
+          "wall_a_world_px": [
+            212,
+            676
+          ],
+          "wall_b_world_px": [
+            653,
+            165
+          ],
+          "wall_t": 0.5,
+          "type": "eight_thin_blade_fan_exit",
+          "open_condition": "stop_spinning; blades remain thin enough to slip between",
+          "position_canvas_px": [
+            1332,
+            700
+          ],
+          "radius_canvas_px": 89,
+          "orientation": "top_left"
+        },
+        {
+          "edge_id": 4,
+          "wall_a_world_px": [
+            2641,
+            297
+          ],
+          "wall_b_world_px": [
+            2956,
+            657
+          ],
+          "wall_t": 0.5,
+          "type": "eight_thin_blade_fan_exit",
+          "open_condition": "stop_spinning; blades remain thin enough to slip between",
+          "position_canvas_px": [
+            2616,
+            1088
+          ],
+          "radius_canvas_px": 58,
+          "orientation": "top_right"
+        }
+      ],
+      "entrances": [],
+      "hazard_authoring": {
+        "projectile_turret": "optional overlay",
+        "push_fan": "optional overlay",
+        "open_wires": "optional overlay"
+      },
+      "note": "Decorative art reference and layout geometry; 2D collision and door logic must be implemented in Godot."
+    },
+    {
+      "id": "L04",
+      "name": "Double Pump Yard",
+      "biome": "Maintenance",
+      "size_class": "Large",
+      "canvas_px": [
+        3200,
+        1920
+      ],
+      "world_footprint_px": [
+        3200,
+        1920
+      ],
+      "world_polygon_px": [
+        [
+          349,
+          265
+        ],
+        [
+          849,
+          115
+        ],
+        [
+          1411,
+          115
+        ],
+        [
+          1599,
+          303
+        ],
+        [
+          2068,
+          153
+        ],
+        [
+          2536,
+          284
+        ],
+        [
+          2974,
+          584
+        ],
+        [
+          2786,
+          847
+        ],
+        [
+          2974,
+          1147
+        ],
+        [
+          2630,
+          1578
+        ],
+        [
+          2099,
+          1709
+        ],
+        [
+          1661,
+          1540
+        ],
+        [
+          1192,
+          1747
+        ],
+        [
+          536,
+          1615
+        ],
+        [
+          224,
+          1372
+        ],
+        [
+          224,
+          884
+        ],
+        [
+          411,
+          678
+        ]
+      ],
+      "world_polygon_area_px2": 3624499,
+      "projection": "elevated_3_4_oblique_isometric_reference",
+      "wall_geometry": "straight_segments_only",
+      "palette": {
+        "shadow": "#3B4145",
+        "base": "#929799",
+        "brass": "#A7793E",
+        "light": "#DDDCD5",
+        "accent": "#85C9D0"
+      },
+      "exits": [
+        {
+          "edge_id": 16,
+          "wall_a_world_px": [
+            411,
+            678
+          ],
+          "wall_b_world_px": [
+            349,
+            265
+          ],
+          "wall_t": 0.5,
+          "type": "eight_thin_blade_fan_exit",
+          "open_condition": "stop_spinning; blades remain thin enough to slip between",
+          "position_canvas_px": [
+            1266,
+            709
+          ],
+          "radius_canvas_px": 89,
+          "orientation": "top_left"
+        },
+        {
+          "edge_id": 6,
+          "wall_a_world_px": [
+            2974,
+            584
+          ],
+          "wall_b_world_px": [
+            2786,
+            847
+          ],
+          "wall_t": 0.5,
+          "type": "eight_thin_blade_fan_exit",
+          "open_condition": "stop_spinning; blades remain thin enough to slip between",
+          "position_canvas_px": [
+            2492,
+            1179
+          ],
+          "radius_canvas_px": 89,
+          "orientation": "top_right"
+        }
+      ],
+      "entrances": [],
+      "hazard_authoring": {
+        "projectile_turret": "optional overlay",
+        "push_fan": "optional overlay",
+        "open_wires": "optional overlay"
+      },
+      "note": "Decorative art reference and layout geometry; 2D collision and door logic must be implemented in Godot."
+    },
+    {
+      "id": "L05",
+      "name": "Winding Repair Concourse",
+      "biome": "Maintenance",
+      "size_class": "Large",
+      "canvas_px": [
+        3200,
+        1920
+      ],
+      "world_footprint_px": [
+        3200,
+        1920
+      ],
+      "world_polygon_px": [
+        [
+          277,
+          317
+        ],
+        [
+          875,
+          147
+        ],
+        [
+          1347,
+          147
+        ],
+        [
+          1505,
+          374
+        ],
+        [
+          2166,
+          204
+        ],
+        [
+          2733,
+          279
+        ],
+        [
+          3016,
+          638
+        ],
+        [
+          2796,
+          865
+        ],
+        [
+          3048,
+          1205
+        ],
+        [
+          2796,
+          1507
+        ],
+        [
+          2261,
+          1640
+        ],
+        [
+          1820,
+          1470
+        ],
+        [
+          1379,
+          1753
+        ],
+        [
+          686,
+          1658
+        ],
+        [
+          308,
+          1451
+        ],
+        [
+          151,
+          1148
+        ],
+        [
+          403,
+          922
+        ],
+        [
+          151,
+          619
+        ]
+      ],
+      "world_polygon_area_px2": 3625389,
+      "projection": "elevated_3_4_oblique_isometric_reference",
+      "wall_geometry": "straight_segments_only",
+      "palette": {
+        "shadow": "#3B4145",
+        "base": "#929799",
+        "brass": "#A7793E",
+        "light": "#DDDCD5",
+        "accent": "#85C9D0"
+      },
+      "exits": [
+        {
+          "edge_id": 17,
+          "wall_a_world_px": [
+            151,
+            619
+          ],
+          "wall_b_world_px": [
+            277,
+            317
+          ],
+          "wall_t": 0.5,
+          "type": "eight_thin_blade_fan_exit",
+          "open_condition": "stop_spinning; blades remain thin enough to slip between",
+          "position_canvas_px": [
+            1176,
+            682
+          ],
+          "radius_canvas_px": 89,
+          "orientation": "top_left"
+        },
+        {
+          "edge_id": 6,
+          "wall_a_world_px": [
+            3016,
+            638
+          ],
+          "wall_b_world_px": [
+            2796,
+            865
+          ],
+          "wall_t": 0.5,
+          "type": "eight_thin_blade_fan_exit",
+          "open_condition": "stop_spinning; blades remain thin enough to slip between",
+          "position_canvas_px": [
+            2480,
+            1195
+          ],
+          "radius_canvas_px": 89,
+          "orientation": "top_right"
+        }
+      ],
+      "entrances": [],
+      "hazard_authoring": {
+        "projectile_turret": "optional overlay",
+        "push_fan": "optional overlay",
+        "open_wires": "optional overlay"
+      },
+      "note": "Decorative art reference and layout geometry; 2D collision and door logic must be implemented in Godot."
+    }
+  ]
+}

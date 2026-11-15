@@ -1,0 +1,107 @@
+{
+  "id": "S03",
+  "name": "Filter Intake",
+  "biome": "Maintenance",
+  "size_class": "Small",
+  "canvas_px": [
+    1280,
+    720
+  ],
+  "world_footprint_px": [
+    1280,
+    720
+  ],
+  "world_polygon_px": [
+    [
+      184,
+      125
+    ],
+    [
+      386,
+      60
+    ],
+    [
+      906,
+      60
+    ],
+    [
+      1096,
+      160
+    ],
+    [
+      1096,
+      274
+    ],
+    [
+      1210,
+      274
+    ],
+    [
+      1210,
+      495
+    ],
+    [
+      1020,
+      588
+    ],
+    [
+      741,
+      588
+    ],
+    [
+      615,
+      645
+    ],
+    [
+      298,
+      645
+    ],
+    [
+      107,
+      538
+    ],
+    [
+      107,
+      296
+    ]
+  ],
+  "world_polygon_area_px2": 543828,
+  "projection": "elevated_3_4_oblique_isometric_reference",
+  "wall_geometry": "straight_segments_only",
+  "palette": {
+    "shadow": "#3B4145",
+    "base": "#929799",
+    "brass": "#A7793E",
+    "light": "#DDDCD5",
+    "accent": "#85C9D0"
+  },
+  "exits": [
+    {
+      "edge_id": 12,
+      "wall_a_world_px": [
+        107,
+        296
+      ],
+      "wall_b_world_px": [
+        184,
+        125
+      ],
+      "wall_t": 0.5,
+      "type": "eight_thin_blade_fan_exit",
+      "open_condition": "stop_spinning; blades remain thin enough to slip between",
+      "position_canvas_px": [
+        477,
+        241
+      ],
+      "radius_canvas_px": 56,
+      "orientation": "top_left"
+    }
+  ],
+  "entrances": [],
+  "hazard_authoring": {
+    "projectile_turret": "optional overlay",
+    "push_fan": "optional overlay",
+    "open_wires": "optional overlay"
+  },
+  "note": "Decorative art reference and layout geometry; 2D collision and door logic must be implemented in Godot."
+}

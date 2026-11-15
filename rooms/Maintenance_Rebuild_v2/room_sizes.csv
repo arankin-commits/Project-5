@@ -1,0 +1,16 @@
+id,size,name,canvas_width_px,canvas_height_px,canvas_area_px2,floor_polygon_area_px2,exit_count,file
+S01,Small,Valve Alcove,1280,720,921600,543750,1,S01_Valve_Alcove.png
+S02,Small,Cable Recess,1280,720,921600,544132,1,S02_Cable_Recess.png
+S03,Small,Filter Intake,1280,720,921600,543828,1,S03_Filter_Intake.png
+M01,Medium,Twin Fan Transfer,2560,1620,4147200,2447804,2,M01_Twin_Fan_Transfer.png
+M02,Medium,Switchback Gallery,2560,1620,4147200,2446309,2,M02_Switchback_Gallery.png
+M03,Medium,Pressure Corridor,2560,1620,4147200,2446736,2,M03_Pressure_Corridor.png
+M04,Medium,Cross Service Hub,2560,1620,4147200,2446475,2,M04_Cross_Service_Hub.png
+M05,Medium,Broken Cable Maze,2560,1620,4147200,2446859,2,M05_Broken_Cable_Maze.png
+M06,Medium,Coolant Pump Hall,2560,1620,4147200,2446880,2,M06_Coolant_Pump_Hall.png
+M07,Medium,Duct-Switch Annex,2560,1620,4147200,2446730,2,M07_Duct-Switch_Annex.png
+L01,Large,Grand Maintenance Transept,3200,1920,6144000,3625675,2,L01_Grand_Maintenance_Transept.png
+L02,Large,Turbine Array,3200,1920,6144000,3625468,2,L02_Turbine_Array.png
+L03,Large,Octagonal Central Works,3200,1920,6144000,3624059,2,L03_Octagonal_Central_Works.png
+L04,Large,Double Pump Yard,3200,1920,6144000,3624499,2,L04_Double_Pump_Yard.png
+L05,Large,Winding Repair Concourse,3200,1920,6144000,3625389,2,L05_Winding_Repair_Concourse.png

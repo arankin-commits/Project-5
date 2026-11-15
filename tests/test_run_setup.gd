@@ -37,13 +37,23 @@ func _run() -> void:
 	setup.reinforcements_checkbox.button_pressed = true
 	setup.fragile_checkbox.button_pressed = true
 	setup.start_button.pressed.emit()
+	# These movement/melee checks use the Cinder room's known obstacle positions.
+	# Select a reproducible seed for that fixture, without fixing production order.
+	var pool_data: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/boiler/rooms.json"))
+	var fixture_rng := RandomNumberGenerator.new()
+	for candidate in 1000:
+		fixture_rng.seed = candidate
+		if preload("res://scripts/room_pool.gd").select_rooms(pool_data,fixture_rng)[0].name == "Cinder Vestibule":
+			config.run_seed = candidate
+			break
 	await scene_changed
 	await process_frame
 	var run = current_scene
 	check(run.name == "RoguelikeRun","Start did not enter run")
 	check(config.max_health() == 70 and config.enemy_speed() == 130.0,"Difficulty not applied")
 	check(run.health == 70 and run.living_enemies == 5,"Initial hull/reinforcements wrong")
-	check(run.rooms.size() == 8 and run.rooms[7].get("boss",false),"Eight rooms/boss data missing")
+	# Run this Boiler regression with --boiler-preview; normal UI starts Maintenance.
+	check(run.rooms.size() == 9 and run.rooms[8].get("boss",false),"Eight regular rooms plus ninth-room boss missing")
 	var player = run.player
 	check(player.visual.hframes == 4 and player.visual.vframes == 2,"Eight-direction robot atlas missing")
 	for enemy in run.enemies.get_children():
@@ -110,7 +120,7 @@ func _run() -> void:
 	check(not paused and not run.hud.pause_menu.visible,"Resume failed")
 	# Clear every wave through damage/death callbacks, then collect a valid reward
 	# and use the range-gated exit. No direct room loads in this progression test.
-	for index in 8:
+	for index in 9:
 		check(run.room_index == index,"Room order skipped or repeated")
 		var path: PackedVector2Array = run.room.path_between(run.room.spawn_position,run.room.exit_position)
 		check(path.size() > 1,"Entrance cannot reach exit in room %d" % (index+1))
@@ -118,7 +128,7 @@ func _run() -> void:
 			check(run.room.is_logical_free(Space.unproject(enemy_node.position),0),"Enemy spawned inside cover/wall")
 			check(run.room.path_between(enemy_node.position,run.room.spawn_position).size() > 1,"Enemy cannot reach player")
 		run.room.hazards_enabled = false
-		if index == 7:
+		if index == 8:
 			var boss = run.boss
 			check(is_instance_valid(boss) and boss.max_health == 1250,"Final boss missing")
 			boss.take_damage(630)
@@ -143,7 +153,7 @@ func _run() -> void:
 				foe.take_damage(10000)
 			await frames(3)
 			guard += 1
-		if index < 7:
+		if index < 8:
 			check(run.state == "reward" and run.hud.modal.visible,"Room clear reward missing")
 			check(not run.choose_reward("invalid"),"Invalid reward accepted")
 			var selected: String = run.reward_choices[0]["id"]
@@ -153,8 +163,11 @@ func _run() -> void:
 			run.player.position = run.room.exit_position
 			check(run.try_advance(),"Cleared room exit failed")
 			await frames(2)
-	check(run.state == "result" and run.outcome == "BOILER DISTRICT CLEARED","Eight-room victory missing")
-	check(config.victories == 1,"Victory counted incorrectly")
+		else:
+			check(run.state == "reward", "Boss reward missing")
+			check(run.choose_reward(run.reward_choices[0].id), "Boss reward could not be collected")
+	check(run.state == "result" and run.outcome == "BOILER DISTRICT CLEARED","Nine-room biome completion missing")
+	check(config.victories == 0,"Incomplete route counted as a victory")
 	check(root.get_node("CoreProgression").xp > 0,"Run did not award XP")
 	check(root.get_node("CoreProgression").special_items == 2,"Chamber 4 and boss did not award special items")
 	check(run.hud.modal.visible and not run.player.controls_enabled,"Victory UI/control lock missing")

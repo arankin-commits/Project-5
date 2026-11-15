@@ -64,6 +64,7 @@ func _run() -> void:
 	check(progress.has_skill("perfect_reprisal") and not progress.has_skill("perfect_dodge"), "Perfect Fortune purchase was not migrated")
 	progress.persistence_enabled = false
 	config.start_run("medium",{})
+	config.biome = "boiler"
 	var run = load("res://scenes/RoguelikeRun.tscn").instantiate()
 	root.add_child(run)
 	current_scene = run

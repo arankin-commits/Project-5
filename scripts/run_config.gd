@@ -7,6 +7,18 @@ const ROBOT_STATS := {
 }
 
 var robot_type := "medium"
+const ROUTES := {
+	"above_ground": ["storage", "flying_ship_gallery", "executive", "summit_chambers"],
+	"below_ground": ["maintenance", "factory", "boiler", "toxin_refinery"]
+}
+const BIOME_DATA := {
+	"maintenance": "res://data/blockouts/maintenance.json",
+	"factory": "res://data/blockouts/factory.json",
+	"boiler": "res://data/blockouts/boiler.json",
+	"toxin_refinery": "res://data/blockouts/toxin_refinery.json"
+}
+var route := "below_ground"
+var biome := "maintenance"
 var modifiers := {
 	"overclocked_enemies": false,
 	"reinforcements": false,
@@ -21,9 +33,14 @@ const ELEMENTS := ["fire", "water", "lightning"]
 var core_elements: Array[String] = []
 var core_limit := 1
 
-func start_run(selected_robot: String, selected_modifiers: Dictionary) -> bool:
-	if not ROBOT_STATS.has(selected_robot):
+func start_run(selected_robot: String, selected_modifiers: Dictionary, selected_route := "below_ground") -> bool:
+	if not ROBOT_STATS.has(selected_robot) or not ROUTES.has(selected_route):
 		return false
+	var first: String = ROUTES[selected_route][0]
+	if not BIOME_DATA.has(first):
+		return false
+	route = selected_route
+	biome = first
 	robot_type = selected_robot
 	for key in modifiers:
 		modifiers[key] = bool(selected_modifiers.get(key, false))
@@ -33,6 +50,11 @@ func start_run(selected_robot: String, selected_modifiers: Dictionary) -> bool:
 	sync_return_pending = false
 	run_seed = randi()
 	return true
+
+func next_biome() -> String:
+	var path: Array = ROUTES[route]
+	var index := path.find(biome)
+	return str(path[index+1]) if index >= 0 and index+1 < path.size() else ""
 
 func end_run() -> void:
 	if active:

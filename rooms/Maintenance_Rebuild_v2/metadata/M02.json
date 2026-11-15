@@ -1,0 +1,143 @@
+{
+  "id": "M02",
+  "name": "Switchback Gallery",
+  "biome": "Maintenance",
+  "size_class": "Medium",
+  "canvas_px": [
+    2560,
+    1620
+  ],
+  "world_footprint_px": [
+    2560,
+    1620
+  ],
+  "world_polygon_px": [
+    [
+      237,
+      183
+    ],
+    [
+      994,
+      183
+    ],
+    [
+      1150,
+      348
+    ],
+    [
+      1672,
+      348
+    ],
+    [
+      1881,
+      133
+    ],
+    [
+      2324,
+      133
+    ],
+    [
+      2429,
+      529
+    ],
+    [
+      2194,
+      645
+    ],
+    [
+      2194,
+      1107
+    ],
+    [
+      2429,
+      1240
+    ],
+    [
+      2037,
+      1454
+    ],
+    [
+      1489,
+      1454
+    ],
+    [
+      1307,
+      1306
+    ],
+    [
+      654,
+      1306
+    ],
+    [
+      472,
+      1487
+    ],
+    [
+      159,
+      1306
+    ],
+    [
+      159,
+      596
+    ]
+  ],
+  "world_polygon_area_px2": 2446310,
+  "projection": "elevated_3_4_oblique_isometric_reference",
+  "wall_geometry": "straight_segments_only",
+  "palette": {
+    "shadow": "#3B4145",
+    "base": "#929799",
+    "brass": "#A7793E",
+    "light": "#DDDCD5",
+    "accent": "#85C9D0"
+  },
+  "exits": [
+    {
+      "edge_id": 16,
+      "wall_a_world_px": [
+        159,
+        596
+      ],
+      "wall_b_world_px": [
+        237,
+        183
+      ],
+      "wall_t": 0.5,
+      "type": "eight_thin_blade_fan_exit",
+      "open_condition": "stop_spinning; blades remain thin enough to slip between",
+      "position_canvas_px": [
+        960,
+        557
+      ],
+      "radius_canvas_px": 95,
+      "orientation": "top_left"
+    },
+    {
+      "edge_id": 5,
+      "wall_a_world_px": [
+        2324,
+        133
+      ],
+      "wall_b_world_px": [
+        2429,
+        529
+      ],
+      "wall_t": 0.5,
+      "type": "eight_thin_blade_fan_exit",
+      "open_condition": "stop_spinning; blades remain thin enough to slip between",
+      "position_canvas_px": [
+        2218,
+        897
+      ],
+      "radius_canvas_px": 80,
+      "orientation": "top_right"
+    }
+  ],
+  "entrances": [],
+  "hazard_authoring": {
+    "projectile_turret": "optional overlay",
+    "push_fan": "optional overlay",
+    "open_wires": "optional overlay"
+  },
+  "note": "Decorative art reference and layout geometry; 2D collision and door logic must be implemented in Godot."
+}

@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://dwbamd7w2tav1"
+
+[deps]
+
+files=["res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/room_index.number.translation", "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/room_index.name.translation", "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/room_index.size.translation", "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/room_index.width.translation", "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/room_index.height.translation", "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/room_index.image.translation", "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/room_index.motif.translation", "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/room_index.floor.translation", "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/room_index.entry.translation", "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/room_index.exit.translation", "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/room_index.gap.translation", "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/room_index.obstacle.translation", "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/room_index.half.translation", "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/room_index.hazards.translation"]
+
+source_file="res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/room_index.csv"
+dest_files=["res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/room_index.number.translation", "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/room_index.name.translation", "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/room_index.size.translation", "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/room_index.width.translation", "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/room_index.height.translation", "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/room_index.image.translation", "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/room_index.motif.translation", "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/room_index.floor.translation", "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/room_index.entry.translation", "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/room_index.exit.translation", "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/room_index.gap.translation", "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/room_index.obstacle.translation", "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/room_index.half.translation", "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/room_index.hazards.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

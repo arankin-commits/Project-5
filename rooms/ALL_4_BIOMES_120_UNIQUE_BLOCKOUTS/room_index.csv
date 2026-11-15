@@ -1,0 +1,121 @@
+biome,number,name,size,width_px,height_px,image,motif,floor_area_world2,entry_count,exit_count,gap_count,obstacle_count,half_cover_count,hazards
+Maintenance,1,Intake Nook,small,1280,720,maintenance/small/01_intake-nook.png,dogleg,4210.45,1,1,1,3,2,turret; fan; wires
+Maintenance,2,Wire Junction,small,1280,720,maintenance/small/02_wire-junction.png,back-alcove,4110.64,1,1,1,2,3,wires; turret
+Maintenance,3,Fuse Pocket,small,1280,720,maintenance/small/03_fuse-pocket.png,forked-gallery,4116.61,1,1,1,2,2,fan; wires
+Maintenance,4,Vent Spur,small,1280,720,maintenance/small/04_vent-spur.png,stepped-court,3414.55,1,1,1,2,2,turret; fan
+Maintenance,5,Service Elbow,small,1280,720,maintenance/small/05_service-elbow.png,wide-cross,4476.31,1,1,1,3,3,wires; turret
+Maintenance,6,Filter Kink,small,1280,720,maintenance/small/06_filter-kink.png,offset-bay,4744.24,1,1,1,2,2,fan; wires
+Maintenance,7,Pump Court,medium,2688,1512,maintenance/medium/07_pump-court.png,cut-corner,15490.88,1,2,3,5,4,turret; fan; wires; turret; fan
+Maintenance,8,Conveyor Turn,medium,2688,1512,maintenance/medium/08_conveyor-turn.png,side-bulge,18850.34,1,2,2,5,5,wires; turret; fan; wires; turret; fan
+Maintenance,9,Turbine Cross,medium,2688,1512,maintenance/medium/09_turbine-cross.png,double-niche,16994.61,1,2,2,6,4,fan; wires; turret; fan; wires
+Maintenance,10,Coolant Bend,medium,2688,1512,maintenance/medium/10_coolant-bend.png,pinched-hall,16274.57,1,2,3,5,4,turret; fan; wires; turret; fan
+Maintenance,11,Relay Hall,medium,2688,1512,maintenance/medium/11_relay-hall.png,split-wing,20874.17,1,2,2,5,5,wires; turret; fan; wires; turret
+Maintenance,12,Cable Yard,medium,2688,1512,maintenance/medium/12_cable-yard.png,asymmetric-octagon,12372.85,1,2,2,5,4,fan; wires; turret; fan; wires
+Maintenance,13,Inspection Bay,medium,2688,1512,maintenance/medium/13_inspection-bay.png,counterflow,11203.54,1,2,3,6,4,turret; fan; wires; turret; fan
+Maintenance,14,Fan Gallery,medium,2688,1512,maintenance/medium/14_fan-gallery.png,perimeter-ring,17717.14,1,2,2,5,5,wires; turret; fan; wires; turret
+Maintenance,15,Spindle Room,medium,2688,1512,maintenance/medium/15_spindle-room.png,offset-crossfire,18175.16,1,2,2,5,4,fan; wires; turret; fan; wires; turret
+Maintenance,16,Circuit Yard,medium,2688,1512,maintenance/medium/16_circuit-yard.png,central-lane,18804.97,1,2,3,5,4,turret; fan; wires; turret; fan
+Maintenance,17,Pressure Loop,medium,2688,1512,maintenance/medium/17_pressure-loop.png,crossing-lanes,13850.05,1,2,2,6,5,wires; turret; fan; wires; turret
+Maintenance,18,Service Maze,medium,2688,1512,maintenance/medium/18_service-maze.png,zigzag,17696.05,1,2,2,5,4,fan; wires; turret; fan; wires
+Maintenance,19,Scrap Transit,medium,2688,1512,maintenance/medium/19_scrap-transit.png,corner-ambush,19440.32,1,2,3,5,4,turret; fan; wires; turret; fan
+Maintenance,20,Boiler Link,medium,2688,1512,maintenance/medium/20_boiler-link.png,gauntlet,13882.19,1,2,2,5,5,wires; turret; fan; wires; turret
+Maintenance,21,Main Compressor,large,3200,1800,maintenance/large/21_main-compressor.png,swept-edge,22655.87,1,3,4,10,6,fan; wires; turret; fan; wires; turret; fan; wires; turret
+Maintenance,22,Duct Nexus,large,3200,1800,maintenance/large/22_duct-nexus.png,broken-axis,24008.15,1,3,5,9,6,turret; fan; wires; turret; fan; wires; turret; fan; wires; turret
+Maintenance,23,Generator Floor,large,3200,1800,maintenance/large/23_generator-floor.png,split-court,22393.79,1,3,4,9,7,wires; turret; fan; wires; turret; fan; wires; turret; fan
+Maintenance,24,Overflow Exchange,large,3200,1800,maintenance/large/24_overflow-exchange.png,double-loop,26902.17,1,3,4,9,6,fan; wires; turret; fan; wires; turret; fan; wires; turret
+Maintenance,25,Turret Foundry,large,3200,1800,maintenance/large/25_turret-foundry.png,bypass,21277.95,1,3,5,10,6,turret; fan; wires; turret; fan; wires; turret; fan; wires
+Maintenance,26,Cooling Manifold,large,3200,1800,maintenance/large/26_cooling-manifold.png,offset-courtyard,17835.44,1,3,4,9,7,wires; turret; fan; wires; turret; fan; wires; turret; fan
+Maintenance,27,Maintenance Hub,large,3200,1800,maintenance/large/27_maintenance-hub.png,staggered-cover,25785.65,1,3,4,9,6,fan; wires; turret; fan; wires; turret; fan; wires; turret
+Maintenance,28,Rotor Basin,large,3200,1800,maintenance/large/28_rotor-basin.png,flank-run,26388.35,1,3,5,9,6,turret; fan; wires; turret; fan; wires; turret; fan; wires
+Maintenance,29,Grid Breaker,large,3200,1800,maintenance/large/29_grid-breaker.png,sentry-loop,28436.65,1,3,4,10,7,wires; turret; fan; wires; turret; fan; wires; turret; fan; wires
+Maintenance,30,Waste Sorter,large,3200,1800,maintenance/large/30_waste-sorter.png,wide-arena,21660.43,1,3,4,9,6,fan; wires; turret; fan; wires; turret; fan; wires; turret
+Factory,1,Punch-Press Vestibule,small,1280,720,factory/small/01_punch-press-vestibule.png,dogleg,4374.58,1,1,1,3,2,saw; tesla; press
+Factory,2,Blade Feeder,small,1280,720,factory/small/02_blade-feeder.png,back-alcove,4508.94,1,1,1,2,3,press; saw
+Factory,3,Coil Annex,small,1280,720,factory/small/03_coil-annex.png,forked-gallery,3900.67,1,1,1,2,2,tesla; press
+Factory,4,Die-Cast Nook,small,1280,720,factory/small/04_die-cast-nook.png,stepped-court,3933.37,1,1,1,2,2,saw; tesla
+Factory,5,Piston Elbow,small,1280,720,factory/small/05_piston-elbow.png,wide-cross,3628.5,1,1,1,3,3,press; saw
+Factory,6,Stamping Pocket,small,1280,720,factory/small/06_stamping-pocket.png,offset-bay,3852.41,1,1,1,2,2,tesla; press
+Factory,7,Assembly Junction,medium,2688,1512,factory/medium/07_assembly-junction.png,cut-corner,21536.6,1,2,3,5,4,saw; tesla; press; saw; tesla
+Factory,8,Sawtooth Transfer,medium,2688,1512,factory/medium/08_sawtooth-transfer.png,side-bulge,12820.91,1,2,2,5,5,press; saw; tesla; press; saw; tesla
+Factory,9,Capacitor Hall,medium,2688,1512,factory/medium/09_capacitor-hall.png,double-niche,11192.56,1,2,2,6,4,tesla; press; saw; tesla; press
+Factory,10,Press-Line Bend,medium,2688,1512,factory/medium/10_press-line-bend.png,pinched-hall,17856.94,1,2,3,5,4,saw; tesla; press; saw; tesla
+Factory,11,Molding Exchange,medium,2688,1512,factory/medium/11_molding-exchange.png,split-wing,18187.89,1,2,2,5,5,press; saw; tesla; press; saw
+Factory,12,Rivet Yard,medium,2688,1512,factory/medium/12_rivet-yard.png,asymmetric-octagon,18659.06,1,2,2,5,4,tesla; press; saw; tesla; press
+Factory,13,Stamping Gallery,medium,2688,1512,factory/medium/13_stamping-gallery.png,counterflow,15836.07,1,2,3,6,4,saw; tesla; press; saw; tesla
+Factory,14,Switchgear Run,medium,2688,1512,factory/medium/14_switchgear-run.png,perimeter-ring,15919.73,1,2,2,5,5,press; saw; tesla; press; saw
+Factory,15,Conveyor Quadrant,medium,2688,1512,factory/medium/15_conveyor-quadrant.png,offset-crossfire,19125.53,1,2,2,5,4,tesla; press; saw; tesla; press; saw
+Factory,16,Hydraulic Turn,medium,2688,1512,factory/medium/16_hydraulic-turn.png,central-lane,13983.32,1,2,3,5,4,saw; tesla; press; saw; tesla
+Factory,17,Forge Inspection,medium,2688,1512,factory/medium/17_forge-inspection.png,crossing-lanes,17403.1,1,2,2,6,5,press; saw; tesla; press; saw
+Factory,18,Blade Relay,medium,2688,1512,factory/medium/18_blade-relay.png,zigzag,19127.9,1,2,2,5,4,tesla; press; saw; tesla; press
+Factory,19,Die Conveyor,medium,2688,1512,factory/medium/19_die-conveyor.png,corner-ambush,16076.75,1,2,3,5,4,saw; tesla; press; saw; tesla
+Factory,20,Final Sorting,medium,2688,1512,factory/medium/20_final-sorting.png,gauntlet,19124.84,1,2,2,5,5,press; saw; tesla; press; saw
+Factory,21,Grand Assembly Floor,large,3200,1800,factory/large/21_grand-assembly-floor.png,swept-edge,19117.92,1,3,4,10,6,tesla; press; saw; tesla; press; saw; tesla; press; saw
+Factory,22,Rotary Manufacturing,large,3200,1800,factory/large/22_rotary-manufacturing.png,broken-axis,16508.89,1,3,5,9,6,saw; tesla; press; saw; tesla; press; saw; tesla; press; saw
+Factory,23,Heavy Press Foundry,large,3200,1800,factory/large/23_heavy-press-foundry.png,split-court,28724.5,1,3,4,9,7,press; saw; tesla; press; saw; tesla; press; saw; tesla
+Factory,24,Voltage Distribution,large,3200,1800,factory/large/24_voltage-distribution.png,double-loop,26915.96,1,3,4,9,6,tesla; press; saw; tesla; press; saw; tesla; press; saw
+Factory,25,Blade Exchange,large,3200,1800,factory/large/25_blade-exchange.png,bypass,26856.13,1,3,5,10,6,saw; tesla; press; saw; tesla; press; saw; tesla; press
+Factory,26,Automated Stamping,large,3200,1800,factory/large/26_automated-stamping.png,offset-courtyard,19512.21,1,3,4,9,7,press; saw; tesla; press; saw; tesla; press; saw; tesla
+Factory,27,Production Crossroads,large,3200,1800,factory/large/27_production-crossroads.png,staggered-cover,26571.67,1,3,4,9,6,tesla; press; saw; tesla; press; saw; tesla; press; saw
+Factory,28,Smelting Dispatch,large,3200,1800,factory/large/28_smelting-dispatch.png,flank-run,26766.89,1,3,5,9,6,saw; tesla; press; saw; tesla; press; saw; tesla; press
+Factory,29,Robotic Assembly,large,3200,1800,factory/large/29_robotic-assembly.png,sentry-loop,23612.83,1,3,4,10,7,press; saw; tesla; press; saw; tesla; press; saw; tesla; press
+Factory,30,Shutdown Complex,large,3200,1800,factory/large/30_shutdown-complex.png,wide-arena,21590.16,1,3,4,9,6,tesla; press; saw; tesla; press; saw; tesla; press; saw
+Boiler Room,1,Pilot Burner,small,1280,720,boiler_room/small/01_pilot-burner.png,dogleg,3968.78,1,1,1,3,2,spinner; spitter; oven
+Boiler Room,2,Cinder Intake,small,1280,720,boiler_room/small/02_cinder-intake.png,back-alcove,3494.63,1,1,1,2,3,oven; vent
+Boiler Room,3,Steam Elbow,small,1280,720,boiler_room/small/03_steam-elbow.png,forked-gallery,4749.73,1,1,1,2,2,can; spinner
+Boiler Room,4,Ash Pocket,small,1280,720,boiler_room/small/04_ash-pocket.png,stepped-court,2864.84,1,1,1,2,2,spitter; oven
+Boiler Room,5,Pressure Nook,small,1280,720,boiler_room/small/05_pressure-nook.png,wide-cross,2661.29,1,1,1,3,3,vent; can
+Boiler Room,6,Ignition Hatch,small,1280,720,boiler_room/small/06_ignition-hatch.png,offset-bay,4266.63,1,1,1,2,2,spinner; spitter
+Boiler Room,7,Ember Gallery,medium,2688,1512,boiler_room/medium/07_ember-gallery.png,cut-corner,18048.05,1,2,3,5,4,oven; vent; can; spinner; spitter
+Boiler Room,8,Firebox Exchange,medium,2688,1512,boiler_room/medium/08_firebox-exchange.png,side-bulge,16392.48,1,2,2,5,5,can; spinner; spitter; oven; vent; can
+Boiler Room,9,Flue Junction,medium,2688,1512,boiler_room/medium/09_flue-junction.png,double-niche,14692.32,1,2,2,6,4,spitter; oven; vent; can; spinner
+Boiler Room,10,Overheat Bend,medium,2688,1512,boiler_room/medium/10_overheat-bend.png,pinched-hall,19384.51,1,2,3,5,4,vent; can; spinner; spitter; oven
+Boiler Room,11,Boiler Service Court,medium,2688,1512,boiler_room/medium/11_boiler-service-court.png,split-wing,19269.22,1,2,2,5,5,spinner; spitter; oven; vent; can
+Boiler Room,12,Furnace Relay,medium,2688,1512,boiler_room/medium/12_furnace-relay.png,asymmetric-octagon,14561.52,1,2,2,5,4,oven; vent; can; spinner; spitter
+Boiler Room,13,Soot Conveyor,medium,2688,1512,boiler_room/medium/13_soot-conveyor.png,counterflow,16585.84,1,2,3,6,4,can; spinner; spitter; oven; vent
+Boiler Room,14,Heat Diverter,medium,2688,1512,boiler_room/medium/14_heat-diverter.png,perimeter-ring,17588.24,1,2,2,5,5,spitter; oven; vent; can; spinner
+Boiler Room,15,Piston Furnace,medium,2688,1512,boiler_room/medium/15_piston-furnace.png,offset-crossfire,17031.8,1,2,2,5,4,vent; can; spinner; spitter; oven; vent
+Boiler Room,16,Pressure Manifold,medium,2688,1512,boiler_room/medium/16_pressure-manifold.png,central-lane,20696.49,1,2,3,5,4,spinner; spitter; oven; vent; can
+Boiler Room,17,Ash Recovery,medium,2688,1512,boiler_room/medium/17_ash-recovery.png,crossing-lanes,13069.62,1,2,2,6,5,oven; vent; can; spinner; spitter
+Boiler Room,18,Flashpoint Passage,medium,2688,1512,boiler_room/medium/18_flashpoint-passage.png,zigzag,12184.06,1,2,2,5,4,can; spinner; spitter; oven; vent
+Boiler Room,19,Steam Return,medium,2688,1512,boiler_room/medium/19_steam-return.png,corner-ambush,18902.38,1,2,3,5,4,spitter; oven; vent; can; spinner
+Boiler Room,20,Combustion Hall,medium,2688,1512,boiler_room/medium/20_combustion-hall.png,gauntlet,20131.6,1,2,2,5,5,vent; can; spinner; spitter; oven
+Boiler Room,21,Great Boiler Chamber,large,3200,1800,boiler_room/large/21_great-boiler-chamber.png,swept-edge,27165.53,1,3,4,10,6,spinner; spitter; oven; vent; can; spinner; spitter; oven; vent; can
+Boiler Room,22,Inferno Transfer,large,3200,1800,boiler_room/large/22_inferno-transfer.png,broken-axis,20345.75,1,3,5,9,6,oven; vent; can; spinner; spitter; oven; vent; can; spinner; spitter; oven
+Boiler Room,23,Superheater Floor,large,3200,1800,boiler_room/large/23_superheater-floor.png,split-court,28204.51,1,3,4,9,7,can; spinner; spitter; oven; vent; can; spinner; spitter; oven; vent
+Boiler Room,24,Pressure Cascade,large,3200,1800,boiler_room/large/24_pressure-cascade.png,double-loop,27424.6,1,3,4,9,6,spitter; oven; vent; can; spinner; spitter; oven; vent; can; spinner
+Boiler Room,25,Furnace Crucible,large,3200,1800,boiler_room/large/25_furnace-crucible.png,bypass,21908.51,1,3,5,10,6,vent; can; spinner; spitter; oven; vent; can; spinner; spitter; oven
+Boiler Room,26,Steam Crown,large,3200,1800,boiler_room/large/26_steam-crown.png,offset-courtyard,23168.35,1,3,4,9,7,spinner; spitter; oven; vent; can; spinner; spitter; oven; vent; can
+Boiler Room,27,Thermal Distribution,large,3200,1800,boiler_room/large/27_thermal-distribution.png,staggered-cover,24403.55,1,3,4,9,6,oven; vent; can; spinner; spitter; oven; vent; can; spinner; spitter
+Boiler Room,28,Redline Compressor,large,3200,1800,boiler_room/large/28_redline-compressor.png,flank-run,23273.07,1,3,5,9,6,can; spinner; spitter; oven; vent; can; spinner; spitter; oven; vent
+Boiler Room,29,Ashfall Exchange,large,3200,1800,boiler_room/large/29_ashfall-exchange.png,sentry-loop,27075.9,1,3,4,10,7,spitter; oven; vent; can; spinner; spitter; oven; vent; can; spinner; spitter
+Boiler Room,30,Core Ignition Complex,large,3200,1800,boiler_room/large/30_core-ignition-complex.png,wide-arena,19699.23,1,3,4,9,6,vent; can; spinner; spitter; oven; vent; can; spinner; spitter; oven
+Toxin Refinery,1,Reagent Intake,small,1280,720,toxin_refinery/small/01_reagent-intake.png,dogleg,2810.28,1,1,1,3,2,acid; spikes; barrel
+Toxin Refinery,2,Caustic Elbow,small,1280,720,toxin_refinery/small/02_caustic-elbow.png,back-alcove,4236.43,1,1,1,2,3,barrel; acid
+Toxin Refinery,3,Barrel Pocket,small,1280,720,toxin_refinery/small/03_barrel-pocket.png,forked-gallery,4052.63,1,1,1,2,2,spikes; barrel
+Toxin Refinery,4,Acid Sump,small,1280,720,toxin_refinery/small/04_acid-sump.png,stepped-court,4173.83,1,1,1,2,2,acid; spikes
+Toxin Refinery,5,Valve Nook,small,1280,720,toxin_refinery/small/05_valve-nook.png,wide-cross,3489.89,1,1,1,3,3,barrel; acid
+Toxin Refinery,6,Spike Bay,small,1280,720,toxin_refinery/small/06_spike-bay.png,offset-bay,3921.4,1,1,1,2,2,spikes; barrel
+Toxin Refinery,7,Solvent Junction,medium,2688,1512,toxin_refinery/medium/07_solvent-junction.png,cut-corner,19760.49,1,2,3,5,4,acid; spikes; barrel; acid; spikes
+Toxin Refinery,8,Neutralizer Hall,medium,2688,1512,toxin_refinery/medium/08_neutralizer-hall.png,side-bulge,15538.52,1,2,2,5,5,barrel; acid; spikes; barrel; acid; spikes
+Toxin Refinery,9,Reagent Gallery,medium,2688,1512,toxin_refinery/medium/09_reagent-gallery.png,double-niche,16160.87,1,2,2,6,4,spikes; barrel; acid; spikes; barrel
+Toxin Refinery,10,Corrosion Transfer,medium,2688,1512,toxin_refinery/medium/10_corrosion-transfer.png,pinched-hall,16844.08,1,2,3,5,4,acid; spikes; barrel; acid; spikes
+Toxin Refinery,11,Barrel Exchange,medium,2688,1512,toxin_refinery/medium/11_barrel-exchange.png,split-wing,15681.88,1,2,2,5,5,barrel; acid; spikes; barrel; acid
+Toxin Refinery,12,Toxic Split,medium,2688,1512,toxin_refinery/medium/12_toxic-split.png,asymmetric-octagon,20525.56,1,2,2,5,4,spikes; barrel; acid; spikes; barrel
+Toxin Refinery,13,Acid Feeder,medium,2688,1512,toxin_refinery/medium/13_acid-feeder.png,counterflow,13143.28,1,2,3,6,4,acid; spikes; barrel; acid; spikes
+Toxin Refinery,14,Hazard Inspection,medium,2688,1512,toxin_refinery/medium/14_hazard-inspection.png,perimeter-ring,11575.57,1,2,2,5,5,barrel; acid; spikes; barrel; acid
+Toxin Refinery,15,Drip Court,medium,2688,1512,toxin_refinery/medium/15_drip-court.png,offset-crossfire,18801.8,1,2,2,5,4,spikes; barrel; acid; spikes; barrel; acid
+Toxin Refinery,16,Leakage Crossing,medium,2688,1512,toxin_refinery/medium/16_leakage-crossing.png,central-lane,20174.62,1,2,3,5,4,acid; spikes; barrel; acid; spikes
+Toxin Refinery,17,Distillate Bend,medium,2688,1512,toxin_refinery/medium/17_distillate-bend.png,crossing-lanes,19453.94,1,2,2,6,5,barrel; acid; spikes; barrel; acid
+Toxin Refinery,18,Separation Run,medium,2688,1512,toxin_refinery/medium/18_separation-run.png,zigzag,15096.45,1,2,2,5,4,spikes; barrel; acid; spikes; barrel
+Toxin Refinery,19,Fume Sorting,medium,2688,1512,toxin_refinery/medium/19_fume-sorting.png,corner-ambush,18144.08,1,2,3,5,4,acid; spikes; barrel; acid; spikes
+Toxin Refinery,20,Pressure Filtration,medium,2688,1512,toxin_refinery/medium/20_pressure-filtration.png,gauntlet,20056.7,1,2,2,5,5,barrel; acid; spikes; barrel; acid
+Toxin Refinery,21,Refinery Core,large,3200,1800,toxin_refinery/large/21_refinery-core.png,swept-edge,21065.03,1,3,4,10,6,spikes; barrel; acid; spikes; barrel; acid; spikes; barrel; acid
+Toxin Refinery,22,Catalyst Exchange,large,3200,1800,toxin_refinery/large/22_catalyst-exchange.png,broken-axis,23102.08,1,3,5,9,6,acid; spikes; barrel; acid; spikes; barrel; acid; spikes; barrel; acid
+Toxin Refinery,23,Containment Grid,large,3200,1800,toxin_refinery/large/23_containment-grid.png,split-court,24116.72,1,3,4,9,7,barrel; acid; spikes; barrel; acid; spikes; barrel; acid; spikes
+Toxin Refinery,24,Toxic Processing Floor,large,3200,1800,toxin_refinery/large/24_toxic-processing-floor.png,double-loop,23668.62,1,3,4,9,6,spikes; barrel; acid; spikes; barrel; acid; spikes; barrel; acid
+Toxin Refinery,25,Acid Distribution,large,3200,1800,toxin_refinery/large/25_acid-distribution.png,bypass,27126.29,1,3,5,10,6,acid; spikes; barrel; acid; spikes; barrel; acid; spikes; barrel
+Toxin Refinery,26,Waste Reclaimer,large,3200,1800,toxin_refinery/large/26_waste-reclaimer.png,offset-courtyard,19551.82,1,3,4,9,7,barrel; acid; spikes; barrel; acid; spikes; barrel; acid; spikes
+Toxin Refinery,27,Spill Control,large,3200,1800,toxin_refinery/large/27_spill-control.png,staggered-cover,15967.48,1,3,4,9,6,spikes; barrel; acid; spikes; barrel; acid; spikes; barrel; acid
+Toxin Refinery,28,Reaction Manifold,large,3200,1800,toxin_refinery/large/28_reaction-manifold.png,flank-run,27208.86,1,3,5,9,6,acid; spikes; barrel; acid; spikes; barrel; acid; spikes; barrel
+Toxin Refinery,29,Barrel Handling Complex,large,3200,1800,toxin_refinery/large/29_barrel-handling-complex.png,sentry-loop,28090.86,1,3,4,10,7,barrel; acid; spikes; barrel; acid; spikes; barrel; acid; spikes; barrel
+Toxin Refinery,30,Final Purification,large,3200,1800,toxin_refinery/large/30_final-purification.png,wide-arena,26758.96,1,3,4,9,6,spikes; barrel; acid; spikes; barrel; acid; spikes; barrel; acid

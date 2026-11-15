@@ -1,6 +1,7 @@
 extends Node2D
 
 const Space := preload("res://scripts/boiler_space.gd")
+const MAP_TEXTURE := preload("res://scripts/map_texture.gdshader")
 var definition: Dictionary
 var navigation := AStarGrid2D.new()
 var footprints: Array[Rect2] = []
@@ -21,6 +22,9 @@ func build(data: Dictionary) -> void:
 	var background := Sprite2D.new()
 	background.name = "PaintedBoilerShell"
 	background.texture = load("res://art/boiler/%s.png" % data.get("background","chamber"))
+	var map_material := ShaderMaterial.new()
+	map_material.shader = MAP_TEXTURE
+	background.material = map_material
 	background.centered = false
 	background.z_index = -10
 	background.modulate = Color(data.get("tint", "ffffff"))

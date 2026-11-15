@@ -1,0 +1,143 @@
+{
+  "id": "L04",
+  "name": "Double Pump Yard",
+  "biome": "Maintenance",
+  "size_class": "Large",
+  "canvas_px": [
+    3200,
+    1920
+  ],
+  "world_footprint_px": [
+    3200,
+    1920
+  ],
+  "world_polygon_px": [
+    [
+      349,
+      265
+    ],
+    [
+      849,
+      115
+    ],
+    [
+      1411,
+      115
+    ],
+    [
+      1599,
+      303
+    ],
+    [
+      2068,
+      153
+    ],
+    [
+      2536,
+      284
+    ],
+    [
+      2974,
+      584
+    ],
+    [
+      2786,
+      847
+    ],
+    [
+      2974,
+      1147
+    ],
+    [
+      2630,
+      1578
+    ],
+    [
+      2099,
+      1709
+    ],
+    [
+      1661,
+      1540
+    ],
+    [
+      1192,
+      1747
+    ],
+    [
+      536,
+      1615
+    ],
+    [
+      224,
+      1372
+    ],
+    [
+      224,
+      884
+    ],
+    [
+      411,
+      678
+    ]
+  ],
+  "world_polygon_area_px2": 3624499,
+  "projection": "elevated_3_4_oblique_isometric_reference",
+  "wall_geometry": "straight_segments_only",
+  "palette": {
+    "shadow": "#3B4145",
+    "base": "#929799",
+    "brass": "#A7793E",
+    "light": "#DDDCD5",
+    "accent": "#85C9D0"
+  },
+  "exits": [
+    {
+      "edge_id": 16,
+      "wall_a_world_px": [
+        411,
+        678
+      ],
+      "wall_b_world_px": [
+        349,
+        265
+      ],
+      "wall_t": 0.5,
+      "type": "eight_thin_blade_fan_exit",
+      "open_condition": "stop_spinning; blades remain thin enough to slip between",
+      "position_canvas_px": [
+        1266,
+        709
+      ],
+      "radius_canvas_px": 89,
+      "orientation": "top_left"
+    },
+    {
+      "edge_id": 6,
+      "wall_a_world_px": [
+        2974,
+        584
+      ],
+      "wall_b_world_px": [
+        2786,
+        847
+      ],
+      "wall_t": 0.5,
+      "type": "eight_thin_blade_fan_exit",
+      "open_condition": "stop_spinning; blades remain thin enough to slip between",
+      "position_canvas_px": [
+        2492,
+        1179
+      ],
+      "radius_canvas_px": 89,
+      "orientation": "top_right"
+    }
+  ],
+  "entrances": [],
+  "hazard_authoring": {
+    "projectile_turret": "optional overlay",
+    "push_fan": "optional overlay",
+    "open_wires": "optional overlay"
+  },
+  "note": "Decorative art reference and layout geometry; 2D collision and door logic must be implemented in Godot."
+}
