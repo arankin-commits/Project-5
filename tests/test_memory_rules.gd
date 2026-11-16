@@ -1,0 +1,195 @@
+extends SceneTree
+
+const BLOCKOUT_ROOM := preload("res://scripts/blockout_room.gd")
+const SPACE := preload("res://scripts/boiler_space.gd")
+
+var checks := 0
+var failures := 0
+
+func _initialize() -> void:
+	call_deferred("_run")
+
+func check(ok: bool, message: String) -> void:
+	checks += 1
+	if not ok:
+		failures += 1
+		push_error("FAILED: " + message)
+
+func frames(count := 2) -> void:
+	for i in count:
+		await physics_frame
+		await process_frame
+
+func _run() -> void:
+	print("--- BEGINNING MEMORY RULES VALIDATION ---")
+	
+	# ==========================================
+	# RULE 11: Steampunk Reward Icon Atlas Mapping (21 icons in 7x3 grid)
+	# ==========================================
+	var atlas_names := [
+		"aether_cores", "core_xp", "permanent_info", "cds", "core_fire", "core_ice", "core_wind",
+		"core_earth", "core_lightning", "core_water", "temporary_info", "upgrade_fire", "upgrade_ice", "upgrade_wind",
+		"upgrade_earth", "upgrade_lightning", "upgrade_water", "max_hp_increase", "shop_room", "trap_room", "secret_room"
+	]
+	check(atlas_names.size() == 21, "Atlas must define exactly 21 icons")
+	for name in atlas_names:
+		check(BLOCKOUT_ROOM.REWARD_ICONS.has(name), "Atlas icon missing from REWARD_ICONS: " + name)
+	
+	# Verify distinct Rect2 coordinates for each atlas icon
+	var mapped_rects := {}
+	for name in atlas_names:
+		var rect: Rect2 = BLOCKOUT_ROOM.REWARD_ICONS[name]
+		check(not mapped_rects.has(rect), "Atlas Rect2 collided: " + name)
+		mapped_rects[rect] = name
+	check(mapped_rects.size() == 21, "All 21 atlas icons must have unique Rect2 coordinates")
+	
+	# ==========================================
+	# RULES 4, 5, 8, 9, 10: Excluded Icons (Secret, Shop, Info, Weapon)
+	# ==========================================
+	var config: Node = root.get_node("RunConfig")
+	config.call("start_run", "medium", {})
+	
+	var run = load("res://scenes/RoguelikeRun.tscn").instantiate()
+	root.add_child(run)
+	current_scene = run
+	await frames(3)
+	
+	# Test pool generation does not contain excluded icons
+	for room_idx in 10:
+		var exit_rewards: Array[String] = run._generate_unique_exit_rewards(4, room_idx)
+		for reward in exit_rewards:
+			check(reward != "secret_room", "Rule 8 violated: secret room icon appeared in exit rewards")
+			check(reward != "shop_room", "Rule 9 violated: shop room icon appeared in exit rewards")
+			check(reward != "permanent_info", "Rule 10 violated: permanent info icon appeared in exit rewards")
+			check(reward != "temporary_info", "Rule 10 violated: temporary info icon appeared in exit rewards")
+			check(not reward.begins_with("weapon"), "Rule 4/5 violated: weapon reward appeared in exit rewards")
+	
+	# ==========================================
+	# RULE 3: No multiple doors with the same icon in the same room
+	# ==========================================
+	for room_idx in 20:
+		for exit_count in range(2, 5):
+			var exits: Array[String] = run._generate_unique_exit_rewards(exit_count, room_idx)
+			check(exits.size() == exit_count, "Wrong exit count generated")
+			var seen := {}
+			for r in exits:
+				check(not seen.has(r), "Rule 3 violated: duplicate door icon/reward '%s' in room %d" % [r, room_idx])
+				seen[r] = true
+	
+	# ==========================================
+	# RULE 6: Elemental core upgrades only show up if you have the selected core
+	# ==========================================
+	config.core_elements.clear()
+	var rewards_no_core: Array[String] = run._generate_unique_exit_rewards(6, 1)
+	for r in rewards_no_core:
+		check(not r.begins_with("upgrade_"), "Rule 6 violated: core upgrade appeared without owning core: " + r)
+	
+	config.core_elements = ["fire"]
+	var saw_fire_upgrade := false
+	for seed_offset in 50:
+		var test_rewards: Array[String] = run._generate_unique_exit_rewards(6, seed_offset)
+		for r in test_rewards:
+			if r == "upgrade_fire":
+				saw_fire_upgrade = true
+			check(r != "upgrade_water" and r != "upgrade_lightning", "Rule 6 violated: unowned core upgrade appeared: " + r)
+	check(saw_fire_upgrade, "Owned fire core never offered fire upgrade")
+	
+	# ==========================================
+	# RULE 7: Elemental Cores align with skill tree (Power of 2 & Power of 3)
+	# ==========================================
+	config.core_elements = ["fire"]
+	config.core_limit = 1 # At default limit 1 with 1 core owned
+	for seed_offset in 30:
+		var test_rewards: Array[String] = run._generate_unique_exit_rewards(6, seed_offset)
+		for r in test_rewards:
+			check(not r.begins_with("core_"), "Rule 7 violated: elemental core appeared at capacity: " + r)
+	
+	# With Power of Two, capacity is 2
+	config.core_limit = 2
+	var saw_core_reward := false
+	for seed_offset in 30:
+		var test_rewards: Array[String] = run._generate_unique_exit_rewards(6, seed_offset)
+		for r in test_rewards:
+			if r.begins_with("core_"):
+				saw_core_reward = true
+				check(r != "core_fire", "Rule 7 violated: already owned core appeared: " + r)
+	check(saw_core_reward, "Elemental core did not appear with available capacity")
+	
+	# ==========================================
+	# RULE 1: Reward item spawns next to player, in-bounds, activates only on E
+	# ==========================================
+	# Clear first room enemies
+	for enemy in run.enemies.get_children():
+		enemy.active = false
+		enemy.take_damage(10000)
+	await frames(4)
+	
+	check(run.state == "reward", "Room did not enter reward state")
+	check(run.reward_item != null, "Rule 1 violated: physical reward item did not spawn")
+	check(run.player.position.distance_to(run.reward_item.position) <= 80, "Rule 1 violated: reward item not spawned next to player")
+	check(not run.hud.modal.visible, "Rule 1 violated: reward modal opened before interaction")
+	
+	# Interacting with reward item opens modal
+	run.activate_reward_item()
+	check(run.hud.modal.visible, "Interacting with reward item did not open modal")
+	
+	# ==========================================
+	# RULE 2: Leaving through door prompts warning; second interaction leaves reward
+	# ==========================================
+	# Reset room to reward state without collecting
+	run.hud.modal.hide()
+	run.reward_collected = false
+	run.door_exit_warned = false
+	
+	# Move player to exit door
+	run.player.position = run.room.exit_positions[0]
+	
+	# 1st attempt: player warned, does not advance
+	var advanced_1: bool = run.try_advance()
+	check(not advanced_1, "Rule 2 violated: player advanced through door without collecting reward on 1st attempt")
+	check(run.door_exit_warned, "Rule 2 violated: door_exit_warned flag not set")
+	check(run.speech_label != null and run.speech_label.visible and run.speech_label.text.contains("collect the reward item first"), "Rule 2 violated: player character did not speak warning")
+	
+	# 2nd attempt: player leaves reward behind and advances
+	var initial_room_idx: int = run.room_index
+	var advanced_2: bool = run.try_advance()
+	check(advanced_2, "Rule 2 violated: player was not allowed to leave reward behind on 2nd attempt")
+	check(run.reward_collected, "Reward not marked collected after leaving it behind")
+	await frames(3)
+	check(run.room_index == initial_room_idx + 1, "Player did not advance to next chamber")
+	
+	# ==========================================
+	# RULE 12: Trap Rooms win conditions and rarity boost
+	# ==========================================
+	run.rooms[run.room_index].reward = "trap_room"
+	run._load_room(run.room_index)
+	await frames(2)
+	check(run.is_trap_room, "Trap room not initialized")
+	check(run.trap_mode in ["timer", "waves"], "Trap room mode must be timer or waves")
+	if run.trap_mode == "timer":
+		check(run.trap_timer >= 45.0 and run.trap_timer <= 90.0, "Rule 12: Trap timer out of 45s-90s range: %f" % run.trap_timer)
+	else:
+		check(run.trap_target_waves >= 10 and run.trap_target_waves <= 15, "Rule 12: Trap waves out of 10-15 range: %d" % run.trap_target_waves)
+	
+	# Simulate clearing the trap room
+	for enemy in run.enemies.get_children():
+		enemy.active = false
+		enemy.take_damage(10000)
+	run.trap_timer = 0.0
+	run.trap_current_wave = run.trap_target_waves
+	run._check_clear()
+	await frames(2)
+	check(run.trap_buff_active, "Rule 12: Trap room clear did not activate rarity buff")
+	
+	# ==========================================
+	# RULE 13: Cap of 2 shop rewards per run
+	# ==========================================
+	check(config.MAX_SHOP_REWARDS == 2, "Rule 13: Max shop rewards must be 2")
+	check(config.shop_rewards_count <= config.MAX_SHOP_REWARDS, "Shop rewards exceeded cap of 2")
+	
+	run.queue_free()
+	current_scene = null
+	
+	print("--- MEMORY RULES VALIDATION COMPLETED ---")
+	print("MEMORY_RULES_CHECKS=", checks, " FAILURES=", failures)
+	quit(1 if failures else 0)

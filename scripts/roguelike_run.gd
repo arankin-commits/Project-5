@@ -48,6 +48,17 @@ var perfect_slow_active := false
 var perfect_slow_generation := 0
 var previous_time_scale := 1.0
 var enemy_designs: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/enemies/industrial.json"))
+var reward_item: Area2D = null
+var reward_collected := false
+var door_exit_warned := false
+var speech_label: Label = null
+var speech_timer := 0.0
+var is_trap_room := false
+var trap_mode := "timer"
+var trap_timer := 0.0
+var trap_target_waves := 0
+var trap_current_wave := 0
+var trap_buff_active := false
 
 func _ready() -> void:
 	get_node("/root/BackgroundMusic").play_boiler()
@@ -94,7 +105,6 @@ func _prepare_biome() -> void:
 		rooms[i]["final"] = i == rooms.size()-1
 		rooms[i]["room_count"] = rooms.size()
 		if rooms[i].get("blockout",false):
-			rooms[i]["exit_rewards"] = ["repair","hull","power"]
 			if i+1 < rooms.size():
 				rooms[i]["next_preview"] = ("BOSS: " + str(rooms[i+1].boss_name)) if rooms[i+1].get("boss",false) else "NEXT: " + str(rooms[i+1].name).to_upper()
 		elif config.biome == "maintenance" and i+1 < rooms.size():
@@ -138,6 +148,172 @@ func _end_perfect_slow() -> void:
 func _exit_tree() -> void:
 	_end_perfect_slow()
 
+func _find_reward_spawn_position() -> Vector2:
+	var candidate_offsets: Array[Vector2] = [
+		Vector2(60, 0), Vector2(-60, 0), Vector2(0, 60), Vector2(0, -60),
+		Vector2(45, 45), Vector2(-45, 45), Vector2(45, -45), Vector2(-45, -45)
+	]
+	for offset in candidate_offsets:
+		var target_pos := player.position + offset
+		if room.has_method("is_logical_free"):
+			if room.is_logical_free(Space.unproject(target_pos), 25.0):
+				return target_pos
+		elif room.has_method("_source_free"):
+			if room._source_free(target_pos):
+				return target_pos
+	return player.position
+
+func _spawn_reward_item() -> void:
+	if is_instance_valid(reward_item):
+		reward_item.queue_free()
+		reward_item = null
+	
+	var pos := _find_reward_spawn_position()
+	reward_item = Area2D.new()
+	reward_item.name = "RewardItem"
+	reward_item.position = pos
+	reward_item.z_index = 8
+	
+	var sprite := Sprite2D.new()
+	sprite.name = "Visual"
+	sprite.texture = preload("res://rooms/Room Exit Icons/Steampunk Reward Icon Atlas.png")
+	var current_reward: String = rooms[room_index].get("reward", "max_hp_increase")
+	var atlas_tex := AtlasTexture.new()
+	atlas_tex.atlas = sprite.texture
+	atlas_tex.region = BLOCKOUT_ROOM.REWARD_ICONS.get(current_reward, Rect2(821, 547, 273, 274))
+	atlas_tex.filter_clip = true
+	sprite.texture = atlas_tex
+	sprite.scale = Vector2.ONE * 0.22
+	reward_item.add_child(sprite)
+	
+	var col := CollisionShape2D.new()
+	var circle := CircleShape2D.new()
+	circle.radius = 45.0
+	col.shape = circle
+	reward_item.add_child(col)
+	
+	var prompt := Label.new()
+	prompt.name = "Prompt"
+	prompt.text = "[E] Claim Reward"
+	prompt.position = Vector2(-75, -55)
+	prompt.size = Vector2(150, 30)
+	prompt.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	prompt.add_theme_font_size_override("font_size", 14)
+	prompt.add_theme_color_override("font_color", Color("ffd080"))
+	prompt.add_theme_color_override("font_shadow_color", Color.BLACK)
+	prompt.add_theme_constant_override("shadow_offset_x", 1)
+	prompt.add_theme_constant_override("shadow_offset_y", 1)
+	reward_item.add_child(prompt)
+	
+	var tween := create_tween().set_loops()
+	tween.tween_property(sprite, "position:y", -8.0, 0.7).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(sprite, "position:y", 0.0, 0.7).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	
+	$World.add_child(reward_item)
+
+func activate_reward_item() -> void:
+	if reward_collected or not is_instance_valid(reward_item):
+		return
+	hud.call("show_rewards", reward_choices)
+	player.set("controls_enabled", false)
+
+func interact_reward() -> void:
+	activate_reward_item()
+
+func _player_say(text: String) -> void:
+	if is_instance_valid(player):
+		if speech_label == null or not is_instance_valid(speech_label):
+			speech_label = Label.new()
+			speech_label.name = "SpeechBubble"
+			speech_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			speech_label.add_theme_font_size_override("font_size", 16)
+			speech_label.add_theme_color_override("font_color", Color("fff3cf"))
+			speech_label.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.9))
+			speech_label.add_theme_constant_override("shadow_offset_x", 1)
+			speech_label.add_theme_constant_override("shadow_offset_y", 1)
+			speech_label.z_index = 20
+			speech_label.custom_minimum_size = Vector2(300, 40)
+			player.add_child(speech_label)
+		speech_label.text = text
+		speech_label.position = Vector2(-150, -110)
+		speech_label.show()
+		speech_timer = 2.5
+	if is_instance_valid(hud) and is_instance_valid(hud.objective):
+		hud.objective.text = text
+
+func _generate_unique_exit_rewards(count: int, current_room_index: int) -> Array[String]:
+	var pool: Array[String] = []
+	pool.append("max_hp_increase")
+	pool.append("cds")
+	pool.append("core_xp")
+	pool.append("aether_cores")
+	# Generic power/speed rewards reuse elemental artwork and cannot be door previews.
+	pool.append("trap_room")
+	
+	var raw_reward_str: String = str(rooms[current_room_index].get("reward", ""))
+	var pending_core: String = raw_reward_str.trim_prefix("core_") if config.is_element_reward(raw_reward_str) else ""
+	var reserves_slot: bool = not pending_core.is_empty() and not config.core_elements.has(pending_core)
+	var current_cores_count: int = config.core_elements.size() + (1 if reserves_slot else 0)
+	if current_cores_count < config.core_limit:
+		for element in config.available_elements():
+			if element != pending_core:
+				pool.append("core_" + element)
+	
+	for element in config.core_elements:
+		pool.append("upgrade_" + element)
+	
+	var selected: Array[String] = []
+	var available := pool.duplicate()
+	var exit_rng := RandomNumberGenerator.new()
+	exit_rng.seed = int(config.get("run_seed")) + current_room_index * 137
+	# Keep random choices, but prevent long stretches without an owned-core upgrade.
+	if count > 0 and not config.core_elements.is_empty() and current_room_index % 3 == 0:
+		var element: String = config.core_elements[(current_room_index / 3 as int) % config.core_elements.size()]
+		var upgrade := "upgrade_" + element
+		selected.append(upgrade)
+		available.erase(upgrade)
+	
+	for i in count - selected.size():
+		if available.is_empty():
+			break
+		var pick_idx := exit_rng.randi_range(0, available.size() - 1)
+		selected.append(available[pick_idx])
+		var selected_icon: Rect2 = BLOCKOUT_ROOM.REWARD_ICONS[available[pick_idx]]
+		available.remove_at(pick_idx)
+		# Different reward IDs can use the same atlas artwork.
+		for remaining in range(available.size() - 1, -1, -1):
+			if BLOCKOUT_ROOM.REWARD_ICONS[available[remaining]] == selected_icon:
+				available.remove_at(remaining)
+	
+	return selected
+
+func _spawn_trap_wave() -> void:
+	var enemy_keys := enemy_designs.keys()
+	var kinds: Array = []
+	for i in (3 if config.get("modifiers")["reinforcements"] else 2):
+		var pick: String = enemy_keys[rng.randi_range(0, enemy_keys.size() - 1)]
+		kinds.append(pick)
+	var points: Array[Vector2] = room.call("safe_spawns", kinds.size(), rng)
+	living_enemies += kinds.size()
+	for i in kinds.size():
+		var kind: String = kinds[i]
+		var enemy = INDUSTRIAL_ENEMY.new() if enemy_designs.has(kind) else ENEMY.new()
+		enemy.position = points[i] if i < points.size() else player.position + Vector2(200, 0)
+		enemy.room = room
+		enemy.target = player
+		enemy.speed = config.call("enemy_speed")
+		enemy.cooldown = 1.4 + i * 0.2
+		if enemy is INDUSTRIAL_ENEMY:
+			enemy.design = enemy_designs[kind]
+			enemy.summon_requested.connect(_spawn_summons)
+			enemy.projectile_requested.connect(_spawn_projectile)
+			enemy.impact_requested.connect(_on_impact)
+		enemy.defeated.connect(_on_enemy_defeated)
+		enemies.add_child(enemy)
+		if room is BLOCKOUT_ROOM:
+			enemy.collision_mask = 9
+		_effect(enemy.position, "ring", 60, Color("ef9353"))
+
 func _load_room(index: int) -> void:
 	_end_perfect_slow()
 	player.clear_enemy_statuses()
@@ -156,19 +332,34 @@ func _load_room(index: int) -> void:
 	wave_index = 0
 	state = "combat"
 	boss = null
+	reward_collected = false
+	door_exit_warned = false
+	if is_instance_valid(reward_item):
+		reward_item.queue_free()
+		reward_item = null
+	if is_instance_valid(speech_label):
+		speech_label.hide()
+	is_trap_room = rooms[index].get("reward") == "trap_room"
+	if is_trap_room:
+		var trap_rng := RandomNumberGenerator.new()
+		trap_rng.seed = int(config.get("run_seed")) + index * 43
+		if trap_rng.randf() > 0.5:
+			trap_mode = "timer"
+			trap_timer = trap_rng.randf_range(45.0, 90.0)
+		else:
+			trap_mode = "waves"
+			trap_target_waves = trap_rng.randi_range(10, 15)
+			trap_current_wave = 1
 	room = BLOCKOUT_ROOM.new() if rooms[index].get("blockout",false) else (MAINTENANCE_ROOM.new() if config.biome == "maintenance" else ROOM.new())
 	room.name = "Chamber"
 	$World.add_child(room)
 	if room is BLOCKOUT_ROOM:
-		var options: Array[String] = ["repair","hull","power","dash","speed"]
-		var pending_core: String = str(rooms[index].reward).trim_prefix("core_") if str(rooms[index].reward).begins_with("core_") else ""
-		if config.core_elements.size()+(0 if pending_core.is_empty() else 1) < config.core_limit:
-			for element in config.available_elements():
-				if element != pending_core:
-					options.append("core_"+element)
-		rooms[index].exit_rewards = []
-		for door in 3:
-			rooms[index].exit_rewards.append(options[(index+door)%options.size()])
+		# Exit positions are populated by build(); count the authored doors first.
+		var exit_count := 0
+		for door in rooms[index].geometry.doors:
+			if door.role != "entrance":
+				exit_count += 1
+		rooms[index].exit_rewards = _generate_unique_exit_rewards(exit_count, index)
 	room.call("build",rooms[index])
 	player.collision_mask = 9 if room is BLOCKOUT_ROOM else 1
 	room.set("player",player)
@@ -258,14 +449,44 @@ func _spawn_summons(summoner: CharacterBody2D, key: String, count: int) -> void:
 		_effect(point,"ring",40,Color("c998ff"))
 
 func _process(delta: float) -> void:
+	if speech_timer > 0:
+		speech_timer -= delta
+		if speech_timer <= 0 and is_instance_valid(speech_label):
+			speech_label.hide()
 	if state == "combat":
 		elapsed += delta
-		var waves: Array = rooms[room_index]["waves"]
-		hud.objective.text = "WAVE %d/%d   /   %d HOSTILES" % [wave_index+1,waves.size(),living_enemies]
-	elif state == "exit":
+		if is_trap_room and trap_mode == "timer":
+			trap_timer -= delta
+			if trap_timer > 0:
+				hud.objective.text = "SURVIVE: %02d:%02d" % [int(trap_timer) / 60, int(trap_timer) % 60]
+				if living_enemies < 2:
+					_spawn_trap_wave()
+			else:
+				hud.objective.text = "TIME SURVIVED!"
+				for enemy in enemies.get_children():
+					if enemy.health > 0:
+						enemy.take_damage(10000)
+				living_enemies = 0
+				_check_clear()
+		elif is_trap_room and trap_mode == "waves":
+			hud.objective.text = "SURVIVE WAVES: %d/%d   /   %d HOSTILES" % [trap_current_wave, trap_target_waves, living_enemies]
+		else:
+			var waves: Array = rooms[room_index]["waves"]
+			hud.objective.text = "WAVE %d/%d   /   %d HOSTILES" % [wave_index+1,waves.size(),living_enemies]
+	elif state == "reward" or state == "exit":
 		if room is MAINTENANCE_ROOM:
 			room.exit_position = room.nearest_exit(player.position)
-		hud.objective.text = "E  CONTINUE" if player.position.distance_to(room.get("exit_position")) < 85 else "REACH THE TEAL LIFT MARKER"
+		if is_instance_valid(reward_item) and not reward_collected:
+			var near_reward := player.position.distance_to(reward_item.position) <= 85
+			var prompt_node = reward_item.get_node_or_null("Prompt")
+			if prompt_node:
+				prompt_node.modulate.a = 1.0 if near_reward else 0.5
+			if near_reward:
+				hud.objective.text = "E  CLAIM REWARD"
+			elif speech_timer <= 0:
+				hud.objective.text = "CHAMBER CLEARED"
+		elif state == "exit":
+			hud.objective.text = "E  CONTINUE" if player.position.distance_to(room.get("exit_position")) < 85 else "REACH THE TEAL LIFT MARKER"
 	hud.call("update_stats",health,maximum_health,player.get("dash_cooldown"),player.get("special_cooldown"))
 	hud.call("set_boss",boss if is_instance_valid(boss) else null)
 	hud.call("update_progression", player.energy, config.core_elements, config.core_limit, run_xp, run_items, player.perfect_reward_timer, player.perfect_damage_timer)
@@ -277,8 +498,15 @@ func _process(delta: float) -> void:
 	$Camera2D.offset = Vector2(sin(elapsed*91),cos(elapsed*107))*camera_shake if get_node("/root/GameSettings").screen_shake else Vector2.ZERO
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("interact") and state == "exit":
-		try_advance()
+	if event.is_action_pressed("interact"):
+		if is_instance_valid(reward_item) and not reward_collected and player.position.distance_to(reward_item.position) <= 85:
+			activate_reward_item()
+			get_viewport().set_input_as_handled()
+			return
+		if state == "reward" or state == "exit":
+			try_advance()
+			get_viewport().set_input_as_handled()
+			return
 	if event.is_action_pressed("toggle_debug"):
 		debug_enabled = not debug_enabled
 		room.set("debug_enabled",debug_enabled)
@@ -286,11 +514,24 @@ func _unhandled_input(event: InputEvent) -> void:
 func try_advance() -> bool:
 	if room is MAINTENANCE_ROOM:
 		room.exit_position = room.nearest_exit(player.position)
-	if state != "exit" or player.position.distance_to(room.get("exit_position")) >= 85:
+	if state == "combat" or player.position.distance_to(room.get("exit_position")) >= 85:
 		return false
+	if not reward_collected:
+		if not door_exit_warned:
+			door_exit_warned = true
+			_player_say("I should collect the reward item first.")
+			return false
+		_player_say("Leaving the reward behind...")
+		reward_collected = true
+		if is_instance_valid(reward_item):
+			reward_item.queue_free()
+			reward_item = null
+	door_exit_warned = false
 	if room is BLOCKOUT_ROOM:
 		var door: int = room.exit_positions.find(room.exit_position)
-		rooms[room_index+1].reward = rooms[room_index].exit_rewards[door]
+		if door >= 0 and door < rooms[room_index].exit_rewards.size() and room_index + 1 < rooms.size():
+			rooms[room_index+1].reward = rooms[room_index].exit_rewards[door]
+
 	_load_room(room_index+1)
 	return true
 
@@ -350,7 +591,11 @@ func _on_enemy_defeated(enemy: CharacterBody2D) -> void:
 func _check_clear() -> void:
 	if state != "combat" or living_enemies > 0:
 		return
-	if wave_index+1 < rooms[room_index]["waves"].size():
+	if is_trap_room and trap_mode == "waves" and trap_current_wave < trap_target_waves:
+		trap_current_wave += 1
+		_spawn_trap_wave()
+		return
+	if not is_trap_room and wave_index+1 < rooms[room_index]["waves"].size():
 		wave_index += 1
 		_spawn_wave()
 		return
@@ -358,33 +603,54 @@ func _check_clear() -> void:
 	room.set("hazards_enabled",false)
 	player.clear_enemy_statuses()
 	_award_progress(25, 1 if room_index == 3 else 0)
+	if is_trap_room:
+		trap_buff_active = true
 	state = "reward"
 	hud.objective.text = "CHAMBER CLEARED"
 	$Audio.play_cue("clear")
-	player.set("controls_enabled",false)
 	health = minf(maximum_health,health+12)
 	reward_choices.clear()
+	var promised: String = rooms[room_index].reward
 	if config.biome == "maintenance" or room is BLOCKOUT_ROOM:
+		var found_promised := false
 		for reward in REWARDS:
-			if reward.id == rooms[room_index].reward:
+			if reward.id == promised:
 				reward_choices.append(reward)
-		var promised: String = rooms[room_index].reward
-		if promised.begins_with("core_"):
-			var element := promised.trim_prefix("core_")
-			reward_choices.append({"id":promised,"name":element.to_upper()+" CORE","description":"Bind %s core\nQ / 25 energy" % element})
-		hud.call("show_rewards",reward_choices)
-		return
-	var available := REWARDS.duplicate(true)
-	for i in 3:
-		var pick := rng.randi_range(0,available.size()-1)
-		reward_choices.append(available[pick])
-		available.remove_at(pick)
-	var elements: Array[String] = config.available_elements()
-	if not elements.is_empty():
-		var element: String = elements[rng.randi_range(0, elements.size() - 1)]
-		var effect_text: String = {"fire": "High-damage burst", "water": "Burst + 3s slow", "lightning": "Burst + knockback"}[element]
-		reward_choices[0] = {"id": "core_" + element, "name": element.to_upper() + " CORE", "description": "%s\nBind slot %d/%d\nQ / 25 energy" % [effect_text, config.core_elements.size() + 1, config.core_limit]}
-	hud.call("show_rewards",reward_choices)
+				found_promised = true
+				break
+		if not found_promised:
+			if config.is_element_reward(promised):
+				var element := promised.trim_prefix("core_")
+				reward_choices.append({"id":promised,"name":element.to_upper()+" CORE","description":"Bind %s core\nQ / 25 energy" % element})
+			elif promised.begins_with("upgrade_"):
+				var element := promised.trim_prefix("upgrade_")
+				var bonus_text := "+45% (High Rarity)" if trap_buff_active else "+25%"
+				reward_choices.append({"id":promised,"name":element.to_upper()+" UPGRADE","description":"Enhance %s core power\n%s effectiveness" % [element, bonus_text]})
+			elif promised == "trap_room":
+				reward_choices.append({"id":"trap_room","name":"TRAP SURVIVAL CACHE","description":"Upgrade rarity increased for future rewards"})
+			elif promised == "core_xp":
+				reward_choices.append({"id":"core_xp","name":"KINETIC DYNAMO","description":"+100 Core XP"})
+			elif promised == "aether_cores":
+				reward_choices.append({"id":"aether_cores","name":"AETHER GEAR","description":"+1 Aether Gear"})
+			elif promised == "cds":
+				reward_choices.append({"id":"cds","name":"CLOCKWORK ESCAPEMENT","description":"20% faster dash recharge\nCore power cooldown reduced"})
+			elif promised == "max_hp_increase":
+				reward_choices.append({"id":"max_hp_increase","name":"REINFORCED CHASSIS","description":"+25 maximum hull\nRepair 35 hull"})
+	else:
+		var available := REWARDS.duplicate(true)
+		for i in 3:
+			var pick := rng.randi_range(0,available.size()-1)
+			reward_choices.append(available[pick])
+			available.remove_at(pick)
+		var elements: Array[String] = config.available_elements()
+		if not elements.is_empty():
+			var element: String = elements[rng.randi_range(0, elements.size() - 1)]
+			var effect_text: String = {"fire": "High-damage burst", "water": "Burst + 3s slow", "lightning": "Burst + knockback"}[element]
+			reward_choices[0] = {"id": "core_" + element, "name": element.to_upper() + " CORE", "description": "%s\nBind slot %d/%d\nQ / 25 energy" % [effect_text, config.core_elements.size() + 1, config.core_limit]}
+	reward_collected = false
+	door_exit_warned = false
+	player.set("controls_enabled", true)
+	_spawn_reward_item()
 
 func choose_reward(id: String) -> bool:
 	if state != "reward":
@@ -394,16 +660,45 @@ func choose_reward(id: String) -> bool:
 		valid = valid or choice["id"] == id
 	if not valid:
 		return false
-	if id.begins_with("core_") and not config.pick_element(id.trim_prefix("core_")):
+	if id.begins_with("upgrade_") and not config.core_elements.has(id.trim_prefix("upgrade_")):
 		return false
+	if config.is_element_reward(id) and not config.pick_element(id.trim_prefix("core_")):
+		return false
+	if config.is_element_reward(id) and room is BLOCKOUT_ROOM and not rooms[room_index].get("final", false):
+		# These previews were built before the player owned the newly collected core.
+		var upgrade := "upgrade_" + id.trim_prefix("core_")
+		var exits: Array = rooms[room_index].exit_rewards
+		if not exits.is_empty() and not exits.has(upgrade):
+			exits[0] = upgrade
+			room.refresh_exit_previews(rooms[room_index])
+	reward_collected = true
+	door_exit_warned = false
+	if is_instance_valid(reward_item):
+		reward_item.queue_free()
+		reward_item = null
 	match id:
 		"power": player.set("damage_multiplier",float(player.get("damage_multiplier"))+0.2 * config.call("robot_stats")["damage"])
 		"hull":
 			maximum_health += 20
 			health = minf(maximum_health,health+25)
+		"max_hp_increase":
+			maximum_health += 25
+			health = minf(maximum_health,health+35)
 		"dash": player.set("dash_recharge",maxf(0.3,float(player.get("dash_recharge"))*0.85))
+		"cds":
+			player.set("dash_recharge",maxf(0.3,float(player.get("dash_recharge"))*0.80))
 		"speed": player.set("speed",float(player.get("speed"))*1.1)
 		"repair": health = minf(maximum_health,health+45)
+		"core_xp": _award_progress(100, 0)
+		"aether_cores": _award_progress(25, 1)
+		"trap_room":
+			trap_buff_active = true
+		"upgrade_fire", "upgrade_lightning", "upgrade_ice", "upgrade_wind", "upgrade_earth":
+			var mult: float = 1.45 if trap_buff_active else 1.25
+			player.set("damage_multiplier", float(player.get("damage_multiplier")) * mult)
+		"upgrade_water":
+			var mult: float = 1.45 if trap_buff_active else 1.25
+			player.set("speed", float(player.get("speed")) * mult)
 	if room_index == rooms.size()-1:
 		hud.modal.hide()
 		_complete_biome()

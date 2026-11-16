@@ -32,6 +32,9 @@ var sync_return_pending := false
 const ELEMENTS := ["fire", "water", "lightning"]
 var core_elements: Array[String] = []
 var core_limit := 1
+var trap_buff_active := false
+var shop_rewards_count := 0
+const MAX_SHOP_REWARDS := 2
 
 func start_run(selected_robot: String, selected_modifiers: Dictionary, selected_route := "below_ground") -> bool:
 	if not ROBOT_STATS.has(selected_robot) or not ROUTES.has(selected_route):
@@ -48,6 +51,8 @@ func start_run(selected_robot: String, selected_modifiers: Dictionary, selected_
 	core_elements.clear()
 	core_limit = get_node("/root/CoreProgression").core_capacity()
 	sync_return_pending = false
+	trap_buff_active = false
+	shop_rewards_count = 0
 	run_seed = randi()
 	return true
 
@@ -61,6 +66,8 @@ func end_run() -> void:
 		get_node("/root/ShipCrew").returned_from_run()
 	active = false
 	sync_return_pending = true
+	trap_buff_active = false
+	shop_rewards_count = 0
 	get_node("/root/SaveSlots").save_current()
 
 func consume_sync_return() -> bool:
@@ -73,6 +80,9 @@ func max_health() -> int:
 
 func robot_stats() -> Dictionary:
 	return ROBOT_STATS[robot_type]
+
+func is_element_reward(reward: String) -> bool:
+	return reward.begins_with("core_") and ELEMENTS.has(reward.trim_prefix("core_"))
 
 func available_elements() -> Array[String]:
 	var available: Array[String] = []

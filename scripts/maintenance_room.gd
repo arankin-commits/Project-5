@@ -181,7 +181,13 @@ func _build_exit_preview(data: Dictionary, point: Vector2) -> void:
 	add_child(fan)
 	var icon := Sprite2D.new()
 	icon.name = "ExitRewardPreview"
-	icon.texture = crop_texture(ICON_SHEET, Rect2(850,545,275,270))
+	var reward_region: Rect2 = Rect2(821,547,273,274)
+	if data.has("exit_rewards") and not data.exit_rewards.is_empty():
+		var reward_name: String = str(data.exit_rewards[0])
+		var blockout_script = preload("res://scripts/blockout_room.gd")
+		if blockout_script.REWARD_ICONS.has(reward_name):
+			reward_region = blockout_script.REWARD_ICONS[reward_name]
+	icon.texture = crop_texture(ICON_SHEET, reward_region)
 	icon.position = point - Vector2(0,205)
 	icon.scale = Vector2.ONE * 0.25
 	icon.z_index = 5

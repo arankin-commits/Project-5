@@ -33,6 +33,8 @@ func _run() -> void:
 	check(progress.xp == 321,"Slot progress leaked or failed to reload")
 	saves.select_slot(2)
 	check(progress.xp == 17,"Second slot did not persist")
+	check(not saves.is_slot_empty(1), "Slot 1 should not be empty")
+	check(saves.is_slot_empty(3), "Slot 3 should be empty")
 	var screen = load("res://scenes/ui/StartScreen.tscn").instantiate()
 	root.add_child(screen)
 	current_scene = screen
@@ -63,5 +65,11 @@ func _run() -> void:
 	menu.open_menu()
 	await capture("frontend-pause")
 	menu.resume()
+	var start = load("res://scenes/ui/StartScreen.tscn").instantiate()
+	root.add_child(start)
+	current_scene = start
+	start._choose(3)
+	await scene_changed
+	check(current_scene.name == "RoguelikeRun","Empty slot did not enter roguelike")
 	print("FRONTEND_FAILURES=",failures)
 	quit(1 if failures else 0)

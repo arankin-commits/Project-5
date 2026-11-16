@@ -14,7 +14,14 @@ func info(slot: int) -> Dictionary:
 		exists = data.load(directory.path_join("skill_tree.cfg")) == OK
 	return {"exists": exists, "xp": data.get_value("progress", "xp", 0),
 		"skills": data.get_value("progress", "skills", ["root"]).size(),
-		"victories": data.get_value("ship", "victories", 0)}
+		"victories": data.get_value("ship", "victories", 0),
+		"returns": data.get_value("ship", "returns", 0)}
+
+func is_slot_empty(slot: int) -> bool:
+	var inf := info(slot)
+	if not inf.exists:
+		return true
+	return inf.xp == 0 and inf.victories == 0 and inf.skills <= 1 and int(inf.get("returns", 0)) == 0
 
 func select_slot(slot: int) -> Error:
 	if slot < 1 or slot > 3:

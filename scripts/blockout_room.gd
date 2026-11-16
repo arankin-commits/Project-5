@@ -1,16 +1,57 @@
 extends "res://scripts/maintenance_room.gd"
 
 const REWARD_ICONS := {
-	"repair": Rect2(850,545,275,270),
-	"hull": Rect2(25,545,250,270),
-	"power": Rect2(300,545,260,270),
-	"dash": Rect2(1650,275,265,265),
-	"speed": Rect2(1650,0,265,270),
-	"core_fire": Rect2(1130,0,270,270),
-	"core_water": Rect2(575,275,270,265),
-	"core_lightning": Rect2(300,275,260,265)
+	"aether_cores": Rect2(0, 0, 273, 273),
+	"core_xp": Rect2(273, 0, 274, 273),
+	"permanent_info": Rect2(547, 0, 274, 273),
+	"cds": Rect2(821, 0, 273, 273),
+	"core_fire": Rect2(1094, 0, 274, 273),
+	"core_ice": Rect2(1368, 0, 274, 273),
+	"core_wind": Rect2(1642, 0, 274, 273),
+	"core_earth": Rect2(0, 273, 273, 274),
+	"core_lightning": Rect2(273, 273, 274, 274),
+	"core_water": Rect2(547, 273, 274, 274),
+	"temporary_info": Rect2(821, 273, 273, 274),
+	"upgrade_fire": Rect2(1094, 273, 274, 274),
+	"upgrade_ice": Rect2(1368, 273, 274, 274),
+	"upgrade_wind": Rect2(1642, 273, 274, 274),
+	"upgrade_earth": Rect2(0, 547, 273, 274),
+	"upgrade_lightning": Rect2(273, 547, 274, 274),
+	"upgrade_water": Rect2(547, 547, 274, 274),
+	"max_hp_increase": Rect2(821, 547, 273, 274),
+	"shop_room": Rect2(1094, 547, 274, 274),
+	"trap_room": Rect2(1368, 547, 274, 274),
+	"secret_room": Rect2(1642, 547, 274, 274),
+	"repair": Rect2(821, 547, 273, 274),
+	"hull": Rect2(0, 547, 273, 274),
+	"power": Rect2(273, 547, 274, 274),
+	"dash": Rect2(1642, 273, 274, 274),
+	"speed": Rect2(1642, 0, 274, 273)
 }
-const REWARD_TEXT := {"repair":"REPAIR 45 HULL", "hull":"+20 MAX HULL / REPAIR 25", "power":"+20% STRIKE DAMAGE", "dash":"15% FASTER DASH RECHARGE", "speed":"+10% MOVEMENT SPEED", "core_fire":"FIRE CORE", "core_water":"WATER CORE", "core_lightning":"LIGHTNING CORE"}
+const REWARD_TEXT := {
+	"repair": "REPAIR 45 HULL",
+	"hull": "+20 MAX HULL / REPAIR 25",
+	"power": "+20% STRIKE DAMAGE",
+	"dash": "15% FASTER DASH RECHARGE",
+	"speed": "+10% MOVEMENT SPEED",
+	"max_hp_increase": "+25 MAX HULL / REPAIR 35",
+	"cds": "COOLDOWN REDUCTION",
+	"core_xp": "+100 CORE XP",
+	"aether_cores": "+1 AETHER GEAR",
+	"trap_room": "TRAP SURVIVAL CHAMBER",
+	"core_fire": "FIRE CORE",
+	"core_water": "WATER CORE",
+	"core_lightning": "LIGHTNING CORE",
+	"core_ice": "ICE CORE",
+	"core_wind": "WIND CORE",
+	"core_earth": "EARTH CORE",
+	"upgrade_fire": "FIRE CORE UPGRADE",
+	"upgrade_water": "WATER CORE UPGRADE",
+	"upgrade_lightning": "LIGHTNING CORE UPGRADE",
+	"upgrade_ice": "ICE CORE UPGRADE",
+	"upgrade_wind": "WIND CORE UPGRADE",
+	"upgrade_earth": "EARTH CORE UPGRADE"
+}
 var movement_only: Array[bool] = []
 var reachable := {}
 
@@ -75,20 +116,30 @@ func build(data: Dictionary) -> void:
 				child.collision_layer = 8
 			index += 1
 
+func refresh_exit_previews(data: Dictionary) -> void:
+	for child in get_children():
+		if str(child.name).begins_with("ExitRewardPreview") or (child is Label and child in exit_previews):
+			remove_child(child)
+			child.queue_free()
+	exit_previews.clear()
+	for point in exit_positions:
+		_build_exit_preview(data, point)
+
 func _build_exit_preview(data: Dictionary, point: Vector2) -> void:
 	if data.get("final",false):
 		return
 	var index := exit_positions.find(point)
-	var reward: String = data.exit_rewards[index]
+	var reward: String = data.exit_rewards[index] if (data.has("exit_rewards") and index >= 0 and index < data.exit_rewards.size()) else "max_hp_increase"
 	var icon := Sprite2D.new()
 	icon.name = "ExitRewardPreview%d" % index
-	icon.texture = crop_texture(ICON_SHEET,REWARD_ICONS[reward])
+	var icon_rect: Rect2 = REWARD_ICONS.get(reward, REWARD_ICONS["max_hp_increase"])
+	icon.texture = crop_texture(ICON_SHEET, icon_rect)
 	icon.position = point-Vector2(0,90)
 	icon.scale = Vector2.ONE*0.22
 	icon.z_index = 5
 	add_child(icon)
 	var label := Label.new()
-	label.text = str(data.get("next_preview","NEXT CHAMBER"))+"\n"+REWARD_TEXT[reward]
+	label.text = str(data.get("next_preview","NEXT CHAMBER"))+"\n"+REWARD_TEXT.get(reward, "SALVAGE CACHE")
 	label.position = point-Vector2(160,150)
 	label.size = Vector2(320,50)
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER

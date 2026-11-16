@@ -60,22 +60,42 @@ func show_slots() -> void:
 		cover.position = Vector2(345,y+37)
 		cover.size = Vector2(850,83)
 		cover.add_theme_stylebox_override("panel",UI.style())
+		cover.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		canvas.add_child(cover)
 		var data: Dictionary = saves.info(i)
-		var summary := "%d XP   /   %d upgrades   /   %d victories" % [data.xp,maxi(0,data.skills-1),data.victories] if data.exists else "Empty slot  /  A new adventure awaits"
+		var is_empty: bool = saves.is_slot_empty(i)
+		var summary := "%d XP   /   %d upgrades   /   %d victories" % [data.xp,maxi(0,data.skills-1),data.victories] if not is_empty else "Empty slot  /  A new adventure awaits"
 		UI.label(canvas,summary,Rect2(365,y+58,560,40),19)
-		var b := UI.button(canvas,"Continue" if data.exists else "Create",Rect2(960,y+51,170,55),_choose.bind(i))
+		var slot_btn := Button.new()
+		slot_btn.position = Vector2(65, y)
+		slot_btn.size = Vector2(1150, 140)
+		slot_btn.flat = true
+		slot_btn.focus_mode = Control.FOCUS_NONE
+		slot_btn.add_theme_stylebox_override("normal", StyleBoxEmpty.new())
+		slot_btn.add_theme_stylebox_override("hover", UI.style(Color(1,0.7,0.2,0.06), Color("ffd080")))
+		slot_btn.add_theme_stylebox_override("pressed", UI.style(Color(0.1,0.4,0.4,0.15), Color("65e2df")))
+		slot_btn.pressed.connect(_choose.bind(i))
+		canvas.add_child(slot_btn)
+		var b := UI.button(canvas,"Continue" if not is_empty else "Create",Rect2(960,y+51,170,55),_choose.bind(i))
 		if i == 1:
 			b.grab_focus()
 	UI.button(canvas,"Back",Rect2(80,640,180,50),show_title)
 	status = UI.label(canvas,"Progress saves automatically. Runs restart from the ship.",Rect2(310,649,900,30),18)
 
 func _choose(slot: int) -> void:
-	var error: Error = get_node("/root/SaveSlots").select_slot(slot)
+	var saves = get_node("/root/SaveSlots")
+	var is_empty: bool = saves.is_slot_empty(slot)
+	var error: Error = saves.select_slot(slot)
 	if error != OK:
-		status.text = "Could not save file: " + error_string(error)
+		if status != null:
+			status.text = "Could not save file: " + error_string(error)
 		return
-	get_tree().change_scene_to_file("res://scenes/FlyingLibertyMainHall.tscn")
+	if is_empty:
+		var config = get_node("/root/RunConfig")
+		config.call("start_run", "medium", {})
+		get_tree().change_scene_to_file("res://scenes/RoguelikeRun.tscn")
+	else:
+		get_tree().change_scene_to_file("res://scenes/FlyingLibertyMainHall.tscn")
 
 func _settings() -> void:
 	settings_menu.show_settings()

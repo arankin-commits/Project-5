@@ -154,7 +154,9 @@ func _run() -> void:
 			await frames(3)
 			guard += 1
 		if index < 8:
-			check(run.state == "reward" and run.hud.modal.visible,"Room clear reward missing")
+			check(run.state == "reward" and run.reward_item != null,"Room clear reward item missing")
+			run.activate_reward_item()
+			check(run.hud.modal.visible,"Room clear reward missing")
 			check(not run.choose_reward("invalid"),"Invalid reward accepted")
 			var selected: String = run.reward_choices[0]["id"]
 			check(run.choose_reward(selected),"Reward selection rejected")
@@ -164,7 +166,8 @@ func _run() -> void:
 			check(run.try_advance(),"Cleared room exit failed")
 			await frames(2)
 		else:
-			check(run.state == "reward", "Boss reward missing")
+			check(run.state == "reward" and run.reward_item != null, "Boss reward missing")
+			run.activate_reward_item()
 			check(run.choose_reward(run.reward_choices[0].id), "Boss reward could not be collected")
 	check(run.state == "result" and run.outcome == "BOILER DISTRICT CLEARED","Nine-room biome completion missing")
 	check(config.victories == 0,"Incomplete route counted as a victory")
