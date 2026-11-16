@@ -3,6 +3,9 @@ extends Control
 signal resume_requested
 signal give_up_requested
 
+const UI = preload("res://scripts/brass_ui.gd")
+var front_end := false
+var frame: TextureRect
 var page := "menu"
 var stack: VBoxContainer
 var title: Label
@@ -21,16 +24,17 @@ func _ready() -> void:
 	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(center)
 	var panel := PanelContainer.new()
-	panel.custom_minimum_size = Vector2(520, 540)
-	var style := StyleBoxFlat.new()
-	style.bg_color = Color("142126")
-	style.border_color = Color("9f7845")
-	style.set_border_width_all(2)
-	style.set_content_margin_all(28)
+	panel.custom_minimum_size = Vector2(400, 620)
+	var style := StyleBoxTexture.new()
+	style.texture = preload("res://HUD/In-game menu reference/menu reference.png")
+	style.content_margin_left = 56
+	style.content_margin_right = 56
+	style.content_margin_top = 80
+	style.content_margin_bottom = 75
 	panel.add_theme_stylebox_override("panel", style)
 	center.add_child(panel)
 	stack = VBoxContainer.new()
-	stack.add_theme_constant_override("separation", 12)
+	stack.add_theme_constant_override("separation", 16)
 	panel.add_child(stack)
 	hide()
 
@@ -50,7 +54,11 @@ func _page(id: String, heading: String) -> void:
 func _button(text: String, action: Callable) -> Button:
 	var button := Button.new()
 	button.text = text
-	button.custom_minimum_size.y = 54
+	button.custom_minimum_size.y = 62
+	button.add_theme_stylebox_override("normal", UI.style(Color("171511")))
+	button.add_theme_stylebox_override("disabled", UI.style(Color("171511"),Color("614f37")))
+	button.add_theme_stylebox_override("hover", UI.style(Color("49321c"), Color("ffca78")))
+	button.add_theme_stylebox_override("focus", UI.style(Color(0,0,0,0), Color("7ae3de")))
 	button.add_theme_font_size_override("font_size", 20)
 	button.pressed.connect(action)
 	stack.add_child(button)
@@ -65,9 +73,16 @@ func show_menu() -> void:
 	give_up.disabled = not can_give_up
 	if not can_give_up:
 		give_up.tooltip_text = "Give Up is available during a roguelite run."
-	_button("Quit", func(): get_tree().quit())
+	_button("Quit", func():
+		get_node("/root/SaveSlots").save_current()
+		get_tree().quit()
+	)
 
 func back() -> void:
+	if front_end:
+		settings.save()
+		resume_requested.emit()
+		return
 	if page == "menu":
 		resume_requested.emit()
 	else:

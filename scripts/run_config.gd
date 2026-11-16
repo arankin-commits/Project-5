@@ -61,6 +61,7 @@ func end_run() -> void:
 		get_node("/root/ShipCrew").returned_from_run()
 	active = false
 	sync_return_pending = true
+	get_node("/root/SaveSlots").save_current()
 
 func consume_sync_return() -> bool:
 	var pending := sync_return_pending

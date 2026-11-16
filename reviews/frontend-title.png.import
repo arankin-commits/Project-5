@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dodcyf6ure3bc"
-path="res://.godot/imported/Sync Pod HUD.png-4788e84f909c11134057ba733ea2383f.ctex"
+uid="uid://c0lnn5167mdo2"
+path="res://.godot/imported/frontend-title.png-32744b2ab54262347de741b375b21fe8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://HUD/Sync Pod HUD.png"
-dest_files=["res://.godot/imported/Sync Pod HUD.png-4788e84f909c11134057ba733ea2383f.ctex"]
+source_file="res://reviews/frontend-title.png"
+dest_files=["res://.godot/imported/frontend-title.png-32744b2ab54262347de741b375b21fe8.ctex"]
 
 [params]
 

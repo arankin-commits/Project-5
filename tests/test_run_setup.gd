@@ -200,7 +200,7 @@ func _run() -> void:
 	change_scene_to_file("res://scenes/FlyingLibertySyncChamber.tscn")
 	await scene_changed
 	check(not current_scene.returning,"Ordinary room entry replayed return cinematic")
-	check(ProjectSettings.get_setting("application/run/main_scene") == "res://scenes/RoguelikeRun.tscn","Game does not start in roguelite")
+	check(ProjectSettings.get_setting("application/run/main_scene") == "res://scenes/ui/StartScreen.tscn","Game does not start at title screen")
 	print("BOILER_RUN_CHECKS=",checks," FAILURES=",failures)
 	if failures == 0:
 		print("RUN_SETUP_TESTS_PASSED")

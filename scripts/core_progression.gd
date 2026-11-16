@@ -27,6 +27,7 @@ const SKILLS := {
 }
 
 var unlocked_skills: Array[String] = ["root"]
+var active_save_path := SAVE_PATH
 var xp := 0
 var special_items := 0
 var persistence_enabled := true
@@ -71,10 +72,13 @@ func award(amount: int, items := 0) -> void:
 	save_progress()
 	changed.emit()
 
-func save_progress(path := SAVE_PATH) -> void:
+func save_progress(path := "") -> void:
+	if path.is_empty():
+		path = active_save_path
 	if not persistence_enabled:
 		return
 	var config := ConfigFile.new()
+	config.load(path)
 	config.set_value("progress", "xp", xp)
 	config.set_value("progress", "items", special_items)
 	config.set_value("progress", "skills", unlocked_skills)
