@@ -2,6 +2,7 @@ extends Node2D
 
 const DOOR := preload("res://scripts/cockpit_door.gd")
 const PASSAGE := preload("res://scripts/room_passage.gd")
+const JUKEBOX_INTERACTABLE := preload("res://scripts/jukebox_interactable.gd")
 const WING_START_X := 1590.0
 const WING_TOP_Y := 175.0
 const WING_TILE_WIDTH := 225.0
@@ -9,6 +10,9 @@ const BEDROOM_COUNT := 6
 
 @onready var player: CharacterBody2D = $Player
 var doors: Array[CockpitDoor] = []
+var interactables: Array[CockpitInteractable] = []
+var jukebox_hud: CanvasLayer
+var closed_jukebox_frame := -1
 var prompt: Label
 var panel: PanelContainer
 var panel_title: Label
@@ -30,6 +34,7 @@ func _ready() -> void:
 	_build_collision()
 	_build_doors()
 	_build_passages()
+	_build_jukebox()
 	_build_ui()
 	npc_controller = preload("res://scripts/ship_npcs.gd").new()
 	npc_controller.room_id = "hall"
@@ -41,7 +46,16 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if npc_controller.blocks_room_input():
 		return
-	var nearest := _nearest_door()
+	if jukebox_hud != null and jukebox_hud.visible:
+		prompt.text = ""
+		if Input.is_action_just_pressed("interact"):
+			if jukebox_hud.get("opened_frame") != Engine.get_process_frames():
+				jukebox_hud.close_jukebox()
+		return
+	if closed_jukebox_frame == Engine.get_process_frames():
+		prompt.text = ""
+		return
+	var nearest := _nearest_interaction()
 	prompt.text = "[E] %s" % nearest.prompt if nearest != null and not panel.visible else ""
 	if Input.is_action_just_pressed("interact"):
 		if panel.visible:
@@ -109,6 +123,7 @@ func _add_door(node_name: String, at: Vector2, label: String, target_id: String,
 	door.locked = is_locked
 	$Doors.add_child(door)
 	doors.append(door)
+	interactables.append(door)
 
 func _nearest_door() -> CockpitDoor:
 	var nearest: CockpitDoor
@@ -119,6 +134,91 @@ func _nearest_door() -> CockpitDoor:
 			nearest = door
 			distance = d
 	return nearest
+
+func _nearest_interaction() -> CockpitInteractable:
+	var nearest: CockpitInteractable
+	var distance := INF
+	for item in interactables:
+		var d := item.global_position.distance_to(player.global_position)
+		if d <= item.radius and d < distance:
+			nearest = item
+			distance = d
+	return nearest
+
+func _build_jukebox() -> void:
+	var jb_container := Node2D.new()
+	jb_container.name = "JukeboxProp"
+	jb_container.z_index = 0
+
+	var sprite := Sprite2D.new()
+	sprite.name = "JukeboxSprite"
+	sprite.texture = preload("res://HUD/jukebox.png")
+	sprite.centered = false
+	sprite.scale = Vector2(0.42, 0.42)
+	sprite.position = Vector2(680.0 - (260.0 * 0.42) / 2.0, 280.0 - (348.0 * 0.42))
+
+	var shader := Shader.new()
+	shader.code = """
+shader_type canvas_item;
+
+void fragment() {
+	vec4 c = texture(TEXTURE, UV);
+	float alpha = 1.0;
+	if (UV.y < 0.236) {
+		float du = (UV.x - 0.50) / 0.408;
+		float dv = (UV.y - 0.236) / 0.224;
+		float dist = sqrt(du * du + dv * dv);
+		if (dist > 1.0) {
+			alpha = clamp(1.0 - (dist - 1.0) / 0.03, 0.0, 1.0);
+		}
+	}
+	if (UV.x < 0.108) {
+		alpha = min(alpha, clamp((UV.x - 0.095) / 0.013, 0.0, 1.0));
+	}
+	if (UV.x > 0.931) {
+		alpha = min(alpha, clamp((0.944 - UV.x) / 0.013, 0.0, 1.0));
+	}
+	if (UV.y > 0.965) {
+		alpha = min(alpha, clamp((0.985 - UV.y) / 0.020, 0.0, 1.0));
+	}
+	c.a *= alpha;
+	COLOR = c;
+}
+"""
+	var mat := ShaderMaterial.new()
+	mat.shader = shader
+	sprite.material = mat
+	jb_container.add_child(sprite)
+	add_child(jb_container)
+
+	var jb = JUKEBOX_INTERACTABLE.new()
+	jb.name = "Jukebox"
+	jb.position = Vector2(680.0, 275.0)
+	jb.prompt = "Play Jukebox"
+	jb.radius = 95.0
+	add_child(jb)
+	interactables.append(jb)
+
+	_add_obstacle("JukeboxObstacle", PackedVector2Array([
+		Vector2(635, 230), Vector2(725, 230),
+		Vector2(725, 280), Vector2(635, 280)
+	]))
+
+	if has_node("JukeboxHUD"):
+		jukebox_hud = get_node("JukeboxHUD") as CanvasLayer
+	else:
+		jukebox_hud = preload("res://scenes/ui/JukeboxHUD.tscn").instantiate() as CanvasLayer
+		add_child(jukebox_hud)
+	jukebox_hud.closed.connect(_on_jukebox_closed)
+
+func open_jukebox() -> void:
+	player.set("controls_enabled", false)
+	jukebox_hud.open_jukebox()
+
+func _on_jukebox_closed() -> void:
+	closed_jukebox_frame = Engine.get_process_frames()
+	player.set("controls_enabled", true)
+
 
 func _build_collision() -> void:
 	# The hall painting is a single image; collision is fitted to its visible walkable deck.
