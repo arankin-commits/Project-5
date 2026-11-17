@@ -51,5 +51,18 @@ func _run() -> void:
 	check(not paused and current_scene.name == "FlyingLibertySyncChamber", "Give Up failed to return to ship")
 	check(current_scene.returning and not root.get_node("RunConfig").active, "Give Up skipped sync return")
 	check(root.get_node("ShipCrew").return_count == 1, "Give Up did not update cockpit crew")
+	# In-game menu Quit returns to main menu (StartScreen)
+	var ship_menu = current_scene.get_node("ShipMenu")
+	ship_menu.open_menu()
+	check(paused and ship_menu.menu.visible, "Ship in-game menu did not open")
+	var ship_quit_btn: Button = null
+	for child in ship_menu.menu.stack.get_children():
+		if child is Button and child.text == "Quit":
+			ship_quit_btn = child
+	check(ship_quit_btn != null, "Quit button missing in ship in-game menu")
+	if ship_quit_btn != null:
+		ship_quit_btn.pressed.emit()
+		await scene_changed
+		check(not paused and current_scene.name == "StartScreen", "Quit from ship in-game menu failed to return to main menu")
 	print("RUN_MENU_FAILURES=", failures)
 	quit(1 if failures else 0)

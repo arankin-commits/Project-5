@@ -112,3 +112,7 @@ Indexed from left to right, top to bottom:
 - **Save Deletion:** Non-empty save slots display a "Delete" button styled in crimson warning colors alongside the "Continue" button on the Save Selection screen.
 - **Delete Confirmation:** Clicking "Delete" opens a modal confirmation dialog explaining that all progress, skills, XP, and stats will be permanently erased. Players can click "Cancel" (or press Esc) to dismiss, or "Delete File" to confirm.
 - **Save Slot Reset:** Confirming deletion calls SaveSlots.delete_slot(slot), which removes slot_{id}.cfg (and legacy skill_tree.cfg if slot 1), resets active progression/crew/run state if currently active, and refreshes the slots view to show the slot as empty ("Create").
+
+## In-Game Menu & Navigation
+
+- **Quit to Main Menu:** Selecting "Quit" from the in-game menu (both in roguelike runs via the pause menu and aboard the Flying Liberty via ShipMenu) saves current game progress (`SaveSlots.save_current()`), resets active run flags, unpauses the game tree (`get_tree().paused = false`), and returns the player to the main menu (`res://scenes/ui/StartScreen.tscn`) rather than terminating the application.

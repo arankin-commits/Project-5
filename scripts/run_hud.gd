@@ -4,6 +4,7 @@ signal reward_selected(id: String)
 signal retry_requested
 signal return_requested
 signal pause_requested
+signal quit_requested
 
 var room_label: Label
 var room_subtitle: Label
@@ -125,6 +126,7 @@ func _ready() -> void:
 	root.add_child(pause_menu)
 	pause_menu.resume_requested.connect(func(): pause_requested.emit())
 	pause_menu.give_up_requested.connect(func(): return_requested.emit())
+	pause_menu.quit_requested.connect(func(): quit_requested.emit())
 	var menu_button := Button.new()
 	menu_button.text = "Menu [Esc]"
 	menu_button.position = Vector2(1110, 108)

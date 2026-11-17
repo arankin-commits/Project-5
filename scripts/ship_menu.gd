@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+signal quit_requested
+
 var menu: Control
 var previous_focus: Control
 
@@ -24,6 +26,7 @@ func _ready() -> void:
 	menu.can_give_up = false
 	root.add_child(menu)
 	menu.resume_requested.connect(resume)
+	menu.quit_requested.connect(func(): quit_requested.emit())
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel") and not event.is_echo():

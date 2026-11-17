@@ -2,6 +2,7 @@ extends Control
 
 signal resume_requested
 signal give_up_requested
+signal quit_requested
 
 const UI = preload("res://scripts/brass_ui.gd")
 var front_end := false
@@ -74,9 +75,19 @@ func show_menu() -> void:
 	if not can_give_up:
 		give_up.tooltip_text = "Give Up is available during a roguelite run."
 	_button("Quit", func():
-		get_node("/root/SaveSlots").save_current()
-		get_tree().quit()
+		quit()
+
 	)
+
+func quit() -> void:
+	get_node("/root/SaveSlots").save_current()
+	var config = get_node_or_null("/root/RunConfig")
+	if config != null:
+		config.active = false
+		config.sync_return_pending = false
+	quit_requested.emit()
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://scenes/ui/StartScreen.tscn")
 
 func back() -> void:
 	if front_end:

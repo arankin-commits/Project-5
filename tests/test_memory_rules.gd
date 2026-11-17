@@ -278,7 +278,24 @@ func _run() -> void:
 
 	elem_enemy.queue_free()
 	
-	run.queue_free()
+	# ==========================================
+	# RULE 16: Quitting from the in-game menu brings player to the main menu
+	# ==========================================
+	run._toggle_pause()
+	var pause_menu = run.hud.pause_menu
+	check(paused and pause_menu.visible, "Rule 16: Pause menu not visible when paused")
+	var run_quit_btn: Button = null
+	for child in pause_menu.stack.get_children():
+		if child is Button and child.text == "Quit":
+			run_quit_btn = child
+	check(run_quit_btn != null, "Rule 16: Quit button missing from in-game menu")
+	if run_quit_btn != null:
+		run_quit_btn.pressed.emit()
+		await scene_changed
+		check(not paused and current_scene.name == "StartScreen", "Rule 16: Quitting from in-game menu did not return to StartScreen main menu")
+	
+	if current_scene != null:
+		current_scene.queue_free()
 	current_scene = null
 	
 	print("--- MEMORY RULES VALIDATION COMPLETED ---")
