@@ -224,6 +224,9 @@ func _physics_process(delta: float) -> void:
 	hook_timer = maxf(0,hook_timer-delta)
 	if hook_timer <= 0 or target.dash_timer > 0 or hit_flash > 0:
 		hooked = false
+	if wall_stun_timer > 0:
+		super._physics_process(delta)
+		return
 	if state in ["ability","recover","charge"]:
 		hit_flash = maxf(0,hit_flash-delta)
 		velocity = Vector2.ZERO
@@ -275,6 +278,8 @@ func _update_animation(delta: float) -> void:
 	var next := "idle"
 	if dying:
 		next = "death"
+	elif wall_stun_timer > 0:
+		next = "recover"
 	elif state == "windup":
 		next = "windup"
 	elif state in ["charge","ability"]:

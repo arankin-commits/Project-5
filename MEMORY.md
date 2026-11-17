@@ -79,3 +79,7 @@ Indexed from left to right, top to bottom:
 ## Flying Liberty Controls & Movement
 
 - **Running on the Flying Liberty:** Holding Space while moving on the Flying Liberty (Cockpit, Main Hall, Sync Chamber, Engineering Workshop) engages running at increased speed (360 px/s vs standard 220 px/s walk) and plays the character running animation (`MC_RUN`).
+
+## Combat & Enemy Mechanics
+
+- **Wall & Construct Knockback Stun:** Enemies knocked back into walls or constructs/obstacles are stunned for 0.3 seconds (`wall_stun_timer = 0.3`). While stunned, enemy movement and attacks are paused, a stun halo is drawn overhead, the recovery/reeling animation plays, and attacks against the enemy gain the wall-stun damage bonus.

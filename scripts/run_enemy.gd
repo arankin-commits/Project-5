@@ -34,7 +34,7 @@ var custom_attack_warning := false
 
 func _ready() -> void:
 	collision_layer = 4
-	collision_mask = 1
+	collision_mask = 9
 	var cell := 3
 	var size := 0.24
 	if kind == "sentry":
@@ -181,7 +181,7 @@ func apply_knockback(direction: Vector2, distance: float) -> void:
 		return
 	var collision := move_and_collide(direction.normalized() * distance)
 	if collision != null:
-		wall_stun_timer = 1.5
+		wall_stun_timer = 0.3
 		state = "chase"
 		cooldown = 1.0
 	queue_redraw()

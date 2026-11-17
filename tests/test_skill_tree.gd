@@ -116,7 +116,7 @@ func _run() -> void:
 	enemy.position = player.position + Vector2(70,0)
 	enemy.facing = Vector2.LEFT
 	enemy.health = 1000
-	enemy.wall_stun_timer = 1.5
+	enemy.wall_stun_timer = 0.3
 	player.combo = 0
 	player.attack_cooldown = 0
 	player.perform_attack(Vector2.RIGHT)
@@ -147,7 +147,31 @@ func _run() -> void:
 	enemy.position = Vector2(12000,12000)
 	enemy.apply_knockback(Vector2.RIGHT,250)
 	check(enemy.wall_stun_timer > 0, "Knockback against wall did not stun")
+	check(is_equal_approx(enemy.wall_stun_timer, 0.3), "Knockback against wall did not stun for 0.3s")
 	wall.queue_free()
+
+	# Collision-based construct stun (obstacles on layer 1 or layer 8)
+	var construct := StaticBody2D.new()
+	construct.position = Vector2(12080,12000)
+	construct.collision_layer = 8
+	var construct_shape := CollisionShape2D.new()
+	var construct_rect := RectangleShape2D.new()
+	construct_rect.size = Vector2(40,40)
+	construct_shape.shape = construct_rect
+	construct.add_child(construct_shape)
+	run.add_child(construct)
+	await physics_frame
+	enemy.wall_stun_timer = 0.0
+	enemy.position = Vector2(12000,12000)
+	enemy.apply_knockback(Vector2.RIGHT,250)
+	check(is_equal_approx(enemy.wall_stun_timer, 0.3), "Knockback against construct did not stun for 0.3s")
+	construct.queue_free()
+
+	# Knockback in open space without walls or constructs should not stun
+	enemy.wall_stun_timer = 0.0
+	enemy.position = Vector2(12000,12000)
+	enemy.apply_knockback(Vector2.RIGHT,50)
+	check(enemy.wall_stun_timer == 0.0, "Knockback in open space should not stun")
 	enemy.kind = "brute"
 	enemy.position = player.position + Vector2(220,0)
 	player.grapple_cooldown = 0
