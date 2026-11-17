@@ -94,3 +94,9 @@ Indexed from left to right, top to bottom:
 - **Precompiled Shaders:** Shaders used for canvas items (`clean_walk.gdshader`, `key_black.gdshader`, `jukebox_cutout.gdshader`) are stored in `scripts/` as precompiled `.gdshader` files and loaded via `preload()` rather than compiled at runtime from dynamic strings, avoiding synchronous OpenGL shader compilation hitches.
 - **Safe Spawn Coarse-to-Fine Search:** `_safe_source_point()` uses coarse-to-fine step sampling (16px coarse pass followed by local 2px refinement) rather than brute-forcing full 2px grids over the entire room canvas.
 - **Player Idle Visual Updates:** In `_face_idle()`, only assign `visual.frame` when `visual.frame != target_frame` to prevent redundant frame-changed signal dispatches and uniform buffer re-uploads every physics frame.
+
+## Save File Management
+
+- **Save Deletion:** Non-empty save slots display a "Delete" button styled in crimson warning colors alongside the "Continue" button on the Save Selection screen.
+- **Delete Confirmation:** Clicking "Delete" opens a modal confirmation dialog explaining that all progress, skills, XP, and stats will be permanently erased. Players can click "Cancel" (or press Esc) to dismiss, or "Delete File" to confirm.
+- **Save Slot Reset:** Confirming deletion calls SaveSlots.delete_slot(slot), which removes slot_{id}.cfg (and legacy skill_tree.cfg if slot 1), resets active progression/crew/run state if currently active, and refreshes the slots view to show the slot as empty ("Create").

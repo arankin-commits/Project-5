@@ -23,6 +23,40 @@ func is_slot_empty(slot: int) -> bool:
 		return true
 	return inf.xp == 0 and inf.victories == 0 and inf.skills <= 1 and int(inf.get("returns", 0)) == 0
 
+func delete_slot(slot: int) -> Error:
+	if slot < 1 or slot > 3:
+		return ERR_INVALID_PARAMETER
+	var slot_file := path(slot)
+	if FileAccess.file_exists(slot_file):
+		var err := DirAccess.remove_absolute(slot_file)
+		if err != OK:
+			return err
+	if slot == 1:
+		var legacy_file := directory.path_join("skill_tree.cfg")
+		if FileAccess.file_exists(legacy_file):
+			DirAccess.remove_absolute(legacy_file)
+	if active_slot == slot:
+		active_slot = 0
+		var progress = get_node_or_null("/root/CoreProgression")
+		if progress != null:
+			progress.xp = 0
+			progress.special_items = 0
+			progress.unlocked_skills.assign(["root"])
+			progress.changed.emit()
+		var config = get_node_or_null("/root/RunConfig")
+		if config != null:
+			config.best_room = 0
+			config.victories = 0
+			config.active = false
+			config.sync_return_pending = false
+			config.core_elements.clear()
+		var crew = get_node_or_null("/root/ShipCrew")
+		if crew != null:
+			crew.return_count = 0
+			if crew.COCKPIT_LAYOUTS.size() > 0:
+				crew.cockpit_layout = crew.COCKPIT_LAYOUTS[0].duplicate()
+	return OK
+
 func select_slot(slot: int) -> Error:
 	if slot < 1 or slot > 3:
 		return ERR_INVALID_PARAMETER
