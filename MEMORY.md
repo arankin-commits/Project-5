@@ -70,3 +70,7 @@ Indexed from left to right, top to bottom:
   - Allows the player to choose from 3 rewards for their selected gear price.
   - Hard limit of 2 shop rewards per run.
   - *(Currently not implemented; do not show shop room icons).*
+
+## Workshop & Skill Tree Interface
+
+- **All-Sides Interaction:** The power core machine in the Engineering Workshop (`PowerCoreTerminal`) used to interact with and view the elemental skill tree is interactable on all sides (top/north, bottom/south, left/west, right/east, and corners).

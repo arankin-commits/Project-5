@@ -52,6 +52,8 @@ func _build_interactions() -> void:
 	core.position = Vector2(800, 610)
 	core.prompt = "Open Skill Tree"
 	core.radius = 100.0
+	core.interaction_rect = Rect2(620, 455, 355, 125)
+	core.interaction_polygon = PackedVector2Array([Vector2(620, 455), Vector2(975, 455), Vector2(975, 580), Vector2(620, 580)])
 	$Interactions.add_child(core)
 	interactables.append(core)
 	var station := INTERACTABLE.new() as CockpitInteractable
@@ -83,8 +85,9 @@ func _nearest_interaction() -> CockpitInteractable:
 	var nearest: CockpitInteractable
 	var distance := INF
 	for item in interactables:
-		var d := item.global_position.distance_to(player.global_position)
-		if d <= item.radius and d < distance:
+		var d: float = item.distance_to_point(player.global_position) if item.has_method("distance_to_point") else item.global_position.distance_to(player.global_position)
+		var within_range: bool = item.in_range(player.global_position) if item.has_method("in_range") else (d <= item.radius)
+		if within_range and d < distance:
 			nearest = item
 			distance = d
 	return nearest
