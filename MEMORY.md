@@ -74,3 +74,7 @@ Indexed from left to right, top to bottom:
 ## Workshop & Skill Tree Interface
 
 - **All-Sides Interaction:** The power core machine in the Engineering Workshop (`PowerCoreTerminal`) used to interact with and view the elemental skill tree is interactable on all sides (top/north, bottom/south, left/west, right/east, and corners).
+
+## Flying Liberty Controls & Movement
+
+- **Running on the Flying Liberty:** Holding Space while moving on the Flying Liberty (Cockpit, Main Hall, Sync Chamber, Engineering Workshop) engages running at increased speed (360 px/s vs standard 220 px/s walk) and plays the character running animation (`MC_RUN`).

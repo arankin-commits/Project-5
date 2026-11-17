@@ -145,7 +145,7 @@ func _build_ui() -> void:
 	$InteractionUI.add_child(panel)
 	panel.hide()
 	var hint := Label.new()
-	hint.text = "ENGINEERING WORKSHOP   WASD move   E interact"
+	hint.text = "ENGINEERING WORKSHOP   WASD move   Space run   E interact"
 	hint.position = Vector2(20, 18)
 	hint.add_theme_color_override("font_color", Color("fff0ce"))
 	$InteractionUI.add_child(hint)

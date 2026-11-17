@@ -229,7 +229,7 @@ func _build_ui() -> void:
 	ui.add_child(panel)
 	panel.hide()
 	var hint := Label.new()
-	hint.text = "WASD move   E interact   F3 collision / layout"
+	hint.text = "WASD move   Space run   E interact   F3 collision / layout"
 	hint.position = Vector2(20, 18)
 	hint.add_theme_color_override("font_color", Color("fff0ce"))
 	ui.add_child(hint)

@@ -11,7 +11,7 @@ func _run() -> void:
 	player.set_physics_process(false)
 	player.get_node("Camera2D").reset_smoothing()
 	player.get_node("Camera2D").force_update_scroll()
-	for animation in ["idle","walk"]:
+	for animation in ["idle","walk","run"]:
 		player.visual.play(animation)
 		await process_frame
 		await RenderingServer.frame_post_draw
