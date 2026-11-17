@@ -8,6 +8,7 @@ var footprints: Array[Rect2] = []
 var vents: Array[Vector2] = []
 var blockers: Array[PackedVector2Array] = []
 var hazards_enabled := false
+var trap_triggers: Dictionary = {}
 var exit_enabled := false
 var debug_enabled := false
 var elapsed := 0.0
@@ -141,14 +142,52 @@ func safe_spawns(count: int, rng: RandomNumberGenerator) -> Array[Vector2]:
 		choices.remove_at(index)
 	return result
 
+func can_trigger_trap(entity: Node) -> bool:
+	if entity == null:
+		return false
+	if entity == player:
+		return true
+	var enemies_node := get_parent().get_node_or_null("Enemies") if get_parent() else null
+	if enemies_node and entity.get_parent() == enemies_node:
+		return false
+	if entity.has_signal("damaged") or entity.get("kind") in ["crawler", "brute", "boss"]:
+		return false
+	return false
+
+func trigger_trap(index: int, activator: Node = null) -> bool:
+	if activator != null and not can_trigger_trap(activator):
+		return false
+	if index < 0 or index >= vents.size():
+		return false
+	trap_triggers[index] = 1.5
+	return true
+
+func is_trap_active(index: int) -> bool:
+	if not hazards_enabled:
+		return false
+	if trap_triggers.get(index, 0.0) > 0.0:
+		return true
+	var phase := fmod(elapsed + index * 1.1, 4.8)
+	return phase > 4.0
+
 func _physics_process(delta: float) -> void:
 	if not hazards_enabled:
 		return
 	elapsed += delta
 	for i in vents.size():
 		var phase := fmod(elapsed + i * 1.1, 4.8)
-		if phase > 4.0 and is_instance_valid(player) and ((player.position-vents[i])*Vector2(1,2)).length() < 49:
-			player.call("take_damage", 12)
+		if trap_triggers.has(i) and trap_triggers[i] > 0.0:
+			trap_triggers[i] = maxf(0.0, trap_triggers[i] - delta)
+		if is_instance_valid(player) and ((player.position - vents[i]) * Vector2(1, 2)).length() < 49:
+			trigger_trap(i, player)
+			if is_trap_active(i):
+	
+		var enemies := get_parent().get_node_or_null("Enemies") if get_parent() else null
+		if enemies:
+			for enemy in enemies.get_children():
+				if is_trap_active(i) and ((enemy.position - vents[i]) * Vector2(1, 2)).length() < 49:
+					enemy.take_damage(32, Vector2.ZERO, 12.0, "fire")
+
 
 func _process(_delta: float) -> void:
 	var marks := get_node_or_null("FloorSignals")
@@ -159,8 +198,8 @@ func _draw_floor(canvas: Node2D) -> void:
 	for i in vents.size():
 		var p := vents[i]
 		var phase := fmod(elapsed + i * 1.1, 4.8)
-		var active := hazards_enabled and phase > 4.0
-		var warning := hazards_enabled and phase > 2.8
+		var active := is_trap_active(i)
+		var warning := hazards_enabled and (active or phase > 2.8)
 		canvas.draw_set_transform(p,0,Vector2(1,0.5))
 		canvas.draw_circle(Vector2.ZERO,49,Color("1b2024"))
 		canvas.draw_arc(Vector2.ZERO,49,0,TAU,48,Color("98714b"),3,true)

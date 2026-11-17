@@ -1,0 +1,962 @@
+{
+  "title": "Flying Liberty: 16 Lobby Themes \u2014 Historical and New Age v1",
+  "historical_note": "Renaissance c.1400-1600, Victorian c.1837-1901. Classical set is a deliberate fantasy fusion; New Age is modern neo-Renaissance / neo-Victorian crossover, not a historical genre.",
+  "leitmotif": {
+    "scale_degrees": [
+      1,
+      2,
+      4,
+      5,
+      4,
+      2
+    ],
+    "description": "A recurring six-note rising/falling contour transformed through mode, counterpoint, meter, key and register; all original music."
+  },
+  "production": "Composed as individual MIDI arrangements, rendered using TimGM6mb GM sample library via libfluidsynth; the SoundFont itself is NOT included. Clear samples for commercial licensing.",
+  "tracks": [
+    {
+      "index": 1,
+      "title": "Copper Hearth",
+      "group": "Classical Renaissance x Victorian",
+      "key": "G major",
+      "bpm": 96,
+      "meter": "3/4",
+      "bars": 32,
+      "duration_seconds": 60.0,
+      "samples_per_stem": 1440000,
+      "sample_rate": 24000,
+      "instruments": {
+        "Foundation": [
+          "piano",
+          "cello"
+        ],
+        "Theme": [
+          "violin",
+          "flute"
+        ],
+        "Counterpoint": [
+          "clarinet",
+          "harp"
+        ],
+        "Atmosphere": [
+          "reed_organ",
+          "music_box"
+        ]
+      },
+      "style": "waltz",
+      "concept": "Warm Victorian parlour waltz with imitation between violin and flute; the ship feels lived-in.",
+      "stems": [
+        "Foundation",
+        "Theme",
+        "Counterpoint",
+        "Atmosphere"
+      ],
+      "quiet_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.88,
+        "Counterpoint": 0.35,
+        "Atmosphere": 0.48
+      },
+      "story_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.95,
+        "Counterpoint": 0.83,
+        "Atmosphere": 0.88
+      },
+      "notes_per_stem": {
+        "Foundation": 192,
+        "Theme": 112,
+        "Counterpoint": 144,
+        "Atmosphere": 112
+      },
+      "quiet_rms": 0.064,
+      "quiet_peak": 0.34286,
+      "duration_samples": 1440000
+    },
+    {
+      "index": 2,
+      "title": "Scribes of the Air",
+      "group": "Classical Renaissance x Victorian",
+      "key": "D dorian",
+      "bpm": 90,
+      "meter": "4/4",
+      "bars": 24,
+      "duration_seconds": 64.0,
+      "samples_per_stem": 1536000,
+      "sample_rate": 24000,
+      "instruments": {
+        "Foundation": [
+          "reed_organ",
+          "cello"
+        ],
+        "Theme": [
+          "recorder",
+          "violin"
+        ],
+        "Counterpoint": [
+          "clarinet",
+          "nylon_guitar"
+        ],
+        "Atmosphere": [
+          "harpsichord",
+          "tubular"
+        ]
+      },
+      "style": "canon",
+      "concept": "Dorian modal counterpoint; recorder and violin answer each other over a reed organ.",
+      "stems": [
+        "Foundation",
+        "Theme",
+        "Counterpoint",
+        "Atmosphere"
+      ],
+      "quiet_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.88,
+        "Counterpoint": 0.35,
+        "Atmosphere": 0.48
+      },
+      "story_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.95,
+        "Counterpoint": 0.83,
+        "Atmosphere": 0.88
+      },
+      "notes_per_stem": {
+        "Foundation": 96,
+        "Theme": 84,
+        "Counterpoint": 108,
+        "Atmosphere": 84
+      },
+      "quiet_rms": 0.06198,
+      "quiet_peak": 0.30766,
+      "duration_samples": 1536000
+    },
+    {
+      "index": 3,
+      "title": "Parlour Above the Clouds",
+      "group": "Classical Renaissance x Victorian",
+      "key": "F major",
+      "bpm": 84,
+      "meter": "6/8",
+      "bars": 32,
+      "duration_seconds": 68.571,
+      "samples_per_stem": 1645714,
+      "sample_rate": 24000,
+      "instruments": {
+        "Foundation": [
+          "harp",
+          "bass"
+        ],
+        "Theme": [
+          "flute",
+          "violin"
+        ],
+        "Counterpoint": [
+          "nylon_guitar",
+          "clarinet"
+        ],
+        "Atmosphere": [
+          "piano",
+          "celesta"
+        ]
+      },
+      "style": "siciliana",
+      "concept": "Lyrical 6/8, alternating harp and parlour guitar with woodwind ornament.",
+      "stems": [
+        "Foundation",
+        "Theme",
+        "Counterpoint",
+        "Atmosphere"
+      ],
+      "quiet_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.88,
+        "Counterpoint": 0.35,
+        "Atmosphere": 0.48
+      },
+      "story_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.95,
+        "Counterpoint": 0.83,
+        "Atmosphere": 0.88
+      },
+      "notes_per_stem": {
+        "Foundation": 128,
+        "Theme": 112,
+        "Counterpoint": 144,
+        "Atmosphere": 112
+      },
+      "quiet_rms": 0.057,
+      "quiet_peak": 0.59444,
+      "duration_samples": 1645714
+    },
+    {
+      "index": 4,
+      "title": "Captain's Quadrille",
+      "group": "Classical Renaissance x Victorian",
+      "key": "C major",
+      "bpm": 118,
+      "meter": "2/4",
+      "bars": 52,
+      "duration_seconds": 52.881,
+      "samples_per_stem": 1269153,
+      "sample_rate": 24000,
+      "instruments": {
+        "Foundation": [
+          "accordion",
+          "tuba"
+        ],
+        "Theme": [
+          "trumpet",
+          "clarinet"
+        ],
+        "Counterpoint": [
+          "flute",
+          "violin"
+        ],
+        "Atmosphere": [
+          "pizz",
+          "woodblock"
+        ]
+      },
+      "style": "march",
+      "concept": "Nimble 2/4 ballroom march with cornet-like trumpet and concertina.",
+      "stems": [
+        "Foundation",
+        "Theme",
+        "Counterpoint",
+        "Atmosphere"
+      ],
+      "quiet_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.88,
+        "Counterpoint": 0.35,
+        "Atmosphere": 0.48
+      },
+      "story_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.95,
+        "Counterpoint": 0.83,
+        "Atmosphere": 0.88
+      },
+      "notes_per_stem": {
+        "Foundation": 156,
+        "Theme": 180,
+        "Counterpoint": 234,
+        "Atmosphere": 208
+      },
+      "quiet_rms": 0.05215,
+      "quiet_peak": 0.40173,
+      "duration_samples": 1269153
+    },
+    {
+      "index": 5,
+      "title": "Clockwork Pavane",
+      "group": "Classical Renaissance x Victorian",
+      "key": "A natural_minor",
+      "bpm": 76,
+      "meter": "4/4",
+      "bars": 24,
+      "duration_seconds": 75.789,
+      "samples_per_stem": 1818947,
+      "sample_rate": 24000,
+      "instruments": {
+        "Foundation": [
+          "reed_organ",
+          "cello"
+        ],
+        "Theme": [
+          "oboe",
+          "viola"
+        ],
+        "Counterpoint": [
+          "harp",
+          "recorder"
+        ],
+        "Atmosphere": [
+          "tubular",
+          "slow_strings"
+        ]
+      },
+      "style": "pavane",
+      "concept": "Slow ceremonial Renaissance-inspired pavane, suspended organ and imitative reed voices.",
+      "stems": [
+        "Foundation",
+        "Theme",
+        "Counterpoint",
+        "Atmosphere"
+      ],
+      "quiet_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.88,
+        "Counterpoint": 0.35,
+        "Atmosphere": 0.48
+      },
+      "story_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.95,
+        "Counterpoint": 0.83,
+        "Atmosphere": 0.88
+      },
+      "notes_per_stem": {
+        "Foundation": 96,
+        "Theme": 84,
+        "Counterpoint": 108,
+        "Atmosphere": 30
+      },
+      "quiet_rms": 0.06291,
+      "quiet_peak": 0.35938,
+      "duration_samples": 1818947
+    },
+    {
+      "index": 6,
+      "title": "Father's Photograph",
+      "group": "Classical Renaissance x Victorian",
+      "key": "E natural_minor",
+      "bpm": 72,
+      "meter": "3/4",
+      "bars": 30,
+      "duration_seconds": 75.0,
+      "samples_per_stem": 1800000,
+      "sample_rate": 24000,
+      "instruments": {
+        "Foundation": [
+          "piano",
+          "cello"
+        ],
+        "Theme": [
+          "violin",
+          "english_horn"
+        ],
+        "Counterpoint": [
+          "harp",
+          "clarinet"
+        ],
+        "Atmosphere": [
+          "reed_organ",
+          "music_box"
+        ]
+      },
+      "style": "lament",
+      "concept": "Intimate elegiac piano-and-cello miniature for the CEO son\u2019s family storyline.",
+      "stems": [
+        "Foundation",
+        "Theme",
+        "Counterpoint",
+        "Atmosphere"
+      ],
+      "quiet_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.88,
+        "Counterpoint": 0.35,
+        "Atmosphere": 0.48
+      },
+      "story_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.95,
+        "Counterpoint": 0.83,
+        "Atmosphere": 0.88
+      },
+      "notes_per_stem": {
+        "Foundation": 180,
+        "Theme": 90,
+        "Counterpoint": 136,
+        "Atmosphere": 105
+      },
+      "quiet_rms": 0.05668,
+      "quiet_peak": 0.29892,
+      "duration_samples": 1800000
+    },
+    {
+      "index": 7,
+      "title": "Brass and Lace",
+      "group": "Classical Renaissance x Victorian",
+      "key": "A dorian",
+      "bpm": 112,
+      "meter": "6/8",
+      "bars": 36,
+      "duration_seconds": 57.857,
+      "samples_per_stem": 1388571,
+      "sample_rate": 24000,
+      "instruments": {
+        "Foundation": [
+          "nylon_guitar",
+          "bass"
+        ],
+        "Theme": [
+          "accordion",
+          "violin"
+        ],
+        "Counterpoint": [
+          "flute",
+          "oboe"
+        ],
+        "Atmosphere": [
+          "harpsichord",
+          "pizz"
+        ]
+      },
+      "style": "galliard",
+      "concept": "Buoyant triple dance, plucked strings, lilting concertina, and agile contrapuntal lines.",
+      "stems": [
+        "Foundation",
+        "Theme",
+        "Counterpoint",
+        "Atmosphere"
+      ],
+      "quiet_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.88,
+        "Counterpoint": 0.35,
+        "Atmosphere": 0.48
+      },
+      "story_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.95,
+        "Counterpoint": 0.83,
+        "Atmosphere": 0.88
+      },
+      "notes_per_stem": {
+        "Foundation": 252,
+        "Theme": 124,
+        "Counterpoint": 162,
+        "Atmosphere": 216
+      },
+      "quiet_rms": 0.05907,
+      "quiet_peak": 0.44719,
+      "duration_samples": 1388571
+    },
+    {
+      "index": 8,
+      "title": "Liberty Overture",
+      "group": "Classical Renaissance x Victorian",
+      "key": "Bb major",
+      "bpm": 92,
+      "meter": "4/4",
+      "bars": 28,
+      "duration_seconds": 73.043,
+      "samples_per_stem": 1753043,
+      "sample_rate": 24000,
+      "instruments": {
+        "Foundation": [
+          "strings",
+          "contrabass"
+        ],
+        "Theme": [
+          "horn",
+          "violin"
+        ],
+        "Counterpoint": [
+          "flute",
+          "clarinet"
+        ],
+        "Atmosphere": [
+          "brass",
+          "timpani"
+        ]
+      },
+      "style": "overture",
+      "concept": "Ceremonial flying-ship theme: warm horn lines, string countermelody, and measured brass.",
+      "stems": [
+        "Foundation",
+        "Theme",
+        "Counterpoint",
+        "Atmosphere"
+      ],
+      "quiet_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.88,
+        "Counterpoint": 0.35,
+        "Atmosphere": 0.48
+      },
+      "story_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.95,
+        "Counterpoint": 0.83,
+        "Atmosphere": 0.88
+      },
+      "notes_per_stem": {
+        "Foundation": 112,
+        "Theme": 96,
+        "Counterpoint": 126,
+        "Atmosphere": 49
+      },
+      "quiet_rms": 0.06299,
+      "quiet_peak": 0.39166,
+      "duration_samples": 1753043
+    },
+    {
+      "index": 9,
+      "title": "Glass Horizon",
+      "group": "New Age Neo-Renaissance",
+      "key": "C lydian",
+      "bpm": 68,
+      "meter": "4/4",
+      "bars": 22,
+      "duration_seconds": 77.647,
+      "samples_per_stem": 1863529,
+      "sample_rate": 24000,
+      "instruments": {
+        "Foundation": [
+          "warm_pad",
+          "bass"
+        ],
+        "Theme": [
+          "piano",
+          "flute"
+        ],
+        "Counterpoint": [
+          "harp",
+          "vibraphone"
+        ],
+        "Atmosphere": [
+          "halo_pad",
+          "celesta"
+        ]
+      },
+      "style": "ambient",
+      "concept": "Lydian open sky: repeating piano figures bloom into distant airy strings and pads.",
+      "stems": [
+        "Foundation",
+        "Theme",
+        "Counterpoint",
+        "Atmosphere"
+      ],
+      "quiet_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.88,
+        "Counterpoint": 0.35,
+        "Atmosphere": 0.48
+      },
+      "story_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.95,
+        "Counterpoint": 0.83,
+        "Atmosphere": 0.88
+      },
+      "notes_per_stem": {
+        "Foundation": 104,
+        "Theme": 76,
+        "Counterpoint": 116,
+        "Atmosphere": 74
+      },
+      "quiet_rms": 0.04512,
+      "quiet_peak": 0.40024,
+      "duration_samples": 1863529
+    },
+    {
+      "index": 10,
+      "title": "Aether Lullaby",
+      "group": "New Age Neo-Renaissance",
+      "key": "D major",
+      "bpm": 76,
+      "meter": "6/8",
+      "bars": 34,
+      "duration_seconds": 80.526,
+      "samples_per_stem": 1932632,
+      "sample_rate": 24000,
+      "instruments": {
+        "Foundation": [
+          "slow_strings",
+          "harp"
+        ],
+        "Theme": [
+          "flute",
+          "music_box"
+        ],
+        "Counterpoint": [
+          "piano",
+          "vibraphone"
+        ],
+        "Atmosphere": [
+          "warm_pad",
+          "choir"
+        ]
+      },
+      "style": "float",
+      "concept": "A gentle suspended 6/8 wash: harp, music box, flute and distant harmonic glow.",
+      "stems": [
+        "Foundation",
+        "Theme",
+        "Counterpoint",
+        "Atmosphere"
+      ],
+      "quiet_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.88,
+        "Counterpoint": 0.35,
+        "Atmosphere": 0.48
+      },
+      "story_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.95,
+        "Counterpoint": 0.83,
+        "Atmosphere": 0.88
+      },
+      "notes_per_stem": {
+        "Foundation": 161,
+        "Theme": 118,
+        "Counterpoint": 145,
+        "Atmosphere": 114
+      },
+      "quiet_rms": 0.05853,
+      "quiet_peak": 0.39177,
+      "duration_samples": 1932632
+    },
+    {
+      "index": 11,
+      "title": "Time Between Gears",
+      "group": "New Age Neo-Renaissance",
+      "key": "E dorian",
+      "bpm": 83,
+      "meter": "5/4",
+      "bars": 22,
+      "duration_seconds": 79.518,
+      "samples_per_stem": 1908434,
+      "sample_rate": 24000,
+      "instruments": {
+        "Foundation": [
+          "warm_pad",
+          "cello"
+        ],
+        "Theme": [
+          "music_box",
+          "clarinet"
+        ],
+        "Counterpoint": [
+          "marimba",
+          "harp"
+        ],
+        "Atmosphere": [
+          "halo_pad",
+          "vibraphone"
+        ]
+      },
+      "style": "five",
+      "concept": "Uneven 5/4 puzzle-like pulse from a repeating music-box motif with spacious modal pads.",
+      "stems": [
+        "Foundation",
+        "Theme",
+        "Counterpoint",
+        "Atmosphere"
+      ],
+      "quiet_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.88,
+        "Counterpoint": 0.35,
+        "Atmosphere": 0.48
+      },
+      "story_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.95,
+        "Counterpoint": 0.83,
+        "Atmosphere": 0.88
+      },
+      "notes_per_stem": {
+        "Foundation": 104,
+        "Theme": 76,
+        "Counterpoint": 216,
+        "Atmosphere": 85
+      },
+      "quiet_rms": 0.05971,
+      "quiet_peak": 0.35067,
+      "duration_samples": 1908434
+    },
+    {
+      "index": 12,
+      "title": "Skylight Chapel",
+      "group": "New Age Neo-Renaissance",
+      "key": "G mixolydian",
+      "bpm": 64,
+      "meter": "3/4",
+      "bars": 24,
+      "duration_seconds": 67.5,
+      "samples_per_stem": 1620000,
+      "sample_rate": 24000,
+      "instruments": {
+        "Foundation": [
+          "reed_organ",
+          "cello"
+        ],
+        "Theme": [
+          "flute",
+          "voice"
+        ],
+        "Counterpoint": [
+          "harp",
+          "choir"
+        ],
+        "Atmosphere": [
+          "halo_pad",
+          "tubular"
+        ]
+      },
+      "style": "hymn",
+      "concept": "A meditative modal hymn texture with pump organ, harp and distant wordless choir timbre.",
+      "stems": [
+        "Foundation",
+        "Theme",
+        "Counterpoint",
+        "Atmosphere"
+      ],
+      "quiet_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.88,
+        "Counterpoint": 0.35,
+        "Atmosphere": 0.48
+      },
+      "story_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.95,
+        "Counterpoint": 0.83,
+        "Atmosphere": 0.88
+      },
+      "notes_per_stem": {
+        "Foundation": 114,
+        "Theme": 84,
+        "Counterpoint": 102,
+        "Atmosphere": 81
+      },
+      "quiet_rms": 0.06427,
+      "quiet_peak": 0.44057,
+      "duration_samples": 1620000
+    },
+    {
+      "index": 13,
+      "title": "Observatory of Dreams",
+      "group": "New Age Neo-Renaissance",
+      "key": "A natural_minor",
+      "bpm": 88,
+      "meter": "7/8",
+      "bars": 30,
+      "duration_seconds": 71.591,
+      "samples_per_stem": 1718182,
+      "sample_rate": 24000,
+      "instruments": {
+        "Foundation": [
+          "bowed_pad",
+          "bass"
+        ],
+        "Theme": [
+          "vibraphone",
+          "oboe"
+        ],
+        "Counterpoint": [
+          "harp",
+          "clarinet"
+        ],
+        "Atmosphere": [
+          "music_box",
+          "halo_pad"
+        ]
+      },
+      "style": "seven",
+      "concept": "Dreamlike 7/8 grouped 3+2+2, glassy counterpoints and distant clockwork echoes.",
+      "stems": [
+        "Foundation",
+        "Theme",
+        "Counterpoint",
+        "Atmosphere"
+      ],
+      "quiet_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.88,
+        "Counterpoint": 0.35,
+        "Atmosphere": 0.48
+      },
+      "story_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.95,
+        "Counterpoint": 0.83,
+        "Atmosphere": 0.88
+      },
+      "notes_per_stem": {
+        "Foundation": 142,
+        "Theme": 104,
+        "Counterpoint": 211,
+        "Atmosphere": 115
+      },
+      "quiet_rms": 0.04967,
+      "quiet_peak": 0.40677,
+      "duration_samples": 1718182
+    },
+    {
+      "index": 14,
+      "title": "The Unsent Letter",
+      "group": "New Age Neo-Renaissance",
+      "key": "E natural_minor",
+      "bpm": 65,
+      "meter": "4/4",
+      "bars": 20,
+      "duration_seconds": 73.846,
+      "samples_per_stem": 1772308,
+      "sample_rate": 24000,
+      "instruments": {
+        "Foundation": [
+          "piano",
+          "cello"
+        ],
+        "Theme": [
+          "english_horn",
+          "violin"
+        ],
+        "Counterpoint": [
+          "harp",
+          "flute"
+        ],
+        "Atmosphere": [
+          "slow_strings",
+          "warm_pad"
+        ]
+      },
+      "style": "intimate",
+      "concept": "Modern sentimental parlour echoes, with slowly shifting harmonies and low piano register.",
+      "stems": [
+        "Foundation",
+        "Theme",
+        "Counterpoint",
+        "Atmosphere"
+      ],
+      "quiet_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.88,
+        "Counterpoint": 0.35,
+        "Atmosphere": 0.48
+      },
+      "story_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.95,
+        "Counterpoint": 0.83,
+        "Atmosphere": 0.88
+      },
+      "notes_per_stem": {
+        "Foundation": 95,
+        "Theme": 60,
+        "Counterpoint": 105,
+        "Atmosphere": 67
+      },
+      "quiet_rms": 0.05489,
+      "quiet_peak": 0.28302,
+      "duration_samples": 1772308
+    },
+    {
+      "index": 15,
+      "title": "Wings Beyond Tomorrow",
+      "group": "New Age Neo-Renaissance",
+      "key": "F lydian",
+      "bpm": 82,
+      "meter": "6/8",
+      "bars": 32,
+      "duration_seconds": 70.244,
+      "samples_per_stem": 1685854,
+      "sample_rate": 24000,
+      "instruments": {
+        "Foundation": [
+          "slow_strings",
+          "bass"
+        ],
+        "Theme": [
+          "horn",
+          "flute"
+        ],
+        "Counterpoint": [
+          "harp",
+          "piano"
+        ],
+        "Atmosphere": [
+          "halo_pad",
+          "choir"
+        ]
+      },
+      "style": "cinematic",
+      "concept": "Broad optimistic Lydian arcs, harp currents, warm horn, and an ascending atmospheric swell.",
+      "stems": [
+        "Foundation",
+        "Theme",
+        "Counterpoint",
+        "Atmosphere"
+      ],
+      "quiet_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.88,
+        "Counterpoint": 0.35,
+        "Atmosphere": 0.48
+      },
+      "story_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.95,
+        "Counterpoint": 0.83,
+        "Atmosphere": 0.88
+      },
+      "notes_per_stem": {
+        "Foundation": 152,
+        "Theme": 112,
+        "Counterpoint": 136,
+        "Atmosphere": 107
+      },
+      "quiet_rms": 0.05667,
+      "quiet_peak": 0.36704,
+      "duration_samples": 1685854
+    },
+    {
+      "index": 16,
+      "title": "Homeward Through Mist",
+      "group": "New Age Neo-Renaissance",
+      "key": "D major",
+      "bpm": 72,
+      "meter": "4/4",
+      "bars": 24,
+      "duration_seconds": 80.0,
+      "samples_per_stem": 1920000,
+      "sample_rate": 24000,
+      "instruments": {
+        "Foundation": [
+          "piano",
+          "bass"
+        ],
+        "Theme": [
+          "flute",
+          "cello"
+        ],
+        "Counterpoint": [
+          "harp",
+          "clarinet"
+        ],
+        "Atmosphere": [
+          "warm_pad",
+          "music_box"
+        ]
+      },
+      "style": "return",
+      "concept": "Warm ambient homecoming, gently resolving the Flying Liberty motif as the sky clears.",
+      "stems": [
+        "Foundation",
+        "Theme",
+        "Counterpoint",
+        "Atmosphere"
+      ],
+      "quiet_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.88,
+        "Counterpoint": 0.35,
+        "Atmosphere": 0.48
+      },
+      "story_mix": {
+        "Foundation": 0.86,
+        "Theme": 0.95,
+        "Counterpoint": 0.83,
+        "Atmosphere": 0.88
+      },
+      "notes_per_stem": {
+        "Foundation": 114,
+        "Theme": 84,
+        "Counterpoint": 126,
+        "Atmosphere": 81
+      },
+      "quiet_rms": 0.04818,
+      "quiet_peak": 0.4239,
+      "duration_samples": 1920000
+    }
+  ]
+}

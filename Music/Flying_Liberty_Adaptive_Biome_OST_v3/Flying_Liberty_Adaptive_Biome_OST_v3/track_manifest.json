@@ -1,0 +1,97 @@
+{
+  "title": "Flying Liberty Adaptive Biome OST v3",
+  "leitmotif_intervals": [
+    0,
+    3,
+    7,
+    10,
+    7,
+    3
+  ],
+  "tracks": [
+    {
+      "biome": "Maintenance",
+      "meter": "3/4",
+      "bpm": 102,
+      "key": "D minor",
+      "bars": 40,
+      "duration_seconds": 70.58825,
+      "sample_rate": 32000,
+      "frames_per_stem": 2258824,
+      "stems": [
+        "Foundation",
+        "Motif",
+        "Pulse",
+        "Combat"
+      ],
+      "exploration_levels": [
+        0.78,
+        0.9,
+        0.42,
+        0.0
+      ],
+      "combat_levels": [
+        0.85,
+        0.88,
+        0.98,
+        0.95
+      ]
+    },
+    {
+      "biome": "Factory",
+      "meter": "4/4",
+      "bpm": 136,
+      "key": "E minor",
+      "bars": 40,
+      "duration_seconds": 70.58825,
+      "sample_rate": 32000,
+      "frames_per_stem": 2258824,
+      "stems": [
+        "Foundation",
+        "Motif",
+        "Pulse",
+        "Combat"
+      ],
+      "exploration_levels": [
+        0.78,
+        0.9,
+        0.42,
+        0.0
+      ],
+      "combat_levels": [
+        0.85,
+        0.88,
+        0.98,
+        0.95
+      ]
+    },
+    {
+      "biome": "Toxin_Refinery",
+      "meter": "5/4",
+      "bpm": 90,
+      "key": "C-sharp minor",
+      "bars": 24,
+      "duration_seconds": 80.0,
+      "sample_rate": 32000,
+      "frames_per_stem": 2560000,
+      "stems": [
+        "Foundation",
+        "Motif",
+        "Pulse",
+        "Combat"
+      ],
+      "exploration_levels": [
+        0.78,
+        0.9,
+        0.42,
+        0.0
+      ],
+      "combat_levels": [
+        0.85,
+        0.88,
+        0.98,
+        0.95
+      ]
+    }
+  ]
+}

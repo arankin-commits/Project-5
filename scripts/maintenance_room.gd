@@ -298,16 +298,29 @@ func safe_spawns(count: int, rng: RandomNumberGenerator) -> Array[Vector2]:
 				choices.remove_at(j)
 	return result
 
+func is_trap_active(index: int) -> bool:
+	if not hazards_enabled:
+		return false
+	if trap_triggers.get(index, 0.0) > 0.0:
+		return true
+	var phase := fmod(elapsed + index * 1.1, 4.8)
+	return phase >= 3.8
+
 func _physics_process(delta: float) -> void:
 	if not hazards_enabled:
 		return
 	elapsed += delta
+	for i in vents.size():
+		if trap_triggers.has(i) and trap_triggers[i] > 0.0:
+			trap_triggers[i] = maxf(0.0, trap_triggers[i] - delta)
+		if is_instance_valid(player) and ((player.position-vents[i])*Vector2(1,2)).length() < 65:
+			trigger_trap(i, player)
 	hazard_tick -= delta
 	if hazard_tick > 0:
 		return
 	hazard_tick = 0.5
 	for i in vents.size():
-		if fmod(elapsed+i*1.1,4.8) < 3.8:
+		if not is_trap_active(i):
 			continue
 		if is_instance_valid(player) and ((player.position-vents[i])*Vector2(1,2)).length() < 65:
 			player.take_damage(8)
@@ -320,8 +333,8 @@ func _physics_process(delta: float) -> void:
 func _draw_floor(canvas: Node2D) -> void:
 	for i in vents.size():
 		var phase := fmod(elapsed+i*1.1,4.8)
-		var active := hazards_enabled and phase >= 3.8
-		var warning := hazards_enabled and phase >= 2.6
+		var active := is_trap_active(i)
+		var warning := hazards_enabled and (active or phase >= 2.6)
 		hazard_sprites[i].modulate = Color.WHITE if active else Color(0.45,0.5,0.55)
 		canvas.draw_set_transform(vents[i],0,Vector2(1,0.5))
 		if warning:

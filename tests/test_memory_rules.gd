@@ -279,6 +279,49 @@ func _run() -> void:
 	elem_enemy.queue_free()
 	
 	# ==========================================
+	# RULE 17: Enemies don't trigger traps, but can still be harmed by them
+	# ==========================================
+	run.room.hazards_enabled = true
+	var trap_enemy = load("res://scripts/run_enemy.gd").new()
+	trap_enemy.room = run.room
+	trap_enemy.target = run.player
+	run.enemies.add_child(trap_enemy)
+	trap_enemy.position = run.room.vents[0]
+	trap_enemy.health = 500
+	
+	# Verify enemy cannot trigger traps
+	check(run.room.can_trigger_trap(run.player), "Rule 17: Player must be able to trigger traps")
+	check(not run.room.can_trigger_trap(trap_enemy), "Rule 17: Enemy must NOT be able to trigger traps")
+	check(not run.room.trigger_trap(0, trap_enemy), "Rule 17: Trap triggering by enemy must be rejected")
+	
+	# With periodic hazard idle, enemy on trap does not trigger it and takes no damage
+	run.room.elapsed = 1.0
+	run.room.trap_triggers.clear()
+	run.room.hazard_tick = 0
+	run.player.position = Vector2(-2000, -2000)
+	run.room._physics_process(0.01)
+	check(not run.room.is_trap_active(0), "Rule 17: Trap must not be active when only enemy stepped on it")
+	check(trap_enemy.health == 500, "Rule 17: Enemy must take no damage from inactive untriggered trap")
+	
+	# Player triggers the trap: trap becomes active
+	check(run.room.trigger_trap(0, run.player), "Rule 17: Player failed to trigger trap")
+	check(run.room.is_trap_active(0), "Rule 17: Trap must be active after player triggers it")
+	
+	# Enemy on the active/triggered trap is harmed by it
+	run.room.hazard_tick = 0
+	run.room._physics_process(0.01)
+	check(trap_enemy.health == 500 - 32, "Rule 17: Enemy must take full trap damage (32) when on triggered trap, got %f" % trap_enemy.health)
+	
+	# Enemy knocked into periodic active trap is also harmed
+	run.room.trap_triggers.clear()
+	run.room.elapsed = 4.0
+	run.room.hazard_tick = 0
+	trap_enemy.health = 500
+	run.room._physics_process(0.01)
+	check(trap_enemy.health == 500 - 32, "Rule 17: Enemy must be harmed by active periodic trap, got %f" % trap_enemy.health)
+	trap_enemy.queue_free()
+	
+	# ==========================================
 	# RULE 16: Quitting from the in-game menu brings player to the main menu
 	# ==========================================
 	run._toggle_pause()

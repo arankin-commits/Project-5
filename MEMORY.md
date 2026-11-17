@@ -10,7 +10,7 @@
 - **Isometric Sightlines.** Exits are almost always positioned along the upper-left, upper-right, or far-top walls of an arena so reward previews remain clearly visible to the player. Entrances generally sit at the bottom-left or bottom-right edges.
 - **Room Connection.** The player should enter from the room wall opposite the wall they exited from in the previous room. The player always comes in from the bottom left in the first room of a new biome.
 - **Hazards and Enemy Placement.** Hazards and enemies are placed on top afterwards.
-- **Asymmetric Trap Damage.** Environmental hazards damage both the player and foes, but traps deal significantly more damage to enemies than to you. You can use knockback effects or bait enemies into walking over triggers to clear waves safely.
+- **Asymmetric Trap Damage.** Environmental hazards damage both the player and foes, but traps deal significantly more damage to enemies than to you. Enemies don't trigger traps, but can still be harmed by them. You can use knockback effects to knock enemies into active traps or trigger traps yourself to catch enemies in the hazard.
 - **Fixed Biome Hazards.** Each region features signature environmental traps built directly into the room's floor plan. These include pressure-activated Spike Pits and explosive urns in Tartarus, rivers of magma in Asphodel, and poison pools alongside curing mandragora stations in the Temple of Styx.
 - **Wave-Based Spawning.** Standard combat rooms do not spawn every enemy at once. Instead, enemies appear in sequential waves, with the next group spawning once the active wave is cleared or reduced below a set threshold - 50%, 70%, or 90%.
 - **Proximity Spawn Manipulation.** Each chamber has predefined spawn points, and the game prioritizes spawning new waves at nodes near the player's current location.
@@ -84,6 +84,7 @@ Indexed from left to right, top to bottom:
 
 - **Wall & Construct Knockback Stun:** Enemies knocked back into walls or constructs/obstacles are stunned for 0.3 seconds (`wall_stun_timer = 0.3`). While stunned, enemy movement and attacks are paused, a stun halo is drawn overhead, the recovery/reeling animation plays, and attacks against the enemy gain the wall-stun damage bonus.
 - **Damage Numbers Beside Foes:** When an enemy takes damage, damage numbers show up next to the enemy hit (horizontally offset beside the enemy's torso on the side of the impact, rather than directly overhead) to keep the enemy body, overhead stun halos, and health bars unobstructed. Damage numbers reflect the actual damage taken after reductions (such as shield guarding) and apply to all damage sources including player strikes, core powers, and environmental traps/hazards.
+- **Enemies and Traps:** Enemies do not trigger traps or pressure plates (`can_trigger_trap(enemy) == false`). However, enemies can still be harmed by traps (`take_damage` from active/triggered hazards) when knocked into them or when caught inside hazards triggered by the player or environmental cycles.
 
 ## Element Rules
 
