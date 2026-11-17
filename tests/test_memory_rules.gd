@@ -322,6 +322,98 @@ func _run() -> void:
 	trap_enemy.queue_free()
 	
 	# ==========================================
+	# RULE 18: CD Rewards & 16-Track Biome Distribution
+	# ==========================================
+	var save_slots = root.get_node_or_null("SaveSlots")
+	check(save_slots != null, "Rule 18: SaveSlots singleton missing")
+	if save_slots != null:
+		# 1. Verify 16 tracks catalog
+		check(save_slots.CD_TRACKS.size() == 16, "Rule 18: Exactly 16 CD tracks required, found %d" % save_slots.CD_TRACKS.size())
+		
+		# 2. Verify 4 biomes with 4 tracks each
+		var expected_biomes := ["maintenance", "factory", "boiler", "toxin_refinery"]
+		var total_partitioned := 0
+		var all_track_ids := []
+		for b in expected_biomes:
+			check(save_slots.BIOME_CDS.has(b), "Rule 18: Biome missing from BIOME_CDS: " + b)
+			var b_tracks: Array = save_slots.BIOME_CDS.get(b, [])
+			check(b_tracks.size() == 4, "Rule 18: Biome %s must have exactly 4 tracks, got %d" % [b, b_tracks.size()])
+			total_partitioned += b_tracks.size()
+			for tid in b_tracks:
+				check(save_slots.CD_TRACKS.has(tid), "Rule 18: Track ID %s missing from CD_TRACKS" % tid)
+				check(save_slots.CD_TRACKS[tid].biome == b, "Rule 18: Track %s biome mismatch, expected %s" % [tid, b])
+				check(not all_track_ids.has(tid), "Rule 18: Duplicate track ID in partition: " + tid)
+				all_track_ids.append(tid)
+				# Check audio file existence
+				var audio_path: String = save_slots.CD_TRACKS[tid].get("path", "")
+				check(FileAccess.file_exists(audio_path), "Rule 18: Audio file missing on disk: " + audio_path)
+		check(total_partitioned == 16, "Rule 18: Total partitioned tracks must equal 16")
+		
+		# First 4 maintenance, next 4 factory, next 4 boiler, final 4 toxin_refinery
+		check(save_slots.BIOME_CDS["maintenance"][0] == "01_Copper_Hearth", "Rule 18: Track 1 must be 01_Copper_Hearth in maintenance")
+		check(save_slots.BIOME_CDS["maintenance"][3] == "04_Captains_Quadrille", "Rule 18: Track 4 must be 04_Captains_Quadrille in maintenance")
+		check(save_slots.BIOME_CDS["factory"][0] == "05_Clockwork_Pavane", "Rule 18: Track 5 must be 05_Clockwork_Pavane in factory")
+		check(save_slots.BIOME_CDS["factory"][3] == "08_Liberty_Overture", "Rule 18: Track 8 must be 08_Liberty_Overture in factory")
+		check(save_slots.BIOME_CDS["boiler"][0] == "09_Glass_Horizon", "Rule 18: Track 9 must be 09_Glass_Horizon in boiler")
+		check(save_slots.BIOME_CDS["boiler"][3] == "12_Skylight_Chapel", "Rule 18: Track 12 must be 12_Skylight_Chapel in boiler")
+		check(save_slots.BIOME_CDS["toxin_refinery"][0] == "13_Observatory_of_Dreams", "Rule 18: Track 13 must be 13_Observatory_of_Dreams in toxin_refinery")
+		check(save_slots.BIOME_CDS["toxin_refinery"][3] == "16_Homeward_Through_Mist", "Rule 18: Track 16 must be 16_Homeward_Through_Mist in toxin_refinery")
+		
+		# 3. Uncollected pool & random selection without replacement
+		save_slots.reset_collected_cds()
+		check(save_slots.get_uncollected_cds("maintenance").size() == 4, "Rule 18: Maintenance uncollected pool must start at 4")
+		save_slots.collect_cd("01_Copper_Hearth")
+		check(save_slots.is_cd_collected("01_Copper_Hearth"), "Rule 18: Track 01_Copper_Hearth not marked collected")
+		var uncollected_maint := save_slots.get_uncollected_cds("maintenance")
+		check(uncollected_maint.size() == 3, "Rule 18: Uncollected pool must reduce to 3 after collecting one")
+		check(not uncollected_maint.has("01_Copper_Hearth"), "Rule 18: Acquired track must no longer show up in pool")
+		
+		# 4. Biome cleared: CD reward no longer shows up
+		save_slots.collect_cd("02_Scribes_of_the_Air")
+		save_slots.collect_cd("03_Parlour_Above_the_Clouds")
+		save_slots.collect_cd("04_Captains_Quadrille")
+		check(save_slots.get_uncollected_cds("maintenance").is_empty(), "Rule 18: Maintenance uncollected pool must be empty after 4 collected")
+		config.biome = "maintenance"
+		for test_seed in 50:
+			var exit_rewards := run._generate_unique_exit_rewards(4, test_seed)
+			check(not exit_rewards.has("cds"), "Rule 18 violated: 'cds' appeared as reward after all biome CDs were collected in room %d" % test_seed)
+		
+		# 5. 3x Rarity: When uncollected CDs exist, 'cds' is 3 times as rare to find
+		save_slots.reset_collected_cds()
+		var cds_found_count := 0
+		var total_sample_rooms := 150
+		for test_seed in total_sample_rooms:
+			var exit_rewards := run._generate_unique_exit_rewards(4, test_seed)
+			if exit_rewards.has("cds"):
+				cds_found_count += 1
+		# With 3x rarity, cds appears in roughly 1/3 of the rate when it was 100% pool candidate
+		check(cds_found_count > 0, "Rule 18: 'cds' reward never appeared across 150 rooms")
+		check(cds_found_count < total_sample_rooms * 0.45, "Rule 18: 'cds' reward appeared too frequently (found %d/%d), 3x rarity not enforced" % [cds_found_count, total_sample_rooms])
+		
+		# 6. Room reward and claiming
+		run.rooms[run.room_index].reward = "cds"
+		run.rooms[run.room_index].erase("cd_track")
+		run._load_room(run.room_index)
+		check(run.rooms[run.room_index].has("cd_track"), "Rule 18: Loading a 'cds' room must assign a cd_track")
+		var assigned_track: String = run.rooms[run.room_index]["cd_track"]
+		check(save_slots.BIOME_CDS["maintenance"].has(assigned_track), "Rule 18: Assigned track must belong to maintenance biome: " + assigned_track)
+		run.state = "reward"
+		run.reward_choices.clear()
+		run.rooms[run.room_index].reward = "cds"
+		var promised: String = "cds"
+		var track_id: String = run.rooms[run.room_index].get("cd_track", "")
+		var track_title := str(save_slots.CD_TRACKS[track_id].get("title", track_id))
+		run.reward_choices.append({
+			"id": "cds",
+			"name": "MUSIC CD: " + track_title.to_upper(),
+			"description": "Acquire '%s' for the Jukebox\n20%% faster dash recharge" % track_title,
+			"track_id": track_id
+		})
+		check(run.reward_choices[0].name.begins_with("MUSIC CD: "), "Rule 18: Reward modal choice name must begin with 'MUSIC CD:'")
+		check(run.choose_reward("cds"), "Rule 18: choose_reward('cds') failed")
+		check(save_slots.is_cd_collected(assigned_track), "Rule 18: Claiming CD reward must mark assigned track collected")
+	
+	# ==========================================
 	# RULE 16: Quitting from the in-game menu brings player to the main menu
 	# ==========================================
 	run._toggle_pause()

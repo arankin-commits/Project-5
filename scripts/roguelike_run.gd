@@ -278,9 +278,18 @@ func _player_say(text: String) -> void:
 		hud.objective.text = text
 
 func _generate_unique_exit_rewards(count: int, current_room_index: int) -> Array[String]:
+	var exit_rng := RandomNumberGenerator.new()
+
+	exit_rng.seed = int(config.get("run_seed")) + current_room_index * 137
 	var pool: Array[String] = []
 	pool.append("max_hp_increase")
-	pool.append("cds")
+	var save_slots = get_node_or_null("/root/SaveSlots")
+	var uncollected: Array[String] = []
+	if save_slots != null and save_slots.has_method("get_uncollected_cds"):
+		uncollected = save_slots.get_uncollected_cds(config.biome)
+	# CD reward: only eligible if current biome has uncollected CDs, and made 3 times as rare to find (1 in 3 chance)
+	if not uncollected.is_empty() and exit_rng.randi_range(0, 2) == 0:
+		pool.append("cds")
 	pool.append("core_xp")
 	pool.append("aether_cores")
 	# Generic power/speed rewards reuse elemental artwork and cannot be door previews.
@@ -300,7 +309,7 @@ func _generate_unique_exit_rewards(count: int, current_room_index: int) -> Array
 	
 	var selected: Array[String] = []
 	var available := pool.duplicate()
-	var exit_rng := RandomNumberGenerator.new()
+
 	exit_rng.seed = int(config.get("run_seed")) + current_room_index * 137
 	# Keep random choices, but prevent long stretches without an owned-core upgrade.
 	if count > 0 and not config.core_elements.is_empty() and current_room_index % 3 == 0:
@@ -388,6 +397,15 @@ func _load_room(index: int) -> void:
 			trap_mode = "waves"
 			trap_target_waves = trap_rng.randi_range(10, 15)
 			trap_current_wave = 1
+	if rooms[index].get("reward") == "cds" and not rooms[index].has("cd_track"):
+		var save_slots = get_node_or_null("/root/SaveSlots")
+		if save_slots != null and save_slots.has_method("get_uncollected_cds"):
+			var uncollected: Array[String] = save_slots.get_uncollected_cds(config.biome)
+			if not uncollected.is_empty():
+				var cd_rng := RandomNumberGenerator.new()
+				cd_rng.seed = int(config.get("run_seed")) + index * 313
+				var pick := cd_rng.randi_range(0, uncollected.size() - 1)
+				rooms[index]["cd_track"] = uncollected[pick]
 	room = BLOCKOUT_ROOM.new() if rooms[index].get("blockout",false) else (MAINTENANCE_ROOM.new() if config.biome == "maintenance" else ROOM.new())
 	room.name = "Chamber"
 	$World.add_child(room)
@@ -675,7 +693,17 @@ func _check_clear() -> void:
 			elif promised == "aether_cores":
 				reward_choices.append({"id":"aether_cores","name":"AETHER GEAR","description":"+1 Aether Gear"})
 			elif promised == "cds":
-				reward_choices.append({"id":"cds","name":"CLOCKWORK ESCAPEMENT","description":"20% faster dash recharge\nCore power cooldown reduced"})
+				var track_id: String = rooms[room_index].get("cd_track", "")
+				var save_slots = get_node_or_null("/root/SaveSlots")
+				if track_id.is_empty() and save_slots != null and save_slots.has_method("get_uncollected_cds"):
+					var uncollected: Array[String] = save_slots.get_uncollected_cds(config.biome)
+					if not uncollected.is_empty():
+						track_id = uncollected[rng.randi_range(0, uncollected.size() - 1)]
+						rooms[room_index]["cd_track"] = track_id
+				var track_title := "DISC"
+				if not track_id.is_empty() and save_slots != null and save_slots.CD_TRACKS.has(track_id):
+					track_title = str(save_slots.CD_TRACKS[track_id].get("title", track_id))
+				reward_choices.append({"id":"cds","name":"MUSIC CD: " + track_title.to_upper(),"description":"Acquire '%s' for the Jukebox\n20%% faster dash recharge" % track_title,"track_id":track_id})
 			elif promised == "max_hp_increase":
 				reward_choices.append({"id":"max_hp_increase","name":"REINFORCED CHASSIS","description":"+25 maximum hull\nRepair 35 hull"})
 	else:
@@ -728,7 +756,17 @@ func choose_reward(id: String) -> bool:
 			health = minf(maximum_health,health+35)
 		"dash": player.set("dash_recharge",maxf(0.3,float(player.get("dash_recharge"))*0.85))
 		"cds":
-			player.set("dash_recharge",maxf(0.3,float(player.get("dash_recharge"))*0.80))
+			var save_slots = get_node_or_null("/root/SaveSlots")
+			var awarded_track: String = rooms[room_index].get("cd_track", "")
+			if awarded_track.is_empty() and save_slots != null and save_slots.has_method("get_uncollected_cds"):
+				var uncollected: Array[String] = save_slots.get_uncollected_cds(config.biome)
+				if not uncollected.is_empty():
+					awarded_track = uncollected[rng.randi_range(0, uncollected.size() - 1)]
+			if not awarded_track.is_empty() and save_slots != null and save_slots.has_method("collect_cd"):
+				save_slots.collect_cd(awarded_track)
+				var title: String = save_slots.CD_TRACKS.get(awarded_track, {}).get("title", awarded_track)
+				_player_say("Acquired Music CD: " + title)
+			player.set("dash_recharge", maxf(0.3, float(player.get("dash_recharge")) * 0.80))
 		"speed": player.set("speed",float(player.get("speed"))*1.1)
 		"repair": health = minf(maximum_health,health+45)
 		"core_xp": _award_progress(100, 0)

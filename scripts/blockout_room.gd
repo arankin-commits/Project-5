@@ -35,7 +35,7 @@ const REWARD_TEXT := {
 	"dash": "15% FASTER DASH RECHARGE",
 	"speed": "+10% MOVEMENT SPEED",
 	"max_hp_increase": "+25 MAX HULL / REPAIR 35",
-	"cds": "COOLDOWN REDUCTION",
+	"cds": "MUSIC CD",
 	"core_xp": "+100 CORE XP",
 	"aether_cores": "+1 AETHER GEAR",
 	"trap_room": "TRAP SURVIVAL CHAMBER",

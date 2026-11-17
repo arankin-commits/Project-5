@@ -117,3 +117,15 @@ Indexed from left to right, top to bottom:
 ## In-Game Menu & Navigation
 
 - **Quit to Main Menu:** Selecting "Quit" from the in-game menu (both in roguelike runs via the pause menu and aboard the Flying Liberty via ShipMenu) saves current game progress (`SaveSlots.save_current()`), resets active run flags, unpauses the game tree (`get_tree().paused = false`), and returns the player to the main menu (`res://scenes/ui/StartScreen.tscn`) rather than terminating the application.
+
+## CD Track Rewards & Biome Distribution
+
+- **16 Collectible Lobby Themes:** 16 full-production lobby theme tracks located in `Music/Flying_Liberty_16_Lobby_Themes_Full_Production_v1` can be acquired as room CD rewards (`"cds"`):
+  - **Tracks 1–4 (Maintenance):** 01 Copper Hearth, 02 Scribes of the Air, 03 Parlour Above the Clouds, 04 Captain's Quadrille.
+  - **Tracks 5–8 (Factory):** 05 Clockwork Pavane, 06 Father's Photograph, 07 Brass and Lace, 08 Liberty Overture.
+  - **Tracks 9–12 (Boiler):** 09 Glass Horizon, 10 Aether Lullaby, 11 Time Between Gears, 12 Skylight Chapel.
+  - **Tracks 13–16 (Toxin Refinery):** 13 Observatory of Dreams, 14 The Unsent Letter, 15 Wings Beyond Tomorrow, 16 Homeward Through Mist.
+- **Random Selection Without Replacement:** Entering a chamber with `"cds"` as the promised reward randomly assigns one of the remaining uncollected tracks for the current biome. Once a track has been collected, it is permanently removed from the reward pool and cannot be awarded again.
+- **Biome Cleared Exclusion:** Once all 4 tracks for a biome have been acquired, the `"cds"` reward is removed from the reward candidate pool and will no longer show up as a door reward or exit option in that biome.
+- **3x Rarity:** The `"cds"` reward is 3 times as rare to find as standard exit rewards. When candidate exit pools are generated, `"cds"` only enters the available selection pool 1 out of 3 times (`exit_rng.randi_range(0, 2) == 0`).
+- **Save File Persistence:** Collected CD track IDs are saved persistently per save slot under `[ship] collected_cds` and loaded automatically via `SaveSlots`.
