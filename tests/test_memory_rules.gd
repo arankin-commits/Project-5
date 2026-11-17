@@ -276,6 +276,65 @@ func _run() -> void:
 		var font_col: Color = default_label.get_theme_color("font_color")
 		check(font_col == Color("cccccc"), "Rule 15: Untyped damage must default to grey, got %s" % str(font_col))
 
+	# Test Elemental Reactions and Status Mechanics (Rule 15 additions)
+	var ELEM := preload("res://scripts/elemental_system.gd")
+	var state := ELEM.StatusState.new()
+	
+	# Symmetric Fire/Frost reaction to Wet
+	ELEM.apply_frost(state)
+	check(state.is_frost(), "Rule 15: Applying frost must set frost status")
+	ELEM.apply_burn(state)
+	check(not state.is_frost() and not state.is_burning() and state.is_wet(), "Rule 15: Burn on frost must cancel both and apply wet")
+	check(state.frost_meter == 0.0 and state.burn_meter == 0.0, "Rule 15: Burn/frost cancellation must reset meters to zero")
+	
+	var state_rev := ELEM.StatusState.new()
+	ELEM.apply_burn(state_rev)
+	check(state_rev.is_burning(), "Rule 15: Applying burn must set burning status")
+	ELEM.apply_frost(state_rev)
+	check(not state_rev.is_burning() and not state_rev.is_frost() and state_rev.is_wet(), "Rule 15: Frost on burn must cancel both and apply wet (symmetric)")
+	
+	# Wet status vulnerability (+50% for Ice/Frost and Lightning/Electricity)
+	check(ELEM.calculate_elemental_damage(100.0, "ice", state) == 150.0, "Rule 15: Ice damage against Wet enemy must deal +50%")
+	check(ELEM.calculate_elemental_damage(100.0, "lightning", state) == 150.0, "Rule 15: Lightning damage against Wet enemy must deal +50%")
+	
+	# Enemies cannot be burned under Wet status
+	var burn_under_wet = ELEM.apply_burn(state)
+	check(not burn_under_wet.applied and not state.is_burning(), "Rule 15: Enemies cannot be burned under Wet status")
+	
+	# Applying Wet extinguishes Burn and resets meter
+	var state_ext := ELEM.StatusState.new()
+	ELEM.apply_burn(state_ext, 4.0, 50.0)
+	ELEM.apply_wet(state_ext)
+	check(not state_ext.is_burning() and state_ext.burn_meter == 0.0 and state_ext.is_wet(), "Rule 15: Wet must extinguish Burn and reset meter")
+	
+	# Frost meter attack gain is doubled under Wet status
+	var state_frost_gain := ELEM.StatusState.new()
+	ELEM.apply_wet(state_frost_gain)
+	ELEM.apply_frost(state_frost_gain, 4.0, 30.0)
+	check(state_frost_gain.frost_meter == 60.0, "Rule 15: Frost meter gain must be doubled under Wet status")
+	
+	# Earth and Burn damage do 50% damage to frozen enemies
+	var state_frozen := ELEM.StatusState.new()
+	state_frozen.frozen_timer = 3.0
+	check(ELEM.calculate_elemental_damage(100.0, "earth", state_frozen) == 50.0, "Rule 15: Earth damage must be 50% against frozen enemy")
+	check(ELEM.calculate_elemental_damage(100.0, "burn", state_frozen) == 50.0, "Rule 15: Burn damage must be 50% against frozen enemy")
+	
+	# Earth attacks against Wet enemies apply Mud
+	var state_mud := ELEM.StatusState.new()
+	ELEM.apply_wet(state_mud)
+	ELEM.apply_earth(state_mud)
+	check(state_mud.is_muddy() and state_mud.mud_timer == 2.0, "Rule 15: Earth attack against Wet enemy must apply Mud")
+	
+	# Wind increases Burn tick by 25% for 3 seconds
+	var state_wind := ELEM.StatusState.new()
+	ELEM.apply_burn(state_wind)
+	ELEM.apply_wind(state_wind)
+	check(ELEM.calculate_burn_tick(40.0, state_wind) == 50.0, "Rule 15: Wind must increase Burn tick by 25%")
+	
+	# Boss knockback is halved
+	check(ELEM.get_effective_knockback(180.0, true) == 90.0, "Rule 15: Knockback effects must be halved against bosses")
+	check(ELEM.get_effective_knockback(180.0, false) == 180.0, "Rule 15: Knockback effects must remain full against regular enemies")
+
 	elem_enemy.queue_free()
 	
 	# ==========================================

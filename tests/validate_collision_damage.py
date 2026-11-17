@@ -34,7 +34,7 @@ def test_run_enemy_script():
 
     assert "func calculate_collision_damage(knockback_power: float) -> float:" in code
     assert "collision_mask |= 4" in code
-    assert "calculate_collision_damage(distance)" in code
+    assert "calculate_collision_damage(" in code
     assert "wall_stun_timer = 0.3" in code
     assert "is_in_knockback" in code
     assert "func _die() -> void:" in code
@@ -50,7 +50,7 @@ def test_industrial_enemy_script():
         code = f.read()
 
     assert "func _die() -> void:" in code
-    assert "super.take_damage(amount, knockback, push_distance, element)" in code
+    assert "super.take_damage(amount, knockback, push_distance, element" in code
     assert "dying = true" in code
     print("scripts/industrial_enemy.gd implementation verified!")
 

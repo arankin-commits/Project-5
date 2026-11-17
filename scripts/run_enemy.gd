@@ -33,6 +33,7 @@ var stride := 0.0
 var visual: Sprite2D
 var custom_attack_warning := false
 var is_in_knockback := false
+var elemental_state := ElementalSystem.StatusState.new()
 
 func _init() -> void:
 	collision_layer = 4
@@ -60,6 +61,7 @@ func _ready() -> void:
 		damage = 22
 		speed *= 0.65
 	max_health = health
+	elemental_state.is_boss = (kind == "boss")
 	var shape := CircleShape2D.new()
 	shape.radius = 30.0 if kind == "boss" else 17.0
 	var collision := CollisionShape2D.new()
@@ -76,8 +78,10 @@ func _physics_process(delta: float) -> void:
 	if not active or not is_instance_valid(target) or health <= 0:
 		return
 	slow_timer = maxf(0, slow_timer - delta)
-	if wall_stun_timer > 0:
-		wall_stun_timer = maxf(0, wall_stun_timer - delta)
+	elemental_state.update(delta)
+	if wall_stun_timer > 0 or elemental_state.is_frozen():
+		if wall_stun_timer > 0:
+			wall_stun_timer = maxf(0, wall_stun_timer - delta)
 		velocity = Vector2.ZERO
 		queue_redraw()
 		return
@@ -127,6 +131,8 @@ func _physics_process(delta: float) -> void:
 		facing = facing.slerp(velocity.normalized(), minf(1.0, delta * 5.0)).normalized()
 	if slow_timer > 0:
 		velocity *= 0.5
+	if elemental_state.is_muddy():
+		velocity *= 0.8
 	move_and_slide()
 	queue_redraw()
 
@@ -187,21 +193,29 @@ func calculate_collision_damage(knockback_power: float) -> float:
 		return 0.0
 	return maxf(1.0, roundf(knockback_power * 0.5))
 
-func apply_knockback(direction: Vector2, distance: float) -> void:
-	if kind == "boss" or health <= 0 or is_in_knockback:
+func apply_knockback(direction: Vector2, distance: float, knockback_source := "regular") -> void:
+	if health <= 0 or is_in_knockback:
 		return
+	var eff_distance := distance * 0.5 if kind == "boss" else distance
 	is_in_knockback = true
 	var old_mask := collision_mask
 	collision_mask |= 4
-	var collision := move_and_collide(direction.normalized() * distance)
+	var collision := move_and_collide(direction.normalized() * eff_distance)
 	collision_mask = old_mask
 	if collision != null:
 		var collider: Object = collision.get_collider()
-		var col_damage := calculate_collision_damage(distance)
-		wall_stun_timer = 0.3
-		state = "chase"
-		cooldown = 1.0
+		var col_damage := calculate_collision_damage(eff_distance)
+		if kind != "boss":
+			wall_stun_timer = 0.3
+			state = "chase"
+			cooldown = 1.0
+		else:
+			wall_stun_timer = 0.15 * maxf(0.2, 1.0 - elemental_state.cc_resistance)
+			elemental_state.cc_resistance = minf(0.8, elemental_state.cc_resistance + 0.2)
 		if is_instance_valid(collider) and collider != self and collider is CharacterBody2D and (target == null or collider != target):
+			if knockback_source == "wind" and (elemental_state.is_burning() or elemental_state.is_wet()):
+				if collider.get("elemental_state") != null:
+					ElementalSystem.apply_wet(collider.elemental_state, 4.0)
 			if collider.has_method("take_damage"):
 				collider.call("take_damage", col_damage, Vector2.ZERO, 0.0, "regular")
 			if collider.get("kind") != "boss":
@@ -218,17 +232,35 @@ func apply_knockback(direction: Vector2, distance: float) -> void:
 	if is_instance_valid(self) and not is_queued_for_deletion():
 		queue_redraw()
 
-func take_damage(amount: float, knockback: Vector2 = Vector2.ZERO, push_distance := 12.0, element := "regular") -> void:
+func take_damage(amount: float, knockback: Vector2 = Vector2.ZERO, push_distance := 12.0, element := "regular", knockback_source := "regular") -> void:
 	if health <= 0 or not active:
 		return
-	health = maxf(0, health - amount)
+	var final_amount := ElementalSystem.calculate_elemental_damage(amount, element, elemental_state)
+	health = maxf(0, health - final_amount)
 	hit_flash = 0.12
-	damaged.emit(amount, knockback, element)
+	damaged.emit(final_amount, knockback, element)
+	
+	var elem := element.to_lower().strip_edges()
+	if elem in ["fire", "burn"]:
+		ElementalSystem.apply_burn(elemental_state)
+	elif elem in ["ice", "frost"]:
+		ElementalSystem.apply_frost(elemental_state)
+	elif elem in ["water", "rust"]:
+		ElementalSystem.apply_wet(elemental_state)
+	elif elem == "wind":
+		ElementalSystem.apply_wind(elemental_state)
+	elif elem in ["lightning", "electricity"]:
+		var res := ElementalSystem.apply_lightning(elemental_state)
+		if res.get("extra_burn_tick", false):
+			take_damage(ElementalSystem.calculate_burn_tick(8.0, elemental_state), Vector2.ZERO, 0.0, "burn")
+	elif elem == "earth":
+		ElementalSystem.apply_earth(elemental_state)
+		
 	if health <= 0:
 		_die()
 		return
-	if kind != "boss" and knockback.length_squared() > 0:
-		apply_knockback(knockback, push_distance)
+	if knockback.length_squared() > 0:
+		apply_knockback(knockback, push_distance, knockback_source)
 	if is_instance_valid(self) and not is_queued_for_deletion():
 		queue_redraw()
 
