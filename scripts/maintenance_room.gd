@@ -315,7 +315,7 @@ func _physics_process(delta: float) -> void:
 		if enemies:
 			for enemy in enemies.get_children():
 				if ((enemy.position-vents[i])*Vector2(1,2)).length() < 65:
-					enemy.take_damage(32)
+					enemy.take_damage(32, Vector2.ZERO, 12.0, "electricity")
 
 func _draw_floor(canvas: Node2D) -> void:
 	for i in vents.size():

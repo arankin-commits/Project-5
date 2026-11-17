@@ -320,7 +320,7 @@ func _update_animation(delta: float) -> void:
 		if death_clock >= 0.9:
 			queue_free()
 
-func take_damage(amount: float, knockback: Vector2 = Vector2.ZERO, push_distance := 12.0) -> void:
+func take_damage(amount: float, knockback: Vector2 = Vector2.ZERO, push_distance := 12.0, element := "regular") -> void:
 	if health <= 0:
 		return
 	# Ground hazards and radial core damage have no incoming direction.
@@ -331,7 +331,7 @@ func take_damage(amount: float, knockback: Vector2 = Vector2.ZERO, push_distance
 			knockback = Vector2.ZERO
 	hooked = false
 	if amount < health:
-		super.take_damage(amount,knockback,push_distance)
+		super.take_damage(amount, knockback, push_distance, element)
 		return
 	health = 0
 	active = false
@@ -339,6 +339,7 @@ func take_damage(amount: float, knockback: Vector2 = Vector2.ZERO, push_distance
 	velocity = Vector2.ZERO
 	collision_layer = 0
 	collision_mask = 0
+	damaged.emit(amount, knockback, element)
 	defeated.emit(self)
 	queue_redraw()
 

@@ -187,6 +187,97 @@ func _run() -> void:
 	check(config.MAX_SHOP_REWARDS == 2, "Rule 13: Max shop rewards must be 2")
 	check(config.shop_rewards_count <= config.MAX_SHOP_REWARDS, "Shop rewards exceeded cap of 2")
 	
+	# ==========================================
+	# RULE 14: Damage numbers show up next to the enemy hit
+	# ==========================================
+	var test_enemy = load("res://scripts/run_enemy.gd").new()
+	test_enemy.room = run.room
+	test_enemy.target = run.player
+	run.enemies.add_child(test_enemy)
+	test_enemy.position = Vector2(500, 500)
+	test_enemy.health = 500
+	test_enemy.take_damage(25, Vector2.RIGHT)
+	var dmg_num: Label = null
+	for child in run.get_node("Effects").get_children():
+		if child is Label and child.text == "25":
+			dmg_num = child
+	check(dmg_num != null, "Rule 14: Damage number did not spawn on hit")
+	if dmg_num != null:
+		check(dmg_num.position.x > test_enemy.position.x, "Rule 14: Damage number not to the right on rightward hit")
+		check(absf(dmg_num.position.y - (test_enemy.position.y - 36)) < 15, "Rule 14: Damage number not beside torso")
+	test_enemy.take_damage(40, Vector2.LEFT)
+	var left_dmg: Label = null
+	for child in run.get_node("Effects").get_children():
+		if child is Label and child.text == "40":
+			left_dmg = child
+	check(left_dmg != null, "Rule 14: Damage number did not spawn on leftward hit")
+	if left_dmg != null:
+		check(left_dmg.position.x + left_dmg.size.x <= test_enemy.position.x, "Rule 14: Damage number not to the left on leftward hit")
+	test_enemy.queue_free()
+	
+	# ==========================================
+	# RULE 15: Element Rules - Damage number colors
+	# ==========================================
+	var roguelike_script = load("res://scripts/roguelike_run.gd")
+	check(roguelike_script.element_color("fire") == Color("ff3b30"), "Rule 15: Fire damage number must be red")
+	check(roguelike_script.element_color("burn") == Color("ff3b30"), "Rule 15: Burn damage number must be red")
+	check(roguelike_script.element_color("explosive") == Color("ff3b30"), "Rule 15: Explosive damage number must be red")
+	check(roguelike_script.element_color("earth") == Color("a65e2e"), "Rule 15: Earth damage number must be brown")
+	check(roguelike_script.element_color("lightning") == Color("ffe600"), "Rule 15: Lightning damage number must be yellow")
+	check(roguelike_script.element_color("electricity") == Color("ffe600"), "Rule 15: Electricity damage number must be yellow")
+	check(roguelike_script.element_color("water") == Color("3399ff"), "Rule 15: Water damage number must be blue")
+	check(roguelike_script.element_color("rust") == Color("3399ff"), "Rule 15: Rust damage number must be blue")
+	check(roguelike_script.element_color("wind") == Color("38d978"), "Rule 15: Wind damage number must be green")
+	check(roguelike_script.element_color("ice") == Color("a8f0ff"), "Rule 15: Ice damage number must be frozen blue")
+	check(roguelike_script.element_color("frost") == Color("a8f0ff"), "Rule 15: Frost damage number must be frozen blue")
+	check(roguelike_script.element_color("regular") == Color("cccccc"), "Rule 15: Regular damage number must be grey")
+	check(roguelike_script.element_color("unknown") == Color("cccccc"), "Rule 15: Default damage number must be grey")
+
+	var elem_enemy = load("res://scripts/run_enemy.gd").new()
+	elem_enemy.room = run.room
+	elem_enemy.target = run.player
+	run.enemies.add_child(elem_enemy)
+	elem_enemy.position = Vector2(600, 600)
+	elem_enemy.health = 5000
+
+	var elem_tests := [
+		{"element": "fire", "damage": 51, "expected_color": Color("ff3b30")},
+		{"element": "burn", "damage": 52, "expected_color": Color("ff3b30")},
+		{"element": "explosive", "damage": 53, "expected_color": Color("ff3b30")},
+		{"element": "earth", "damage": 54, "expected_color": Color("a65e2e")},
+		{"element": "lightning", "damage": 55, "expected_color": Color("ffe600")},
+		{"element": "electricity", "damage": 56, "expected_color": Color("ffe600")},
+		{"element": "water", "damage": 57, "expected_color": Color("3399ff")},
+		{"element": "rust", "damage": 58, "expected_color": Color("3399ff")},
+		{"element": "wind", "damage": 59, "expected_color": Color("38d978")},
+		{"element": "ice", "damage": 60, "expected_color": Color("a8f0ff")},
+		{"element": "frost", "damage": 61, "expected_color": Color("a8f0ff")},
+		{"element": "regular", "damage": 62, "expected_color": Color("cccccc")}
+	]
+
+	for t in elem_tests:
+		elem_enemy.take_damage(t.damage, Vector2.RIGHT, 12.0, t.element)
+		var found_label: Label = null
+		for child in run.get_node("Effects").get_children():
+			if child is Label and child.text == str(t.damage):
+				found_label = child
+		check(found_label != null, "Rule 15: Damage number label not spawned for " + t.element)
+		if found_label != null:
+			var font_col: Color = found_label.get_theme_color("font_color")
+			check(font_col == t.expected_color, "Rule 15: Color mismatch for %s: got %s, expected %s" % [t.element, str(font_col), str(t.expected_color)])
+
+	elem_enemy.take_damage(63, Vector2.RIGHT)
+	var default_label: Label = null
+	for child in run.get_node("Effects").get_children():
+		if child is Label and child.text == "63":
+			default_label = child
+	check(default_label != null, "Rule 15: Untyped damage number label not spawned")
+	if default_label != null:
+		var font_col: Color = default_label.get_theme_color("font_color")
+		check(font_col == Color("cccccc"), "Rule 15: Untyped damage must default to grey, got %s" % str(font_col))
+
+	elem_enemy.queue_free()
+	
 	run.queue_free()
 	current_scene = null
 	

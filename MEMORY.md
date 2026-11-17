@@ -83,6 +83,18 @@ Indexed from left to right, top to bottom:
 ## Combat & Enemy Mechanics
 
 - **Wall & Construct Knockback Stun:** Enemies knocked back into walls or constructs/obstacles are stunned for 0.3 seconds (`wall_stun_timer = 0.3`). While stunned, enemy movement and attacks are paused, a stun halo is drawn overhead, the recovery/reeling animation plays, and attacks against the enemy gain the wall-stun damage bonus.
+- **Damage Numbers Beside Foes:** When an enemy takes damage, damage numbers show up next to the enemy hit (horizontally offset beside the enemy's torso on the side of the impact, rather than directly overhead) to keep the enemy body, overhead stun halos, and health bars unobstructed. Damage numbers reflect the actual damage taken after reductions (such as shield guarding) and apply to all damage sources including player strikes, core powers, and environmental traps/hazards.
+
+## Element Rules
+
+- **Damage Number Elemental Colors:** Damage numbers floating beside hit enemies use distinct colors corresponding to their damage element / type:
+  - **Fire / Burn / Explosive:** Red (`Color("ff3b30")`)
+  - **Earth:** Brown (`Color("a65e2e")`)
+  - **Lightning / Electricity:** Yellow (`Color("ffe600")`)
+  - **Water / Rust:** Blue (`Color("3399ff")`)
+  - **Wind:** Green (`Color("38d978")`)
+  - **Ice / Frost:** Frozen Blue (`Color("a8f0ff")`)
+  - **Regular / Physical / Default:** Grey (`Color("cccccc")`)
 
 ## Run Setup & Robot Deployment
 

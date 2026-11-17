@@ -17,6 +17,40 @@ const REWARDS := [
 	{"id":"repair", "name":"COOLANT RESERVE", "description":"Repair 45 hull"}
 ]
 
+const ELEMENT_COLORS: Dictionary = {
+	"fire": Color("ff3b30"),
+	"burn": Color("ff3b30"),
+	"explosive": Color("ff3b30"),
+	"earth": Color("a65e2e"),
+	"lightning": Color("ffe600"),
+	"electricity": Color("ffe600"),
+	"water": Color("3399ff"),
+	"rust": Color("3399ff"),
+	"wind": Color("38d978"),
+	"ice": Color("a8f0ff"),
+	"frost": Color("a8f0ff"),
+	"frozen blue": Color("a8f0ff"),
+	"frozen_blue": Color("a8f0ff"),
+	"regular": Color("cccccc"),
+	"normal": Color("cccccc"),
+	"physical": Color("cccccc"),
+	"grey": Color("cccccc"),
+	"gray": Color("cccccc")
+}
+
+const CORE_TINTS: Dictionary = {
+	"fire": Color("ff9955"),
+	"water": Color("55ccff"),
+	"lightning": Color("df88ff"),
+	"earth": Color("b26a3c"),
+	"wind": Color("55ff99"),
+	"ice": Color("a8f0ff")
+}
+
+static func element_color(element: String) -> Color:
+	var key := element.to_lower().strip_edges()
+	return ELEMENT_COLORS.get(key, Color("cccccc"))
+
 @onready var player: CharacterBody2D = $World/Player
 @onready var enemies: Node2D = $World/Enemies
 @onready var hud: CanvasLayer = $RunUI
@@ -88,6 +122,7 @@ func _ready() -> void:
 	player.damaged.connect(_on_damage)
 	player.dashed.connect(func(): _effect(player.position, "ring", 55, Color("73f7e4")))
 	player.dashed.connect(func(): $Audio.play_cue("dash"))
+	enemies.child_entered_tree.connect(_on_enemy_child_entered)
 	hud.reward_selected.connect(choose_reward)
 	hud.retry_requested.connect(_retry)
 	hud.return_requested.connect(return_to_sync_chamber)
@@ -310,6 +345,8 @@ func _spawn_trap_wave() -> void:
 			enemy.projectile_requested.connect(_spawn_projectile)
 			enemy.impact_requested.connect(_on_impact)
 		enemy.defeated.connect(_on_enemy_defeated)
+		if not enemy.damaged.is_connected(_on_enemy_damaged):
+			enemy.damaged.connect(_on_enemy_damaged.bind(enemy))
 		enemies.add_child(enemy)
 		if room is BLOCKOUT_ROOM:
 			enemy.collision_mask = 9
@@ -406,6 +443,8 @@ func _spawn_wave() -> void:
 		enemy.speed = config.call("enemy_speed")
 		enemy.cooldown = 1.4 + i*0.2
 		enemy.defeated.connect(_on_enemy_defeated)
+		if not enemy.damaged.is_connected(_on_enemy_damaged):
+			enemy.damaged.connect(_on_enemy_damaged.bind(enemy))
 		enemy.projectile_requested.connect(_spawn_projectile)
 		enemy.impact_requested.connect(_on_impact)
 		enemies.add_child(enemy)
@@ -436,6 +475,8 @@ func _spawn_summons(summoner: CharacterBody2D, key: String, count: int) -> void:
 		enemy.is_summon = true
 		enemy.summoner = weakref(summoner)
 		enemy.defeated.connect(_on_enemy_defeated)
+		if not enemy.damaged.is_connected(_on_enemy_damaged):
+			enemy.damaged.connect(_on_enemy_damaged.bind(enemy))
 		enemy.projectile_requested.connect(_spawn_projectile)
 		enemy.impact_requested.connect(_on_impact)
 		living_enemies += 1
@@ -560,7 +601,7 @@ func _on_attack(origin: Vector2, direction: Vector2, damage: float, reach: float
 			hit_damage *= float(player.get("backstab_multiplier"))
 		enemy.call("take_damage",hit_damage,direction,180.0 if player.charged_strike else (65.0 if heavy else 12.0))
 		player.gain_hit_energy()
-		_damage_number(enemy.position-Vector2(0,70),hit_damage)
+
 		_effect(enemy.position-Vector2(0,35),"burst",35,Color("ffe0a0"))
 		camera_shake = 3 if not heavy else 6
 
@@ -750,7 +791,7 @@ func use_core_power() -> bool:
 	player.energy -= 25
 	player.core_cooldown = 1.0
 	for element in config.core_elements:
-		var tint: Color = {"fire": Color("ff9955"), "water": Color("55ccff"), "lightning": Color("df88ff")}[element]
+		var tint: Color = CORE_TINTS.get(element, Color("ff9955"))
 		_effect(player.position, "ring", 240, tint)
 		for enemy in enemies.get_children():
 			if enemy.health <= 0 or enemy.position.distance_to(player.position) > 240:
@@ -758,12 +799,12 @@ func use_core_power() -> bool:
 			if not get_world_2d().direct_space_state.intersect_ray(PhysicsRayQueryParameters2D.create(player.position,enemy.position,1)).is_empty():
 				continue
 			var damage := (40.0 if element == "fire" else 25.0) * float(player.combat_damage_multiplier())
-			enemy.take_damage(damage)
+			enemy.take_damage(damage, Vector2.ZERO, 12.0, element)
 			if element == "water":
 				enemy.slow_timer = 3.0
 			elif element == "lightning":
 				enemy.apply_knockback(player.position.direction_to(enemy.position), 90)
-			_damage_number(enemy.position - Vector2(0,70), damage)
+
 	return true
 
 func _spawn_projectile(origin: Vector2, direction: Vector2, damage: float) -> void:
@@ -789,15 +830,72 @@ func _effect(point: Vector2, kind: String, radius: float, color: Color, directio
 	effect.direction = direction
 	$Effects.add_child(effect)
 
-func _damage_number(point: Vector2, amount: float) -> void:
+func _on_enemy_child_entered(node: Node) -> void:
+	if node is CharacterBody2D and node.has_signal("damaged"):
+		if not node.damaged.is_connected(_on_enemy_damaged):
+			node.damaged.connect(_on_enemy_damaged.bind(node))
+
+func _on_enemy_damaged(amount: float, knockback: Vector2, element: String, enemy: CharacterBody2D) -> void:
+	if not is_instance_valid(enemy):
+		return
+	spawn_damage_number(enemy, amount, knockback, element)
+
+func spawn_damage_number(enemy: CharacterBody2D, amount: float, direction := Vector2.ZERO, element := "regular") -> void:
+	if not is_instance_valid(enemy) or roundi(amount) <= 0:
+		return
+	var is_boss: bool = enemy.get("kind") == "boss"
+	var side_offset: float = 72.0 if is_boss else 44.0
+	var vertical_offset: float = -55.0 if is_boss else -36.0
+	var side := 1.0
+	if direction.x > 0.05:
+		side = 1.0
+	elif direction.x < -0.05:
+		side = -1.0
+	elif is_instance_valid(player):
+		side = 1.0 if enemy.position.x >= player.position.x else -1.0
+	
+	var jitter_y: float = rng.randf_range(-6.0, 6.0) if rng != null else randf_range(-6.0, 6.0)
+	var spawn_pos: Vector2
+	var label := Label.new()
+	label.name = "DamageNumber"
+	label.text = str(roundi(amount))
+	label.add_theme_font_size_override("font_size", 24)
+	label.add_theme_color_override("font_color", element_color(element))
+	label.add_theme_color_override("font_outline_color", Color("1a1008"))
+	label.add_theme_constant_override("outline_size", 4)
+	label.z_index = 8
+	label.size = Vector2(70, 32)
+	
+	if side > 0:
+		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+		spawn_pos = enemy.position + Vector2(side_offset, vertical_offset + jitter_y)
+	else:
+		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		spawn_pos = enemy.position + Vector2(-side_offset - label.size.x, vertical_offset + jitter_y)
+	
+	label.position = spawn_pos
+	$Effects.add_child(label)
+	
+	var drift_x: float = side * 12.0
+	var drift_y: float = -28.0
+	var target_pos: Vector2 = spawn_pos + Vector2(drift_x, drift_y)
+	
+	var tween := label.create_tween().set_parallel(true)
+	tween.tween_property(label, "position", target_pos, 0.55).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(label, "modulate:a", 0.0, 0.55).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_QUAD)
+	tween.chain().tween_callback(label.queue_free)
+
+func _damage_number(point: Vector2, amount: float, element := "regular") -> void:
 	var label := Label.new()
 	label.text = str(roundi(amount))
 	label.position = point
 	label.add_theme_font_size_override("font_size",24)
-	label.add_theme_color_override("font_color",Color("fff0bb"))
+	label.add_theme_color_override("font_color", element_color(element))
+	label.add_theme_color_override("font_outline_color", Color("1a1008"))
+	label.add_theme_constant_override("outline_size", 4)
 	label.z_index = 8
 	$Effects.add_child(label)
-	var tween := create_tween().set_parallel(true)
+	var tween := label.create_tween().set_parallel(true)
 	tween.tween_property(label,"position",point-Vector2(0,35),0.55)
 	tween.tween_property(label,"modulate:a",0.0,0.55)
 	tween.chain().tween_callback(label.queue_free)

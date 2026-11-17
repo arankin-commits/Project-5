@@ -3,6 +3,7 @@ extends CharacterBody2D
 signal defeated(enemy: CharacterBody2D)
 signal projectile_requested(origin: Vector2, direction: Vector2, damage: float)
 signal impact_requested(point: Vector2, radius: float)
+signal damaged(amount: float, knockback: Vector2, element: String)
 
 const Space := preload("res://scripts/boiler_space.gd")
 var target: CharacterBody2D
@@ -186,13 +187,14 @@ func apply_knockback(direction: Vector2, distance: float) -> void:
 		cooldown = 1.0
 	queue_redraw()
 
-func take_damage(amount: float, knockback: Vector2 = Vector2.ZERO, push_distance := 12.0) -> void:
+func take_damage(amount: float, knockback: Vector2 = Vector2.ZERO, push_distance := 12.0, element := "regular") -> void:
 	if health <= 0:
 		return
 	health = maxf(0,health-amount)
 	hit_flash = 0.12
 	if kind != "boss" and knockback.length_squared() > 0:
 		apply_knockback(knockback, push_distance)
+	damaged.emit(amount, knockback, element)
 	if health <= 0:
 		active = false
 		defeated.emit(self)

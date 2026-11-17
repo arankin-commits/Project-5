@@ -121,6 +121,14 @@ func _run() -> void:
 	player.attack_cooldown = 0
 	player.perform_attack(Vector2.RIGHT)
 	check(is_equal_approx(1000-enemy.health,24*1.25*1.45), "Perfect Reprisal and wall damage bonuses wrong")
+	var hit_label: Label = null
+	for child in run.get_node("Effects").get_children():
+		if child is Label and child.text == str(roundi(24*1.25*1.45)):
+			hit_label = child
+	check(hit_label != null, "Damage number not spawned next to enemy on attack")
+	if hit_label != null:
+		check(hit_label.position.x > enemy.position.x, "Damage number should appear to the right of enemy on rightward strike")
+		check(absf(hit_label.position.y - (enemy.position.y - 36)) < 15, "Damage number should be positioned next to torso")
 	player.perfect_reward_timer = 0
 	player.perfect_damage_timer = 0
 	enemy.wall_stun_timer = 0
@@ -132,6 +140,31 @@ func _run() -> void:
 	player.release_charge(Vector2.RIGHT)
 	check(is_equal_approx(1000-enemy.health,48), "Charged attack damage wrong")
 	check(enemy.position.distance_to(player.position) > 180, "Charged attack did not knock back")
+
+	# Leftward attack damage number placement
+	enemy.health = 1000
+	enemy.position = Vector2(800, 500)
+	player.position = Vector2(870, 500)
+	player.combo = 0
+	player.attack_cooldown = 0
+	player.perform_attack(Vector2.LEFT)
+	var left_label: Label = null
+	for child in run.get_node("Effects").get_children():
+		if child is Label and child.text == "24":
+			left_label = child
+	check(left_label != null, "Damage number not spawned on leftward attack")
+	if left_label != null:
+		check(left_label.position.x + left_label.size.x <= enemy.position.x, "Damage number should appear to the left of enemy on leftward strike")
+
+	# Environmental hazard damage number placement
+	enemy.take_damage(32)
+	var hazard_label: Label = null
+	for child in run.get_node("Effects").get_children():
+		if child is Label and child.text == "32":
+			hazard_label = child
+	check(hazard_label != null, "Damage number not spawned on hazard damage")
+	if hazard_label != null:
+		check(absf(hazard_label.position.x - enemy.position.x) > 30, "Hazard damage number should appear next to enemy")
 	# Collision-based wall stun, without manually setting the status.
 	# Use an explicit wall instead of coordinates from the retired Boiler layout.
 	var wall := StaticBody2D.new()
