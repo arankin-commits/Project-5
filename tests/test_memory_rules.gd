@@ -325,11 +325,58 @@ func _run() -> void:
 	ELEM.apply_earth(state_mud)
 	check(state_mud.is_muddy() and state_mud.mud_timer == 2.0, "Rule 15: Earth attack against Wet enemy must apply Mud")
 	
-	# Wind increases Burn tick by 25% for 3 seconds
+	# Wind's 50% Burn damage bonus does not stack. Repeated Wind attacks refresh it.
 	var state_wind := ELEM.StatusState.new()
 	ELEM.apply_burn(state_wind)
 	ELEM.apply_wind(state_wind)
-	check(ELEM.calculate_burn_tick(40.0, state_wind) == 50.0, "Rule 15: Wind must increase Burn tick by 25%")
+	check(ELEM.calculate_burn_tick(40.0, state_wind) == 60.0, "Rule 15: Wind must increase Burn tick by 50% without stacking")
+	# Reapplying wind refreshes duration and keeps 50%
+	ELEM.apply_wind(state_wind)
+	check(ELEM.calculate_burn_tick(40.0, state_wind) == 60.0, "Rule 15: Repeated Wind attacks must refresh duration rather than stack bonus")
+
+	# Wet multiplies Ice and Lightning by 1.5, but does NOT increase regular attack component
+	var split_res: Dictionary = ELEM.calculate_split_damage(100.0, 100.0, "ice", state)
+	check(split_res.regular_damage == 100.0, "Rule 15: Wet must not increase regular damage component")
+	check(split_res.elemental_damage == 150.0, "Rule 15: Wet must multiply elemental Ice damage by 1.5")
+	check(split_res.total_damage == 250.0, "Rule 15: Total split damage under Wet must be regular (100) + elemental (150)")
+
+	# Secondary effects cannot trigger themselves
+	check(ELEM.can_trigger_secondary_effect(false) == true, "Rule 15: Primary effect must be able to trigger secondary")
+	check(ELEM.can_trigger_secondary_effect(true) == false, "Rule 15: Secondary effect cannot trigger secondary effect")
+
+	# Burn and Freeze meters only increase from qualifying elemental applications (DoT & secondary excluded)
+	var state_dot := ELEM.StatusState.new()
+	ELEM.apply_burn(state_dot, 4.0, 30.0, true, true, false) # is_dot = true
+	check(state_dot.burn_meter == 0.0, "Rule 15: DoT ticks must not increase Burn meter")
+	ELEM.apply_burn(state_dot, 4.0, 30.0, true, false, true) # is_secondary = true
+	check(state_dot.burn_meter == 0.0, "Rule 15: Secondary damage must not increase Burn meter")
+	ELEM.apply_burn(state_dot, 4.0, 30.0, true, false, false) # qualifying direct
+	check(state_dot.burn_meter == 30.0, "Rule 15: Qualifying elemental application must increase Burn meter")
+
+	# Multi-hit abilities controlled buildup
+	var state_multi := ELEM.StatusState.new()
+	check(state_multi.can_receive_multi_hit_buildup("flurry_1", 1.0, 0.25) == true, "Rule 15: First hit of multi-hit must allow buildup")
+	check(state_multi.can_receive_multi_hit_buildup("flurry_1", 1.1, 0.25) == false, "Rule 15: Second hit within interval must reject buildup")
+	check(state_multi.can_receive_multi_hit_buildup("flurry_1", 1.3, 0.25) == true, "Rule 15: Hit after interval must allow buildup")
+
+	# Armor retaliation 0.5s cooldown
+	var state_armor := ELEM.StatusState.new()
+	check(state_armor.trigger_armor_retaliation() == true, "Rule 15: First armor retaliation must trigger")
+	check(state_armor.trigger_armor_retaliation() == false, "Rule 15: Immediate second retaliation must be blocked by 0.5s cooldown")
+	state_armor.update(0.51)
+	check(state_armor.trigger_armor_retaliation() == true, "Rule 15: Retaliation after cooldown elapsed must trigger")
+
+	# Orbiting rocks and stationary constructs separate capacity limits
+	var limits := ELEM.EarthConstructLimits.new()
+	for i in range(limits.max_orbiting_rocks):
+		check(limits.add_orbiting_rock(), "Rule 15: Should be able to add orbiting rock within limit")
+	check(not limits.can_spawn_orbiting_rock(), "Rule 15: Orbiting rocks at cap must block further spawns")
+	check(limits.can_spawn_stationary_construct(), "Rule 15: Stationary constructs must have separate limit unaffected by orbiting cap")
+
+	# Rock fragments do not inherit triggers
+	var frag := ELEM.RockFragmentRules.configure_rock_fragment({"can_split": true, "returns_to_player": true})
+	check(frag.can_split == false, "Rule 15: Rock fragment cannot split")
+	check(frag.returns_to_player == false, "Rule 15: Rock fragment cannot return to player")
 	
 	# Boss knockback is halved
 	check(ELEM.get_effective_knockback(180.0, true) == 90.0, "Rule 15: Knockback effects must be halved against bosses")

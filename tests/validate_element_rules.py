@@ -35,9 +35,11 @@ class StatusState:
         self.frozen_timer = 0.0
         self.wet_timer = 0.0
         self.mud_timer = 0.0
-        self.wind_fanned_timer = 0.0
+        self.wind_fanned_timer = 0.0 # Wind's 50% Burn damage bonus for 3s (refreshes duration, does not stack)
         self.cc_resistance = 0.0
         self.is_boss = is_boss
+        self.armor_retaliation_cooldown = 0.0
+        self.recent_attack_intervals = {}
 
     def is_burning(self):
         return self.burn_timer > 0.0
@@ -54,6 +56,25 @@ class StatusState:
     def is_muddy(self):
         return self.mud_timer > 0.0
 
+    def can_trigger_armor_retaliation(self):
+        return self.armor_retaliation_cooldown <= 0.0
+
+    def trigger_armor_retaliation(self, cooldown=0.5):
+        if self.armor_retaliation_cooldown <= 0.0:
+            self.armor_retaliation_cooldown = cooldown
+            return True
+        return False
+
+    def can_receive_multi_hit_buildup(self, attack_id, current_time, interval=0.25):
+        if not attack_id:
+            return True
+        if attack_id in self.recent_attack_intervals:
+            last_time = self.recent_attack_intervals[attack_id]
+            if current_time - last_time < interval:
+                return False
+        self.recent_attack_intervals[attack_id] = current_time
+        return True
+
     def update(self, delta):
         self.burn_timer = max(0.0, self.burn_timer - delta)
         self.frost_timer = max(0.0, self.frost_timer - delta)
@@ -61,6 +82,7 @@ class StatusState:
         self.wet_timer = max(0.0, self.wet_timer - delta)
         self.mud_timer = max(0.0, self.mud_timer - delta)
         self.wind_fanned_timer = max(0.0, self.wind_fanned_timer - delta)
+        self.armor_retaliation_cooldown = max(0.0, self.armor_retaliation_cooldown - delta)
         if self.is_boss and self.cc_resistance > 0.0:
             self.cc_resistance = max(0.0, self.cc_resistance - delta * 0.1)
         if self.burn_timer <= 0.0:
@@ -80,12 +102,27 @@ def calculate_elemental_damage(base_damage: float, element: str, state: StatusSt
         dmg *= 0.5
     return dmg
 
-def calculate_burn_tick(base_tick: float, state: StatusState) -> float:
+# Wet multiplies Ice and Lightning damage by 1.5. It does not increase the regular attack component.
+def calculate_split_damage(regular_damage: float, elemental_damage: float, element: str, state: StatusState):
+    elem = element.lower().strip()
+    elem_mult = 1.0
+    if state.is_wet() and elem in ["ice", "frost", "lightning", "electricity"]:
+        elem_mult = 1.5
+    elif state.is_frozen() and elem in ["earth", "burn", "fire"]:
+        elem_mult = 0.5
+    return {
+        "regular_damage": regular_damage,
+        "elemental_damage": elemental_damage * elem_mult,
+        "total_damage": regular_damage + (elemental_damage * elem_mult)
+    }
+
+# Wind's 50% Burn damage bonus does not stack. Repeated Wind attacks refresh it.
+def calculate_burn_tick(base_tick: float, state: StatusState, bonus_pct=0.50) -> float:
     if state.wind_fanned_timer > 0.0:
-        return base_tick * 1.25
+        return base_tick * (1.0 + bonus_pct)
     return base_tick
 
-def apply_burn(state: StatusState, duration=4.0, buildup=25.0):
+def apply_burn(state: StatusState, duration=4.0, buildup=25.0, is_qualifying=True, is_dot=False, is_secondary=False, attack_id="", current_time=0.0, attack_interval=0.25):
     # Enemies cannot be burned under Wet status
     if state.is_wet():
         return {"applied": False, "reason": "wet_immune"}
@@ -101,13 +138,21 @@ def apply_burn(state: StatusState, duration=4.0, buildup=25.0):
         return {"applied": True, "reaction": "vaporize_wet"}
     # Reapplying Burn resets duration
     state.burn_timer = duration
-    state.burn_meter += buildup
-    if state.burn_meter >= 100.0:
-        state.burn_meter = 0.0 # meter resets to zero, excess discarded
-        return {"applied": True, "reaction": "burn_explosion"}
+    
+    # Burn and Freeze meters only increase from qualifying elemental applications.
+    # DoT ticks and secondary chain damage do not automatically increase buildup.
+    meter_allowed = is_qualifying and not is_dot and not is_secondary
+    if meter_allowed and attack_id:
+        meter_allowed = state.can_receive_multi_hit_buildup(attack_id, current_time, attack_interval)
+    
+    if meter_allowed and buildup > 0.0:
+        state.burn_meter += buildup
+        if state.burn_meter >= 100.0:
+            state.burn_meter = 0.0 # meter resets to zero, excess discarded
+            return {"applied": True, "reaction": "burn_explosion"}
     return {"applied": True, "reaction": "burn"}
 
-def apply_frost(state: StatusState, duration=4.0, buildup=25.0):
+def apply_frost(state: StatusState, duration=4.0, buildup=25.0, is_qualifying=True, is_dot=False, is_secondary=False, attack_id="", current_time=0.0, attack_interval=0.25):
     # Applying Frost to a burning enemy also cancels both statuses and applies Wet
     # Enemies cannot be under frost or frozen status while under burn
     if state.is_burning():
@@ -122,18 +167,25 @@ def apply_frost(state: StatusState, duration=4.0, buildup=25.0):
     # During Freeze duration, additional Frost hits deal normal damage but do not build another Freeze
     if state.is_frozen():
         return {"applied": False, "reason": "already_frozen"}
-    # Frost meter attack gain is doubled under Wet status
-    effective_gain = buildup * (2.0 if state.is_wet() else 1.0)
-    state.frost_meter = min(100.0, state.frost_meter + effective_gain)
-    if state.frost_meter >= 100.0:
-        state.frost_meter = 0.0
-        freeze_dur = duration
-        if state.is_boss:
-            freeze_dur *= max(0.2, 1.0 - state.cc_resistance)
-            state.cc_resistance = min(0.8, state.cc_resistance + 0.3)
-        state.frozen_timer = freeze_dur
-        return {"applied": True, "reaction": "freeze"}
     state.frost_timer = duration
+    
+    # Freeze meter only increases from qualifying elemental applications.
+    meter_allowed = is_qualifying and not is_dot and not is_secondary
+    if meter_allowed and attack_id:
+        meter_allowed = state.can_receive_multi_hit_buildup(attack_id, current_time, attack_interval)
+    
+    if meter_allowed and buildup > 0.0:
+        # Frost meter attack gain is doubled under Wet status
+        effective_gain = buildup * (2.0 if state.is_wet() else 1.0)
+        state.frost_meter = min(100.0, state.frost_meter + effective_gain)
+        if state.frost_meter >= 100.0:
+            state.frost_meter = 0.0
+            freeze_dur = duration
+            if state.is_boss:
+                freeze_dur *= max(0.2, 1.0 - state.cc_resistance)
+                state.cc_resistance = min(0.8, state.cc_resistance + 0.3)
+            state.frozen_timer = freeze_dur
+            return {"applied": True, "reaction": "freeze"}
     return {"applied": True, "reaction": "frost"}
 
 def apply_wet(state: StatusState, duration=4.0):
@@ -146,7 +198,7 @@ def apply_wet(state: StatusState, duration=4.0):
     return {"applied": True, "reaction": "wet"}
 
 def apply_wind(state: StatusState, duration=3.0):
-    # Wind increases Burn tick damage by 25% for 3 seconds. Repeated hits refresh duration rather than stacking
+    # Wind's 50% Burn damage bonus does not stack. Repeated Wind attacks refresh it.
     if state.is_burning():
         state.wind_fanned_timer = duration
         return {"applied": True, "reaction": "wind_fanned_burn"}
@@ -175,6 +227,47 @@ def check_wind_knockback_spread(source_state: StatusState, target_state: StatusS
 def get_effective_knockback(distance: float, is_boss: bool) -> float:
     # Knockback effects are halved against bosses
     return distance * 0.5 if is_boss else distance
+
+# Secondary effects cannot trigger themselves. Lightning splash damage cannot create another splash. Wind Bomb cannot endlessly create more Wind Bombs.
+def can_trigger_secondary_effect(is_secondary: bool) -> bool:
+    return not is_secondary
+
+# Orbiting rocks and stationary constructs have separate capacity limits.
+class EarthConstructLimits:
+    def __init__(self, max_orbiting=5, max_stationary=3):
+        self.max_orbiting = max_orbiting
+        self.max_stationary = max_stationary
+        self.active_orbiting = 0
+        self.active_stationary = 0
+
+    def can_spawn_orbiting(self):
+        return self.active_orbiting < self.max_orbiting
+
+    def can_spawn_stationary(self):
+        return self.active_stationary < self.max_stationary
+
+    def add_orbiting(self):
+        if self.can_spawn_orbiting():
+            self.active_orbiting += 1
+            return True
+        return False
+
+    def add_stationary(self):
+        if self.can_spawn_stationary():
+            self.active_stationary += 1
+            return True
+        return False
+
+# Rock fragments do not inherit Rock Shot triggers. This prevents Shotgun fragments from continuously splitting or returning to the player.
+class RockFragmentRules:
+    @staticmethod
+    def configure_rock_fragment(props):
+        fragment = dict(props)
+        fragment["is_fragment"] = True
+        fragment["can_split"] = False
+        fragment["returns_to_player"] = False
+        fragment["procs_rock_shot"] = False
+        return fragment
 
 def test_all():
     print("Beginning Comprehensive Element Rules Validation...")
@@ -258,20 +351,20 @@ def test_all():
     assert speed == 80.0
     print("[PASS] Earth against Wet applies Mud (20% slow for 2s)")
 
-    # Rule 10: Wind increases Burn tick damage by 25% for 3 seconds. Repeated hits refresh duration rather than stacking
+    # Rule 10: Wind's 50% Burn damage bonus does not stack. Repeated Wind attacks refresh it.
     s_wind = StatusState()
     apply_burn(s_wind)
     assert calculate_burn_tick(40.0, s_wind) == 40.0
     apply_wind(s_wind)
     assert s_wind.wind_fanned_timer == 3.0
-    assert calculate_burn_tick(40.0, s_wind) == 50.0 # +25%
+    assert calculate_burn_tick(40.0, s_wind) == 60.0 # +50%
     # Repeated hit refreshes duration
     s_wind.update(1.0)
     assert s_wind.wind_fanned_timer == 2.0
     apply_wind(s_wind)
     assert s_wind.wind_fanned_timer == 3.0
-    assert calculate_burn_tick(40.0, s_wind) == 50.0 # still 50.0 (not stacked)
-    print("[PASS] Wind increases Burn tick by 25% for 3s, refresh without stacking verified")
+    assert calculate_burn_tick(40.0, s_wind) == 60.0 # still 60.0 (not stacked)
+    print("[PASS] Wind increases Burn tick by 50% for 3s, refresh without stacking verified")
 
     # Rule 11: Knocking back a Burning or Wet enemy with Wind spreads Wet to first enemy collided with
     s_burn_src = StatusState()
@@ -339,22 +432,97 @@ def test_all():
     assert get_effective_knockback(180.0, False) == 180.0
     print("[PASS] Boss knockback halving and CC diminishing returns verified")
 
-    # Rule 16: Check files on disk
+    # Rule 16: Wet Multiplies Ice and Lightning by 1.5, but does NOT increase regular attack component
+    s_wet_split = StatusState()
+    apply_wet(s_wet_split)
+    split_dmg = calculate_split_damage(100.0, 100.0, "ice", s_wet_split)
+    assert split_dmg["regular_damage"] == 100.0, f"Expected 100.0 regular damage, got {split_dmg['regular_damage']}"
+    assert split_dmg["elemental_damage"] == 150.0, f"Expected 150.0 elemental damage, got {split_dmg['elemental_damage']}"
+    assert split_dmg["total_damage"] == 250.0
+    split_light = calculate_split_damage(80.0, 80.0, "lightning", s_wet_split)
+    assert split_light["regular_damage"] == 80.0
+    assert split_light["elemental_damage"] == 120.0
+    print("[PASS] Wet multiplies Ice and Lightning damage by 1.5 without increasing regular attack component")
+
+    # Rule 17: Secondary effects cannot trigger themselves
+    assert can_trigger_secondary_effect(False) == True
+    assert can_trigger_secondary_effect(True) == False
+    print("[PASS] Secondary effects cannot trigger themselves")
+
+    # Rule 18: Burn and Freeze meters only increase from qualifying elemental applications (DoT & secondary excluded)
+    s_dot_test = StatusState()
+    apply_burn(s_dot_test, 4.0, 30.0, is_qualifying=True, is_dot=True)
+    assert s_dot_test.burn_meter == 0.0, "DoT tick must not increase burn meter"
+    apply_burn(s_dot_test, 4.0, 30.0, is_qualifying=True, is_secondary=True)
+    assert s_dot_test.burn_meter == 0.0, "Secondary chain damage must not increase burn meter"
+    apply_burn(s_dot_test, 4.0, 30.0, is_qualifying=False)
+    assert s_dot_test.burn_meter == 0.0, "Non-qualifying hit must not increase burn meter"
+    apply_burn(s_dot_test, 4.0, 30.0, is_qualifying=True, is_dot=False, is_secondary=False)
+    assert s_dot_test.burn_meter == 30.0, "Qualifying hit must increase burn meter"
+    print("[PASS] Burn and Freeze meters only increase from qualifying elemental applications")
+
+    # Rule 19: Multi-hit abilities have controlled buildup (max one increase per application / interval)
+    s_multi = StatusState()
+    assert s_multi.can_receive_multi_hit_buildup("beam_tick", 0.0, 0.25) == True
+    assert s_multi.can_receive_multi_hit_buildup("beam_tick", 0.1, 0.25) == False
+    assert s_multi.can_receive_multi_hit_buildup("beam_tick", 0.3, 0.25) == True
+    print("[PASS] Multi-hit abilities have controlled buildup per application/interval")
+
+    # Rule 20: Armor retaliation 0.5s cooldown
+    s_retal = StatusState()
+    assert s_retal.can_trigger_armor_retaliation() == True
+    assert s_retal.trigger_armor_retaliation() == True
+    assert s_retal.can_trigger_armor_retaliation() == False
+    assert s_retal.trigger_armor_retaliation() == False
+    s_retal.update(0.51)
+    assert s_retal.can_trigger_armor_retaliation() == True
+    assert s_retal.trigger_armor_retaliation() == True
+    print("[PASS] Armor retaliation has a 0.5-second cooldown")
+
+    # Rule 21: Orbiting rocks and stationary constructs have separate capacity limits
+    limits = EarthConstructLimits(max_orbiting=5, max_stationary=3)
+    for _ in range(5):
+        assert limits.add_orbiting() == True
+    assert limits.can_spawn_orbiting() == False
+    assert limits.can_spawn_stationary() == True
+    for _ in range(3):
+        assert limits.add_stationary() == True
+    assert limits.can_spawn_stationary() == False
+    print("[PASS] Orbiting rocks and stationary constructs have separate capacity limits")
+
+    # Rule 22: Rock fragments do not inherit Rock Shot triggers
+    frag_data = RockFragmentRules.configure_rock_fragment({"can_split": True, "returns_to_player": True, "procs_rock_shot": True})
+    assert frag_data["can_split"] == False
+    assert frag_data["returns_to_player"] == False
+    assert frag_data["procs_rock_shot"] == False
+    print("[PASS] Rock fragments do not inherit Rock Shot triggers")
+
+    # Rule 23: Check files on disk
     with open("MEMORY.md", "r", encoding="utf-8") as f:
         mem_text = f.read()
     assert "Element Rules" in mem_text
-    assert "Applying burn on top of frost cancels both and does wet status" in mem_text or "Applying Burn on top of Frost cancels both and inflicts Wet status" in mem_text
-    assert "Knockback effects are halved against bosses" in mem_text
+    assert "Secondary effects cannot trigger themselves" in mem_text
+    assert "Burn and Freeze meters only increase from qualifying elemental applications" in mem_text
+    assert "Multi-hit abilities should have controlled buildup" in mem_text
+    assert "Wet multiplies Ice and Lightning damage by 1.5. It does not increase the regular attack component" in mem_text
+    assert "Wind's 50% Burn damage bonus does not stack. Repeated Wind attacks refresh it" in mem_text
+    assert "Armor retaliation has a 0.5-second cooldown" in mem_text
+    assert "Orbiting rocks and stationary constructs have separate capacity limits" in mem_text
+    assert "Rock fragments do not inherit Rock Shot triggers" in mem_text
 
     with open("memory/element-rules.md", "r", encoding="utf-8") as f:
         er_text = f.read()
     assert "# Element Rules" in er_text
-    assert "Burn Explosions" in er_text
-    assert "Freeze Meter" in er_text
-    assert "Lightning Chains" in er_text
-    assert "Water interacts with terrain" in er_text
+    assert "Secondary effects cannot trigger themselves" in er_text
+    assert "Burn and Freeze meters only increase from qualifying elemental applications" in er_text
+    assert "Multi-hit abilities should have controlled buildup" in er_text
+    assert "Wet multiplies Ice and Lightning damage by 1.5" in er_text
+    assert "Wind's 50% Burn damage bonus does not stack" in er_text
+    assert "Armor retaliation has a 0.5-second cooldown" in er_text
+    assert "Orbiting rocks and stationary constructs have separate capacity limits" in er_text
+    assert "Rock fragments do not inherit Rock Shot triggers" in er_text
 
-    print("\nALL 35+ ELEMENTAL RULES VALIDATED SUCCESSFULLY!")
+    print("\nALL 40+ ELEMENTAL RULES VALIDATED SUCCESSFULLY!")
 
 if __name__ == "__main__":
     test_all()
