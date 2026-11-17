@@ -13,6 +13,7 @@ const MC_RUN := "res://characters/MC/ChatGPT Image Nov 13, 2026, 01_04_26 AM-3.p
 const IDLE_BASELINES := [500,510,510,505,514,507,512,510]
 const WALK_BASELINES := [522,520,531,520,530,531,530,526]
 const RUN_BASELINES := [525,526,526,526,527,526,527,526]
+const CLEAN_WALK_SHADER := preload("res://scripts/clean_walk.gdshader")
 
 func _ready() -> void:
 	var shape := CapsuleShape2D.new()
@@ -29,20 +30,24 @@ func _build_visual() -> void:
 	frames.add_animation("idle")
 	frames.add_animation("walk")
 	frames.add_animation("run")
-	for i in 8:
-		if appearance == "main":
+	if appearance == "main":
+		var tex_idle: Texture2D = load(MC_IDLE)
+		var tex_walk: Texture2D = load(MC_WALK)
+		var tex_run: Texture2D = load(MC_RUN)
+		for i in 8:
 			for animation in ["idle","walk","run"]:
 				var texture := AtlasTexture.new()
-				var atlas_path := MC_IDLE
+				var atlas_tex := tex_idle
 				if animation == "walk":
-					atlas_path = MC_WALK
+					atlas_tex = tex_walk
 				elif animation == "run":
-					atlas_path = MC_RUN
-				texture.atlas = load(atlas_path)
+					atlas_tex = tex_run
+				texture.atlas = atlas_tex
 				texture.region = Rect2((i % 4) * 362, (i / 4) * 543, 362, 543)
 				texture.filter_clip = true
 				frames.add_frame(animation, texture)
-		else:
+	else:
+		for i in 8:
 			var texture := load("res://art/characters/medium_walk_%d.png" % i) as Texture2D
 			frames.add_frame("walk", texture)
 			if i < 6:
@@ -65,12 +70,8 @@ func _build_visual() -> void:
 	visual.position.y = -22.0 if appearance == "medium" else 0.0
 	if appearance == "main":
 		visual.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-		var shader := Shader.new()
-		# The supplied walk PNG has a translucent checker matte (alpha ~0.5).
-		# Its painted character is nearly opaque; discard the matte at draw time.
-		shader.code = "shader_type canvas_item; uniform bool clean_walk = false; varying vec4 tint; void vertex(){tint=COLOR;} void fragment(){vec4 c=texture(TEXTURE,UV); if(clean_walk){c.a=smoothstep(0.80,0.96,c.a);} COLOR=c*tint;}"
 		var material := ShaderMaterial.new()
-		material.shader = shader
+		material.shader = CLEAN_WALK_SHADER
 		visual.material = material
 		visual.frame_changed.connect(_align_visual)
 		visual.animation_changed.connect(_align_visual)
@@ -95,8 +96,10 @@ func _align_visual() -> void:
 func _face_idle() -> void:
 	if appearance == "main":
 		visual.flip_h = false
-		var direction_index := posmod(roundi(facing.angle() / (PI / 4.0)),8)
-		visual.frame = [2,1,0,7,6,5,4,3][direction_index]
+		var direction_index := posmod(roundi(facing.angle() / (PI / 4.0)), 8)
+		var target_frame: int = [2, 1, 0, 7, 6, 5, 4, 3][direction_index]
+		if visual.frame != target_frame:
+			visual.frame = target_frame
 
 func _physics_process(_delta: float) -> void:
 	if not controls_enabled:

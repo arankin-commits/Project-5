@@ -76,13 +76,31 @@ func _safe_source_point(desired: Vector2) -> Vector2:
 	var nearest := desired
 	var distance := INF
 	var crop: Rect2 = layout.crop
-	for x in range(int(crop.position.x),int(crop.end.x),2):
-		for y in range(int(crop.position.y),int(crop.end.y),2):
-			var candidate := Vector2(x,y)
+	for x in range(int(crop.position.x), int(crop.end.x), 16):
+		for y in range(int(crop.position.y), int(crop.end.y), 16):
+			var candidate := Vector2(x, y)
 			if candidate.distance_squared_to(desired) < distance and _source_free(candidate):
 				nearest = candidate
 				distance = candidate.distance_squared_to(desired)
-	assert(distance < INF,"Painted Maintenance room has no safe interior")
+	if distance < INF:
+		var fine_min_x := maxi(int(crop.position.x), int(nearest.x) - 24)
+		var fine_max_x := mini(int(crop.end.x), int(nearest.x) + 24)
+		var fine_min_y := maxi(int(crop.position.y), int(nearest.y) - 24)
+		var fine_max_y := mini(int(crop.end.y), int(nearest.y) + 24)
+		for x in range(fine_min_x, fine_max_x, 2):
+			for y in range(fine_min_y, fine_max_y, 2):
+				var candidate := Vector2(x, y)
+				if candidate.distance_squared_to(desired) < distance and _source_free(candidate):
+					nearest = candidate
+					distance = candidate.distance_squared_to(desired)
+	else:
+		for x in range(int(crop.position.x), int(crop.end.x), 2):
+			for y in range(int(crop.position.y), int(crop.end.y), 2):
+				var candidate := Vector2(x, y)
+				if candidate.distance_squared_to(desired) < distance and _source_free(candidate):
+					nearest = candidate
+					distance = candidate.distance_squared_to(desired)
+	assert(distance < INF, "Painted Maintenance room has no safe interior")
 	return nearest
 
 func build(data: Dictionary) -> void:

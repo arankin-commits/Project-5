@@ -87,3 +87,10 @@ Indexed from left to right, top to bottom:
 ## Run Setup & Robot Deployment
 
 - **Medium Robot Only Available:** Only the Medium robot is implemented in the game. Players cannot start a run with the Light or Heavy robot selected. Selecting Light or Heavy in the Sync Pod Run Setup disables the Start Run button (`start_button.disabled = true`), displays `"[Robot] robot is not yet available."` in the route note, and blocks run initiation. Only the Medium robot (with Below Ground route) allows starting a run.
+
+## Performance & Scene Transitions
+
+- **Reward Tween Binding:** Looping tweens (such as `_spawn_reward_item()` floating animation) must be bound to the spawned node (`reward_item.create_tween()`) and configure `set_loops()` only after adding tween properties. This ensures the tween is automatically freed when the item is destroyed, preventing 0-duration infinite tween loops and `ERROR: Infinite loop detected` freezes.
+- **Precompiled Shaders:** Shaders used for canvas items (`clean_walk.gdshader`, `key_black.gdshader`, `jukebox_cutout.gdshader`) are stored in `scripts/` as precompiled `.gdshader` files and loaded via `preload()` rather than compiled at runtime from dynamic strings, avoiding synchronous OpenGL shader compilation hitches.
+- **Safe Spawn Coarse-to-Fine Search:** `_safe_source_point()` uses coarse-to-fine step sampling (16px coarse pass followed by local 2px refinement) rather than brute-forcing full 2px grids over the entire room canvas.
+- **Player Idle Visual Updates:** In `_face_idle()`, only assign `visual.frame` when `visual.frame != target_frame` to prevent redundant frame-changed signal dispatches and uniform buffer re-uploads every physics frame.

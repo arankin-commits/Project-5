@@ -3,6 +3,7 @@ extends Node2D
 const DOOR := preload("res://scripts/cockpit_door.gd")
 const PASSAGE := preload("res://scripts/room_passage.gd")
 const JUKEBOX_INTERACTABLE := preload("res://scripts/jukebox_interactable.gd")
+const JUKEBOX_SHADER := preload("res://scripts/jukebox_cutout.gdshader")
 const WING_START_X := 1590.0
 const WING_TOP_Y := 175.0
 const WING_TILE_WIDTH := 225.0
@@ -157,36 +158,8 @@ func _build_jukebox() -> void:
 	sprite.scale = Vector2(0.42, 0.42)
 	sprite.position = Vector2(680.0 - (260.0 * 0.42) / 2.0, 280.0 - (348.0 * 0.42))
 
-	var shader := Shader.new()
-	shader.code = """
-shader_type canvas_item;
-
-void fragment() {
-	vec4 c = texture(TEXTURE, UV);
-	float alpha = 1.0;
-	if (UV.y < 0.236) {
-		float du = (UV.x - 0.50) / 0.408;
-		float dv = (UV.y - 0.236) / 0.224;
-		float dist = sqrt(du * du + dv * dv);
-		if (dist > 1.0) {
-			alpha = clamp(1.0 - (dist - 1.0) / 0.03, 0.0, 1.0);
-		}
-	}
-	if (UV.x < 0.108) {
-		alpha = min(alpha, clamp((UV.x - 0.095) / 0.013, 0.0, 1.0));
-	}
-	if (UV.x > 0.931) {
-		alpha = min(alpha, clamp((0.944 - UV.x) / 0.013, 0.0, 1.0));
-	}
-	if (UV.y > 0.965) {
-		alpha = min(alpha, clamp((0.985 - UV.y) / 0.020, 0.0, 1.0));
-	}
-	c.a *= alpha;
-	COLOR = c;
-}
-"""
 	var mat := ShaderMaterial.new()
-	mat.shader = shader
+	mat.shader = JUKEBOX_SHADER
 	sprite.material = mat
 	jb_container.add_child(sprite)
 	add_child(jb_container)

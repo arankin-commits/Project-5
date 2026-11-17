@@ -1,5 +1,7 @@
 extends RefCounted
 
+const KEY_BLACK_SHADER := preload("res://scripts/key_black.gdshader")
+
 const NPCS := {
 	"pilot": {"name":"Pilot", "file":"Pilot", "anchor":Vector2(205,965), "scale":0.13, "key_black":true, "split":[Vector2(490,0),Vector2(490,350),Vector2(385,650),Vector2(360,1086)], "lines":["Engines steady. We will keep the Flying Liberty in the air while you are down there.", "Come back in one piece. I would rather fly you home than recover your signal."]},
 	"copilot": {"name":"Copilot", "file":"Copilot", "anchor":Vector2(200,960), "scale":0.13, "split":[Vector2(390,0),Vector2(390,700),Vector2(315,900),Vector2(315,1086)], "lines":["Charts checked, weather logged. There is always another route if the first one closes.", "The pilot watches the horizon. I watch everything he misses."]},
@@ -33,9 +35,7 @@ static func visual(id: String, portrait := false) -> Polygon2D:
 	art.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	if data.get("key_black", false):
 		# These three supplied sheets are RGB; key their black matte at draw time.
-		var shader := Shader.new()
-		shader.code = "shader_type canvas_item; void fragment(){vec4 c=texture(TEXTURE,UV); c.a*=smoothstep(0.005,0.035,max(c.r,max(c.g,c.b))); COLOR=c;}"
 		var material := ShaderMaterial.new()
-		material.shader = shader
+		material.shader = KEY_BLACK_SHADER
 		art.material = material
 	return art

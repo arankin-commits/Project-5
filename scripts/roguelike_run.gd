@@ -205,9 +205,10 @@ func _spawn_reward_item() -> void:
 	prompt.add_theme_constant_override("shadow_offset_y", 1)
 	reward_item.add_child(prompt)
 	
-	var tween := create_tween().set_loops()
+	var tween := reward_item.create_tween()
 	tween.tween_property(sprite, "position:y", -8.0, 0.7).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property(sprite, "position:y", 0.0, 0.7).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tween.set_loops()
 	
 	$World.add_child(reward_item)
 
