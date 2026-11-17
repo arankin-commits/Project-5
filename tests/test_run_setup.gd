@@ -33,6 +33,15 @@ func _run() -> void:
 	var setup = chamber.get_node("RunSetup")
 	check(setup.visible and not chamber.get_node("Player").controls_enabled,"Pod did not lock player/open UI")
 	check(not setup.robot_choice.is_item_disabled(1) and not setup.robot_choice.is_item_disabled(2),"Robot choices locked")
+	setup.robot_choice.select(1)
+	setup._robot_changed(1)
+	check(setup.start_button.disabled, "Light robot must disable start button")
+	setup.robot_choice.select(2)
+	setup._robot_changed(2)
+	check(setup.start_button.disabled, "Heavy robot must disable start button")
+	setup.robot_choice.select(0)
+	setup._robot_changed(0)
+	check(not setup.start_button.disabled, "Medium robot must enable start button")
 	setup.overclock_checkbox.button_pressed = true
 	setup.reinforcements_checkbox.button_pressed = true
 	setup.fragile_checkbox.button_pressed = true

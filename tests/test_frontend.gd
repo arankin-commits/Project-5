@@ -59,6 +59,7 @@ func _run() -> void:
 	setup.robot_choice.select(2)
 	setup._robot_changed(2)
 	check(setup.selected_robot() == "heavy","Robot selection failed")
+	check(setup.start_button.disabled, "Heavy robot must disable start button")
 	await capture("frontend-sync")
 	setup.close_setup()
 	var menu = current_scene.get_node("ShipMenu")

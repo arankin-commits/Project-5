@@ -109,17 +109,32 @@ func _select_route(index: int) -> void:
 	_update_route(index)
 
 func _robot_changed(index: int) -> void:
-	robot_stats.text = ["Speed         100%\nHull             100%\nPower          100%\nBackstab       2x", "Speed         125%\nHull               60%\nPower            70%\nBackstab       6x", "Speed           70%\nHull             150%\nPower          130%\nBackstab       2x"][index]
+	var stats := [
+		"Speed         100%\nHull             100%\nPower          100%\nBackstab       2x",
+		"Speed         125%\nHull               60%\nPower            70%\nBackstab       6x\n[NOT YET AVAILABLE]",
+		"Speed           70%\nHull             150%\nPower          130%\nBackstab       2x\n[NOT YET AVAILABLE]"
+	]
+	robot_stats.text = stats[index]
+	_update_start_availability()
 
 func selected_route() -> String:
 	return "above_ground" if route_choice.selected == 0 else "below_ground"
 
 func _update_route(index: int) -> void:
-	start_button.disabled = index == 0
 	for i in route_buttons.size():
 		route_buttons[i].add_theme_stylebox_override("normal",UI.style(Color("174345") if i == index else Color("241b14"),Color("73e6e0") if i == index else Color("b67e39")))
-	if index == 0:
+	_update_start_availability()
+
+func _update_start_availability() -> void:
+	if start_button == null:
+		return
+	var route_ok := selected_route() != "above_ground"
+	var robot_ok := selected_robot() == "medium"
+	start_button.disabled = not (route_ok and robot_ok)
+	if not route_ok:
 		route_note.text = "Above-ground route is not yet available."
+	elif not robot_ok:
+		route_note.text = "%s robot is not yet available." % selected_robot().capitalize()
 	else:
 		route_note.text = "Investigate tech below ground."
 
@@ -127,7 +142,7 @@ func selected_robot() -> String:
 	return ["medium", "light", "heavy"][robot_choice.selected]
 
 func _on_start_pressed() -> void:
-	if selected_route() == "above_ground":
+	if selected_route() == "above_ground" or selected_robot() != "medium":
 		return
 	start_requested.emit(selected_modifiers())
 

@@ -135,8 +135,11 @@ func _play_sync_return() -> void:
 	)
 
 func _on_start_requested(modifiers: Dictionary) -> void:
+	var robot := str(run_setup.call("selected_robot"))
+	if robot != "medium":
+		return
 	var run_config: Node = get_node("/root/RunConfig")
-	if run_config.call("start_run", run_setup.call("selected_robot"), modifiers, run_setup.call("selected_route")):
+	if run_config.call("start_run", robot, modifiers, run_setup.call("selected_route")):
 		get_tree().change_scene_to_file("res://scenes/RoguelikeRun.tscn")
 
 func _nearest_interaction() -> CockpitInteractable:

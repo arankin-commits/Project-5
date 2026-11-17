@@ -83,3 +83,7 @@ Indexed from left to right, top to bottom:
 ## Combat & Enemy Mechanics
 
 - **Wall & Construct Knockback Stun:** Enemies knocked back into walls or constructs/obstacles are stunned for 0.3 seconds (`wall_stun_timer = 0.3`). While stunned, enemy movement and attacks are paused, a stun halo is drawn overhead, the recovery/reeling animation plays, and attacks against the enemy gain the wall-stun damage bonus.
+
+## Run Setup & Robot Deployment
+
+- **Medium Robot Only Available:** Only the Medium robot is implemented in the game. Players cannot start a run with the Light or Heavy robot selected. Selecting Light or Heavy in the Sync Pod Run Setup disables the Start Run button (`start_button.disabled = true`), displays `"[Robot] robot is not yet available."` in the route note, and blocks run initiation. Only the Medium robot (with Below Ground route) allows starting a run.
