@@ -184,3 +184,4 @@ Indexed from left to right, top to bottom:
 - **Biome Cleared Exclusion:** Once all 4 tracks for a biome have been acquired, the `"cds"` reward is removed from the reward candidate pool and will no longer show up as a door reward or exit option in that biome.
 - **3x Rarity:** The `"cds"` reward is 3 times as rare to find as standard exit rewards. When candidate exit pools are generated, `"cds"` only enters the available selection pool 1 out of 3 times (`exit_rng.randi_range(0, 2) == 0`).
 - **Save File Persistence:** Collected CD track IDs are saved persistently per save slot under `[ship] collected_cds` and loaded automatically via `SaveSlots`.
+- **Tracklist Import Keep:** `Tracklist.csv` metadata file in the music directory is marked with `importer="keep"` in `Tracklist.csv.import` and uses `Key_Mode` instead of `Key/Mode` to prevent Godot's translation importer from attempting to create invalid `.translation` files.
