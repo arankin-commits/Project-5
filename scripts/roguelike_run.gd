@@ -357,6 +357,9 @@ func _spawn_trap_wave() -> void:
 		if not enemy.damaged.is_connected(_on_enemy_damaged):
 			enemy.damaged.connect(_on_enemy_damaged.bind(enemy))
 		enemies.add_child(enemy)
+		if not (enemy is INDUSTRIAL_ENEMY) and (config.biome == "maintenance" or room is MAINTENANCE_ROOM):
+			enemy.health *= 3.0
+			enemy.max_health = enemy.health
 		if room is BLOCKOUT_ROOM:
 			enemy.collision_mask = 9
 		_effect(enemy.position, "ring", 60, Color("ef9353"))
@@ -466,6 +469,9 @@ func _spawn_wave() -> void:
 		enemy.projectile_requested.connect(_spawn_projectile)
 		enemy.impact_requested.connect(_on_impact)
 		enemies.add_child(enemy)
+		if not (enemy is INDUSTRIAL_ENEMY) and (config.biome == "maintenance" or room is MAINTENANCE_ROOM):
+			enemy.health *= 3.0
+			enemy.max_health = enemy.health
 		if room is BLOCKOUT_ROOM:
 			enemy.collision_mask = 9
 		_effect(enemy.position,"ring",60,Color("ef9353"))

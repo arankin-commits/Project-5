@@ -90,6 +90,7 @@ Indexed from left to right, top to bottom:
   - **Knockback Without Collision:** If an enemy is knocked back in open space and collides with neither a wall/construct nor another enemy, 0 collision damage is dealt and no stun is applied.
 - **Damage Numbers Beside Foes:** When an enemy takes damage, damage numbers show up next to the enemy hit (horizontally offset beside the enemy's torso on the side of the impact, rather than directly overhead) to keep the enemy body, overhead stun halos, and health bars unobstructed. Damage numbers reflect the actual damage taken after reductions (such as shield guarding) and apply to all damage sources including player strikes, core powers, and environmental traps/hazards.
 - **Enemies and Traps:** Enemies do not trigger traps or pressure plates (`can_trigger_trap(enemy) == false`). However, enemies can still be harmed by traps (`take_damage` from active/triggered hazards) when knocked into them or when caught inside hazards triggered by the player or environmental cycles.
+- **Maintenance Enemy Health (3x):** All enemies in the Maintenance biome have triple their base health (all 8 Maintenance industrial enemies: Inspection Wasp 105 HP, Dust Mites 36 HP, Pressure Purger 330 HP, Spanner Guard 270 HP, Foreman Node 390 HP, Cable Snare Unit 240 HP, Phase Custodian 240 HP, Signal Scrambler 180 HP; summons; regular wave spawns; and Maintenance Guardian boss 3750 HP).
 
 ## Element Rules
 

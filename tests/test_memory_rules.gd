@@ -529,6 +529,23 @@ func _run() -> void:
 	await frames(2)
 
 	# ==========================================
+	# RULE 20: Maintenance Enemy Health (3x HP)
+	# ==========================================
+	var industrial_catalog: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/enemies/industrial.json"))
+	var expected_maint_hp := {
+		"industrial_00": 105.0,
+		"industrial_01": 36.0,
+		"industrial_02": 330.0,
+		"industrial_03": 270.0,
+		"industrial_04": 390.0,
+		"industrial_05": 240.0,
+		"industrial_06": 240.0,
+		"industrial_07": 180.0
+	}
+	for id in expected_maint_hp:
+		check(float(industrial_catalog[id].hp) == expected_maint_hp[id], "Rule 20: Enemy %s in maintenance must have tripled HP (%f), got %f" % [id, expected_maint_hp[id], float(industrial_catalog[id].hp)])
+
+	# ==========================================
 	# RULE 16: Quitting from the in-game menu brings player to the main menu
 	# ==========================================
 	run._toggle_pause()

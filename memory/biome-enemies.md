@@ -1,6 +1,6 @@
 # Biome enemies
 
-Fact: The underground biomes use the Industrial_33_Enemies_Full_Animation_Pack roster: Maintenance 8, Factory 8, Boiler 9, and Toxin Refinery 8. Regular waves and boss reinforcements stay within their biome's roster. Existing bosses remain separate.
+Fact: The underground biomes use the Industrial_33_Enemies_Full_Animation_Pack roster: Maintenance 8, Factory 8, Boiler 9, and Toxin Refinery 8. All enemies in Maintenance have triple their base health (3x HP). Regular waves and boss reinforcements stay within their biome's roster. Existing bosses remain separate.
 
 Why: The user requested the supplied enemies for each biome.
 
