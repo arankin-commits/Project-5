@@ -75,8 +75,8 @@ func _on_core_terminal_closed() -> void:
 func _build_passage() -> void:
 	var return_passage := PASSAGE.new()
 	return_passage.name = "MainHallReturn"
-	return_passage.position = Vector2(1495, 490)
-	return_passage.half_extent = Vector2(28, 65)
+	return_passage.position = Vector2(1500, 510)
+	return_passage.half_extent = Vector2(35, 120)
 	return_passage.target_scene = "res://scenes/FlyingLibertyMainHall.tscn"
 	return_passage.target_entry_id = "from_workshop"
 	$Passages.add_child(return_passage)

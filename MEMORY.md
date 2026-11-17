@@ -74,6 +74,7 @@ Indexed from left to right, top to bottom:
 ## Workshop & Skill Tree Interface
 
 - **All-Sides Interaction:** The power core machine in the Engineering Workshop (`PowerCoreTerminal`) used to interact with and view the elemental skill tree is interactable on all sides (top/north, bottom/south, left/west, right/east, and corners).
+- **Exit Arch Dimensions:** The return passage back to the Main Hall (`MainHallReturn` in `scripts/workshop.gd`) matches the visual opening of the painted archway on the right wall: `position = Vector2(1500, 510)` and `half_extent = Vector2(35, 120)` (spanning $X \in [1465, 1535]$ and $Y \in [390, 630]$, full size $70 \times 240$ px).
 
 ## Flying Liberty Controls & Movement
 

@@ -182,6 +182,8 @@ func _run() -> void:
 	workshop_player.position = Vector2(1445, 490)
 	var workshop_exit = workshop.get_node("Passages/MainHallReturn")
 	assert(workshop_exit.target_entry_id == "from_workshop", "Workshop return passage is missing")
+	assert(workshop_exit.position == Vector2(1500, 510), "Workshop return passage position does not match visual arch")
+	assert(workshop_exit.half_extent == Vector2(35, 120), "Workshop return passage size does not match visual arch")
 	Input.action_press("move_right")
 	for i in 40:
 		await physics_frame
