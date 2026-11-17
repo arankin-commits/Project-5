@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://cvqfyb56ssxqv"
+
+[deps]
+
+files=["res://Music/Flying_Liberty_16_Lobby_Themes_Full_Production_v1/Flying_Liberty_Lobby_OST_16_v1/Tracklist.Track.translation", "res://Music/Flying_Liberty_16_Lobby_Themes_Full_Production_v1/Flying_Liberty_Lobby_OST_16_v1/Tracklist.Group.translation", "res://Music/Flying_Liberty_16_Lobby_Themes_Full_Production_v1/Flying_Liberty_Lobby_OST_16_v1/Tracklist.Key/Mode.translation", "res://Music/Flying_Liberty_16_Lobby_Themes_Full_Production_v1/Flying_Liberty_Lobby_OST_16_v1/Tracklist.Meter.translation", "res://Music/Flying_Liberty_16_Lobby_Themes_Full_Production_v1/Flying_Liberty_Lobby_OST_16_v1/Tracklist.BPM.translation", "res://Music/Flying_Liberty_16_Lobby_Themes_Full_Production_v1/Flying_Liberty_Lobby_OST_16_v1/Tracklist.Duration seconds.translation", "res://Music/Flying_Liberty_16_Lobby_Themes_Full_Production_v1/Flying_Liberty_Lobby_OST_16_v1/Tracklist.Concept.translation"]
+
+source_file="res://Music/Flying_Liberty_16_Lobby_Themes_Full_Production_v1/Flying_Liberty_Lobby_OST_16_v1/Tracklist.csv"
+dest_files=["res://Music/Flying_Liberty_16_Lobby_Themes_Full_Production_v1/Flying_Liberty_Lobby_OST_16_v1/Tracklist.Track.translation", "res://Music/Flying_Liberty_16_Lobby_Themes_Full_Production_v1/Flying_Liberty_Lobby_OST_16_v1/Tracklist.Group.translation", "res://Music/Flying_Liberty_16_Lobby_Themes_Full_Production_v1/Flying_Liberty_Lobby_OST_16_v1/Tracklist.Key/Mode.translation", "res://Music/Flying_Liberty_16_Lobby_Themes_Full_Production_v1/Flying_Liberty_Lobby_OST_16_v1/Tracklist.Meter.translation", "res://Music/Flying_Liberty_16_Lobby_Themes_Full_Production_v1/Flying_Liberty_Lobby_OST_16_v1/Tracklist.BPM.translation", "res://Music/Flying_Liberty_16_Lobby_Themes_Full_Production_v1/Flying_Liberty_Lobby_OST_16_v1/Tracklist.Duration seconds.translation", "res://Music/Flying_Liberty_16_Lobby_Themes_Full_Production_v1/Flying_Liberty_Lobby_OST_16_v1/Tracklist.Concept.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

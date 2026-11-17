@@ -414,6 +414,62 @@ func _run() -> void:
 		check(save_slots.is_cd_collected(assigned_track), "Rule 18: Claiming CD reward must mark assigned track collected")
 	
 	# ==========================================
+	# RULE 19: Enemy Collision Damage & Knockback Scaling
+	# ==========================================
+	var RUN_ENEMY := preload("res://scripts/run_enemy.gd")
+	var e_sample = RUN_ENEMY.new()
+	check(e_sample.calculate_collision_damage(12.0) == 6.0, "Rule 19: Knockback power 12.0 must deal 6 collision damage")
+	check(e_sample.calculate_collision_damage(65.0) == 33.0, "Rule 19: Knockback power 65.0 must deal 33 collision damage")
+	check(e_sample.calculate_collision_damage(90.0) == 45.0, "Rule 19: Knockback power 90.0 must deal 45 collision damage")
+	check(e_sample.calculate_collision_damage(180.0) == 90.0, "Rule 19: Knockback power 180.0 must deal 90 collision damage")
+	check(e_sample.calculate_collision_damage(0.0) == 0.0, "Rule 19: 0 knockback power must deal 0 collision damage")
+	check(e_sample.calculate_collision_damage(180.0) > e_sample.calculate_collision_damage(65.0), "Rule 19: Higher knockback power must deal greater collision damage")
+	e_sample.free()
+
+	# Create two test enemies in the active room
+	var enemy_a = RUN_ENEMY.new()
+	enemy_a.kind = "crawler"
+	enemy_a.health = 100.0
+	enemy_a.max_health = 100.0
+	enemy_a.position = Vector2(400, 400)
+	run.room.add_child(enemy_a)
+
+	var enemy_b = RUN_ENEMY.new()
+	enemy_b.kind = "crawler"
+	enemy_b.health = 100.0
+	enemy_b.max_health = 100.0
+	enemy_b.position = Vector2(420, 400)
+	run.room.add_child(enemy_b)
+	await frames(2)
+
+	# 1. Test Enemy-Enemy collision: Enemy A knocked into Enemy B
+	var a_hp_before := enemy_a.health
+	var b_hp_before := enemy_b.health
+	enemy_a.apply_knockback(Vector2.RIGHT, 65.0)
+	await frames(1)
+
+	check(enemy_a.health == a_hp_before - 33.0, "Rule 19: Knocked enemy A must take collision damage (33), got %f" % enemy_a.health)
+	check(enemy_b.health == b_hp_before - 33.0, "Rule 19: Collided enemy B must take collision damage (33), got %f" % enemy_b.health)
+	check(enemy_a.wall_stun_timer > 0.0, "Rule 19: Knocked enemy A must be stunned after colliding with enemy B")
+	check(enemy_b.wall_stun_timer > 0.0, "Rule 19: Collided enemy B must be stunned after being hit by knocked enemy")
+
+	# 2. Test Wall/Construct collision: Enemy A knocked into room boundary wall
+	enemy_a.position = Vector2(100, 300)
+	enemy_a.health = 100.0
+	enemy_a.wall_stun_timer = 0.0
+	var wall_hp_before := enemy_a.health
+	enemy_a.apply_knockback(Vector2.LEFT, 180.0)
+	await frames(1)
+	check(enemy_a.health == wall_hp_before - 90.0, "Rule 19: Enemy knocked into wall must take 90 collision damage from 180 power, got %f" % enemy_a.health)
+	check(enemy_a.wall_stun_timer > 0.0, "Rule 19: Enemy knocked into wall must receive wall stun")
+
+	if is_instance_valid(enemy_a):
+		enemy_a.queue_free()
+	if is_instance_valid(enemy_b):
+		enemy_b.queue_free()
+	await frames(2)
+
+	# ==========================================
 	# RULE 16: Quitting from the in-game menu brings player to the main menu
 	# ==========================================
 	run._toggle_pause()

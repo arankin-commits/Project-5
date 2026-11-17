@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c0u7rovi66dew"
-path="res://.godot/imported/Steampunk Vent and Entrance Asset Sheet.png-4adf867d33ff4f1210ee7d85df6ce635.ctex"
+path="res://.godot/imported/Steampunk Vent and Entrance Asset Sheet.png-8ff7f8e59f2c3777f0651c6347749fef.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://rooms/Maintenance/Steampunk Vent and Entrance Asset Sheet.png"
-dest_files=["res://.godot/imported/Steampunk Vent and Entrance Asset Sheet.png-4adf867d33ff4f1210ee7d85df6ce635.ctex"]
+source_file="res://Music/Flying_Liberty_Adaptive_Biome_OST_v3/Flying_Liberty_Adaptive_Biome_OST_v3/Maintenance/Steampunk Vent and Entrance Asset Sheet.png"
+dest_files=["res://.godot/imported/Steampunk Vent and Entrance Asset Sheet.png-8ff7f8e59f2c3777f0651c6347749fef.ctex"]
 
 [params]
 

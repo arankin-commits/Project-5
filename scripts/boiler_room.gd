@@ -181,6 +181,7 @@ func _physics_process(delta: float) -> void:
 		if is_instance_valid(player) and ((player.position - vents[i]) * Vector2(1, 2)).length() < 49:
 			trigger_trap(i, player)
 			if is_trap_active(i):
+				player.call("take_damage", 12)
 	
 		var enemies := get_parent().get_node_or_null("Enemies") if get_parent() else null
 		if enemies:

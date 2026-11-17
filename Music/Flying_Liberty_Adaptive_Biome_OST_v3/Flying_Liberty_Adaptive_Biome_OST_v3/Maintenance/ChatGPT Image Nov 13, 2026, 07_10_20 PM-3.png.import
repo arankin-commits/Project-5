@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dl2gnopr52ael"
-path="res://.godot/imported/ChatGPT Image Nov 13, 2026, 07_10_20 PM-3.png-7170582832e0b33dec28818130914681.ctex"
+path="res://.godot/imported/ChatGPT Image Nov 13, 2026, 07_10_20 PM-3.png-b4762e10ffc6c33a7962bf056805803a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://rooms/Maintenance/ChatGPT Image Nov 13, 2026, 07_10_20 PM-3.png"
-dest_files=["res://.godot/imported/ChatGPT Image Nov 13, 2026, 07_10_20 PM-3.png-7170582832e0b33dec28818130914681.ctex"]
+source_file="res://Music/Flying_Liberty_Adaptive_Biome_OST_v3/Flying_Liberty_Adaptive_Biome_OST_v3/Maintenance/ChatGPT Image Nov 13, 2026, 07_10_20 PM-3.png"
+dest_files=["res://.godot/imported/ChatGPT Image Nov 13, 2026, 07_10_20 PM-3.png-b4762e10ffc6c33a7962bf056805803a.ctex"]
 
 [params]
 

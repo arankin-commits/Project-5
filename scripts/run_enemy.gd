@@ -32,6 +32,11 @@ var path := PackedVector2Array()
 var stride := 0.0
 var visual: Sprite2D
 var custom_attack_warning := false
+var is_in_knockback := false
+
+func _init() -> void:
+	collision_layer = 4
+	collision_mask = 9
 
 func _ready() -> void:
 	collision_layer = 4
@@ -177,29 +182,62 @@ func is_backstab(origin: Vector2) -> bool:
 	var to_attacker := global_position.direction_to(origin)
 	return to_attacker.dot(facing.normalized()) < -0.5
 
+func calculate_collision_damage(knockback_power: float) -> float:
+	if knockback_power <= 0.0:
+		return 0.0
+	return maxf(1.0, roundf(knockback_power * 0.5))
+
 func apply_knockback(direction: Vector2, distance: float) -> void:
-	if kind == "boss" or health <= 0:
+	if kind == "boss" or health <= 0 or is_in_knockback:
 		return
+	is_in_knockback = true
+	var old_mask := collision_mask
+	collision_mask |= 4
 	var collision := move_and_collide(direction.normalized() * distance)
+	collision_mask = old_mask
 	if collision != null:
+		var collider: Object = collision.get_collider()
+		var col_damage := calculate_collision_damage(distance)
 		wall_stun_timer = 0.3
 		state = "chase"
 		cooldown = 1.0
-	queue_redraw()
+		if is_instance_valid(collider) and collider != self and collider is CharacterBody2D and (target == null or collider != target):
+			if collider.has_method("take_damage"):
+				collider.call("take_damage", col_damage, Vector2.ZERO, 0.0, "regular")
+			if collider.get("kind") != "boss":
+				if collider.get("wall_stun_timer") != null:
+					collider.set("wall_stun_timer", 0.3)
+				if collider.get("state") != null:
+					collider.set("state", "chase")
+				if collider.get("cooldown") != null:
+					collider.set("cooldown", maxf(float(collider.get("cooldown")), 1.0))
+			take_damage(col_damage, Vector2.ZERO, 0.0, "regular")
+		else:
+			take_damage(col_damage, Vector2.ZERO, 0.0, "regular")
+	is_in_knockback = false
+	if is_instance_valid(self) and not is_queued_for_deletion():
+		queue_redraw()
 
 func take_damage(amount: float, knockback: Vector2 = Vector2.ZERO, push_distance := 12.0, element := "regular") -> void:
-	if health <= 0:
+	if health <= 0 or not active:
 		return
-	health = maxf(0,health-amount)
+	health = maxf(0, health - amount)
 	hit_flash = 0.12
-	if kind != "boss" and knockback.length_squared() > 0:
-		apply_knockback(knockback, push_distance)
 	damaged.emit(amount, knockback, element)
 	if health <= 0:
-		active = false
-		defeated.emit(self)
-		queue_free()
-	queue_redraw()
+		_die()
+		return
+	if kind != "boss" and knockback.length_squared() > 0:
+		apply_knockback(knockback, push_distance)
+	if is_instance_valid(self) and not is_queued_for_deletion():
+		queue_redraw()
+
+func _die() -> void:
+	if not active and health <= 0:
+		return
+	active = false
+	defeated.emit(self)
+	queue_free()
 
 func _draw() -> void:
 	if wall_stun_timer > 0:
