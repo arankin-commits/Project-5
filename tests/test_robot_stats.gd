@@ -12,7 +12,7 @@ func check(ok: bool, message: String) -> void:
 
 func _run() -> void:
 	var config = root.get_node("RunConfig")
-	var expected := {"heavy": [185.5, 150, 1.3, 2.0], "light": [331.25, 60, 0.7, 6.0], "medium": [265.0, 100, 1.0, 2.0]}
+	var expected := {"heavy": [185.5, 75, 1.3, 2.0], "light": [331.25, 30, 0.7, 6.0], "medium": [265.0, 50, 1.0, 2.0]}
 	for kind in expected:
 		config.start_run(kind, {})
 		config.biome = "boiler"

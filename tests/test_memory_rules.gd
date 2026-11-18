@@ -643,6 +643,30 @@ func _run() -> void:
 		check(float(industrial_catalog[id].hp) == expected_maint_hp[id], "Rule 20: Enemy %s in maintenance must have tripled HP (%f), got %f" % [id, expected_maint_hp[id], float(industrial_catalog[id].hp)])
 
 	# ==========================================
+	# RULE 21: Player Max Health (50) & HP Reward (+25 Max HP, Heals 25)
+	# ==========================================
+	check(config.max_health() == 50, "Rule 21: Default player max health must be 50, got %d" % config.max_health())
+	check(run.maximum_health == 50.0, "Rule 21: Run starting maximum health must be 50, got %f" % run.maximum_health)
+	
+	# Test HP reward increases max health by 25 and heals 25 health
+	run.health = 20.0
+	run.maximum_health = 50.0
+	run.state = "reward"
+	run.reward_choices = [{"id": "max_hp_increase"}]
+	var chosen: bool = run.choose_reward("max_hp_increase")
+	check(chosen, "Rule 21: max_hp_increase reward could not be chosen")
+	check(run.maximum_health == 75.0, "Rule 21: HP reward must increase max health by 25 (50 -> 75), got %f" % run.maximum_health)
+	check(run.health == 45.0, "Rule 21: HP reward must heal 25 health (20 -> 45), got %f" % run.health)
+
+	# Test capping heal at new max health
+	run.health = 70.0
+	run.state = "reward"
+	run.reward_choices = [{"id": "max_hp_increase"}]
+	run.choose_reward("max_hp_increase")
+	check(run.maximum_health == 100.0, "Rule 21: Second HP reward must increase max health by 25 (75 -> 100), got %f" % run.maximum_health)
+	check(run.health == 95.0, "Rule 21: HP reward must heal 25 health (70 -> 95), got %f" % run.health)
+
+	# ==========================================
 	# RULE 16: Quitting from the in-game menu brings player to the main menu
 	# ==========================================
 	run._toggle_pause()

@@ -59,8 +59,8 @@ func _run() -> void:
 	await process_frame
 	var run = current_scene
 	check(run.name == "RoguelikeRun","Start did not enter run")
-	check(config.max_health() == 70 and config.enemy_speed() == 130.0,"Difficulty not applied")
-	check(run.health == 70 and run.living_enemies == 5,"Initial hull/reinforcements wrong")
+	check(config.max_health() == 20 and config.enemy_speed() == 130.0,"Difficulty not applied")
+	check(run.health == 20 and run.living_enemies == 5,"Initial hull/reinforcements wrong")
 	# Run this Boiler regression with --boiler-preview; normal UI starts Maintenance.
 	check(run.rooms.size() == 9 and run.rooms[8].get("boss",false),"Eight regular rooms plus ninth-room boss missing")
 	var player = run.player

@@ -177,6 +177,11 @@ Indexed from left to right, top to bottom:
 - **Safe Spawn Coarse-to-Fine Search:** `_safe_source_point()` uses coarse-to-fine step sampling (16px coarse pass followed by local 2px refinement) rather than brute-forcing full 2px grids over the entire room canvas.
 - **Player Idle Visual Updates:** In `_face_idle()`, only assign `visual.frame` when `visual.frame != target_frame` to prevent redundant frame-changed signal dispatches and uniform buffer re-uploads every physics frame.
 
+## Player Stats & Health Rewards
+
+- **Base Player Health:** The base maximum health of the player (Medium Robot) is 50 (`RunConfig.max_health() == 50`, `RoguelikeRun.maximum_health == 50.0`).
+- **HP Reward Scaling & Healing:** The HP reward (`"max_hp_increase"` and `"hull"`) increases player maximum health by 25 (`maximum_health += 25`) and simultaneously heals 25 health (`health = minf(maximum_health, health + 25)`).
+
 ## Save File Management
 
 - **Save Deletion:** Non-empty save slots display a "Delete" button styled in crimson warning colors alongside the "Continue" button on the Save Selection screen.

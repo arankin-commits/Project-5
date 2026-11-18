@@ -76,7 +76,7 @@ func consume_sync_return() -> bool:
 	return pending
 
 func max_health() -> int:
-	return roundi(100 * ROBOT_STATS[robot_type]["health"]) - (30 if modifiers["fragile_frame"] else 0)
+	return roundi(50 * ROBOT_STATS[robot_type]["health"]) - (30 if modifiers["fragile_frame"] else 0)
 
 func robot_stats() -> Dictionary:
 	return ROBOT_STATS[robot_type]

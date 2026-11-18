@@ -12,7 +12,7 @@ const Space := preload("res://scripts/boiler_space.gd")
 const ElementalCards := preload("res://scripts/elemental_cards.gd")
 const REWARDS := [
 	{"id":"power", "name":"FORGED KNUCKLES", "description":"+20% strike damage"},
-	{"id":"hull", "name":"RIVETED PLATING", "description":"+20 maximum hull\nRepair 25 hull"},
+	{"id":"hull", "name":"RIVETED PLATING", "description":"+25 maximum hull\nRepair 25 hull"},
 	{"id":"dash", "name":"QUICK RELEASE", "description":"15% faster dash recharge"},
 	{"id":"speed", "name":"PISTON DRIVE", "description":"+10% movement speed"},
 	{"id":"repair", "name":"COOLANT RESERVE", "description":"Repair 45 hull"}
@@ -62,8 +62,8 @@ var rng := RandomNumberGenerator.new()
 var room_index := 0
 var wave_index := 0
 var living_enemies := 0
-var health := 100.0
-var maximum_health := 100.0
+var health := 50.0
+var maximum_health := 50.0
 var kills := 0
 var elapsed := 0.0
 var state := "combat"
@@ -145,7 +145,7 @@ func _prepare_biome() -> void:
 			if i+1 < rooms.size():
 				rooms[i]["next_preview"] = ("BOSS: " + str(rooms[i+1].boss_name)) if rooms[i+1].get("boss",false) else "NEXT: " + str(rooms[i+1].name).to_upper()
 		elif config.biome == "maintenance" and i+1 < rooms.size():
-			var reward_text := "+20 MAX HULL / REPAIR 25" if rooms[i+1].reward == "hull" else "REPAIR 45 HULL"
+			var reward_text := "+25 MAX HULL / REPAIR 25" if rooms[i+1].reward == "hull" else "REPAIR 45 HULL"
 			rooms[i]["next_preview"] = ("BOSS: MAINTENANCE GUARDIAN" if rooms[i+1].get("boss",false) else "NEXT: " + str(rooms[i+1].name).to_upper()) + "\n" + reward_text
 
 func _complete_biome() -> void:
@@ -735,7 +735,7 @@ Q / 25 energy" % element})
 					track_title = str(save_slots.CD_TRACKS[track_id].get("title", track_id))
 				reward_choices.append({"id":"cds","name":"MUSIC CD: " + track_title.to_upper(),"description":"Acquire '%s' for the Jukebox\n20%% faster dash recharge" % track_title,"track_id":track_id})
 			elif promised == "max_hp_increase":
-				reward_choices.append({"id":"max_hp_increase","name":"REINFORCED CHASSIS","description":"+25 maximum hull\nRepair 35 hull"})
+				reward_choices.append({"id":"max_hp_increase","name":"REINFORCED CHASSIS","description":"+25 maximum hull\nRepair 25 hull"})
 	else:
 		var available := REWARDS.duplicate(true)
 		for i in 3:
@@ -801,11 +801,11 @@ func choose_reward(id: String) -> bool:
 	match id:
 		"power": player.set("damage_multiplier",float(player.get("damage_multiplier"))+0.2 * config.call("robot_stats")["damage"])
 		"hull":
-			maximum_health += 20
+			maximum_health += 25
 			health = minf(maximum_health,health+25)
 		"max_hp_increase":
 			maximum_health += 25
-			health = minf(maximum_health,health+35)
+			health = minf(maximum_health,health+25)
 		"dash": player.set("dash_recharge",maxf(0.3,float(player.get("dash_recharge"))*0.85))
 		"cds":
 			var save_slots = _get_save_slots()

@@ -30,11 +30,11 @@ const REWARD_ICONS := {
 }
 const REWARD_TEXT := {
 	"repair": "REPAIR 45 HULL",
-	"hull": "+20 MAX HULL / REPAIR 25",
+	"hull": "+25 MAX HULL / REPAIR 25",
 	"power": "+20% STRIKE DAMAGE",
 	"dash": "15% FASTER DASH RECHARGE",
 	"speed": "+10% MOVEMENT SPEED",
-	"max_hp_increase": "+25 MAX HULL / REPAIR 35",
+	"max_hp_increase": "+25 MAX HULL / REPAIR 25",
 	"cds": "MUSIC CD",
 	"core_xp": "+100 CORE XP",
 	"aether_cores": "+1 AETHER GEAR",
