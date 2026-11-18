@@ -1,0 +1,35 @@
+newmtl cable
+Kd 0.35 0.4 0.44
+Ks 0.05 0.05 0.05
+Ns 20
+
+newmtl dark
+Kd 0.26 0.3 0.34
+Ks 0.05 0.05 0.05
+Ns 20
+
+newmtl detail
+Kd 0.9 0.9 0.88
+Ks 0.05 0.05 0.05
+Ns 20
+
+newmtl glass
+Kd 0.6 0.75 0.76
+Ks 0.05 0.05 0.05
+Ns 20
+
+newmtl metal
+Kd 0.48 0.55 0.59
+Ks 0.05 0.05 0.05
+Ns 20
+
+newmtl shell
+Kd 0.65 0.68 0.7
+Ks 0.05 0.05 0.05
+Ns 20
+
+newmtl top
+Kd 0.8 0.83 0.84
+Ks 0.05 0.05 0.05
+Ns 20
+

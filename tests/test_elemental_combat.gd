@@ -196,6 +196,34 @@ func _run() -> void:
 	run.player.speed = base_spd
 	e_fleet.queue_free()
 
+	# 3D. Light Speed Teleport Dash
+	run.player_cards.assign(["light_speed", "lightning_dash"])
+	run.player.cards.assign(["light_speed", "lightning_dash"])
+	var regular_dash_dist: float = 850.0 * float(run.player.get("dash_duration"))
+	var start_pos: Vector2 = run.player.global_position
+	var e_ls = RUN_ENEMY.new()
+	e_ls.health = 100.0
+	e_ls.max_health = 100.0
+	e_ls.position = start_pos + Vector2(regular_dash_dist * 0.5, 0)
+	run.enemies.add_child(e_ls)
+
+	run.player.dash_cooldown = 0.0
+	run.player.start_dash(Vector2.RIGHT)
+	var end_pos: Vector2 = run.player.global_position
+	var traveled_dist: float = start_pos.distance_to(end_pos)
+	check(is_equal_approx(traveled_dist, regular_dash_dist), "Light speed dash distance (%f) must equal regular dash distance (%f)" % [traveled_dist, regular_dash_dist])
+	check(run.player.dash_timer > 0, "Light speed dash must remain active during dash duration")
+	check(run.player.invulnerability >= run.player.dash_timer, "Invulnerability must cover the full dash duration")
+	var took_dmg: bool = run.player.take_damage(20.0)
+	check(not took_dmg, "Player cannot be hit while light speed dash is in progress")
+	check(e_ls.health == 82.0, "Lightning Dash with Light Speed must strike enemies along the teleport path")
+	e_ls.queue_free()
+
+	run.player.dash_timer = 0.0
+	run.player.invulnerability = 0.0
+	took_dmg = run.player.take_damage(10.0)
+	check(took_dmg, "Player can take damage once dash finishes")
+
 	# ==========================================
 	# TEST 4: Armor Retaliation & Projectile Restriction
 	# ==========================================

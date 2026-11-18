@@ -19,6 +19,7 @@ var appearance := "medium"
 var speed := 265.0
 var damage_multiplier := 1.0
 var backstab_multiplier := 2.0
+var dash_speed := 850.0
 var dash_recharge := 0.7
 var dash_duration := 0.18
 var facing := Vector2.DOWN
@@ -51,7 +52,7 @@ var core_cooldown := 0.0
 var enemy_statuses := {}
 
 func apply_enemy_status(effect: String, duration: float, source: Node, distance := 60.0) -> void:
-	if (dash_timer > 0 and dash_elapsed <= dash_duration * 0.5) or not controls_enabled:
+	if (dash_timer > 0 and (cards.has("light_speed") or dash_elapsed <= dash_duration * 0.5)) or not controls_enabled:
 		return
 	# Refresh duration instead of stacking repeated applications.
 	var clock := float(enemy_statuses.get(effect,{}).get("clock",0))
@@ -144,7 +145,10 @@ func _physics_process(delta: float) -> void:
 		core_requested.emit()
 	if dash_timer > 0:
 		dash_timer -= delta
-		velocity = dash_direction * 850.0
+		if cards.has("light_speed"):
+			velocity = Vector2.ZERO
+		else:
+			velocity = dash_direction * dash_speed
 	else:
 		velocity = input * speed
 		if input.length_squared() > 0.01 and attack_pose <= 0:
@@ -187,16 +191,17 @@ func start_dash(direction: Vector2) -> bool:
 	facing = dash_direction
 	dash_timer = dash_duration
 	dash_cooldown = dash_recharge
-	invulnerability = maxf(invulnerability, dash_duration * 0.5)
 	last_dash_start = global_position
+	var dash_distance := dash_speed * dash_duration
 	if cards.has("light_speed"):
-		velocity = dash_direction * (850.0 * 2.0)
-		move_and_slide()
+		invulnerability = maxf(invulnerability, dash_duration)
+		move_and_collide(dash_direction * dash_distance)
 		last_dash_end = global_position
-		dash_timer = 0.0
+		velocity = Vector2.ZERO
 	else:
-		velocity = dash_direction * 850.0
-		last_dash_end = global_position + dash_direction * (850.0 * dash_duration)
+		invulnerability = maxf(invulnerability, dash_duration * 0.5)
+		velocity = dash_direction * dash_speed
+		last_dash_end = global_position + dash_direction * dash_distance
 	dashed.emit()
 	return true
 
@@ -236,13 +241,13 @@ func release_charge(direction: Vector2) -> bool:
 	return success
 
 func take_damage(amount: float, attacker: Node2D = null, is_projectile := false) -> bool:
-	if controls_enabled and dash_timer > 0 and dash_elapsed <= dash_duration * 0.5 and not perfect_triggered:
+	if controls_enabled and dash_timer > 0 and not perfect_triggered and (cards.has("light_speed") or dash_elapsed <= dash_duration * 0.5):
 		perfect_triggered = true
 		perfect_reward_timer = 5.0
 		if skills.has("perfect_reprisal"):
 			perfect_damage_timer = 5.0
 		perfect_dodged.emit()
-	if not controls_enabled or invulnerability > 0:
+	if not controls_enabled or invulnerability > 0 or (cards.has("light_speed") and dash_timer > 0):
 		return false
 	invulnerability = 0.7
 	damaged.emit(amount, attacker, is_projectile)
@@ -284,4 +289,8 @@ func _draw() -> void:
 	draw_circle(Vector2.ZERO, 22, Color(0,0,0,0.5))
 	draw_arc(Vector2.ZERO, 24, 0, TAU, 40, Color(0.3,0.95,0.9,0.8), 2, true)
 	if dash_timer > 0:
-		draw_line(-dash_direction * 15, -dash_direction * 100, Color(0.25,0.95,0.9,0.55), 7, true)
+		if cards.has("light_speed"):
+			draw_line(-dash_direction * 15, -dash_direction * 100, Color(1.0, 0.9, 0.2, 0.8), 8, true)
+			draw_line(-dash_direction * 25, -dash_direction * 80, Color(1.0, 1.0, 1.0, 0.9), 3, true)
+		else:
+			draw_line(-dash_direction * 15, -dash_direction * 100, Color(0.25,0.95,0.9,0.55), 7, true)

@@ -792,6 +792,11 @@ func _on_player_dashed() -> void:
 		return
 	var dash_from: Vector2 = player.last_dash_start
 	var dash_to: Vector2 = player.position
+	if dash_to.is_equal_approx(dash_from) and player.get("last_dash_end") != null and player.last_dash_end != Vector2.ZERO:
+		dash_to = player.last_dash_end
+	if player_cards.has("light_speed"):
+		_effect(dash_from, "ring", 45.0, Color("ffe600"))
+		_effect(dash_to, "burst", 45.0, Color("ffe600"))
 	var enemies_hit: Array[CharacterBody2D] = []
 	for enemy in enemies.get_children():
 		if enemy.health <= 0:

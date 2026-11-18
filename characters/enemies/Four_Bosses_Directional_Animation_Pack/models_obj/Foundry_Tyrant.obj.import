@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dbwe88ol0wjvt"
+path="res://.godot/imported/Foundry_Tyrant.obj-aa564073bcf9112c99bfc254c0c8e39f.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Foundry_Tyrant.obj-aa564073bcf9112c99bfc254c0c8e39f.mesh"]
+
+source_file="res://characters/enemies/Four_Bosses_Directional_Animation_Pack/models_obj/Foundry_Tyrant.obj"
+dest_files=["res://.godot/imported/Foundry_Tyrant.obj-aa564073bcf9112c99bfc254c0c8e39f.mesh", "res://.godot/imported/Foundry_Tyrant.obj-aa564073bcf9112c99bfc254c0c8e39f.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false
