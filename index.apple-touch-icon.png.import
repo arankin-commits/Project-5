@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c2ifmfkdgmu0m"
-path="res://.godot/imported/Flying Liberty.apple-touch-icon.png-20ae209272caa04218135b0659f66d6a.ctex"
+uid="uid://dweo6ia5jmkv4"
+path="res://.godot/imported/index.apple-touch-icon.png-8085a11cc297d91deb55511843765958.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Flying Liberty.apple-touch-icon.png"
-dest_files=["res://.godot/imported/Flying Liberty.apple-touch-icon.png-20ae209272caa04218135b0659f66d6a.ctex"]
+source_file="res://index.apple-touch-icon.png"
+dest_files=["res://.godot/imported/index.apple-touch-icon.png-8085a11cc297d91deb55511843765958.ctex"]
 
 [params]
 

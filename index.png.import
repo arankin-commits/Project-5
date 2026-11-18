@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://caorp12oyl4ha"
-path="res://.godot/imported/Flying Liberty.png-817ddf9bfde88af5a2b3c9c2a6852bb3.ctex"
+uid="uid://djgbvhkeu55qe"
+path="res://.godot/imported/index.png-5122033cac747157decad52589e2295c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Flying Liberty.png"
-dest_files=["res://.godot/imported/Flying Liberty.png-817ddf9bfde88af5a2b3c9c2a6852bb3.ctex"]
+source_file="res://index.png"
+dest_files=["res://.godot/imported/index.png-5122033cac747157decad52589e2295c.ctex"]
 
 [params]
 

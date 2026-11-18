@@ -192,3 +192,9 @@ Indexed from left to right, top to bottom:
 - **3x Rarity:** The `"cds"` reward is 3 times as rare to find as standard exit rewards. When candidate exit pools are generated, `"cds"` only enters the available selection pool 1 out of 3 times (`exit_rng.randi_range(0, 2) == 0`).
 - **Save File Persistence:** Collected CD track IDs are saved persistently per save slot under `[ship] collected_cds` and loaded automatically via `SaveSlots`.
 - **Tracklist Import Keep:** `Tracklist.csv` metadata file in the music directory is marked with `importer="keep"` in `Tracklist.csv.import` and uses `Key_Mode` instead of `Key/Mode` to prevent Godot's translation importer from attempting to create invalid `.translation` files.
+
+## Web Export & Build Packaging
+
+- **Web Target & index.pck Size Limit:** The Web export preset in `export_presets.cfg` targets `./index.html` and outputs `index.pck`, `index.wasm`, `index.js`, and `index.html`.
+- **Under 100MB PCK Requirement:** `index.pck` must remain strictly under 100MB (currently ~95.17 MiB / 99.79 MB). To stay within budget, unused audio production stems (`*Atmosphere.ogg*`, `*Counterpoint.ogg*`, `*Dynamic_Layer_Demo.mp3*`, `*Foundation.ogg*`, `*Full_Story_Loop.ogg*`, `*Listen_Quiet_Lobby.mp3*`, `*Theme.ogg*`, `*Classical_8_Track_Sampler*`, `*New_Age_8_Track_Sampler*`, `MIDI/*`), unused demo suites (`Flying_Liberty_Adaptive_Biome_OST_v3/*`), and unused hazard sheets are excluded via `exclude_filter` in `export_presets.cfg` while keeping all 16 collectible `Quiet_Lobby_Loop.ogg` tracks and game assets fully intact.
+
