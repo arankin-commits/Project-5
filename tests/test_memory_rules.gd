@@ -662,7 +662,7 @@ func _run() -> void:
 	await frames(2)
 
 	# ==========================================
-	# RULE 20: Maintenance Enemy Health (3x HP)
+	# RULE 20: Maintenance Enemy Health (3x HP), Factory, Boiler & Toxin Refinery (4x HP)
 	# ==========================================
 	var industrial_catalog: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/enemies/industrial.json"))
 	var expected_maint_hp := {
@@ -677,6 +677,39 @@ func _run() -> void:
 	}
 	for id in expected_maint_hp:
 		check(float(industrial_catalog[id].hp) == expected_maint_hp[id], "Rule 20: Enemy %s in maintenance must have tripled HP (%f), got %f" % [id, expected_maint_hp[id], float(industrial_catalog[id].hp)])
+
+	var expected_quadrupled_hp := {
+		# Factory (4x)
+		"industrial_08": 360.0,
+		"industrial_09": 56.0,
+		"industrial_10": 320.0,
+		"industrial_11": 380.0,
+		"industrial_12": 640.0,
+		"industrial_13": 300.0,
+		"industrial_14": 460.0,
+		"industrial_15": 360.0,
+		# Boiler Room (4x)
+		"industrial_16": 220.0,
+		"industrial_17": 400.0,
+		"industrial_18": 300.0,
+		"industrial_19": 56.0,
+		"industrial_20": 72.0,
+		"industrial_21": 620.0,
+		"industrial_22": 380.0,
+		"industrial_23": 280.0,
+		"industrial_24": 340.0,
+		# Toxin Refinery (4x)
+		"industrial_25": 380.0,
+		"industrial_26": 52.0,
+		"industrial_27": 420.0,
+		"industrial_28": 380.0,
+		"industrial_29": 300.0,
+		"industrial_30": 320.0,
+		"industrial_31": 680.0,
+		"industrial_32": 580.0
+	}
+	for id in expected_quadrupled_hp:
+		check(float(industrial_catalog[id].hp) == expected_quadrupled_hp[id], "Rule 20: Enemy %s in factory/boiler/toxin must have quadrupled HP (%f), got %f" % [id, expected_quadrupled_hp[id], float(industrial_catalog[id].hp)])
 
 	# ==========================================
 	# RULE 21: Player Max Health (50) & HP Reward (+25 Max HP, Heals 25)
