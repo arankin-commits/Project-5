@@ -320,7 +320,7 @@ func _physics_process(delta: float) -> void:
 		return
 	hazard_tick = 0.5
 	for i in vents.size():
-		if not is_trap_active(i):
+		if not is_trap_active(i) or not uses_contact_damage(i):
 			continue
 		if is_instance_valid(player) and ((player.position-vents[i])*Vector2(1,2)).length() < 65:
 			player.take_damage(8)
@@ -355,3 +355,6 @@ func _draw_floor(canvas: Node2D) -> void:
 
 func hazard_damage_type(_index: int) -> String:
 	return "electricity"
+
+func uses_contact_damage(_index: int) -> bool:
+	return true

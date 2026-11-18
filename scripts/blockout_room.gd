@@ -52,6 +52,9 @@ const REWARD_TEXT := {
 	"upgrade_wind": "WIND CORE UPGRADE",
 	"upgrade_earth": "EARTH CORE UPGRADE"
 }
+var turret_cooldowns: Dictionary = {}
+var trap_shots: Array[Dictionary] = []
+
 var movement_only: Array[bool] = []
 var reachable := {}
 var painted_traps: Array[Sprite2D] = []
@@ -192,6 +195,8 @@ func _draw_floor(canvas: Node2D) -> void:
 	var energy: Color = {"maintenance": Color("73e6ef"), "factory": Color("87bbff"),
 		"boiler_room": Color("ff9a43"), "toxin_refinery": Color("c1ef60")}.get(biome, Color("73e6ef"))
 	for i in vents.size():
+		if hazard_kind(i) in ["turret", "fan"]:
+			continue
 		var active := is_trap_active(i)
 		var phase := fmod(elapsed + i * 1.1, 4.8)
 		var warning := hazards_enabled and (active or phase >= 2.6)
@@ -213,6 +218,7 @@ func _draw_floor(canvas: Node2D) -> void:
 						canvas.draw_circle(tip, 3 + 2 * sin(elapsed * 8 + ray), Color(energy, 0.7))
 					else:
 						canvas.draw_polyline(PackedVector2Array([Vector2.ZERO, tip * 0.4 + Vector2(5, -8), tip * 0.65, tip]), Color(energy, 0.9), 2, true)
+	draw_mechanical_traps(canvas)
 	for point in exit_positions:
 		if definition.get("final", false):
 			break
@@ -344,3 +350,98 @@ func hazard_damage_type(_index: int) -> String:
 		"factory":
 			return "electricity" if definition.geometry.hazards[_index].type == "tesla" else "regular"
 	return "electricity"
+
+func hazard_kind(index: int) -> String:
+	return str(definition.geometry.hazards[index].type)
+
+func uses_contact_damage(index: int) -> bool:
+	return hazard_kind(index) not in ["turret", "fan"]
+
+func is_trap_active(index: int) -> bool:
+	if index >= 0 and index < vents.size() and hazard_kind(index) in ["wires", "turret", "fan"]:
+		return hazards_enabled
+	return super.is_trap_active(index)
+
+func hazard_direction(index: int) -> Vector2:
+	var angle := deg_to_rad(float(definition.geometry.hazards[index].get("direction_degrees", 0)))
+	var size := Vector2(definition.geometry.pixel_size[0], definition.geometry.pixel_size[1])
+	return (_project_pack(Vector2.from_angle(angle), size) - _project_pack(Vector2.ZERO, size)).normalized()
+
+func hazard_targets() -> Array[CharacterBody2D]:
+	var targets: Array[CharacterBody2D] = []
+	if is_instance_valid(player):
+		targets.append(player)
+	var enemies := get_parent().get_node_or_null("Enemies")
+	if enemies:
+		for enemy in enemies.get_children():
+			if enemy is CharacterBody2D and enemy.has_method("take_damage"):
+				targets.append(enemy)
+	return targets
+
+func hazard_blocked(start: Vector2, finish: Vector2) -> bool:
+	return not get_world_2d().direct_space_state.intersect_ray(PhysicsRayQueryParameters2D.create(to_global(start), to_global(finish), 1)).is_empty()
+
+func _physics_process(delta: float) -> void:
+	super._physics_process(delta)
+	if not hazards_enabled:
+		trap_shots.clear()
+		return
+	var targets := hazard_targets()
+	for i in vents.size():
+		var direction := hazard_direction(i)
+		match hazard_kind(i):
+			"turret":
+				turret_cooldowns[i] = float(turret_cooldowns.get(i, 0.8)) - delta
+				if turret_cooldowns[i] <= 0:
+					turret_cooldowns[i] = 1.5
+					trap_shots.append({"position": vents[i], "direction": direction, "distance": 0.0})
+			"fan":
+				for target in targets:
+					var offset := to_local(target.global_position) - vents[i]
+					var forward := offset.dot(direction)
+					if forward >= 0 and forward < 300 and absf(offset.cross(direction)) < 42 + forward * 0.2:
+						if not hazard_blocked(vents[i], to_local(target.global_position)):
+							target.move_and_collide(direction * 180.0 * delta)
+	for j in range(trap_shots.size() - 1, -1, -1):
+		var shot := trap_shots[j]
+		var start: Vector2 = shot.position
+		var finish: Vector2 = start + Vector2(shot.direction) * 320.0 * delta
+		var wall := get_world_2d().direct_space_state.intersect_ray(PhysicsRayQueryParameters2D.create(to_global(start), to_global(finish), 1))
+		if not wall.is_empty():
+			finish = to_local(wall.position)
+		var victim: CharacterBody2D = null
+		var nearest := INF
+		for target in targets:
+			var point := to_local(target.global_position)
+			if Geometry2D.get_closest_point_to_segment(point, start, finish).distance_to(point) < 20:
+				var distance := start.distance_to(point)
+				if distance < nearest:
+					nearest = distance
+					victim = target
+		if victim != null:
+			if victim == player:
+				victim.take_damage(8, null, true)
+			else:
+				victim.take_damage(32, Vector2.ZERO, 0.0, "regular")
+		shot.position = finish
+		shot.distance += 320.0 * delta
+		if victim != null or not wall.is_empty() or shot.distance >= 700:
+			trap_shots.remove_at(j)
+
+func draw_mechanical_traps(canvas: Node2D) -> void:
+	canvas.draw_set_transform(Vector2.ZERO)
+	if not hazards_enabled:
+		return
+	for i in vents.size():
+		var direction := hazard_direction(i)
+		if hazard_kind(i) == "fan":
+			var side := direction.orthogonal()
+			for lane in range(-2, 3):
+				var travel := fmod(elapsed * 180 + lane * 47, 270.0)
+				var start := vents[i] + direction * travel + side * lane * (16 + travel * 0.04)
+				canvas.draw_line(start, start + direction * 28, Color(0.65, 0.94, 1, 0.65), 2, true)
+		elif hazard_kind(i) == "turret":
+			canvas.draw_line(vents[i], vents[i] + direction * 65, Color("ffbf52"), 2, true)
+	for shot in trap_shots:
+		canvas.draw_line(shot.position - shot.direction * 16, shot.position, Color("ffbf52"), 4, true)
+		canvas.draw_circle(shot.position, 5, Color("fff0ce"))

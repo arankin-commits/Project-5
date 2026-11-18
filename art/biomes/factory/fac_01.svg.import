@@ -15,9 +15,9 @@ dest_files=["res://.godot/imported/fac_01.svg-8829d9c77631be3c752f0e372218cc96.c
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
-compress/lossy_quality=0.7
+compress/lossy_quality=0.85
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1

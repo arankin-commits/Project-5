@@ -15,9 +15,9 @@ dest_files=["res://.godot/imported/boi_22.svg-6d840a4e90b19e9d442e5a6e5edf9f63.c
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
-compress/lossy_quality=0.7
+compress/lossy_quality=0.85
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1

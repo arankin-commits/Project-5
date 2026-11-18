@@ -70,6 +70,8 @@ func _run() -> void:
 			root.add_child(target)
 			room.player = target
 			for trap_index in room.vents.size():
+				if not room.uses_contact_damage(trap_index):
+					continue
 				target.position = room.vents[trap_index]
 				foe.position = target.position
 				target.damage = 0.0

@@ -1,0 +1,9 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+BIOME_LAYOUTS_CHECKED=maintenance
+BIOME_LAYOUTS_CHECKED=factory
+BIOME_LAYOUTS_CHECKED=boiler
+BIOME_LAYOUTS_CHECKED=toxin_refinery
+FOUR_BIOME_CHECKS=19448 FAILURES=0
