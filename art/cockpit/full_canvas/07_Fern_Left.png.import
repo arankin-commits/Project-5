@@ -15,9 +15,9 @@ dest_files=["res://.godot/imported/07_Fern_Left.png-5cdd0e7e1a4628994d1f281236db
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
-compress/lossy_quality=0.7
+compress/lossy_quality=0.85
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
