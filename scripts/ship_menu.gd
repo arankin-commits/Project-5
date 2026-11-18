@@ -29,7 +29,7 @@ func _ready() -> void:
 	menu.quit_requested.connect(func(): quit_requested.emit())
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel") and not event.is_echo():
+	if (event.is_action_pressed("ui_cancel") or (event is InputEventKey and event.pressed and not event.is_echo() and (event.keycode == KEY_ESCAPE or event.physical_keycode == KEY_ESCAPE))) and not event.is_echo():
 		if menu.visible:
 			menu.back()
 		else:

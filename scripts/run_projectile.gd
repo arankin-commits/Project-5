@@ -16,7 +16,7 @@ func _physics_process(delta: float) -> void:
 		queue_free()
 		return
 	if is_instance_valid(target) and Geometry2D.get_closest_point_to_segment(target.global_position,global_position,next).distance_to(target.global_position) < 22:
-		target.call("take_damage",damage)
+		target.call("take_damage", damage, self, true)
 		queue_free()
 		return
 	global_position = next

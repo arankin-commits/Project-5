@@ -95,6 +95,8 @@ var trap_timer := 0.0
 var trap_target_waves := 0
 var trap_current_wave := 0
 var trap_buff_active := false
+var player_armor_cooldown := 0.0
+var charging_tempest_energy := 0.0
 
 func _ready() -> void:
 	get_node("/root/BackgroundMusic").play_boiler()
@@ -124,6 +126,7 @@ func _ready() -> void:
 	player.damaged.connect(_on_damage)
 	player.dashed.connect(func(): _effect(player.position, "ring", 55, Color("73f7e4")))
 	player.dashed.connect(func(): $Audio.play_cue("dash"))
+	player.dashed.connect(_on_player_dashed)
 	enemies.child_entered_tree.connect(_on_enemy_child_entered)
 	hud.reward_selected.connect(choose_reward)
 	hud.retry_requested.connect(_retry)
@@ -527,6 +530,19 @@ func _spawn_summons(summoner: CharacterBody2D, key: String, count: int) -> void:
 		_effect(point,"ring",40,Color("c998ff"))
 
 func _process(delta: float) -> void:
+	player_armor_cooldown = maxf(0.0, player_armor_cooldown - delta)
+	if is_instance_valid(player) and player.get("charging") and player_cards.has("raging_tempest"):
+		charging_tempest_energy += delta * 30.0
+		if charging_tempest_energy >= 30.0:
+			charging_tempest_energy -= 30.0
+			var tempest_hits := 0
+			for enemy in enemies.get_children():
+				if enemy.health > 0 and enemy.position.distance_to(player.position) <= 240.0:
+					enemy.take_damage(18.0, Vector2.ZERO, 0.0, "lightning")
+					_effect(enemy.position - Vector2(0, 35), "burst", 35, Color("ffe600"))
+					tempest_hits += 1
+					if tempest_hits >= 3:
+						break
 	if speech_timer > 0:
 		speech_timer -= delta
 		if speech_timer <= 0 and is_instance_valid(speech_label):
@@ -618,6 +634,9 @@ func _on_attack(origin: Vector2, direction: Vector2, damage: float, reach: float
 		return
 	$Audio.play_cue("strike")
 	_effect(origin,"ring" if heavy else "slash",reach,Color("ffcc73") if heavy else Color("85ffe2"),direction)
+	var combo_hit: int = player.combo if is_instance_valid(player) else 1
+	var struck_enemies: Array[CharacterBody2D] = []
+
 	for enemy in enemies.get_children():
 		if enemy.get("health") <= 0:
 			continue
@@ -635,19 +654,173 @@ func _on_attack(origin: Vector2, direction: Vector2, damage: float, reach: float
 			hit_damage *= 1.0 + wall_damage_bonus
 		if enemy.call("is_backstab", origin):
 			hit_damage *= float(player.get("backstab_multiplier"))
-		enemy.call("take_damage",hit_damage,direction,180.0 if player.charged_strike else (65.0 if heavy else 12.0))
+		enemy.call("take_damage",hit_damage,direction,180.0 if player.charged_strike else (65.0 if heavy else 12.0), "regular", "slam" if heavy else "regular")
+		struck_enemies.append(enemy)
 		player.gain_hit_energy()
 
 		_effect(enemy.position-Vector2(0,35),"burst",35,Color("ffe0a0"))
 		camera_shake = 3 if not heavy else 6
 
-func _on_damage(amount: float) -> void:
+	if not heavy:
+		for enemy in struck_enemies:
+			if player_cards.has("lightning_attack"):
+				var l_dmg: float = 8.0 if combo_hit < 3 else 12.0
+				enemy.take_damage(l_dmg, direction, 12.0, "lightning")
+				if player_cards.has("lightning_overload"):
+					for other in enemies.get_children():
+						if other != enemy and other.health > 0 and enemy.position.distance_to(other.position) <= 140.0:
+							other.take_damage(l_dmg * 0.60, Vector2.ZERO, 0.0, "lightning", "secondary")
+				elif rng.randf() <= 0.35:
+					var max_spread := 4 if player_cards.has("chain_lightning") else (3 if player_cards.has("stronger_lightning") else 1)
+					var spread_count := 0
+					for other in enemies.get_children():
+						if other != enemy and other.health > 0 and enemy.position.distance_to(other.position) <= 180.0:
+							other.take_damage(l_dmg * 0.50, Vector2.ZERO, 0.0, "lightning", "secondary")
+							spread_count += 1
+							if spread_count >= max_spread:
+								break
+			if player_cards.has("fire_attack"):
+				enemy.take_damage(0.0, Vector2.ZERO, 0.0, "fire")
+			if player_cards.has("water_attack"):
+				enemy.take_damage(0.0, Vector2.ZERO, 0.0, "water")
+			if player_cards.has("wind_attack"):
+				var w_dmg: float = 5.0 if combo_hit < 3 else 8.0
+				var kb_dir: Vector2 = (player.position - enemy.position).normalized() if player_cards.has("vortex") else direction
+				var kb_dist: float = 12.0 * (1.55 if player_cards.has("gust") else 1.25)
+				enemy.take_damage(w_dmg, kb_dir, kb_dist, "wind")
+			if player_cards.has("ice_attack"):
+				enemy.take_damage(0.0, Vector2.ZERO, 0.0, "ice")
+			if player_cards.has("earth_attack"):
+				var e_dmg: float = 12.0 if combo_hit < 3 else 18.0
+				enemy.take_damage(e_dmg, direction, 12.0, "earth")
+	else:
+		for enemy in struck_enemies:
+			if player_cards.has("lightning_special"):
+				enemy.take_damage(20.0, direction, 45.0, "lightning")
+			if player_cards.has("fire_special"):
+				enemy.take_damage(18.0, direction, 45.0, "fire")
+			if player_cards.has("water_special"):
+				enemy.take_damage(16.0, direction, 45.0, "water")
+			if player_cards.has("wind_special"):
+				enemy.take_damage(14.0, direction, 80.0, "wind")
+			if player_cards.has("ice_special"):
+				enemy.take_damage(18.0, direction, 45.0, "ice")
+			if player_cards.has("earth_special"):
+				enemy.take_damage(24.0, direction, 65.0, "earth")
+
+		if player_cards.has("lightning_slam"):
+			_effect(origin, "ring", reach * 1.2, Color("ffe600"))
+			get_tree().create_timer(1.0).timeout.connect(func():
+				for enemy in enemies.get_children():
+					if enemy.health > 0 and enemy.position.distance_to(origin) <= reach * 1.2:
+						enemy.take_damage(40.0, Vector2.ZERO, 0.0, "lightning")
+						_effect(enemy.position - Vector2(0, 35), "burst", 45, Color("ffe600"))
+			)
+		if player_cards.has("fire_slam"):
+			_effect(origin, "ring", reach * 1.3, Color("ff3b30"))
+			for enemy in enemies.get_children():
+				if enemy.health > 0 and enemy.position.distance_to(origin) <= reach * 1.3:
+					enemy.take_damage(18.0, Vector2.ZERO, 0.0, "fire")
+		if player_cards.has("tidal_slam"):
+			_effect(origin, "ring", reach * 1.3, Color("3399ff"))
+			for enemy in enemies.get_children():
+				if enemy.health > 0 and enemy.position.distance_to(origin) <= reach * 1.3:
+					enemy.take_damage(16.0, origin.direction_to(enemy.position), 90.0, "water")
+		if player_cards.has("ice_slam"):
+			_effect(origin, "ring", reach * 1.2, Color("a8f0ff"))
+			for enemy in enemies.get_children():
+				if enemy.health > 0 and enemy.position.distance_to(origin) <= reach * 1.2:
+					enemy.wall_stun_timer = maxf(enemy.wall_stun_timer, 2.0)
+					enemy.take_damage(22.0, Vector2.ZERO, 0.0, "ice")
+		if player_cards.has("earth_slam"):
+			_effect(origin, "ring", reach * 1.2, Color("a65e2e"))
+			for enemy in enemies.get_children():
+				if enemy.health > 0 and enemy.position.distance_to(origin) <= reach * 1.2:
+					enemy.take_damage(26.0, Vector2.ZERO, 0.0, "earth")
+
+func _on_player_dashed() -> void:
+	if state != "combat" or not is_instance_valid(player):
+		return
+	var dash_from: Vector2 = player.last_dash_start
+	var dash_to: Vector2 = player.position
+	var enemies_hit: Array[CharacterBody2D] = []
+	for enemy in enemies.get_children():
+		if enemy.health <= 0:
+			continue
+		var closest := Geometry2D.get_closest_point_to_segment(enemy.position, dash_from, dash_to)
+		if closest.distance_to(enemy.position) <= 50.0:
+			enemies_hit.append(enemy)
+
+	for enemy in enemies_hit:
+		if player_cards.has("lightning_dash"):
+			enemy.take_damage(18.0, Vector2.ZERO, 0.0, "lightning")
+			_effect(enemy.position - Vector2(0, 35), "burst", 35, Color("ffe600"))
+		if player_cards.has("fire_dash"):
+			enemy.take_damage(0.0, Vector2.ZERO, 0.0, "fire")
+		if player_cards.has("water_dash"):
+			enemy.take_damage(0.0, Vector2.ZERO, 0.0, "water")
+		if player_cards.has("wind_dash"):
+			var pull_dir: Vector2 = (dash_from - enemy.position).normalized()
+			enemy.take_damage(8.0, pull_dir, 60.0, "wind")
+		if player_cards.has("ice_dash"):
+			enemy.take_damage(0.0, Vector2.ZERO, 0.0, "ice")
+		if player_cards.has("earth_dash"):
+			enemy.take_damage(16.0, Vector2.ZERO, 0.0, "earth")
+
+	if not enemies_hit.is_empty() and player_cards.has("fleet_foot"):
+		var orig_speed: float = float(player.get("speed"))
+		player.set("speed", orig_speed * 1.25)
+		get_tree().create_timer(2.0).timeout.connect(func(): if is_instance_valid(player): player.set("speed", orig_speed))
+
+	if player_cards.has("fire_trail"):
+		_effect(dash_from.lerp(dash_to, 0.5), "ring", 60.0, Color("ff3b30"))
+		for enemy in enemies.get_children():
+			if enemy.health > 0 and enemy.position.distance_to(dash_from.lerp(dash_to, 0.5)) <= 80.0:
+				enemy.take_damage(0.0, Vector2.ZERO, 0.0, "fire")
+
+	if player_cards.has("blizzard"):
+		_effect(dash_from.lerp(dash_to, 0.5), "ring", 60.0, Color("a8f0ff"))
+		for enemy in enemies.get_children():
+			if enemy.health > 0 and enemy.position.distance_to(dash_from.lerp(dash_to, 0.5)) <= 80.0:
+				enemy.take_damage(4.0, Vector2.ZERO, 0.0, "ice")
+
+func _on_damage(amount: float, attacker: Node2D = null, is_projectile := false) -> void:
 	if state != "combat":
 		return
 	health = maxf(0,health-amount)
 	$Audio.play_cue("hit")
 	camera_shake = 8
 	_effect(player.position,"burst",45,Color("ff7654"))
+
+	if is_instance_valid(player) and player.get("charging") and is_instance_valid(attacker) and attacker.has_method("take_damage"):
+		if player_cards.has("lightning_armor") or config.core_elements.has("lightning"):
+			attacker.take_damage(16.0, Vector2.ZERO, 0.0, "lightning")
+		if player_cards.has("fire_armor") or config.core_elements.has("fire"):
+			attacker.take_damage(6.0, Vector2.ZERO, 0.0, "fire")
+		if player_cards.has("water_armor") or config.core_elements.has("water"):
+			attacker.take_damage(0.0, Vector2.ZERO, 0.0, "water")
+		if player_cards.has("wind_armor") or config.core_elements.has("wind"):
+			attacker.take_damage(10.0, player.position.direction_to(attacker.position), 80.0, "wind")
+		if player_cards.has("ice_armor") or config.core_elements.has("ice"):
+			attacker.take_damage(0.0, Vector2.ZERO, 0.0, "ice")
+		if player_cards.has("earth_armor") or config.core_elements.has("earth"):
+			attacker.take_damage(18.0, Vector2.ZERO, 0.0, "earth")
+
+	if not is_projectile and is_instance_valid(attacker) and attacker.has_method("take_damage") and player_armor_cooldown <= 0.0:
+		player_armor_cooldown = 0.5
+		if player_cards.has("lightning_armor"):
+			attacker.take_damage(16.0, Vector2.ZERO, 0.0, "lightning")
+		if player_cards.has("fire_armor"):
+			attacker.take_damage(6.0, Vector2.ZERO, 0.0, "fire")
+		if player_cards.has("water_armor"):
+			attacker.take_damage(0.0, Vector2.ZERO, 0.0, "water")
+		if player_cards.has("wind_armor"):
+			attacker.take_damage(10.0, player.position.direction_to(attacker.position), 80.0, "wind")
+		if player_cards.has("ice_armor"):
+			attacker.take_damage(0.0, Vector2.ZERO, 0.0, "ice")
+		if player_cards.has("earth_armor"):
+			attacker.take_damage(18.0, Vector2.ZERO, 0.0, "earth")
+
 	if health <= 0:
 		if player.skills.has("final_stand") and not final_stand_used:
 			final_stand_used = true
@@ -699,9 +872,7 @@ func _check_clear() -> void:
 		if not found_promised:
 			if config.is_element_reward(promised) or promised.begins_with("upgrade_"):
 				var element := promised.trim_prefix("core_").trim_prefix("upgrade_")
-				var rolled: Array[Dictionary] = []
-				if config.biome != "maintenance":
-					rolled = ElementalCards.roll_elemental_cards(element, player_cards, trap_buff_active, rng)
+				var rolled: Array[Dictionary] = ElementalCards.roll_elemental_cards(element, player_cards, trap_buff_active, rng)
 				if not rolled.is_empty():
 					for card in rolled:
 						reward_choices.append({

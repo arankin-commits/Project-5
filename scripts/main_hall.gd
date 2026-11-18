@@ -26,11 +26,11 @@ func _ready() -> void:
 	add_child(preload("res://scripts/ship_menu.gd").new())
 	var entry_id := CockpitDoor.take_entry_id()
 	if entry_id == "from_sync":
-		player.position = Vector2(521, 315)
+		player.position = Vector2(521, 335)
 	elif entry_id == "from_workshop":
-		player.position = Vector2(170, 550)
+		player.position = Vector2(180, 550)
 	else:
-		player.position = Vector2(844, 315)
+		player.position = Vector2(844, 335)
 	_build_right_wing()
 	_build_collision()
 	_build_doors()
@@ -75,11 +75,27 @@ func _build_doors() -> void:
 func _build_passages() -> void:
 	var workshop_entrance := PASSAGE.new()
 	workshop_entrance.name = "WorkshopEntrance"
-	workshop_entrance.position = Vector2(100, 550)
-	workshop_entrance.half_extent = Vector2(35, 45)
+	workshop_entrance.position = Vector2(95, 550)
+	workshop_entrance.half_extent = Vector2(25, 45)
 	workshop_entrance.target_scene = "res://scenes/FlyingLibertyWorkshop.tscn"
 	workshop_entrance.target_entry_id = "from_hall"
 	$Passages.add_child(workshop_entrance)
+
+	var sync_entrance := PASSAGE.new()
+	sync_entrance.name = "SyncChamberEntrance"
+	sync_entrance.position = Vector2(521, 255)
+	sync_entrance.half_extent = Vector2(35, 15)
+	sync_entrance.target_scene = "res://scenes/FlyingLibertySyncChamber.tscn"
+	sync_entrance.target_entry_id = "from_hall"
+	$Passages.add_child(sync_entrance)
+
+	var cockpit_entrance := PASSAGE.new()
+	cockpit_entrance.name = "CockpitEntrance"
+	cockpit_entrance.position = Vector2(844, 255)
+	cockpit_entrance.half_extent = Vector2(35, 15)
+	cockpit_entrance.target_scene = "res://scenes/FlyingLibertyCockpit.tscn"
+	cockpit_entrance.target_entry_id = "from_hall"
+	$Passages.add_child(cockpit_entrance)
 
 func _build_right_wing() -> void:
 	# Reuse the existing painted left corridor and its top-door artwork as texture regions.

@@ -39,7 +39,8 @@ func _ready() -> void:
 	npc_controller.room_id = "cockpit"
 	add_child(npc_controller)
 	var spawn := _object("spawn")
-	player.position = map_gameplay(Vector2(spawn["x"], spawn["y"]))
+	var mapped_spawn := map_gameplay(Vector2(spawn["x"], spawn["y"]))
+	player.position = Vector2(mapped_spawn.x, min(mapped_spawn.y, 780.0))
 	var camera: Camera2D = player.get_node("Camera2D")
 	camera.make_current()
 	camera.reset_smoothing()
@@ -178,8 +179,17 @@ func _build_actors_and_interactions() -> void:
 	door.locked = bool(door_data.get("locked", false))
 	# A later Main Hall scene can be added here without changing the interaction code.
 	door.target_scene = "res://scenes/FlyingLibertyMainHall.tscn"
+	door.target_entry_id = "from_cockpit"
 	interactions.add_child(door)
 	interactables.append(door)
+
+	var passage := preload("res://scripts/room_passage.gd").new()
+	passage.name = "MainHallPassage"
+	passage.position = Vector2(door.position.x, 885.0)
+	passage.half_extent = Vector2(60, 20)
+	passage.target_scene = "res://scenes/FlyingLibertyMainHall.tscn"
+	passage.target_entry_id = "from_cockpit"
+	add_child(passage)
 
 func _object(kind: String) -> Dictionary:
 	for object in layout["objects"]:

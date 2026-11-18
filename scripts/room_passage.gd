@@ -6,6 +6,7 @@ class_name RoomPassage
 @export var target_entry_id := ""
 
 var transitioning := false
+var armed := false
 
 func _ready() -> void:
 	collision_layer = 0
@@ -16,9 +17,14 @@ func _ready() -> void:
 	collision.shape = shape
 	add_child(collision)
 	body_entered.connect(_on_body_entered)
+	_arm_passage()
+
+func _arm_passage() -> void:
+	await get_tree().create_timer(0.35).timeout
+	armed = true
 
 func _on_body_entered(body: Node2D) -> void:
-	if transitioning or not body is CharacterBody2D or not ResourceLoader.exists(target_scene):
+	if not armed or transitioning or not body is CharacterBody2D or not ResourceLoader.exists(target_scene):
 		return
 	transitioning = true
 	call_deferred("_travel")

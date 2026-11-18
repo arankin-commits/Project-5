@@ -29,7 +29,7 @@ func _ready() -> void:
 	_build_pod_doors()
 	run_setup.connect("closed", Callable(self, "_on_setup_closed"))
 	run_setup.connect("start_requested", Callable(self, "_on_start_requested"))
-	player.position = Vector2(793, 825)
+	player.position = Vector2(793, 760)
 	if get_node("/root/RunConfig").call("consume_sync_return"):
 		_play_sync_return()
 	$Player/Camera2D.make_current()
@@ -66,6 +66,14 @@ func _build_interactions() -> void:
 	exit_door.target_entry_id = "from_sync"
 	$Interactions.add_child(exit_door)
 	interactables.append(exit_door)
+
+	var exit_passage := preload("res://scripts/room_passage.gd").new()
+	exit_passage.name = "MainHallPassage"
+	exit_passage.position = Vector2(793, 855)
+	exit_passage.half_extent = Vector2(50, 25)
+	exit_passage.target_scene = "res://scenes/FlyingLibertyMainHall.tscn"
+	exit_passage.target_entry_id = "from_sync"
+	add_child(exit_passage)
 	var pod := SYNC_POD.new() as SyncPodInteractable
 	pod.name = "SyncPod"
 	pod.position = Vector2(650, 630)

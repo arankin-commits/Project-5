@@ -170,7 +170,7 @@ func _quit() -> void:
 	get_tree().quit()
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel"):
+	if event.is_action_pressed("ui_cancel") or (event is InputEventKey and event.pressed and not event.is_echo() and (event.keycode == KEY_ESCAPE or event.physical_keycode == KEY_ESCAPE)):
 		if is_instance_valid(delete_modal):
 			_close_delete_modal()
 		elif settings_menu.visible:

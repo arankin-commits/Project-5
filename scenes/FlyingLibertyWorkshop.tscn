@@ -20,7 +20,7 @@ centered = false
 [node name="Passages" type="Node2D" parent="."]
 
 [node name="Player" type="CharacterBody2D" parent="."]
-position = Vector2(1445, 490)
+position = Vector2(1390, 510)
 collision_layer = 2
 collision_mask = 1
 z_index = 1

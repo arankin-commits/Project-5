@@ -5,11 +5,14 @@ const WALK_ART := preload("res://art/characters/medium_v2/walk.png")
 const STRIKE_ART := preload("res://art/characters/medium_v2/strike.png")
 
 signal attack_requested(origin: Vector2, direction: Vector2, damage: float, reach: float, heavy: bool)
-signal damaged(amount: float)
+signal damaged(amount: float, attacker: Node2D, is_projectile: bool)
 signal dashed
 signal grapple_requested(direction: Vector2)
 signal core_requested
 signal perfect_dodged
+
+var last_dash_start := Vector2.ZERO
+var last_dash_end := Vector2.ZERO
 
 var controls_enabled := true
 var appearance := "medium"
@@ -185,7 +188,15 @@ func start_dash(direction: Vector2) -> bool:
 	dash_timer = dash_duration
 	dash_cooldown = dash_recharge
 	invulnerability = maxf(invulnerability, dash_duration * 0.5)
-	velocity = dash_direction * 850.0
+	last_dash_start = global_position
+	if cards.has("light_speed"):
+		velocity = dash_direction * (850.0 * 2.0)
+		move_and_slide()
+		last_dash_end = global_position
+		dash_timer = 0.0
+	else:
+		velocity = dash_direction * 850.0
+		last_dash_end = global_position + dash_direction * (850.0 * dash_duration)
 	dashed.emit()
 	return true
 
@@ -224,7 +235,7 @@ func release_charge(direction: Vector2) -> bool:
 	charge_time = 0
 	return success
 
-func take_damage(amount: float) -> bool:
+func take_damage(amount: float, attacker: Node2D = null, is_projectile := false) -> bool:
 	if controls_enabled and dash_timer > 0 and dash_elapsed <= dash_duration * 0.5 and not perfect_triggered:
 		perfect_triggered = true
 		perfect_reward_timer = 5.0
@@ -234,7 +245,7 @@ func take_damage(amount: float) -> bool:
 	if not controls_enabled or invulnerability > 0:
 		return false
 	invulnerability = 0.7
-	damaged.emit(amount)
+	damaged.emit(amount, attacker, is_projectile)
 	return true
 
 func _update_visual(delta: float) -> void:

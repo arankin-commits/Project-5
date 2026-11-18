@@ -178,7 +178,7 @@ func _ready() -> void:
 	root.move_child(pause_menu, -1)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel"):
+	if event.is_action_pressed("ui_cancel") or (event is InputEventKey and event.pressed and not event.is_echo() and (event.keycode == KEY_ESCAPE or event.physical_keycode == KEY_ESCAPE)):
 		if pause_menu.visible:
 			pause_menu.back()
 		elif modal.visible and card_view.visible:

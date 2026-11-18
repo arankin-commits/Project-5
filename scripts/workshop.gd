@@ -25,7 +25,7 @@ func _ready() -> void:
 	npc_controller.room_id = "workshop"
 	add_child(npc_controller)
 	core_terminal.connect("closed", Callable(self, "_on_core_terminal_closed"))
-	player.position = Vector2(1445, 490)
+	player.position = Vector2(1390, 510)
 	$Player/Camera2D.make_current()
 	$Player/Camera2D.reset_smoothing()
 	$Player/Camera2D.force_update_scroll()
@@ -75,8 +75,8 @@ func _on_core_terminal_closed() -> void:
 func _build_passage() -> void:
 	var return_passage := PASSAGE.new()
 	return_passage.name = "MainHallReturn"
-	return_passage.position = Vector2(1500, 510)
-	return_passage.half_extent = Vector2(35, 120)
+	return_passage.position = Vector2(1510, 510)
+	return_passage.half_extent = Vector2(20, 100)
 	return_passage.target_scene = "res://scenes/FlyingLibertyMainHall.tscn"
 	return_passage.target_entry_id = "from_workshop"
 	$Passages.add_child(return_passage)

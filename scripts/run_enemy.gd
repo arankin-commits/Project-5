@@ -97,6 +97,19 @@ func _physics_process(delta: float) -> void:
 		return
 	slow_timer = maxf(0, slow_timer - delta)
 	elemental_state.update(delta)
+	if elemental_state.is_burning() and elemental_state.burn_tick_timer <= 0.0:
+		elemental_state.burn_tick_timer = 1.0
+		var burn_tick_dmg := ElementalSystem.calculate_burn_tick(6.0, elemental_state, 0.50)
+		take_damage(burn_tick_dmg, Vector2.ZERO, 0.0, "burn", "dot")
+	if elemental_state.is_wet() and is_instance_valid(target) and target.get("cards") != null:
+		var p_cards: Array = target.cards
+		if p_cards.has("rust") and elemental_state.rust_tick_timer <= 0.0:
+			elemental_state.rust_tick_timer = 1.0
+			elemental_state.rust_consecutive_ticks += 1
+			var rust_dmg := 8.0
+			if p_cards.has("wear_and_tear"):
+				rust_dmg = minf(32.0, 8.0 + (elemental_state.rust_consecutive_ticks - 1) * 3.0)
+			take_damage(rust_dmg, Vector2.ZERO, 0.0, "rust", "dot")
 	if wall_stun_timer > 0 or elemental_state.is_frozen():
 		if wall_stun_timer > 0:
 			wall_stun_timer = maxf(0, wall_stun_timer - delta)
@@ -121,7 +134,9 @@ func _physics_process(delta: float) -> void:
 		windup -= delta
 		velocity = attack_direction * (620 if phase_two else 490)
 		if global_position.distance_to(target.global_position) < 55:
-			target.call("take_damage",damage)
+			var wet_red := 0.35 if (is_instance_valid(target) and target.get("cards") != null and target.cards.has("water_damage")) else 0.20
+			var eff_dmg := damage * (1.0 - wet_red) if elemental_state.is_wet() else damage
+			target.call("take_damage", eff_dmg, self, false)
 		if windup <= 0 or is_on_wall():
 			state = "chase"
 			cooldown = 1.0
@@ -132,7 +147,10 @@ func _physics_process(delta: float) -> void:
 		elif kind != "sentry":
 			path_timer -= delta
 			if path_timer <= 0:
-				path = room.call("path_between",position,target.position)
+				if is_instance_valid(room):
+					path = room.call("path_between",position,target.position)
+				else:
+					path = PackedVector2Array([target.position])
 				path_timer = 0.35
 			while path.size() > 1 and position.distance_to(path[0]) < 22:
 				path.remove_at(0)
@@ -151,6 +169,8 @@ func _physics_process(delta: float) -> void:
 		velocity *= 0.5
 	if elemental_state.is_muddy():
 		velocity *= 0.8
+	if elemental_state.is_frost():
+		velocity *= 0.75
 	move_and_slide()
 	queue_redraw()
 
@@ -194,7 +214,9 @@ func _release_attack() -> void:
 			impact_requested.emit(attack_point,radius)
 			var offset := (target.global_position-attack_point)*Vector2(1,1.0/0.65)
 			if offset.length() < radius:
-				target.call("take_damage",damage)
+				var wet_red := 0.35 if (is_instance_valid(target) and target.get("cards") != null and target.cards.has("water_damage")) else 0.20
+				var eff_dmg := damage * (1.0 - wet_red) if elemental_state.is_wet() else damage
+				target.call("take_damage", eff_dmg, self, false)
 
 func attack_radius() -> float:
 	if kind == "boss":
@@ -205,6 +227,11 @@ func is_backstab(origin: Vector2) -> bool:
 	# Rear 120-degree cone; windups and charges retain their committed facing.
 	var to_attacker := global_position.direction_to(origin)
 	return to_attacker.dot(facing.normalized()) < -0.5
+
+func _player_cards() -> Array:
+	if is_instance_valid(target) and "cards" in target and target.cards != null:
+		return target.cards
+	return []
 
 func calculate_collision_damage(knockback_power: float) -> float:
 	if knockback_power <= 0.0:
@@ -223,6 +250,16 @@ func apply_knockback(direction: Vector2, distance: float, knockback_source := "r
 	if collision != null:
 		var collider: Object = collision.get_collider()
 		var col_damage := calculate_collision_damage(eff_distance)
+		var p_cards: Array = _player_cards()
+		if knockback_source == "wind":
+			col_damage = maxf(col_damage, 16.0)
+			if p_cards.has("come_hither"):
+				col_damage += 12.0
+			if p_cards.has("wind_bomb") and knockback_source != "secondary" and get_parent() != null:
+				for other in get_parent().get_children():
+					if other != self and is_instance_valid(other) and other is CharacterBody2D and other.health > 0.0:
+						if global_position.distance_to(other.global_position) <= 130.0:
+							other.take_damage(24.0, global_position.direction_to(other.global_position), 80.0, "wind", "secondary")
 		if kind != "boss":
 			wall_stun_timer = 0.3
 			state = "chase"
@@ -231,11 +268,14 @@ func apply_knockback(direction: Vector2, distance: float, knockback_source := "r
 			wall_stun_timer = 0.15 * maxf(0.2, 1.0 - elemental_state.cc_resistance)
 			elemental_state.cc_resistance = minf(0.8, elemental_state.cc_resistance + 0.2)
 		if is_instance_valid(collider) and collider != self and collider is CharacterBody2D and (target == null or collider != target):
+			var enemy_col_damage := 8.0 if p_cards.has("pinball") else col_damage
+			if p_cards.has("pinball"):
+				col_damage = 8.0
 			if knockback_source == "wind" and (elemental_state.is_burning() or elemental_state.is_wet()):
 				if collider.get("elemental_state") != null:
 					ElementalSystem.apply_wet(collider.elemental_state, 4.0)
 			if collider.has_method("take_damage"):
-				collider.call("take_damage", col_damage, Vector2.ZERO, 0.0, "regular")
+				collider.call("take_damage", enemy_col_damage, Vector2.ZERO, 0.0, "regular")
 			if collider.get("kind") != "boss":
 				if collider.get("wall_stun_timer") != null:
 					collider.set("wall_stun_timer", 0.3)
@@ -253,24 +293,68 @@ func apply_knockback(direction: Vector2, distance: float, knockback_source := "r
 func take_damage(amount: float, knockback: Vector2 = Vector2.ZERO, push_distance := 12.0, element := "regular", knockback_source := "regular") -> void:
 	if health <= 0 or is_dead:
 		return
-	var final_amount := ElementalSystem.calculate_elemental_damage(amount, element, elemental_state)
+	var p_cards: Array = _player_cards()
+	var eff_amount := amount
+	if elemental_state.is_frozen() and p_cards.has("absolute_zero"):
+		eff_amount *= 1.4
+	if elemental_state.is_wet() and p_cards.has("erosion") and element == "regular":
+		var wet_elapsed := 3.0 - elemental_state.wet_timer
+		eff_amount *= (1.0 + clampf(floorf(wet_elapsed) * 0.05, 0.0, 0.25))
+
+	var final_amount := ElementalSystem.calculate_elemental_damage(eff_amount, element, elemental_state)
 	health = maxf(0, health - final_amount)
 	hit_flash = 0.12
 	damaged.emit(final_amount, knockback, element)
 	
+	var is_dot := (element == "burn" or element == "rust" or knockback_source == "dot")
+	var is_secondary := (knockback_source == "secondary")
 	var elem := element.to_lower().strip_edges()
+
+	# Shatter: Hitting a frozen enemy with heavy attack or Ground Slam instantly shatters them, dealing 80 Ice damage
+	if elemental_state.is_frozen() and (knockback_source in ["heavy", "slam", "special"] or elem in ["earth", "physical"]):
+		if p_cards.has("shatter") and knockback_source != "secondary":
+			elemental_state.frozen_timer = 0.0
+			take_damage(80.0, Vector2.ZERO, 0.0, "ice", "secondary")
+			if p_cards.has("cold_snap") and get_parent() != null:
+				for other in get_parent().get_children():
+					if other != self and is_instance_valid(other) and other is CharacterBody2D and other.health > 0.0:
+						if global_position.distance_to(other.global_position) <= 140.0:
+							other.take_damage(14.0, Vector2.ZERO, 0.0, "ice", "secondary")
+
 	if elem in ["fire", "burn"]:
-		ElementalSystem.apply_burn(elemental_state)
+		if not is_dot:
+			var burn_dur := 5.0 if p_cards.has("lasting_fire") else 3.0
+			var burn_buildup := 10.0 if p_cards.has("explosion") else 0.0
+			var res := ElementalSystem.apply_burn(elemental_state, burn_dur, burn_buildup, true, is_dot, is_secondary)
+			if res.get("reaction") == "burn_explosion":
+				take_damage(100.0, Vector2.ZERO, 0.0, "explosive", "explosion")
+				if p_cards.has("explosive_fury") and get_parent() != null:
+					for other in get_parent().get_children():
+						if other != self and is_instance_valid(other) and other is CharacterBody2D and other.health > 0.0:
+							if global_position.distance_to(other.global_position) <= 150.0:
+								other.take_damage(60.0, Vector2.ZERO, 0.0, "explosive", "secondary")
+								if other.elemental_state.burn_meter >= 70.0:
+									other.elemental_state.burn_meter = 0.0
+									other.take_damage(100.0, Vector2.ZERO, 0.0, "explosive", "secondary")
 	elif elem in ["ice", "frost"]:
-		ElementalSystem.apply_frost(elemental_state)
+		var frost_dur := 3.0
+		var frost_buildup := 15.0 if p_cards.has("flash_freeze") else 10.0
+		var has_ff := p_cards.has("flash_freeze")
+		var res := ElementalSystem.apply_frost(elemental_state, frost_dur, frost_buildup, true, is_dot, is_secondary, "", 0.0, 0.25, has_ff)
+		if res.get("reaction") == "boss_freeze_damage":
+			take_damage(res.get("boss_damage", 80.0), Vector2.ZERO, 0.0, "ice", "secondary")
+		elif res.get("reaction") == "freeze":
+			if p_cards.has("deep_freeze"):
+				elemental_state.frozen_timer = 3.0
 	elif elem in ["water", "rust"]:
-		ElementalSystem.apply_wet(elemental_state)
+		var wet_dur := 5.0 if p_cards.has("drenched") else 3.0
+		ElementalSystem.apply_wet(elemental_state, wet_dur)
 	elif elem == "wind":
 		ElementalSystem.apply_wind(elemental_state)
 	elif elem in ["lightning", "electricity"]:
 		var res := ElementalSystem.apply_lightning(elemental_state)
 		if res.get("extra_burn_tick", false):
-			take_damage(ElementalSystem.calculate_burn_tick(8.0, elemental_state), Vector2.ZERO, 0.0, "burn")
+			take_damage(ElementalSystem.calculate_burn_tick(8.0, elemental_state), Vector2.ZERO, 0.0, "burn", "dot")
 	elif elem == "earth":
 		ElementalSystem.apply_earth(elemental_state)
 		
@@ -285,6 +369,18 @@ func take_damage(amount: float, knockback: Vector2 = Vector2.ZERO, push_distance
 func _die() -> void:
 	if is_dead:
 		return
+	var p_cards: Array = _player_cards()
+	if p_cards.has("fire_spread") and elemental_state.is_burning() and get_parent() != null:
+		var closest_enemy: Node2D = null
+		var min_d := INF
+		for other in get_parent().get_children():
+			if other != self and is_instance_valid(other) and other is CharacterBody2D and other.health > 0.0:
+				var d := global_position.distance_to(other.global_position)
+				if d < min_d:
+					min_d = d
+					closest_enemy = other
+		if closest_enemy != null:
+			ElementalSystem.apply_burn(closest_enemy.elemental_state, 3.0)
 	is_dead = true
 	active = false
 	defeated.emit(self)
