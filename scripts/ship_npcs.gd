@@ -3,6 +3,7 @@ extends Node
 const CATALOG := preload("res://scripts/npc_catalog.gd")
 const DIALOGUE := preload("res://scripts/npc_dialogue.gd")
 const FIXED := {
+	"computer": [{"id":"cyber_security", "at":Vector2(1380,510)}, {"id":"info_broker", "at":Vector2(960,725)}],
 	"hall": [{"id":"old_man", "at":Vector2(455,510), "talk":Vector2(455,363)}, {"id":"kids", "at":Vector2(1050,555), "talk":Vector2(1000,540)}, {"id":"cook", "at":Vector2(1465,650)}],
 	"sync": [{"id":"handler", "at":Vector2(1215,635)}],
 	"workshop": [{"id":"engineer", "at":Vector2(875,845)}, {"id":"mechanic", "at":Vector2(435,650)}]

@@ -235,3 +235,9 @@ Indexed from left to right, top to bottom:
   - Optimized 8-bit palette textures in `res://art/card_hud/` (~283 KB total) including `header_banner.png`, `footer_bar.png`, `art_lightning_attack.png`, `art_fire_slam.png`, `art_ice_slam.png`, 24 elemental action archetype illustrations, and 7 crest/mini icons.
 
 
+
+## Dialogue HUD Rules
+
+- **Sentence-based pagination:** Dialogue must stay within the dialogue text area. When a sentence would overflow, move that entire sentence and all following text to the next page. Repeat until every page fits, measuring wrapped text with the actual HUD font and dimensions.
+- **Oversized sentences:** Split a sentence that exceeds an empty page at word boundaries; split an oversized unbroken word at character boundaries as a last resort. Never clip or discard dialogue.
+- **Continuation:** Preserve speaker, portrait, and text order on every continuation page. Show Continue until the final page, then Leave. Keep player controls locked until the conversation ends.

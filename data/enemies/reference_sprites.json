@@ -1,0 +1,1264 @@
+{
+  "maintenance": [
+    {
+      "top": 0,
+      "height": 157,
+      "frames": [
+        {
+          "center": 85.0,
+          "bottom": 137
+        },
+        {
+          "center": 79.0,
+          "bottom": 135
+        },
+        {
+          "center": 74.5,
+          "bottom": 136
+        },
+        {
+          "center": 77.0,
+          "bottom": 135
+        },
+        {
+          "center": 72.5,
+          "bottom": 133
+        },
+        {
+          "center": 78.5,
+          "bottom": 127
+        },
+        {
+          "center": 84.5,
+          "bottom": 131
+        },
+        {
+          "center": 78.5,
+          "bottom": 132
+        }
+      ]
+    },
+    {
+      "top": 157,
+      "height": 157,
+      "frames": [
+        {
+          "center": 76.0,
+          "bottom": 138
+        },
+        {
+          "center": 77.5,
+          "bottom": 130
+        },
+        {
+          "center": 83.0,
+          "bottom": 137
+        },
+        {
+          "center": 84.5,
+          "bottom": 130
+        },
+        {
+          "center": 78.0,
+          "bottom": 128
+        },
+        {
+          "center": 78.0,
+          "bottom": 121
+        },
+        {
+          "center": 78.0,
+          "bottom": 124
+        },
+        {
+          "center": 73.0,
+          "bottom": 131
+        }
+      ]
+    },
+    {
+      "top": 314,
+      "height": 156,
+      "frames": [
+        {
+          "center": 76.0,
+          "bottom": 150
+        },
+        {
+          "center": 80.0,
+          "bottom": 149
+        },
+        {
+          "center": 81.0,
+          "bottom": 148
+        },
+        {
+          "center": 82.0,
+          "bottom": 147
+        },
+        {
+          "center": 75.5,
+          "bottom": 145
+        },
+        {
+          "center": 78.5,
+          "bottom": 148
+        },
+        {
+          "center": 80.5,
+          "bottom": 142
+        },
+        {
+          "center": 76.5,
+          "bottom": 147
+        }
+      ]
+    },
+    {
+      "top": 470,
+      "height": 157,
+      "frames": [
+        {
+          "center": 78.5,
+          "bottom": 149
+        },
+        {
+          "center": 79.0,
+          "bottom": 145
+        },
+        {
+          "center": 81.0,
+          "bottom": 148
+        },
+        {
+          "center": 83.0,
+          "bottom": 147
+        },
+        {
+          "center": 88.0,
+          "bottom": 147
+        },
+        {
+          "center": 78.5,
+          "bottom": 141
+        },
+        {
+          "center": 70.5,
+          "bottom": 148
+        },
+        {
+          "center": 73.0,
+          "bottom": 147
+        }
+      ]
+    },
+    {
+      "top": 627,
+      "height": 157,
+      "frames": [
+        {
+          "center": 81.0,
+          "bottom": 133
+        },
+        {
+          "center": 79.0,
+          "bottom": 136
+        },
+        {
+          "center": 78.5,
+          "bottom": 136
+        },
+        {
+          "center": 73.0,
+          "bottom": 129
+        },
+        {
+          "center": 77.5,
+          "bottom": 134
+        },
+        {
+          "center": 78.5,
+          "bottom": 137
+        },
+        {
+          "center": 82.0,
+          "bottom": 132
+        },
+        {
+          "center": 84.0,
+          "bottom": 126
+        }
+      ]
+    },
+    {
+      "top": 784,
+      "height": 156,
+      "frames": [
+        {
+          "center": 84.5,
+          "bottom": 132
+        },
+        {
+          "center": 86.0,
+          "bottom": 133
+        },
+        {
+          "center": 72.0,
+          "bottom": 132
+        },
+        {
+          "center": 85.5,
+          "bottom": 130
+        },
+        {
+          "center": 83.5,
+          "bottom": 136
+        },
+        {
+          "center": 71.5,
+          "bottom": 132
+        },
+        {
+          "center": 73.0,
+          "bottom": 132
+        },
+        {
+          "center": 73.0,
+          "bottom": 131
+        }
+      ]
+    },
+    {
+      "top": 940,
+      "height": 157,
+      "frames": [
+        {
+          "center": 79.5,
+          "bottom": 149
+        },
+        {
+          "center": 83.0,
+          "bottom": 145
+        },
+        {
+          "center": 86.0,
+          "bottom": 146
+        },
+        {
+          "center": 83.0,
+          "bottom": 146
+        },
+        {
+          "center": 87.5,
+          "bottom": 147
+        },
+        {
+          "center": 74.0,
+          "bottom": 142
+        },
+        {
+          "center": 72.0,
+          "bottom": 145
+        },
+        {
+          "center": 71.0,
+          "bottom": 145
+        }
+      ]
+    },
+    {
+      "top": 1097,
+      "height": 157,
+      "frames": [
+        {
+          "center": 78.0,
+          "bottom": 141
+        },
+        {
+          "center": 80.0,
+          "bottom": 142
+        },
+        {
+          "center": 79.0,
+          "bottom": 141
+        },
+        {
+          "center": 79.5,
+          "bottom": 134
+        },
+        {
+          "center": 82.0,
+          "bottom": 135
+        },
+        {
+          "center": 77.5,
+          "bottom": 136
+        },
+        {
+          "center": 76.0,
+          "bottom": 136
+        },
+        {
+          "center": 77.0,
+          "bottom": 135
+        }
+      ]
+    }
+  ],
+  "factory": [
+    {
+      "top": 0,
+      "height": 157,
+      "frames": [
+        {
+          "center": 83.5,
+          "bottom": 139
+        },
+        {
+          "center": 80.0,
+          "bottom": 137
+        },
+        {
+          "center": 76.0,
+          "bottom": 138
+        },
+        {
+          "center": 77.0,
+          "bottom": 135
+        },
+        {
+          "center": 81.5,
+          "bottom": 141
+        },
+        {
+          "center": 79.5,
+          "bottom": 136
+        },
+        {
+          "center": 76.0,
+          "bottom": 141
+        },
+        {
+          "center": 79.0,
+          "bottom": 136
+        }
+      ]
+    },
+    {
+      "top": 157,
+      "height": 157,
+      "frames": [
+        {
+          "center": 85.0,
+          "bottom": 140
+        },
+        {
+          "center": 100.5,
+          "bottom": 137
+        },
+        {
+          "center": 63.5,
+          "bottom": 137
+        },
+        {
+          "center": 73.0,
+          "bottom": 109
+        },
+        {
+          "center": 77.0,
+          "bottom": 131
+        },
+        {
+          "center": 77.5,
+          "bottom": 132
+        },
+        {
+          "center": 80.0,
+          "bottom": 132
+        },
+        {
+          "center": 77.0,
+          "bottom": 108
+        }
+      ]
+    },
+    {
+      "top": 314,
+      "height": 156,
+      "frames": [
+        {
+          "center": 81.0,
+          "bottom": 136
+        },
+        {
+          "center": 81.0,
+          "bottom": 138
+        },
+        {
+          "center": 78.0,
+          "bottom": 136
+        },
+        {
+          "center": 77.0,
+          "bottom": 131
+        },
+        {
+          "center": 77.0,
+          "bottom": 136
+        },
+        {
+          "center": 79.0,
+          "bottom": 142
+        },
+        {
+          "center": 82.5,
+          "bottom": 136
+        },
+        {
+          "center": 80.0,
+          "bottom": 133
+        }
+      ]
+    },
+    {
+      "top": 470,
+      "height": 157,
+      "frames": [
+        {
+          "center": 79.5,
+          "bottom": 140
+        },
+        {
+          "center": 80.5,
+          "bottom": 137
+        },
+        {
+          "center": 77.5,
+          "bottom": 140
+        },
+        {
+          "center": 90.0,
+          "bottom": 133
+        },
+        {
+          "center": 83.5,
+          "bottom": 134
+        },
+        {
+          "center": 76.5,
+          "bottom": 134
+        },
+        {
+          "center": 72.5,
+          "bottom": 134
+        },
+        {
+          "center": 62.0,
+          "bottom": 133
+        }
+      ]
+    },
+    {
+      "top": 627,
+      "height": 157,
+      "frames": [
+        {
+          "center": 82.5,
+          "bottom": 139
+        },
+        {
+          "center": 80.0,
+          "bottom": 135
+        },
+        {
+          "center": 77.0,
+          "bottom": 137
+        },
+        {
+          "center": 67.5,
+          "bottom": 137
+        },
+        {
+          "center": 75.5,
+          "bottom": 135
+        },
+        {
+          "center": 79.0,
+          "bottom": 128
+        },
+        {
+          "center": 82.5,
+          "bottom": 136
+        },
+        {
+          "center": 87.5,
+          "bottom": 136
+        }
+      ]
+    },
+    {
+      "top": 784,
+      "height": 156,
+      "frames": [
+        {
+          "center": 75.0,
+          "bottom": 134
+        },
+        {
+          "center": 79.0,
+          "bottom": 134
+        },
+        {
+          "center": 83.0,
+          "bottom": 134
+        },
+        {
+          "center": 75.5,
+          "bottom": 134
+        },
+        {
+          "center": 79.5,
+          "bottom": 135
+        },
+        {
+          "center": 79.5,
+          "bottom": 130
+        },
+        {
+          "center": 80.5,
+          "bottom": 134
+        },
+        {
+          "center": 79.0,
+          "bottom": 133
+        }
+      ]
+    },
+    {
+      "top": 940,
+      "height": 157,
+      "frames": [
+        {
+          "center": 78.5,
+          "bottom": 149
+        },
+        {
+          "center": 79.0,
+          "bottom": 139
+        },
+        {
+          "center": 77.5,
+          "bottom": 147
+        },
+        {
+          "center": 72.0,
+          "bottom": 144
+        },
+        {
+          "center": 75.0,
+          "bottom": 144
+        },
+        {
+          "center": 78.5,
+          "bottom": 139
+        },
+        {
+          "center": 79.0,
+          "bottom": 143
+        },
+        {
+          "center": 85.5,
+          "bottom": 144
+        }
+      ]
+    },
+    {
+      "top": 1097,
+      "height": 157,
+      "frames": [
+        {
+          "center": 78.5,
+          "bottom": 134
+        },
+        {
+          "center": 78.5,
+          "bottom": 135
+        },
+        {
+          "center": 76.0,
+          "bottom": 134
+        },
+        {
+          "center": 77.5,
+          "bottom": 134
+        },
+        {
+          "center": 79.5,
+          "bottom": 134
+        },
+        {
+          "center": 78.0,
+          "bottom": 133
+        },
+        {
+          "center": 75.0,
+          "bottom": 134
+        },
+        {
+          "center": 77.0,
+          "bottom": 133
+        }
+      ]
+    }
+  ],
+  "boiler": [
+    {
+      "top": 0,
+      "height": 220,
+      "frames": [
+        {
+          "center": 58.0,
+          "bottom": 193
+        },
+        {
+          "center": 59.0,
+          "bottom": 188
+        },
+        {
+          "center": 50.0,
+          "bottom": 188
+        },
+        {
+          "center": 54.5,
+          "bottom": 174
+        },
+        {
+          "center": 50.5,
+          "bottom": 169
+        },
+        {
+          "center": 48.5,
+          "bottom": 169
+        },
+        {
+          "center": 54.5,
+          "bottom": 169
+        },
+        {
+          "center": 45.0,
+          "bottom": 174
+        }
+      ]
+    },
+    {
+      "top": 220,
+      "height": 180,
+      "frames": [
+        {
+          "center": 57.5,
+          "bottom": 142
+        },
+        {
+          "center": 62.0,
+          "bottom": 142
+        },
+        {
+          "center": 61.5,
+          "bottom": 142
+        },
+        {
+          "center": 54.5,
+          "bottom": 123
+        },
+        {
+          "center": 52.5,
+          "bottom": 131
+        },
+        {
+          "center": 49.5,
+          "bottom": 121
+        },
+        {
+          "center": 55.5,
+          "bottom": 130
+        },
+        {
+          "center": 43.5,
+          "bottom": 122
+        }
+      ]
+    },
+    {
+      "top": 400,
+      "height": 220,
+      "frames": [
+        {
+          "center": 51.5,
+          "bottom": 171
+        },
+        {
+          "center": 59.5,
+          "bottom": 168
+        },
+        {
+          "center": 65.0,
+          "bottom": 171
+        },
+        {
+          "center": 49.5,
+          "bottom": 171
+        },
+        {
+          "center": 54.0,
+          "bottom": 168
+        },
+        {
+          "center": 49.0,
+          "bottom": 163
+        },
+        {
+          "center": 44.0,
+          "bottom": 170
+        },
+        {
+          "center": 48.5,
+          "bottom": 165
+        }
+      ]
+    },
+    {
+      "top": 620,
+      "height": 190,
+      "frames": [
+        {
+          "center": 58.5,
+          "bottom": 135
+        },
+        {
+          "center": 61.0,
+          "bottom": 135
+        },
+        {
+          "center": 51.0,
+          "bottom": 135
+        },
+        {
+          "center": 55.0,
+          "bottom": 137
+        },
+        {
+          "center": 51.0,
+          "bottom": 127
+        },
+        {
+          "center": 48.5,
+          "bottom": 124
+        },
+        {
+          "center": 47.0,
+          "bottom": 127
+        },
+        {
+          "center": 45.0,
+          "bottom": 137
+        }
+      ]
+    },
+    {
+      "top": 810,
+      "height": 180,
+      "frames": [
+        {
+          "center": 59.0,
+          "bottom": 134
+        },
+        {
+          "center": 52.5,
+          "bottom": 135
+        },
+        {
+          "center": 52.5,
+          "bottom": 133
+        },
+        {
+          "center": 57.0,
+          "bottom": 123
+        },
+        {
+          "center": 51.5,
+          "bottom": 114
+        },
+        {
+          "center": 50.0,
+          "bottom": 134
+        },
+        {
+          "center": 46.0,
+          "bottom": 115
+        },
+        {
+          "center": 44.0,
+          "bottom": 123
+        }
+      ]
+    },
+    {
+      "top": 990,
+      "height": 210,
+      "frames": [
+        {
+          "center": 57.0,
+          "bottom": 163
+        },
+        {
+          "center": 52.5,
+          "bottom": 161
+        },
+        {
+          "center": 52.5,
+          "bottom": 164
+        },
+        {
+          "center": 48.0,
+          "bottom": 157
+        },
+        {
+          "center": 50.0,
+          "bottom": 155
+        },
+        {
+          "center": 50.5,
+          "bottom": 144
+        },
+        {
+          "center": 48.5,
+          "bottom": 155
+        },
+        {
+          "center": 48.0,
+          "bottom": 156
+        }
+      ]
+    },
+    {
+      "top": 1200,
+      "height": 210,
+      "frames": [
+        {
+          "center": 59.0,
+          "bottom": 159
+        },
+        {
+          "center": 63.0,
+          "bottom": 156
+        },
+        {
+          "center": 49.0,
+          "bottom": 163
+        },
+        {
+          "center": 59.0,
+          "bottom": 162
+        },
+        {
+          "center": 58.5,
+          "bottom": 157
+        },
+        {
+          "center": 51.0,
+          "bottom": 156
+        },
+        {
+          "center": 41.5,
+          "bottom": 157
+        },
+        {
+          "center": 46.0,
+          "bottom": 157
+        }
+      ]
+    },
+    {
+      "top": 1410,
+      "height": 210,
+      "frames": [
+        {
+          "center": 59.0,
+          "bottom": 159
+        },
+        {
+          "center": 59.5,
+          "bottom": 156
+        },
+        {
+          "center": 51.5,
+          "bottom": 159
+        },
+        {
+          "center": 52.0,
+          "bottom": 148
+        },
+        {
+          "center": 47.5,
+          "bottom": 151
+        },
+        {
+          "center": 49.5,
+          "bottom": 139
+        },
+        {
+          "center": 49.5,
+          "bottom": 150
+        },
+        {
+          "center": 48.0,
+          "bottom": 150
+        }
+      ]
+    },
+    {
+      "top": 1620,
+      "height": 261,
+      "frames": [
+        {
+          "center": 57.5,
+          "bottom": 158
+        },
+        {
+          "center": 52.0,
+          "bottom": 157
+        },
+        {
+          "center": 60.0,
+          "bottom": 158
+        },
+        {
+          "center": 48.0,
+          "bottom": 150
+        },
+        {
+          "center": 51.0,
+          "bottom": 150
+        },
+        {
+          "center": 49.0,
+          "bottom": 148
+        },
+        {
+          "center": 45.0,
+          "bottom": 150
+        },
+        {
+          "center": 47.5,
+          "bottom": 150
+        }
+      ]
+    }
+  ],
+  "toxin_refinery": [
+    {
+      "top": 0,
+      "height": 157,
+      "frames": [
+        {
+          "center": 93.0,
+          "bottom": 145
+        },
+        {
+          "center": 65.0,
+          "bottom": 146
+        },
+        {
+          "center": 77.5,
+          "bottom": 146
+        },
+        {
+          "center": 77.0,
+          "bottom": 129
+        },
+        {
+          "center": 80.0,
+          "bottom": 133
+        },
+        {
+          "center": 69.5,
+          "bottom": 144
+        },
+        {
+          "center": 69.5,
+          "bottom": 130
+        },
+        {
+          "center": 78.0,
+          "bottom": 119
+        }
+      ]
+    },
+    {
+      "top": 157,
+      "height": 157,
+      "frames": [
+        {
+          "center": 85.0,
+          "bottom": 130
+        },
+        {
+          "center": 79.0,
+          "bottom": 133
+        },
+        {
+          "center": 74.0,
+          "bottom": 133
+        },
+        {
+          "center": 79.5,
+          "bottom": 132
+        },
+        {
+          "center": 83.0,
+          "bottom": 127
+        },
+        {
+          "center": 79.0,
+          "bottom": 130
+        },
+        {
+          "center": 76.0,
+          "bottom": 130
+        },
+        {
+          "center": 72.5,
+          "bottom": 130
+        }
+      ]
+    },
+    {
+      "top": 314,
+      "height": 156,
+      "frames": [
+        {
+          "center": 82.0,
+          "bottom": 137
+        },
+        {
+          "center": 81.5,
+          "bottom": 135
+        },
+        {
+          "center": 79.5,
+          "bottom": 136
+        },
+        {
+          "center": 82.0,
+          "bottom": 136
+        },
+        {
+          "center": 80.5,
+          "bottom": 138
+        },
+        {
+          "center": 80.5,
+          "bottom": 126
+        },
+        {
+          "center": 76.5,
+          "bottom": 135
+        },
+        {
+          "center": 77.0,
+          "bottom": 136
+        }
+      ]
+    },
+    {
+      "top": 470,
+      "height": 157,
+      "frames": [
+        {
+          "center": 77.5,
+          "bottom": 134
+        },
+        {
+          "center": 80.0,
+          "bottom": 128
+        },
+        {
+          "center": 80.0,
+          "bottom": 133
+        },
+        {
+          "center": 83.0,
+          "bottom": 119
+        },
+        {
+          "center": 84.5,
+          "bottom": 118
+        },
+        {
+          "center": 79.5,
+          "bottom": 127
+        },
+        {
+          "center": 72.5,
+          "bottom": 121
+        },
+        {
+          "center": 76.5,
+          "bottom": 108
+        }
+      ]
+    },
+    {
+      "top": 627,
+      "height": 157,
+      "frames": [
+        {
+          "center": 80.0,
+          "bottom": 144
+        },
+        {
+          "center": 80.0,
+          "bottom": 144
+        },
+        {
+          "center": 69.5,
+          "bottom": 144
+        },
+        {
+          "center": 71.0,
+          "bottom": 146
+        },
+        {
+          "center": 73.5,
+          "bottom": 143
+        },
+        {
+          "center": 78.5,
+          "bottom": 142
+        },
+        {
+          "center": 79.5,
+          "bottom": 142
+        },
+        {
+          "center": 80.5,
+          "bottom": 142
+        }
+      ]
+    },
+    {
+      "top": 784,
+      "height": 156,
+      "frames": [
+        {
+          "center": 81.0,
+          "bottom": 148
+        },
+        {
+          "center": 78.5,
+          "bottom": 146
+        },
+        {
+          "center": 73.5,
+          "bottom": 147
+        },
+        {
+          "center": 78.5,
+          "bottom": 147
+        },
+        {
+          "center": 77.5,
+          "bottom": 146
+        },
+        {
+          "center": 79.0,
+          "bottom": 146
+        },
+        {
+          "center": 79.0,
+          "bottom": 146
+        },
+        {
+          "center": 77.5,
+          "bottom": 147
+        }
+      ]
+    },
+    {
+      "top": 940,
+      "height": 157,
+      "frames": [
+        {
+          "center": 84.5,
+          "bottom": 122
+        },
+        {
+          "center": 80.0,
+          "bottom": 124
+        },
+        {
+          "center": 75.0,
+          "bottom": 122
+        },
+        {
+          "center": 68.0,
+          "bottom": 112
+        },
+        {
+          "center": 79.0,
+          "bottom": 121
+        },
+        {
+          "center": 79.5,
+          "bottom": 126
+        },
+        {
+          "center": 73.5,
+          "bottom": 111
+        },
+        {
+          "center": 76.5,
+          "bottom": 113
+        }
+      ]
+    },
+    {
+      "top": 1097,
+      "height": 157,
+      "frames": [
+        {
+          "center": 81.5,
+          "bottom": 133
+        },
+        {
+          "center": 80.5,
+          "bottom": 135
+        },
+        {
+          "center": 77.5,
+          "bottom": 133
+        },
+        {
+          "center": 76.5,
+          "bottom": 134
+        },
+        {
+          "center": 80.5,
+          "bottom": 134
+        },
+        {
+          "center": 81.0,
+          "bottom": 126
+        },
+        {
+          "center": 79.5,
+          "bottom": 133
+        },
+        {
+          "center": 66.5,
+          "bottom": 138
+        }
+      ]
+    }
+  ]
+}

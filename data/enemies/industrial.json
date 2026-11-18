@@ -39,10 +39,11 @@
     "elite": "Two inspection needles and orange-edged wing fins; follows the first dive with a second separately warned dive after a 0.35 s realignment. Elite HP 53.",
     "death": "0.0\u20130.25 s rotor desynchronization; 0.25\u20130.65 s spiral drop; 0.65\u20131.1 s three-piece impact scatter; eye light flickers out.",
     "biome_key": "maintenance",
-    "texture": "res://art/industrial_enemies/industrial_00.svg",
+    "texture": "res://art/enemies_reference/maintenance.png",
     "contact_damage": 9,
     "windup_seconds": 0.5,
-    "cooldown_seconds": 3
+    "cooldown_seconds": 3,
+    "sprite_row": 0
   },
   "industrial_01": {
     "id": 1,
@@ -84,10 +85,11 @@
     "elite": "One visibly larger command bot (24 HP) conducts two Rush waves separated by 0.65 s. Destroying it restores normal uncoordinated behavior.",
     "death": "Each destroyed bot sparks, loses altitude in 0.2 s, bounces once, and rolls to rest for 0.5 s before disappearing; surviving units do not pause.",
     "biome_key": "maintenance",
-    "texture": "res://art/industrial_enemies/industrial_01.svg",
+    "texture": "res://art/enemies_reference/maintenance.png",
     "contact_damage": 4,
     "windup_seconds": 0.35,
-    "cooldown_seconds": 1.8
+    "cooldown_seconds": 1.8,
+    "sprite_row": 1
   },
   "industrial_02": {
     "id": 2,
@@ -129,10 +131,11 @@
     "elite": "Two independently telegraphed steam rings separated by 0.70 s; second ring has a smaller safe inner radius. Elite HP 165.",
     "death": "Gauge needle pegs; 0.25 s bolts pop; 0.4 s harmless venting; 0.5 s cylinder buckles onto its base. Final cloud cannot damage.",
     "biome_key": "maintenance",
-    "texture": "res://art/industrial_enemies/industrial_02.svg",
+    "texture": "res://art/enemies_reference/maintenance.png",
     "contact_damage": 18,
     "windup_seconds": 1.1,
-    "cooldown_seconds": 6
+    "cooldown_seconds": 6,
+    "sprite_row": 2
   },
   "industrial_03": {
     "id": 3,
@@ -174,10 +177,11 @@
     "elite": "Brass shoulder collar and longer wrench handles. Adds Overhead Crush as a delayed third strike after Slash 2 with its full 0.90 s warning. Elite HP 135.",
     "death": "Drops one wrench first, backward torso tip, knee pistons buckle, body collapses on its side, remaining wrist opens involuntarily.",
     "biome_key": "maintenance",
-    "texture": "res://art/industrial_enemies/industrial_03.svg",
+    "texture": "res://art/enemies_reference/maintenance.png",
     "contact_damage": 9,
     "windup_seconds": 0.45,
-    "cooldown_seconds": 1.25
+    "cooldown_seconds": 1.25,
+    "sprite_row": 3
   },
   "industrial_04": {
     "id": 4,
@@ -219,10 +223,11 @@
     "elite": "Wider command halo, orange docking doors, 4 Mites per wave, and 3 s of temporary armor on new bots. Still obeys total summon cap of 6. Elite HP 195.",
     "death": "Doors pop open; fabrication arms lose synchronization; eye flashes red; levitation cuts and pod drops straight down. Existing summons remain alive.",
     "biome_key": "maintenance",
-    "texture": "res://art/industrial_enemies/industrial_04.svg",
+    "texture": "res://art/enemies_reference/maintenance.png",
     "contact_damage": 16,
     "windup_seconds": 1.3,
-    "cooldown_seconds": 7
+    "cooldown_seconds": 7,
+    "sprite_row": 4
   },
   "industrial_05": {
     "id": 5,
@@ -264,10 +269,11 @@
     "elite": "Second spool and mirrored claw arm. A missed first hook can trigger a second, with its own 0.75 s targeting tell. Elite HP 120.",
     "death": "Spool overspins, cable whips down harmlessly, drum breaks free, tripod folds and collapses into a coil of loose wire.",
     "biome_key": "maintenance",
-    "texture": "res://art/industrial_enemies/industrial_05.svg",
+    "texture": "res://art/enemies_reference/maintenance.png",
     "contact_damage": 6,
     "windup_seconds": 0.75,
-    "cooldown_seconds": 5
+    "cooldown_seconds": 5,
+    "sprite_row": 5
   },
   "industrial_06": {
     "id": 6,
@@ -309,10 +315,11 @@
     "elite": "Twice blinks between separate marked positions; harmless afterimage remains at each. Final Ambush Slash retains full tell. Elite HP 120.",
     "death": "Flickers between opacity states, panels separate vertically and crumble into glowing fragments; last grounded shadow fades only after defeat.",
     "biome_key": "maintenance",
-    "texture": "res://art/industrial_enemies/industrial_06.svg",
+    "texture": "res://art/enemies_reference/maintenance.png",
     "contact_damage": 16,
     "windup_seconds": 0.6,
-    "cooldown_seconds": 5
+    "cooldown_seconds": 5,
+    "sprite_row": 6
   },
   "industrial_07": {
     "id": 7,
@@ -354,10 +361,11 @@
     "elite": "Extra concentric antenna ring and amber top beacon. Sends two slower concentric pulses 0.55 s apart, each dodgeable separately. Elite HP 90.",
     "death": "Antennas retract out of sequence, dials spin backward uncontrollably, outer ring falls, and the central sphere cracks into halves.",
     "biome_key": "maintenance",
-    "texture": "res://art/industrial_enemies/industrial_07.svg",
+    "texture": "res://art/enemies_reference/maintenance.png",
     "contact_damage": 12,
     "windup_seconds": 0.85,
-    "cooldown_seconds": 7
+    "cooldown_seconds": 7,
+    "sprite_row": 7
   },
   "industrial_08": {
     "id": 8,
@@ -399,10 +407,11 @@
     "elite": "Secondary upper belt and longer jaw housing. Can follow first charge with a clearly indicated reverse charge at 70% speed. Elite HP 135.",
     "death": "Legs mis-time; side belts spin off their shafts; jaw rollers seize and body skids forward trailing harmless sparks.",
     "biome_key": "factory",
-    "texture": "res://art/industrial_enemies/industrial_08.svg",
+    "texture": "res://art/enemies_reference/factory.png",
     "contact_damage": 18,
     "windup_seconds": 0.75,
-    "cooldown_seconds": 5
+    "cooldown_seconds": 5,
+    "sprite_row": 0
   },
   "industrial_09": {
     "id": 9,
@@ -444,10 +453,11 @@
     "elite": "Six heavier links with gold hinge pins. After Linked Spear it immediately telegraphs a second Tail Whip from the other side. Elite chain 100 HP total.",
     "death": "Hinge sparks propagate front-to-back; links release one by one and clatter into a short line of debris.",
     "biome_key": "factory",
-    "texture": "res://art/industrial_enemies/industrial_09.svg",
+    "texture": "res://art/enemies_reference/factory.png",
     "contact_damage": 8,
     "windup_seconds": 0.65,
-    "cooldown_seconds": 4
+    "cooldown_seconds": 4,
+    "sprite_row": 1
   },
   "industrial_10": {
     "id": 10,
@@ -489,10 +499,11 @@
     "elite": "Ten-sided gear barrel, upgraded steel ring. Fires an initial eight-lane burst then a separately warned burst rotated by 22.5\u00b0. Elite HP 120.",
     "death": "Ring detaches, springs discharge harmlessly, drum unrolls on its side and individual metal teeth slide free.",
     "biome_key": "factory",
-    "texture": "res://art/industrial_enemies/industrial_10.svg",
+    "texture": "res://art/enemies_reference/factory.png",
     "contact_damage": 12,
     "windup_seconds": 0.95,
-    "cooldown_seconds": 6.5
+    "cooldown_seconds": 6.5,
+    "sprite_row": 2
   },
   "industrial_11": {
     "id": 11,
@@ -534,10 +545,11 @@
     "elite": "Visible four-blade scissors with red center pivot. Closing V alternates two diagonal sectors with a 0.4 s gap. Elite HP 143.",
     "death": "Blade lock freezes; shoulder springs eject; two long blades fall outward and the central hinge splits.",
     "biome_key": "factory",
-    "texture": "res://art/industrial_enemies/industrial_11.svg",
+    "texture": "res://art/enemies_reference/factory.png",
     "contact_damage": 12,
     "windup_seconds": 0.65,
-    "cooldown_seconds": 4.5
+    "cooldown_seconds": 4.5,
+    "sprite_row": 3
   },
   "industrial_12": {
     "id": 12,
@@ -579,10 +591,11 @@
     "elite": "Thicker press plate with twin red hydraulic rails. Guard becomes 160\u00b0 but after shove both lateral pistons are vulnerable. Elite HP 240.",
     "death": "Hydraulic rails fail asymmetrically; shield slams face down, torso pitches over it, and piston legs fold.",
     "biome_key": "factory",
-    "texture": "res://art/industrial_enemies/industrial_12.svg",
+    "texture": "res://art/enemies_reference/factory.png",
     "contact_damage": 17,
     "windup_seconds": 0.8,
-    "cooldown_seconds": 5
+    "cooldown_seconds": 5,
+    "sprite_row": 4
   },
   "industrial_13": {
     "id": 13,
@@ -624,10 +637,11 @@
     "elite": "Two enlarged geared wrists and twin capacitor lamps. Swipe steals 18 energy; Charged Toss remains unchanged. Elite HP 113.",
     "death": "Wrist gears jam in opposite directions, energy escapes in harmless arcs, and crooked arms snap into a rigid pose as body falls.",
     "biome_key": "factory",
-    "texture": "res://art/industrial_enemies/industrial_13.svg",
+    "texture": "res://art/enemies_reference/factory.png",
     "contact_damage": 8,
     "windup_seconds": 0.55,
-    "cooldown_seconds": 4
+    "cooldown_seconds": 4,
+    "sprite_row": 5
   },
   "industrial_14": {
     "id": 14,
@@ -669,10 +683,11 @@
     "elite": "Double cable claw and taller beam. Telegraphed two-circle drop in sequence, not simultaneous. Elite HP 173.",
     "death": "Cable frays, top beam tips, claw lands separately and the crane body folds under the weight of its own boom.",
     "biome_key": "factory",
-    "texture": "res://art/industrial_enemies/industrial_14.svg",
+    "texture": "res://art/enemies_reference/factory.png",
     "contact_damage": 8,
     "windup_seconds": 0.85,
-    "cooldown_seconds": 6
+    "cooldown_seconds": 6,
+    "sprite_row": 6
   },
   "industrial_15": {
     "id": 15,
@@ -714,10 +729,11 @@
     "elite": "Adds top drum and third hook forming a triangular capture zone with a marked escape wedge. Elite HP 135.",
     "death": "Hooks cross and seize, reels overheat, one chain snaps harmlessly upward, body tips forward and settles.",
     "biome_key": "factory",
-    "texture": "res://art/industrial_enemies/industrial_15.svg",
+    "texture": "res://art/enemies_reference/factory.png",
     "contact_damage": 12,
     "windup_seconds": 0.7,
-    "cooldown_seconds": 5
+    "cooldown_seconds": 5,
+    "sprite_row": 7
   },
   "industrial_16": {
     "id": 16,
@@ -759,10 +775,11 @@
     "elite": "Two spouts with crossed pouring lanes and a larger black lid; lanes fire sequentially with a 0.4 s gap. Elite HP 83.",
     "death": "Lid blows open without damage, firebox flickers blue then black, steam fins sputter and the empty kettle falls and dents.",
     "biome_key": "boiler",
-    "texture": "res://art/industrial_enemies/industrial_16.svg",
+    "texture": "res://art/enemies_reference/boiler.png",
     "contact_damage": 8,
     "windup_seconds": 0.65,
-    "cooldown_seconds": 5
+    "cooldown_seconds": 5,
+    "sprite_row": 0
   },
   "industrial_17": {
     "id": 17,
@@ -804,10 +821,11 @@
     "elite": "Two rear furnace bells and bright orange exhaust shutters; gains a second short final thrust after ricochet, with new red floor lane. Elite HP 150.",
     "death": "Rear furnace cools unevenly, wheel runners shear, exhaust bell falls off and chassis skids until it stops.",
     "biome_key": "boiler",
-    "texture": "res://art/industrial_enemies/industrial_17.svg",
+    "texture": "res://art/enemies_reference/boiler.png",
     "contact_damage": 12,
     "windup_seconds": 0.85,
-    "cooldown_seconds": 6
+    "cooldown_seconds": 6,
+    "sprite_row": 1
   },
   "industrial_18": {
     "id": 18,
@@ -849,10 +867,11 @@
     "elite": "Two asymmetric curved spouts and larger condensation collar; alternates two different lob arcs with separate landing warnings. Elite HP 113.",
     "death": "Pressure cap twists loose, hot reservoir leaks harmless vapor, four support legs collapse one after another.",
     "biome_key": "boiler",
-    "texture": "res://art/industrial_enemies/industrial_18.svg",
+    "texture": "res://art/enemies_reference/boiler.png",
     "contact_damage": 12,
     "windup_seconds": 0.8,
-    "cooldown_seconds": 4.5
+    "cooldown_seconds": 4.5,
+    "sprite_row": 2
   },
   "industrial_19": {
     "id": 19,
@@ -894,10 +913,11 @@
     "elite": "Longer spear-cloud with brighter eyes, performs two clearly warned short dives from orthogonal directions. Elite HP 100 group.",
     "death": "Cloud collapses inward as eye sparks die; each little wing loses lift, leaving falling ash that evaporates without dealing damage.",
     "biome_key": "boiler",
-    "texture": "res://art/industrial_enemies/industrial_19.svg",
+    "texture": "res://art/enemies_reference/boiler.png",
     "contact_damage": 12,
     "windup_seconds": 0.7,
-    "cooldown_seconds": 4.5
+    "cooldown_seconds": 4.5,
+    "sprite_row": 3
   },
   "industrial_20": {
     "id": 20,
@@ -939,10 +959,11 @@
     "elite": "Six motes including a larger central conductor. Linked Ignition can extend one more hop; conductor flashes a clear second warning. Elite total HP 126.",
     "death": "Connections snap one at a time, coils fall as tiny brass rings, flames wink out in sequence.",
     "biome_key": "boiler",
-    "texture": "res://art/industrial_enemies/industrial_20.svg",
+    "texture": "res://art/enemies_reference/boiler.png",
     "contact_damage": 12,
     "windup_seconds": 0.8,
-    "cooldown_seconds": 5
+    "cooldown_seconds": 5,
+    "sprite_row": 4
   },
   "industrial_21": {
     "id": 21,
@@ -984,10 +1005,11 @@
     "elite": "White heated grates and twin piston braces; adds an independently telegraphed third stomp only after two punches. Elite HP 233.",
     "death": "Fists stop mid-motion, grate light dies from white to ember, front bars separate and heavy chest falls onto knees.",
     "biome_key": "boiler",
-    "texture": "res://art/industrial_enemies/industrial_21.svg",
+    "texture": "res://art/enemies_reference/boiler.png",
     "contact_damage": 16,
     "windup_seconds": 0.75,
-    "cooldown_seconds": 5
+    "cooldown_seconds": 5,
+    "sprite_row": 5
   },
   "industrial_22": {
     "id": 22,
@@ -1029,10 +1051,11 @@
     "elite": "Dual spinning valve rings on polehead; wide sweep ends in a short ember burst warned by orange wheel glow. Elite HP 143.",
     "death": "Polearm digs into floor and stays; its neck valve vents, torso sinks and the service knight topples without creating a flame hazard.",
     "biome_key": "boiler",
-    "texture": "res://art/industrial_enemies/industrial_22.svg",
+    "texture": "res://art/enemies_reference/boiler.png",
     "contact_damage": 12,
     "windup_seconds": 0.45,
-    "cooldown_seconds": 1.25
+    "cooldown_seconds": 1.25,
+    "sprite_row": 6
   },
   "industrial_23": {
     "id": 23,
@@ -1074,10 +1097,11 @@
     "elite": "Three false silhouettes and a large red core in the real body. Only one copy produces a normal shadow; final attack retains 0.7 s telegraph. Elite HP 105.",
     "death": "Heat fins fan fully out then shatter into harmless sparks; fake figures dissolve first; radiator core hits floor with metallic ping.",
     "biome_key": "boiler",
-    "texture": "res://art/industrial_enemies/industrial_23.svg",
+    "texture": "res://art/enemies_reference/boiler.png",
     "contact_damage": 13,
     "windup_seconds": 0.7,
-    "cooldown_seconds": 5
+    "cooldown_seconds": 5,
+    "sprite_row": 7
   },
   "industrial_24": {
     "id": 24,
@@ -1119,10 +1143,11 @@
     "elite": "Twin accordion chambers and two visible orange hoses. Can heat two allies at once, no stacking bonuses. Elite HP 128.",
     "death": "Leather folds burst, rear fan wobbles free, orange exhaust fades to black and all four legs flatten.",
     "biome_key": "boiler",
-    "texture": "res://art/industrial_enemies/industrial_24.svg",
+    "texture": "res://art/enemies_reference/boiler.png",
     "contact_damage": 12,
     "windup_seconds": 0.95,
-    "cooldown_seconds": 7
+    "cooldown_seconds": 7,
+    "sprite_row": 8
   },
   "industrial_25": {
     "id": 25,
@@ -1164,10 +1189,11 @@
     "elite": "Nine pipe segments and two clearly painted pivot nodes. Can make two sharp bends in a rush, each marked during windup. Elite HP 143.",
     "death": "Fluid stops circulating; head plunger droops, hinges freeze sequentially from head to tail, body spills into a loose pile of pipes.",
     "biome_key": "toxin_refinery",
-    "texture": "res://art/industrial_enemies/industrial_25.svg",
+    "texture": "res://art/enemies_reference/toxin_refinery.png",
     "contact_damage": 12,
     "windup_seconds": 0.75,
-    "cooldown_seconds": 5.5
+    "cooldown_seconds": 5.5,
+    "sprite_row": 0
   },
   "industrial_26": {
     "id": 26,
@@ -1209,10 +1235,11 @@
     "elite": "One larger plated louse leader with visible ocher crest; leader directs a synchronized two-unit leap, still respects single-attachment cap. Elite pack HP increased 40%.",
     "death": "Carapace crumbles, legs curl, sparks pop from the mandibles and each louse rolls onto its back before fading.",
     "biome_key": "toxin_refinery",
-    "texture": "res://art/industrial_enemies/industrial_26.svg",
+    "texture": "res://art/enemies_reference/toxin_refinery.png",
     "contact_damage": 8,
     "windup_seconds": 0.5,
-    "cooldown_seconds": 4.2
+    "cooldown_seconds": 4.2,
+    "sprite_row": 1
   },
   "industrial_27": {
     "id": 27,
@@ -1254,10 +1281,11 @@
     "elite": "Three acid channels per claw and red rinse tank. Cross-Etch adds a third narrowly telegraphed finishing puncture after wash delay. Elite HP 158.",
     "death": "Acid lines reverse into wash vat, twin claws lock open and then detach; four walking legs fold in sequence.",
     "biome_key": "toxin_refinery",
-    "texture": "res://art/industrial_enemies/industrial_27.svg",
+    "texture": "res://art/enemies_reference/toxin_refinery.png",
     "contact_damage": 12,
     "windup_seconds": 0.55,
-    "cooldown_seconds": 4.5
+    "cooldown_seconds": 4.5,
+    "sprite_row": 2
   },
   "industrial_28": {
     "id": 28,
@@ -1299,10 +1327,11 @@
     "elite": "Two extra transparent pump vessels and four separately aiming tubes. Hook has wider warning angle but siphon duration stays capped at 2 s. Elite HP 143.",
     "death": "Belly pump overfills, transparent reservoir cracks, fluid pressure drops and four tubes curl inward as unit folds.",
     "biome_key": "toxin_refinery",
-    "texture": "res://art/industrial_enemies/industrial_28.svg",
+    "texture": "res://art/enemies_reference/toxin_refinery.png",
     "contact_damage": 5,
     "windup_seconds": 0.7,
-    "cooldown_seconds": 5.5
+    "cooldown_seconds": 5.5,
+    "sprite_row": 3
   },
   "industrial_29": {
     "id": 29,
@@ -1344,10 +1373,11 @@
     "elite": "Two extra gas cylinders; cycles across three marked vents but reveals the final destination before its jab. Elite HP 113.",
     "death": "Suit loses pressure, glass visor cracks, colored vapor escapes harmlessly, empty fabric shell crumples around frame.",
     "biome_key": "toxin_refinery",
-    "texture": "res://art/industrial_enemies/industrial_29.svg",
+    "texture": "res://art/enemies_reference/toxin_refinery.png",
     "contact_damage": 16,
     "windup_seconds": 0.7,
-    "cooldown_seconds": 5.5
+    "cooldown_seconds": 5.5,
+    "sprite_row": 4
   },
   "industrial_30": {
     "id": 30,
@@ -1389,10 +1419,11 @@
     "elite": "Two offset rotating beacons, alternating ring gaps. Two independently warned weakening waves; debuff never stacks. Elite HP 120.",
     "death": "Beacon cracks and dims, loudspeaker cone caves inward, warning rings detach one after another and base tips sideways.",
     "biome_key": "toxin_refinery",
-    "texture": "res://art/industrial_enemies/industrial_30.svg",
+    "texture": "res://art/enemies_reference/toxin_refinery.png",
     "contact_damage": 12,
     "windup_seconds": 0.9,
-    "cooldown_seconds": 7
+    "cooldown_seconds": 7,
+    "sprite_row": 5
   },
   "industrial_31": {
     "id": 31,
@@ -1434,10 +1465,11 @@
     "elite": "Extra overlapping copper-etched plating; shell march now defends 170\u00b0 front but vents for 1.0 s afterward. Elite HP 255.",
     "death": "Front plates peel apart, leg joints seize one side at a time, shell settles with a hollow thud, corrosion dust puffs harmlessly.",
     "biome_key": "toxin_refinery",
-    "texture": "res://art/industrial_enemies/industrial_31.svg",
+    "texture": "res://art/enemies_reference/toxin_refinery.png",
     "contact_damage": 7,
     "windup_seconds": 0.35,
-    "cooldown_seconds": 4
+    "cooldown_seconds": 4,
+    "sprite_row": 6
   },
   "industrial_32": {
     "id": 32,
@@ -1479,9 +1511,10 @@
     "elite": "Two concentric rotating lid rims and red valve hub. Rotary Lid Shove sweeps an extra 45\u00b0 segment after brief pause, marked separately. Elite HP 218.",
     "death": "Shield rim spins too fast and dislodges; lid drops and rolls in a slow harmless circle as guard slumps and visor darkens.",
     "biome_key": "toxin_refinery",
-    "texture": "res://art/industrial_enemies/industrial_32.svg",
+    "texture": "res://art/enemies_reference/toxin_refinery.png",
     "contact_damage": 16,
     "windup_seconds": 0.3,
-    "cooldown_seconds": 3.6
+    "cooldown_seconds": 3.6,
+    "sprite_row": 7
   }
 }

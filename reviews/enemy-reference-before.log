@@ -1,0 +1,21 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 Core Profile Context 26.10.1.261008 - Compatibility - Using Device: ATI Technologies Inc. - AMD Radeon RX 6700S
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+ENEMY_CAPTURE=maintenance walk RESULT=0
+ENEMY_CAPTURE=maintenance windup RESULT=0
+ENEMY_CAPTURE=maintenance attack RESULT=0
+ENEMY_CAPTURE=maintenance death RESULT=0
+ENEMY_CAPTURE=factory walk RESULT=0
+ENEMY_CAPTURE=factory windup RESULT=0
+ENEMY_CAPTURE=factory attack RESULT=0
+ENEMY_CAPTURE=factory death RESULT=0
+ENEMY_CAPTURE=boiler walk RESULT=0
+ENEMY_CAPTURE=boiler windup RESULT=0
+ENEMY_CAPTURE=boiler attack RESULT=0
+ENEMY_CAPTURE=boiler death RESULT=0
+ENEMY_CAPTURE=toxin_refinery walk RESULT=0
+ENEMY_CAPTURE=toxin_refinery windup RESULT=0
+ENEMY_CAPTURE=toxin_refinery attack RESULT=0
+ENEMY_CAPTURE=toxin_refinery death RESULT=0

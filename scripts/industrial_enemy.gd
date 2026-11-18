@@ -1,9 +1,19 @@
 extends "res://scripts/run_enemy.gd"
 
 signal summon_requested(summoner: CharacterBody2D, enemy_key: String, count: int)
+const REFERENCE_SHADER := preload("res://scripts/reference_enemy.gdshader")
+const REFERENCE_ROWS := {"maintenance": 8, "factory": 8, "boiler": 9, "toxin_refinery": 8}
+static var reference_layout: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/enemies/reference_sprites.json"))
+
 const ATTACK := preload("res://scripts/industrial_attack.gd")
 static var ability_catalog: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/enemies/abilities.json"))
 
+var reference_material: ShaderMaterial
+var reference_row := 0
+var reference_bounds: Dictionary
+var reference_cell_size := Vector2.ZERO
+var reference_sheet_size := Vector2.ZERO
+var reference_gait := 0
 var design: Dictionary
 var animation_clock := 0.0
 var animation_name := ""
@@ -52,13 +62,33 @@ func _ready() -> void:
 			"large": speed = 185.5
 			_: speed = 265.0
 	damage = float(design.get("contact_damage",maxi(4,int(design.danger)*4)))
-	visual.texture = load(design.texture)
+	var biome: String = str(design.biome_key)
+	var sheet: Texture2D = load(design.texture)
+	reference_sheet_size = sheet.get_size()
+	reference_row = int(design.sprite_row)
+	reference_bounds = reference_layout[biome][reference_row]
+	var strip := AtlasTexture.new()
+	strip.atlas = sheet
+	strip.region = Rect2(0, reference_bounds.top, sheet.get_width(), reference_bounds.height)
+	strip.filter_clip = true
+	visual.texture = strip
 	visual.hframes = 8
-	visual.vframes = 16
-	visual.scale = Vector2.ONE*1.6
-	visual.offset = Vector2(0,-40.6)
+	visual.vframes = 1
+	var cell_size := Vector2(sheet.get_width() / 8.0, reference_bounds.height)
+	reference_cell_size = cell_size
+	var span := 145.0 if design.size == "Large" else 125.0
+	if design.role == "Swarm":
+		span = 125.0
+	visual.scale = Vector2.ONE * span / cell_size.x * (0.76 if biome == "boiler" else 1.0)
+	visual.offset = Vector2(0, -cell_size.y * 0.38)
 	visual.position = Vector2.ZERO
 	visual.flip_h = false
+	visual.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	reference_gait = 1 if design.role == "Flying" or int(design.id) in [4, 16, 20] else (3 if design.role == "Swarm" else (2 if int(design.id) in [7, 8, 9, 17, 25, 31] else 0))
+	reference_material = ShaderMaterial.new()
+	reference_material.shader = REFERENCE_SHADER
+	reference_material.set_shader_parameter("gait", float(reference_gait))
+	visual.material = reference_material
 	_update_animation(0.0)
 
 func attack_reach() -> float:
@@ -303,13 +333,21 @@ func _update_animation(delta: float) -> void:
 		animation_name = next
 		animation_clock = 0
 	animation_clock += delta
-	var first: int = {"idle":0,"walk":2,"windup":6,"attack":8,"recover":10,"death":12}[next]
-	var count := 4 if next in ["walk","death"] else 2
-	var rate := 10.0 if next != "death" else 5.0
-	var pose := mini(int(animation_clock*rate),3) if next == "death" else int(animation_clock*rate)%count
 	var yaw := atan2(facing.x/56.0+facing.y/25.0,facing.y/25.0-facing.x/56.0)
 	var direction := posmod(roundi(yaw/TAU*8),8)
-	visual.frame = (first+pose)*8+direction
+	visual.frame = direction
+	var anchor: Dictionary = reference_bounds.frames[direction]
+	visual.offset = Vector2(reference_cell_size.x * 0.5 - float(anchor.center), reference_cell_size.y * 0.5 - float(anchor.bottom))
+	reference_material.set_shader_parameter("frame_uv", Vector4(direction / 8.0, float(reference_bounds.top) / reference_sheet_size.y, 0.125, reference_cell_size.y / reference_sheet_size.y))
+	reference_material.set_shader_parameter("foot_line", float(anchor.bottom) / reference_cell_size.y)
+	reference_material.set_shader_parameter("pose_time", animation_clock)
+	reference_material.set_shader_parameter("pose", float(["idle", "walk", "windup", "attack", "recover", "death"].find(next)))
+	var pose_progress := clampf(animation_clock / 0.5, 0.0, 1.0)
+	if next == "windup" and not current_move.is_empty():
+		pose_progress = clampf(1.0 - windup / maxf(0.01, float(current_move.tell)), 0.0, 1.0)
+	if next == "death":
+		pose_progress = clampf(death_clock / 0.9, 0.0, 1.0)
+	reference_material.set_shader_parameter("progress", pose_progress)
 	visual.flip_h = false
 	visual.position = Vector2.ZERO
 	visual.modulate = Color(2,1.6,1.2) if hit_flash > 0 else Color.WHITE
@@ -317,8 +355,8 @@ func _update_animation(delta: float) -> void:
 		visual.modulate *= Color(1.5,1,.65)
 	if state == "ability" and current_move.get("transit",false):
 		visual.modulate.a = .2
-	if state == "windup" and not current_move.is_empty():
-		visual.frame = (6+mini(1,int(2*(1-windup/float(current_move.tell)))))*8+direction
+	if next in ["idle", "walk"]:
+		visual.position.y = sin(animation_clock * 4.0) * 3.0 if reference_gait == 1 else (-absf(sin(animation_clock * 12.0)) * 2.0 if next == "walk" else 0.0)
 	if next == "attack":
 		visual.position = facing*sin(animation_clock*PI*4)*5
 	elif next == "recover":

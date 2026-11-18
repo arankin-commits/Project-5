@@ -25,7 +25,9 @@ func _ready() -> void:
 	get_node("/root/BackgroundMusic").play_ship()
 	add_child(preload("res://scripts/ship_menu.gd").new())
 	var entry_id := CockpitDoor.take_entry_id()
-	if entry_id == "from_sync":
+	if entry_id == "from_computer":
+		player.position = Vector2(844, 735)
+	elif entry_id == "from_sync":
 		player.position = Vector2(521, 335)
 	elif entry_id == "from_workshop":
 		player.position = Vector2(180, 550)
@@ -73,6 +75,14 @@ func _build_doors() -> void:
 		_add_door("BedroomDoor%d" % number, Vector2(WING_START_X + 140.0 + i * WING_TILE_WIDTH, WING_TOP_Y + 190.0), "Enter Bedroom %d" % number, "bedroom_%02d" % number, "", false)
 
 func _build_passages() -> void:
+	var computer_entrance := PASSAGE.new()
+	computer_entrance.name = "ComputerRoomEntrance"
+	computer_entrance.position = Vector2(844, 820)
+	computer_entrance.half_extent = Vector2(40, 20)
+	computer_entrance.target_scene = "res://scenes/FlyingLibertyComputerRoom.tscn"
+	computer_entrance.target_entry_id = "from_hall"
+	$Passages.add_child(computer_entrance)
+
 	var workshop_entrance := PASSAGE.new()
 	workshop_entrance.name = "WorkshopEntrance"
 	workshop_entrance.position = Vector2(95, 550)

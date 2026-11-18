@@ -44,7 +44,7 @@ func _run() -> void:
 		check(enemy.health == float(catalog[key].hp),"Wrong health: "+key)
 		check(is_equal_approx(enemy.speed, float(catalog[key].speed) * 26.0), "Wrong speed: " + key)
 		check(is_equal_approx(enemy.speed, config.get_enemy_speed_by_size(str(catalog[key].get("size", "Medium")))), "Wrong speed by size: " + key)
-		check(enemy.visual.texture != null and enemy.visual.texture.get_size() == Vector2(1024,2048),"Invalid animation atlas: "+key)
+		check(enemy.visual.texture != null and enemy.visual.texture is AtlasTexture and enemy.visual.texture.atlas.resource_path.begins_with("res://art/enemies_reference/") and enemy.visual.hframes == 8 and enemy.visual.vframes == 1,"Invalid animation atlas: "+key)
 		var directions := {}
 		for angle in 8:
 			enemy.facing = Vector2.from_angle(angle*TAU/8)

@@ -95,5 +95,16 @@ func _run() -> void:
 	workshop_scene.queue_free()
 	await process_frame
 
+	# 7. FlyingLibertyComputerRoom
+	print("Instantiating FlyingLibertyComputerRoom...")
+	var comp_scene = load("res://scenes/FlyingLibertyComputerRoom.tscn").instantiate()
+	root.add_child(comp_scene)
+	current_scene = comp_scene
+	await process_frame
+	await process_frame
+	print("FlyingLibertyComputerRoom frame OK, NPC controller: ", comp_scene.npc_controller != null)
+	comp_scene.queue_free()
+	await process_frame
+
 	print("ALL PCK SCENES FUNCTIONED PERFECTLY!")
 	quit(0)

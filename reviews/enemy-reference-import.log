@@ -1,0 +1,152 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[   0% ] first_scan_filesystem | Started Project initialization (5 steps)
+[   0% ] first_scan_filesystem | Scanning file structure...
+[  16% ] first_scan_filesystem | Loading global class names...
+[  33% ] first_scan_filesystem | Verifying GDExtensions...
+[  50% ] first_scan_filesystem | Creating autoload scripts...
+[  66% ] first_scan_filesystem | Initializing plugins...
+[  83% ] first_scan_filesystem | Starting file scan...
+[ DONE ] first_scan_filesystem
+
+WARNING: UID duplicate detected between res://rooms/Maintenance/ChatGPT Image Nov 13, 2026, 07_10_18 PM-1.png and res://Music/Flying_Liberty_Adaptive_Biome_OST_v3/Flying_Liberty_Adaptive_Biome_OST_v3/Maintenance/ChatGPT Image Nov 13, 2026, 07_10_18 PM-1.png.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://rooms/Maintenance/ChatGPT Image Nov 13, 2026, 07_10_19 PM-2.png and res://Music/Flying_Liberty_Adaptive_Biome_OST_v3/Flying_Liberty_Adaptive_Biome_OST_v3/Maintenance/ChatGPT Image Nov 13, 2026, 07_10_19 PM-2.png.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://rooms/Maintenance/ChatGPT Image Nov 13, 2026, 07_10_20 PM-3.png and res://Music/Flying_Liberty_Adaptive_Biome_OST_v3/Flying_Liberty_Adaptive_Biome_OST_v3/Maintenance/ChatGPT Image Nov 13, 2026, 07_10_20 PM-3.png.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://rooms/Maintenance/Steampunk Vent and Entrance Asset Sheet.png and res://Music/Flying_Liberty_Adaptive_Biome_OST_v3/Flying_Liberty_Adaptive_Biome_OST_v3/Maintenance/Steampunk Vent and Entrance Asset Sheet.png.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+[   0% ] update_scripts_classes | Started Registering global classes... (2 steps)
+[   0% ] update_scripts_classes | 
+[  33% ] update_scripts_classes | 
+[ DONE ] update_scripts_classes
+
+[   0% ] _update_scan_actions | Started Scanning actions... (56 steps)
+[   0% ] _update_scan_actions | boiler.png
+[   1% ] _update_scan_actions | factory.png
+[   3% ] _update_scan_actions | maintenance.png
+[   5% ] _update_scan_actions | toxin_refinery.png
+[   7% ] _update_scan_actions | industrial_00.svg
+[   8% ] _update_scan_actions | industrial_01.svg
+[  10% ] _update_scan_actions | industrial_02.svg
+[  12% ] _update_scan_actions | industrial_03.svg
+[  14% ] _update_scan_actions | industrial_04.svg
+[  15% ] _update_scan_actions | industrial_05.svg
+[  17% ] _update_scan_actions | industrial_06.svg
+[  19% ] _update_scan_actions | industrial_07.svg
+[  21% ] _update_scan_actions | industrial_08.svg
+[  22% ] _update_scan_actions | industrial_09.svg
+[  24% ] _update_scan_actions | industrial_10.svg
+[  26% ] _update_scan_actions | industrial_11.svg
+[  28% ] _update_scan_actions | industrial_12.svg
+[  29% ] _update_scan_actions | industrial_13.svg
+[  31% ] _update_scan_actions | industrial_14.svg
+[  33% ] _update_scan_actions | industrial_15.svg
+[  35% ] _update_scan_actions | industrial_16.svg
+[  36% ] _update_scan_actions | industrial_17.svg
+[  38% ] _update_scan_actions | industrial_18.svg
+[  40% ] _update_scan_actions | industrial_19.svg
+[  42% ] _update_scan_actions | industrial_20.svg
+[  43% ] _update_scan_actions | industrial_21.svg
+[  45% ] _update_scan_actions | industrial_22.svg
+[  47% ] _update_scan_actions | industrial_23.svg
+[  49% ] _update_scan_actions | industrial_24.svg
+[  50% ] _update_scan_actions | industrial_25.svg
+[  52% ] _update_scan_actions | industrial_26.svg
+[  54% ] _update_scan_actions | industrial_27.svg
+[  56% ] _update_scan_actions | industrial_28.svg
+[  57% ] _update_scan_actions | industrial_29.svg
+[  59% ] _update_scan_actions | industrial_30.svg
+[  61% ] _update_scan_actions | industrial_31.svg
+[  63% ] _update_scan_actions | industrial_32.svg
+[  64% ] _update_scan_actions | Enemy_Stats_33.csv
+[  66% ] _update_scan_actions | Original_Enemy_Stats_33.csv
+[  68% ] _update_scan_actions | Tracklist.csv
+[  70% ] _update_scan_actions | enemies_boiler_attack.png
+[  71% ] _update_scan_actions | enemies_boiler_death.png
+[  73% ] _update_scan_actions | enemies_boiler_walk.png
+[  75% ] _update_scan_actions | enemies_boiler_windup.png
+[  77% ] _update_scan_actions | enemies_factory_attack.png
+[  78% ] _update_scan_actions | enemies_factory_death.png
+[  80% ] _update_scan_actions | enemies_factory_walk.png
+[  82% ] _update_scan_actions | enemies_factory_windup.png
+[  84% ] _update_scan_actions | enemies_maintenance_attack.png
+[  85% ] _update_scan_actions | enemies_maintenance_death.png
+[  87% ] _update_scan_actions | enemies_maintenance_walk.png
+[  89% ] _update_scan_actions | enemies_maintenance_windup.png
+[  91% ] _update_scan_actions | enemies_toxin_refinery_attack.png
+[  92% ] _update_scan_actions | enemies_toxin_refinery_death.png
+[  94% ] _update_scan_actions | enemies_toxin_refinery_walk.png
+[  96% ] _update_scan_actions | enemies_toxin_refinery_windup.png
+[ DONE ] _update_scan_actions
+
+[   0% ] reimport | Started (Re)Importing Assets (19 steps)
+[   0% ] reimport | Preparing files to reimport...
+[   5% ] reimport | Preparing files to reimport...
+[  10% ] reimport | Preparing files to reimport...
+[  15% ] reimport | Preparing files to reimport...
+[  20% ] reimport | Preparing files to reimport...
+[  25% ] reimport | Preparing files to reimport...
+[  30% ] reimport | Preparing files to reimport...
+[  35% ] reimport | Preparing files to reimport...
+[  40% ] reimport | Preparing files to reimport...
+[  45% ] reimport | Preparing files to reimport...
+[  50% ] reimport | Preparing files to reimport...
+[  55% ] reimport | Preparing files to reimport...
+[  60% ] reimport | Preparing files to reimport...
+[  65% ] reimport | Preparing files to reimport...
+[  70% ] reimport | Preparing files to reimport...
+[  75% ] reimport | Preparing files to reimport...
+[  80% ] reimport | Preparing files to reimport...
+[  85% ] reimport | Preparing files to reimport...
+[  90% ] reimport | Preparing files to reimport...
+[   0% ] reimport | Executing pre-reimport operations...
+[   0% ] reimport | enemies_toxin_refinery_attack.png
+[   5% ] reimport | enemies_maintenance_windup.png
+[  10% ] reimport | enemies_maintenance_walk.png
+[  15% ] reimport | enemies_maintenance_death.png
+[  20% ] reimport | enemies_maintenance_attack.png
+[  25% ] reimport | enemies_factory_attack.png
+[  30% ] reimport | enemies_boiler_attack.png
+[  35% ] reimport | industrial_07.svg
+[  40% ] reimport | industrial_06.svg
+[  45% ] reimport | industrial_05.svg
+[  50% ] reimport | industrial_04.svg
+[  55% ] reimport | industrial_03.svg
+[  55% ] reimport | industrial_03.svg
+[  60% ] reimport | industrial_02.svg
+[  65% ] reimport | industrial_01.svg
+[  65% ] reimport | industrial_01.svg
+[  65% ] reimport | industrial_01.svg
+[  70% ] reimport | industrial_00.svg
+[  75% ] reimport | toxin_refinery.png
+[  75% ] reimport | toxin_refinery.png
+[  80% ] reimport | maintenance.png
+[  85% ] reimport | factory.png
+[  90% ] reimport | boiler.png
+[  90% ] reimport | boiler.png
+[  90% ] reimport | boiler.png
+[  90% ] reimport | boiler.png
+[  95% ] reimport | Finalizing Asset Import...
+[ DONE ] reimport
+
+[   0% ] reimport | Started (Re)Importing Assets (19 steps)
+[   0% ] reimport | Executing post-reimport operations...
+[ DONE ] reimport
+
+[   0% ] loading_editor_layout | Started Loading editor (5 steps)
+[   0% ] loading_editor_layout | Loading editor layout...
+[  16% ] loading_editor_layout | Loading docks...
+[  33% ] loading_editor_layout | Reopening scenes...
+[  50% ] loading_editor_layout | Loading central editor layout...
+[  66% ] loading_editor_layout | Loading plugin window layout...
+[  83% ] loading_editor_layout | Editor layout ready.
+[ DONE ] loading_editor_layout
+
+ERROR: Cannot save file 'C:/Users/Aiden/AppData/Roaming/Godot/editor_settings-4.7.tres'.
+   at: save (scene/resources/resource_format_text.cpp:1768)
+ERROR: Error saving editor settings to C:/Users/Aiden/AppData/Roaming/Godot/editor_settings-4.7.tres
+   at: save (editor/settings/editor_settings.cpp:1525)
