@@ -6,6 +6,7 @@ signal impact_requested(point: Vector2, radius: float)
 signal damaged(amount: float, knockback: Vector2, element: String)
 
 const Space := preload("res://scripts/boiler_space.gd")
+const SCREEN_DISTANCE := 750.0
 var target: CharacterBody2D
 var room: Node2D
 var kind := "crawler"
@@ -165,6 +166,8 @@ func _physics_process(delta: float) -> void:
 						velocity += offset.normalized()*30
 	if state == "chase" and velocity.length_squared() > 1:
 		facing = facing.slerp(velocity.normalized(), minf(1.0, delta * 5.0)).normalized()
+	elif kind == "sentry" and is_instance_valid(target) and position.distance_to(target.position) <= SCREEN_DISTANCE:
+		facing = global_position.direction_to(target.global_position)
 	if slow_timer > 0:
 		velocity *= 0.5
 	if elemental_state.is_muddy():
@@ -173,6 +176,15 @@ func _physics_process(delta: float) -> void:
 		velocity *= 0.75
 	move_and_slide()
 	queue_redraw()
+
+func has_line_of_sight_to_target() -> bool:
+	if not is_instance_valid(target):
+		return false
+	var space := get_world_2d().direct_space_state
+	if space == null:
+		return true
+	var query := PhysicsRayQueryParameters2D.create(global_position, target.global_position, 1)
+	return space.intersect_ray(query).is_empty()
 
 func _begin_attack() -> void:
 	state = "windup"
@@ -191,7 +203,13 @@ func _begin_attack() -> void:
 		attack_point = global_position + attack_direction*30
 
 func attack_reach() -> float:
-	return INF if kind in ["sentry","boss"] else 87.0
+	if kind == "boss":
+		return INF
+	if kind == "sentry":
+		if not has_line_of_sight_to_target():
+			return 0.0
+		return SCREEN_DISTANCE
+	return 87.0
 
 func _release_attack() -> void:
 	state = "chase"

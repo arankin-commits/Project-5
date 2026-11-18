@@ -91,16 +91,83 @@ func _ready() -> void:
 	visual.material = reference_material
 	_update_animation(0.0)
 
-func attack_reach() -> float:
-	var next := choose_move()
-	return float(moves[next].reach)+20 if next >= 0 else 0.0
+const RANGED_KINDS := ["shot", "lob", "hook", "radial"]
 
-func choose_move() -> int:
+func is_ranged_move(move: Dictionary) -> bool:
+	if move.is_empty():
+		return false
+	var k := str(move.get("kind", ""))
+	if k in RANGED_KINDS:
+		return true
+	if design.get("role") == "Projectile":
+		return true
+	return false
+
+func move_reach(index: int) -> float:
+	if index < 0 or index >= moves.size():
+		return 0.0
+	var m: Dictionary = moves[index]
+	var r := float(m.get("reach", 0.0)) + 20.0
+	if is_ranged_move(m):
+		r = maxf(r, SCREEN_DISTANCE)
+	return r
+
+func is_move_available(index: int) -> bool:
+	if index < 0 or index >= moves.size():
+		return false
+	if float(move_cooldowns[index]) > 0.0:
+		return false
+	var kind_str := str(moves[index].get("kind", ""))
+	if kind_str in ["reel", "siphon"] and not hooked:
+		return false
+	if is_summon and kind_str in ["summon", "split"]:
+		return false
+	return true
+
+func choose_move(require_in_range: bool = false) -> int:
+	if not is_instance_valid(target):
+		for step in 3:
+			var index := (move_index + 1 + step) % 3
+			if is_move_available(index):
+				return index
+		return -1
+
+	var dist := position.distance_to(target.position)
+
+	# If target is at range (> 120 px) and within screen distance,
+	# prioritize available ranged moves that have line of sight.
+	if dist > 120.0 and dist <= SCREEN_DISTANCE:
+		for step in 3:
+			var index := (move_index + 1 + step) % 3
+			if is_move_available(index) and is_ranged_move(moves[index]):
+				var kind_str := str(moves[index].get("kind", ""))
+				if kind_str in ["shot", "hook"] and not has_line_of_sight_to_target():
+					continue
+				return index
+
+	# Check moves in round-robin order that can reach the target at the current distance.
 	for step in 3:
-		var index := (move_index+1+step)%3
-		if float(move_cooldowns[index]) <= 0 and (str(moves[index].kind) not in ["reel","siphon"] or hooked) and (not is_summon or moves[index].kind not in ["summon","split"]):
+		var index := (move_index + 1 + step) % 3
+		if is_move_available(index) and move_reach(index) >= dist:
+			var kind_str := str(moves[index].get("kind", ""))
+			if is_ranged_move(moves[index]) and kind_str in ["shot", "hook"] and dist > 120.0 and not has_line_of_sight_to_target():
+				continue
+			return index
+
+	# If in-range is required (for attack_reach), return -1 if no move can reach.
+	if require_in_range:
+		return -1
+
+	# Fallback (e.g. forced attack or test calls): return next available move.
+	for step in 3:
+		var index := (move_index + 1 + step) % 3
+		if is_move_available(index):
 			return index
 	return -1
+
+func attack_reach() -> float:
+	var next := choose_move(true)
+	return move_reach(next) if next >= 0 else 0.0
 
 func _begin_attack() -> void:
 	var next := choose_move()
@@ -108,6 +175,8 @@ func _begin_attack() -> void:
 		return
 	move_index = next
 	current_move = moves[next].duplicate(true)
+	if is_ranged_move(current_move):
+		current_move.reach = maxf(float(current_move.get("reach", 0.0)), SCREEN_DISTANCE)
 	attack_generation += 1
 	state = "windup"
 	attack_kind = str(current_move.kind)

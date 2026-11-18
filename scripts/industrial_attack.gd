@@ -48,7 +48,8 @@ func _physics_process(delta: float) -> void:
 			hit()
 			queue_free()
 		global_position = next
-		if elapsed_active*float(spec.get("velocity",210)) >= float(spec.get("reach",260)):
+		var max_reach := maxf(float(spec.get("reach", 750.0)), 750.0)
+		if elapsed_active*float(spec.get("velocity",210)) >= max_reach:
 			queue_free()
 		return
 	if elapsed_active > duration:
