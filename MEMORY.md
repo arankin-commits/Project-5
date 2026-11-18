@@ -216,5 +216,20 @@ Indexed from left to right, top to bottom:
 ## Web Export & Build Packaging
 
 - **Web Target & index.pck Size Limit:** The Web export preset in `export_presets.cfg` targets `./index.html` and outputs `index.pck`, `index.wasm`, `index.js`, and `index.html`.
-- **Under 100MB PCK Requirement:** `index.pck` must remain strictly under 100MB (currently ~95.17 MiB / 99.79 MB). To stay within budget, unused audio production stems (`*Atmosphere.ogg*`, `*Counterpoint.ogg*`, `*Dynamic_Layer_Demo.mp3*`, `*Foundation.ogg*`, `*Full_Story_Loop.ogg*`, `*Listen_Quiet_Lobby.mp3*`, `*Theme.ogg*`, `*Classical_8_Track_Sampler*`, `*New_Age_8_Track_Sampler*`, `MIDI/*`), unused demo suites (`Flying_Liberty_Adaptive_Biome_OST_v3/*`), and unused hazard sheets are excluded via `exclude_filter` in `export_presets.cfg` while keeping all 16 collectible `Quiet_Lobby_Loop.ogg` tracks and game assets fully intact.
+- **Under 100MB PCK Requirement:** `index.pck` must remain strictly under 100MB (currently ~87.97 MB / 92,245,848 bytes). To stay within budget, unused audio production stems (`*Atmosphere.ogg*`, `*Counterpoint.ogg*`, `*Dynamic_Layer_Demo.mp3*`, `*Foundation.ogg*`, `*Full_Story_Loop.ogg*`, `*Listen_Quiet_Lobby.mp3*`, `*Theme.ogg*`, `*Classical_8_Track_Sampler*`, `*New_Age_8_Track_Sampler*`, `MIDI/*`), unused demo suites (`Flying_Liberty_Adaptive_Biome_OST_v3/*`), high-res raw HUD mockups (`HUD/*`), and unused hazard sheets are excluded via `exclude_filter` in `export_presets.cfg` while keeping all 16 collectible `Quiet_Lobby_Loop.ogg` tracks, the 8-bit palette card HUD texture suite in `art/card_hud/`, and all core game assets intact.
+
+## Steampunk Card Selection HUD
+
+- **Visual Reference Recreation:** The card reward modal recreates the steampunk card HUD design from the reference image (`uploaded_media_1794968551662.jpg`), featuring:
+  - **Header Banner:** An ornate brass scroll plaque flanked with rotating brass cogwheels, displaying "Choose a Card" in serif typography and "✦ Pick 1 of 3 ✦" as a subtitle.
+  - **Three-Card Layout:** 3 vertical cards side-by-side (`310x480` px) rendered via `CardChoiceButton` with rarity-themed metallic borders (Common: slate/steel, Rare: sapphire blue, Epic: amethyst purple, Legendary: radiant amber/gold).
+  - **Card Structure:** Top rarity pill ribbon (`COMMON`, `RARE`, `EPIC`, `LEGENDARY`), top-left elemental crest diamond badge (⚡ Lightning, 🔥 Fire, ❄ Ice, 🌀 Wind, 🪨 Earth, 💧 Water, ⚙ Core), illustrated character silhouette action art window, card title in warm cream serif font, thin gold divider rule, clean description text, and a recessed bottom stat panel with a mini elemental icon, bold primary damage stat, and secondary effect text.
+  - **Selection & Hover Effects:** Hovering or focusing a card applies a smooth scale up to 1.04x, lifts the card by 8px, casts an outer radiant golden halo glow, and illuminates bright golden L-shaped corner brackets at all four corners matching the selected card in the reference image.
+  - **Footer Navigation Prompt Bar:** Centered pill prompt bar showing `[D-Pad / ◄ ► / Mouse] Select`, `[(A) / Enter / Space] Confirm`, and an interactive `[(B) / Esc] Skip (+15 Gold)` button.
+  - **Skip Interaction:** Clicking the Skip button or pressing `ui_cancel` (B button or Escape) triggers `reward_selected("skip")`, awarding +15 Gold/XP and proceeding to the exit state.
+- **Component Classes & Assets:**
+  - `CardChoiceButton` in `res://scripts/card_choice_button.gd`: Custom button control implementing the visual hierarchy, metallic borders, corner brackets, and dynamic stat parsing.
+  - `RunHUD` in `res://scripts/run_hud.gd`: Manages `card_view` for reward selection, `result_panel` for run completion/failure, and keyboard/controller focus routing.
+  - Optimized 8-bit palette textures in `res://art/card_hud/` (~283 KB total) including `header_banner.png`, `footer_bar.png`, `art_lightning_attack.png`, `art_fire_slam.png`, `art_ice_slam.png`, 24 elemental action archetype illustrations, and 7 crest/mini icons.
+
 

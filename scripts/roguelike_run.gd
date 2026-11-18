@@ -699,7 +699,9 @@ func _check_clear() -> void:
 		if not found_promised:
 			if config.is_element_reward(promised) or promised.begins_with("upgrade_"):
 				var element := promised.trim_prefix("core_").trim_prefix("upgrade_")
-				var rolled: Array[Dictionary] = ElementalCards.roll_elemental_cards(element, player_cards, trap_buff_active, rng)
+				var rolled: Array[Dictionary] = []
+				if config.biome != "maintenance":
+					rolled = ElementalCards.roll_elemental_cards(element, player_cards, trap_buff_active, rng)
 				if not rolled.is_empty():
 					for card in rolled:
 						reward_choices.append({
@@ -764,7 +766,7 @@ Q / 25 energy" % element})
 func choose_reward(id: String) -> bool:
 	if state != "reward":
 		return false
-	var valid := false
+	var valid := (id == "skip")
 	for choice in reward_choices:
 		valid = valid or choice["id"] == id
 	if not valid:
@@ -823,6 +825,9 @@ func choose_reward(id: String) -> bool:
 			player.set("dash_recharge", maxf(0.3, float(player.get("dash_recharge")) * 0.80))
 		"speed": player.set("speed",float(player.get("speed"))*1.1)
 		"repair": health = minf(maximum_health,health+45)
+		"skip":
+			_award_progress(15, 0)
+			_player_say("Skipped reward (+15 Gold)")
 		"core_xp": _award_progress(100, 0)
 		"aether_cores": _award_progress(25, 1)
 		"trap_room":

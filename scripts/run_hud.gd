@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+const CardChoiceButtonClass := preload("res://scripts/card_choice_button.gd")
+
 signal reward_selected(id: String)
 signal retry_requested
 signal return_requested
@@ -17,6 +19,9 @@ var boss_bar: ProgressBar
 var boss_title: Label
 var boss_box: VBoxContainer
 var modal: Control
+var card_view: Control
+var result_panel: CenterContainer
+var skip_button: Button
 var modal_title: Label
 var modal_description: Label
 var modal_actions: HBoxContainer
@@ -98,16 +103,56 @@ func _ready() -> void:
 	modal.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	root.add_child(modal)
 	var shade := ColorRect.new()
-	shade.color = Color(0.02,0.025,0.03,0.82)
+	shade.color = Color(0.02,0.025,0.03,0.85)
 	shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	modal.add_child(shade)
-	var center := CenterContainer.new()
-	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	modal.add_child(center)
+	# 1. Card Selection View (Matches Steampunk Card Selection HUD Reference)
+	card_view = Control.new()
+	card_view.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	modal.add_child(card_view)
+	var header_rect := TextureRect.new()
+	header_rect.name = "HeaderBanner"
+	if ResourceLoader.exists("res://art/card_hud/header_banner.png"):
+		header_rect.texture = load("res://art/card_hud/header_banner.png")
+	header_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	header_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	header_rect.position = Vector2(365, 12)
+	header_rect.size = Vector2(550, 84)
+	header_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	card_view.add_child(header_rect)
+	modal_actions = HBoxContainer.new()
+	modal_actions.alignment = BoxContainer.ALIGNMENT_CENTER
+	modal_actions.add_theme_constant_override("separation", 24)
+	modal_actions.position = Vector2(100, 108)
+	modal_actions.size = Vector2(1080, 495)
+	card_view.add_child(modal_actions)
+	var footer_rect := TextureRect.new()
+	footer_rect.name = "FooterPromptBar"
+	if ResourceLoader.exists("res://art/card_hud/footer_bar.png"):
+		footer_rect.texture = load("res://art/card_hud/footer_bar.png")
+	footer_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	footer_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	footer_rect.position = Vector2(365, 622)
+	footer_rect.size = Vector2(550, 64)
+	footer_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	card_view.add_child(footer_rect)
+	skip_button = Button.new()
+	skip_button.name = "SkipButton"
+	skip_button.flat = true
+	skip_button.position = Vector2(695, 624)
+	skip_button.size = Vector2(210, 58)
+	skip_button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	skip_button.focus_mode = Control.FOCUS_NONE
+	skip_button.pressed.connect(_on_skip_pressed)
+	card_view.add_child(skip_button)
+	# 2. Result View (For show_result / run end)
+	result_panel = CenterContainer.new()
+	result_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	modal.add_child(result_panel)
 	var panel := PanelContainer.new()
 	panel.custom_minimum_size = Vector2(1040,340)
 	panel.add_theme_stylebox_override("panel",panel_style())
-	center.add_child(panel)
+	result_panel.add_child(panel)
 	var stack := VBoxContainer.new()
 	stack.add_theme_constant_override("separation",20)
 	panel.add_child(stack)
@@ -117,10 +162,6 @@ func _ready() -> void:
 	modal_description = label("",17,Color("beccca"))
 	modal_description.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	stack.add_child(modal_description)
-	modal_actions = HBoxContainer.new()
-	modal_actions.alignment = BoxContainer.ALIGNMENT_CENTER
-	modal_actions.add_theme_constant_override("separation",18)
-	stack.add_child(modal_actions)
 	modal.hide()
 	pause_menu = preload("res://scripts/run_menu.gd").new()
 	root.add_child(pause_menu)
@@ -140,9 +181,14 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		if pause_menu.visible:
 			pause_menu.back()
+		elif modal.visible and card_view.visible:
+			_on_skip_pressed()
 		else:
 			pause_requested.emit()
 		get_viewport().set_input_as_handled()
+
+func _on_skip_pressed() -> void:
+	reward_selected.emit("skip")
 
 func set_room(index: int, data: Dictionary, run_seed: int) -> void:
 	room_label.text = str(data["name"]).to_upper()
@@ -173,22 +219,23 @@ func _clear_actions() -> void:
 
 func show_rewards(choices: Array) -> void:
 	_clear_actions()
+	card_view.show()
+	result_panel.hide()
 	modal_title.text = "PRESSURE RELEASED"
 	modal_description.text = "Choose one core or salvage upgrade for this run. Hull repaired by 12."
 	for choice in choices:
-		var button := Button.new()
-		button.text = choice["name"] + "\n\n" + choice["description"]
-		button.custom_minimum_size = Vector2(300,155)
-		button.add_theme_font_size_override("font_size",18)
-		button.add_theme_color_override("font_color",Color("ffdea5"))
-		button.add_theme_stylebox_override("normal",panel_style())
-		button.pressed.connect(func(): reward_selected.emit(choice["id"]))
+		var button := CardChoiceButtonClass.new(choice)
+		var choice_id := str(choice.get("id", ""))
+		button.pressed.connect(func(): reward_selected.emit(choice_id))
 		modal_actions.add_child(button)
 	modal.show()
-	modal_actions.get_child(0).grab_focus()
+	if modal_actions.get_child_count() > 0:
+		modal_actions.get_child(0).grab_focus()
 
 func show_result(title: String, description: String) -> void:
 	_clear_actions()
+	card_view.hide()
+	result_panel.show()
 	modal_title.text = title
 	modal_description.text = description + "\n\nReturning to the ship..."
 	modal.show()
