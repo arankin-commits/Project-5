@@ -20,6 +20,7 @@
 
 - **Spawn Location:** The reward item spawns next to the player, guaranteed within bounds (never out of bounds).
 - **Interaction Activation:** The reward item only activates once the player interacts with it by pressing `E`.
+- **Choice Screen Exclusivity:** Only element, weapon upgrade, and element upgrade rewards show the card choice screen upon pickup. All other rewards (HP/Hull increases, CDs, Core XP, Aether Cores, Trap buffs, Dash, Speed, Power) are collected immediately upon pickup without opening the choice screen.
 - **Leaving Unclaimed Rewards:** If the player attempts to exit through a door without collecting the reward item, the player character states that they should collect the reward item first. If the player interacts with the door a second time, they are allowed to leave the reward behind and exit.
 
 ## Steampunk Reward Icon Atlas

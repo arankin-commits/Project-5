@@ -15,7 +15,7 @@ const REWARDS := [
 	{"id":"hull", "name":"RIVETED PLATING", "description":"+25 maximum hull\nRepair 25 hull"},
 	{"id":"dash", "name":"QUICK RELEASE", "description":"15% faster dash recharge"},
 	{"id":"speed", "name":"PISTON DRIVE", "description":"+10% movement speed"},
-	{"id":"repair", "name":"COOLANT RESERVE", "description":"Repair 45 hull"}
+	{"id":"repair", "name":"COOLANT RESERVE", "description":"+25 maximum hull\nRepair 25 hull"}
 ]
 
 const ELEMENT_COLORS: Dictionary = {
@@ -148,7 +148,8 @@ func _prepare_biome() -> void:
 			if i+1 < rooms.size():
 				rooms[i]["next_preview"] = ("BOSS: " + str(rooms[i+1].boss_name)) if rooms[i+1].get("boss",false) else "NEXT: " + str(rooms[i+1].name).to_upper()
 		elif config.biome == "maintenance" and i+1 < rooms.size():
-			var reward_text := "+25 MAX HULL / REPAIR 25" if rooms[i+1].reward == "hull" else "REPAIR 45 HULL"
+			var reward_id: String = str(rooms[i+1].get("reward", "repair"))
+			var reward_text: String = BLOCKOUT_ROOM.REWARD_TEXT.get(reward_id, "+25 MAX HULL / REPAIR 25")
 			rooms[i]["next_preview"] = ("BOSS: MAINTENANCE GUARDIAN" if rooms[i+1].get("boss",false) else "NEXT: " + str(rooms[i+1].name).to_upper()) + "\n" + reward_text
 
 func _complete_biome() -> void:
@@ -252,11 +253,51 @@ func _spawn_reward_item() -> void:
 	
 	$World.add_child(reward_item)
 
+func is_choice_reward() -> bool:
+	var promised: String = str(rooms[room_index].get("reward", "")) if room_index >= 0 and room_index < rooms.size() else ""
+	if _is_choice_reward_id(promised):
+		return true
+	for choice in reward_choices:
+		var cid: String = str(choice.get("id", ""))
+		if _is_choice_reward_id(cid):
+			return true
+		if choice.get("is_element_card", false) or ElementalCards.has_card(cid):
+			return true
+		if choice.get("is_weapon_card", false) or choice.get("is_weapon_upgrade", false):
+			return true
+	return false
+
+func _is_choice_reward_id(reward_id: String) -> bool:
+	if config.is_element_reward(reward_id):
+		return true
+	if reward_id == "element" or reward_id == "core":
+		return true
+	if reward_id.begins_with("upgrade_") and config.ELEMENTS.has(reward_id.trim_prefix("upgrade_")):
+		return true
+	if reward_id == "element_upgrade":
+		return true
+	if reward_id.begins_with("weapon") or reward_id == "weapon_upgrade":
+		return true
+	return false
+
+func _collect_direct_reward() -> void:
+	var reward_id: String = ""
+	if not reward_choices.is_empty():
+		reward_id = str(reward_choices[0].get("id", ""))
+	if reward_id.is_empty() and room_index >= 0 and room_index < rooms.size():
+		reward_id = str(rooms[room_index].get("reward", "max_hp_increase"))
+	if reward_id.is_empty():
+		reward_id = "max_hp_increase"
+	choose_reward(reward_id)
+
 func activate_reward_item() -> void:
 	if reward_collected or not is_instance_valid(reward_item):
 		return
-	hud.call("show_rewards", reward_choices)
-	player.set("controls_enabled", false)
+	if is_choice_reward():
+		hud.call("show_rewards", reward_choices)
+		player.set("controls_enabled", false)
+	else:
+		_collect_direct_reward()
 
 func interact_reward() -> void:
 	activate_reward_item()
@@ -937,9 +978,10 @@ Q / 25 energy" % element})
 func choose_reward(id: String) -> bool:
 	if state != "reward":
 		return false
-	var valid := (id == "skip")
+	var promised: String = str(rooms[room_index].get("reward", "")) if room_index >= 0 and room_index < rooms.size() else ""
+	var valid := (id == "skip" or id == promised)
 	for choice in reward_choices:
-		valid = valid or choice["id"] == id
+		valid = valid or str(choice.get("id", "")) == id
 	if not valid:
 		return false
 	if id.begins_with("upgrade_") and not config.core_elements.has(id.trim_prefix("upgrade_")):
@@ -974,14 +1016,16 @@ func choose_reward(id: String) -> bool:
 		reward_item.queue_free()
 		reward_item = null
 	match id:
-		"power": player.set("damage_multiplier",float(player.get("damage_multiplier"))+0.2 * config.call("robot_stats")["damage"])
-		"hull":
+		"power":
+			player.set("damage_multiplier",float(player.get("damage_multiplier"))+0.2 * config.call("robot_stats")["damage"])
+			_player_say("+20% Strike Damage")
+		"hull", "repair", "max_hp_increase":
 			maximum_health += 25
 			health = minf(maximum_health,health+25)
-		"max_hp_increase":
-			maximum_health += 25
-			health = minf(maximum_health,health+25)
-		"dash": player.set("dash_recharge",maxf(0.3,float(player.get("dash_recharge"))*0.85))
+			_player_say("+25 Max Hull / Repaired 25 Hull")
+		"dash":
+			player.set("dash_recharge",maxf(0.3,float(player.get("dash_recharge"))*0.85))
+			_player_say("+15% Dash Recharge")
 		"cds":
 			var save_slots = _get_save_slots()
 			var awarded_track: String = rooms[room_index].get("cd_track", "")
@@ -994,21 +1038,31 @@ func choose_reward(id: String) -> bool:
 				var title: String = save_slots.CD_TRACKS.get(awarded_track, {}).get("title", awarded_track)
 				_player_say("Acquired Music CD: " + title)
 			player.set("dash_recharge", maxf(0.3, float(player.get("dash_recharge")) * 0.80))
-		"speed": player.set("speed",float(player.get("speed"))*1.1)
-		"repair": health = minf(maximum_health,health+45)
+		"speed":
+			player.set("speed",float(player.get("speed"))*1.1)
+			_player_say("+10% Movement Speed")
 		"skip":
 			_award_progress(15, 0)
 			_player_say("Skipped reward (+15 Gold)")
-		"core_xp": _award_progress(100, 0)
-		"aether_cores": _award_progress(25, 1)
+		"core_xp":
+			_award_progress(100, 0)
+			_player_say("+100 Core XP")
+		"aether_cores":
+			_award_progress(25, 1)
+			_player_say("+1 Aether Gear")
 		"trap_room":
 			trap_buff_active = true
+			_player_say("Trap Survival Cache: Rarity Boost Active")
 		"upgrade_fire", "upgrade_lightning", "upgrade_ice", "upgrade_wind", "upgrade_earth":
 			var mult: float = 1.45 if trap_buff_active else 1.25
 			player.set("damage_multiplier", float(player.get("damage_multiplier")) * mult)
 		"upgrade_water":
 			var mult: float = 1.45 if trap_buff_active else 1.25
 			player.set("speed", float(player.get("speed")) * mult)
+		_:
+			if id.begins_with("weapon") or id == "weapon_upgrade":
+				player.set("damage_multiplier", float(player.get("damage_multiplier")) * 1.2)
+				_player_say("Weapon Upgrade Applied")
 	if room_index == rooms.size()-1:
 		hud.modal.hide()
 		_complete_biome()

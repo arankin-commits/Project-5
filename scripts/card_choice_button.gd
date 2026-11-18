@@ -135,7 +135,9 @@ func _build_ui() -> void:
 	title_label.size = Vector2(294, 30)
 	var card_id: String = str(choice_data.get("id", ""))
 	var display_title: String = str(choice_data.get("name", "UPGRADE"))
-	if ElementalCards.CARDS.has(card_id):
+	if card_id in ["hull", "repair", "max_hp_increase"]:
+		display_title = "Reinforced Chassis"
+	elif ElementalCards.CARDS.has(card_id):
 		display_title = str(ElementalCards.CARDS[card_id].get("name", display_title))
 	elif display_title == display_title.to_upper():
 		display_title = display_title.capitalize()
@@ -219,7 +221,7 @@ func _resolve_art_texture() -> Texture2D:
 	var elem: String = element if not element.is_empty() else "core"
 	var action := "generic"
 	if card_id.contains("dash"): action = "dash"
-	elif card_id.contains("armor") or card_id.contains("shield"): action = "armor"
+	elif card_id.contains("armor") or card_id.contains("shield") or card_id.contains("hull") or card_id.contains("hp") or card_id.contains("repair"): action = "armor"
 	elif card_id.contains("attack") or card_id.contains("special") or card_id.contains("strike"): action = "attack"
 	elif card_id.contains("slam"): action = "slam"
 	
@@ -259,6 +261,14 @@ func _resolve_clean_description() -> String:
 		return "Ground Slam produces a ring of fire that expands outwards and burns enemies it passes through."
 	elif card_id == "ice_slam":
 		return "Ground Slam creates ice pillars around enemies caught in its area, temporarily trapping them."
+	elif card_id in ["max_hp_increase", "hull", "repair"]:
+		return "+25 maximum hull\nRepair 25 hull"
+	elif card_id == "power":
+		return "+20% strike damage"
+	elif card_id == "dash":
+		return "15% faster dash recharge"
+	elif card_id == "speed":
+		return "+10% movement speed"
 	
 	# Lookup in ElementalCards catalog if present
 	if typeof(ElementalCards) != TYPE_NIL and ElementalCards.CARDS.has(card_id):
@@ -282,7 +292,7 @@ func _resolve_primary_stat() -> String:
 		return "18 Fire Damage"
 	elif card_id == "ice_slam":
 		return "22 Ice Damage"
-	elif card_id == "max_hp_increase":
+	elif card_id in ["max_hp_increase", "hull", "repair"]:
 		return "+25 Maximum Hull"
 	elif card_id == "cds":
 		return "Collectible Theme Record"
@@ -290,6 +300,12 @@ func _resolve_primary_stat() -> String:
 		return "+100 Core XP"
 	elif card_id == "aether_cores":
 		return "+1 Aether Gear"
+	elif card_id == "power":
+		return "+20% Strike Damage"
+	elif card_id == "dash":
+		return "+15% Dash Recharge"
+	elif card_id == "speed":
+		return "+10% Movement Speed"
 	
 	if typeof(ElementalCards) != TYPE_NIL and ElementalCards.CARDS.has(card_id):
 		var c: Dictionary = ElementalCards.CARDS[card_id]
@@ -311,7 +327,7 @@ func _resolve_secondary_stat() -> String:
 		return "+ Applies Burn\n(6 dmg/s for 3s)"
 	elif card_id == "ice_slam":
 		return "+ Traps for 2s"
-	elif card_id == "max_hp_increase":
+	elif card_id in ["max_hp_increase", "hull", "repair"]:
 		return "+ Repair 25 Hull"
 	elif card_id == "cds":
 		return "+ 20% faster dash recharge"
@@ -319,6 +335,12 @@ func _resolve_secondary_stat() -> String:
 		return "+ Permanent skill tree progression"
 	elif card_id == "aether_cores":
 		return "+ Workshop crafting token"
+	elif card_id == "power":
+		return "+ Increased strike damage"
+	elif card_id == "dash":
+		return "+ Faster dash recharge"
+	elif card_id == "speed":
+		return "+ Faster movement speed"
 	
 	if typeof(ElementalCards) != TYPE_NIL and ElementalCards.CARDS.has(card_id):
 		var c: Dictionary = ElementalCards.CARDS[card_id]

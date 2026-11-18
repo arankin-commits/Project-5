@@ -29,7 +29,7 @@ const REWARD_ICONS := {
 	"speed": Rect2(1642, 0, 274, 273)
 }
 const REWARD_TEXT := {
-	"repair": "REPAIR 45 HULL",
+	"repair": "+25 MAX HULL / REPAIR 25",
 	"hull": "+25 MAX HULL / REPAIR 25",
 	"power": "+20% STRIKE DAMAGE",
 	"dash": "15% FASTER DASH RECHARGE",

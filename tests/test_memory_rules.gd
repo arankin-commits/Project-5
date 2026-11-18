@@ -133,9 +133,41 @@ func _run() -> void:
 	check(run.player.position.distance_to(run.reward_item.position) <= 80, "Rule 1 violated: reward item not spawned next to player")
 	check(not run.hud.modal.visible, "Rule 1 violated: reward modal opened before interaction")
 	
-	# Interacting with reward item opens modal
+	# Non-choice reward (e.g. repair/hull/xp/cds) does not open modal and collects directly
 	run.activate_reward_item()
-	check(run.hud.modal.visible, "Interacting with reward item did not open modal")
+	check(not run.hud.modal.visible, "Non-choice reward item must not open choice modal")
+	check(run.reward_collected, "Non-choice reward was not collected directly upon pickup")
+
+	# Choice rewards (element, element upgrade, weapon upgrade) DO open modal
+	run.reward_collected = false
+	run.state = "reward"
+	run.rooms[run.room_index].reward = "core_fire"
+	run.reward_choices = [
+		{"id": "fire_attack", "is_element_card": true},
+		{"id": "fire_slam", "is_element_card": true},
+		{"id": "fire_armor", "is_element_card": true}
+	]
+	run._spawn_reward_item()
+	check(not run.hud.modal.visible, "Choice modal opened before interaction")
+	run.activate_reward_item()
+	check(run.hud.modal.visible, "Interacting with choice reward item did not open modal")
+
+	# Test choice reward classification helper
+	check(run._is_choice_reward_id("core_fire"), "core_fire must be choice reward")
+	check(run._is_choice_reward_id("core_lightning"), "core_lightning must be choice reward")
+	check(run._is_choice_reward_id("upgrade_fire"), "upgrade_fire must be choice reward")
+	check(run._is_choice_reward_id("upgrade_ice"), "upgrade_ice must be choice reward")
+	check(run._is_choice_reward_id("weapon_upgrade"), "weapon_upgrade must be choice reward")
+	check(not run._is_choice_reward_id("core_xp"), "core_xp must NOT be choice reward")
+	check(not run._is_choice_reward_id("aether_cores"), "aether_cores must NOT be choice reward")
+	check(not run._is_choice_reward_id("cds"), "cds must NOT be choice reward")
+	check(not run._is_choice_reward_id("max_hp_increase"), "max_hp_increase must NOT be choice reward")
+	check(not run._is_choice_reward_id("repair"), "repair must NOT be choice reward")
+	check(not run._is_choice_reward_id("hull"), "hull must NOT be choice reward")
+	check(not run._is_choice_reward_id("trap_room"), "trap_room must NOT be choice reward")
+	check(not run._is_choice_reward_id("dash"), "dash must NOT be choice reward")
+	check(not run._is_choice_reward_id("speed"), "speed must NOT be choice reward")
+	check(not run._is_choice_reward_id("power"), "power must NOT be choice reward")
 	
 	# ==========================================
 	# RULE 2: Leaving through door prompts warning; second interaction leaves reward
@@ -665,6 +697,30 @@ func _run() -> void:
 	run.choose_reward("max_hp_increase")
 	check(run.maximum_health == 100.0, "Rule 21: Second HP reward must increase max health by 25 (75 -> 100), got %f" % run.maximum_health)
 	check(run.health == 95.0, "Rule 21: HP reward must heal 25 health (70 -> 95), got %f" % run.health)
+
+	# Test repair and hull rewards also increase max health by 25 and heal 25
+	run.health = 20.0
+	run.maximum_health = 50.0
+	run.state = "reward"
+	run.reward_choices = [{"id": "repair"}]
+	chosen = run.choose_reward("repair")
+	check(chosen, "Rule 21: repair reward could not be chosen")
+	check(run.maximum_health == 75.0, "Rule 21: repair reward must increase max health by 25 (50 -> 75), got %f" % run.maximum_health)
+	check(run.health == 45.0, "Rule 21: repair reward must heal 25 health (20 -> 45), got %f" % run.health)
+
+	run.health = 20.0
+	run.maximum_health = 50.0
+	run.state = "reward"
+	run.reward_choices = [{"id": "hull"}]
+	chosen = run.choose_reward("hull")
+	check(chosen, "Rule 21: hull reward could not be chosen")
+	check(run.maximum_health == 75.0, "Rule 21: hull reward must increase max health by 25 (50 -> 75), got %f" % run.maximum_health)
+	check(run.health == 45.0, "Rule 21: hull reward must heal 25 health (20 -> 45), got %f" % run.health)
+
+	var blockout_script = preload("res://scripts/blockout_room.gd")
+	check(blockout_script.REWARD_TEXT.get("repair") == "+25 MAX HULL / REPAIR 25", "Rule 21: REWARD_TEXT['repair'] must be '+25 MAX HULL / REPAIR 25'")
+	check(blockout_script.REWARD_TEXT.get("hull") == "+25 MAX HULL / REPAIR 25", "Rule 21: REWARD_TEXT['hull'] must be '+25 MAX HULL / REPAIR 25'")
+	check(blockout_script.REWARD_TEXT.get("max_hp_increase") == "+25 MAX HULL / REPAIR 25", "Rule 21: REWARD_TEXT['max_hp_increase'] must be '+25 MAX HULL / REPAIR 25'")
 
 	# ==========================================
 	# RULE 22: Enemy Speeds by Size Category
