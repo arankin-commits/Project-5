@@ -323,7 +323,7 @@
         },
         "image": "toxin_refinery/small/01_reagent-intake.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/small/01_reagent-intake.png",
+      "image": "res://art/biomes/toxin_refinery/tox_01.svg",
       "reward": "repair",
       "waves": [
         [
@@ -646,7 +646,7 @@
         },
         "image": "toxin_refinery/small/02_caustic-elbow.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/small/02_caustic-elbow.png",
+      "image": "res://art/biomes/toxin_refinery/tox_02.svg",
       "reward": "repair",
       "waves": [
         [
@@ -962,7 +962,7 @@
         },
         "image": "toxin_refinery/small/03_barrel-pocket.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/small/03_barrel-pocket.png",
+      "image": "res://art/biomes/toxin_refinery/tox_03.svg",
       "reward": "repair",
       "waves": [
         [
@@ -1278,7 +1278,7 @@
         },
         "image": "toxin_refinery/small/04_acid-sump.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/small/04_acid-sump.png",
+      "image": "res://art/biomes/toxin_refinery/tox_04.svg",
       "reward": "repair",
       "waves": [
         [
@@ -1592,7 +1592,7 @@
         },
         "image": "toxin_refinery/small/05_valve-nook.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/small/05_valve-nook.png",
+      "image": "res://art/biomes/toxin_refinery/tox_05.svg",
       "reward": "repair",
       "waves": [
         [
@@ -1888,7 +1888,7 @@
         },
         "image": "toxin_refinery/small/06_spike-bay.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/small/06_spike-bay.png",
+      "image": "res://art/biomes/toxin_refinery/tox_06.svg",
       "reward": "repair",
       "waves": [
         [
@@ -2381,7 +2381,7 @@
         },
         "image": "toxin_refinery/medium/07_solvent-junction.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/medium/07_solvent-junction.png",
+      "image": "res://art/biomes/toxin_refinery/tox_07.svg",
       "reward": "repair",
       "waves": [
         [
@@ -2929,7 +2929,7 @@
         },
         "image": "toxin_refinery/medium/08_neutralizer-hall.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/medium/08_neutralizer-hall.png",
+      "image": "res://art/biomes/toxin_refinery/tox_08.svg",
       "reward": "repair",
       "waves": [
         [
@@ -3413,7 +3413,7 @@
         },
         "image": "toxin_refinery/medium/09_reagent-gallery.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/medium/09_reagent-gallery.png",
+      "image": "res://art/biomes/toxin_refinery/tox_09.svg",
       "reward": "repair",
       "waves": [
         [
@@ -3886,7 +3886,7 @@
         },
         "image": "toxin_refinery/medium/10_corrosion-transfer.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/medium/10_corrosion-transfer.png",
+      "image": "res://art/biomes/toxin_refinery/tox_10.svg",
       "reward": "repair",
       "waves": [
         [
@@ -4378,7 +4378,7 @@
         },
         "image": "toxin_refinery/medium/11_barrel-exchange.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/medium/11_barrel-exchange.png",
+      "image": "res://art/biomes/toxin_refinery/tox_11.svg",
       "reward": "repair",
       "waves": [
         [
@@ -4859,7 +4859,7 @@
         },
         "image": "toxin_refinery/medium/12_toxic-split.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/medium/12_toxic-split.png",
+      "image": "res://art/biomes/toxin_refinery/tox_12.svg",
       "reward": "repair",
       "waves": [
         [
@@ -5339,7 +5339,7 @@
         },
         "image": "toxin_refinery/medium/13_acid-feeder.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/medium/13_acid-feeder.png",
+      "image": "res://art/biomes/toxin_refinery/tox_13.svg",
       "reward": "repair",
       "waves": [
         [
@@ -5803,7 +5803,7 @@
         },
         "image": "toxin_refinery/medium/14_hazard-inspection.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/medium/14_hazard-inspection.png",
+      "image": "res://art/biomes/toxin_refinery/tox_14.svg",
       "reward": "repair",
       "waves": [
         [
@@ -6284,7 +6284,7 @@
         },
         "image": "toxin_refinery/medium/15_drip-court.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/medium/15_drip-court.png",
+      "image": "res://art/biomes/toxin_refinery/tox_15.svg",
       "reward": "repair",
       "waves": [
         [
@@ -6757,7 +6757,7 @@
         },
         "image": "toxin_refinery/medium/16_leakage-crossing.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/medium/16_leakage-crossing.png",
+      "image": "res://art/biomes/toxin_refinery/tox_16.svg",
       "reward": "repair",
       "waves": [
         [
@@ -7244,7 +7244,7 @@
         },
         "image": "toxin_refinery/medium/17_distillate-bend.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/medium/17_distillate-bend.png",
+      "image": "res://art/biomes/toxin_refinery/tox_17.svg",
       "reward": "repair",
       "waves": [
         [
@@ -7705,7 +7705,7 @@
         },
         "image": "toxin_refinery/medium/18_separation-run.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/medium/18_separation-run.png",
+      "image": "res://art/biomes/toxin_refinery/tox_18.svg",
       "reward": "repair",
       "waves": [
         [
@@ -8174,7 +8174,7 @@
         },
         "image": "toxin_refinery/medium/19_fume-sorting.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/medium/19_fume-sorting.png",
+      "image": "res://art/biomes/toxin_refinery/tox_19.svg",
       "reward": "repair",
       "waves": [
         [
@@ -8646,7 +8646,7 @@
         },
         "image": "toxin_refinery/medium/20_pressure-filtration.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/medium/20_pressure-filtration.png",
+      "image": "res://art/biomes/toxin_refinery/tox_20.svg",
       "reward": "repair",
       "waves": [
         [
@@ -9410,7 +9410,7 @@
         },
         "image": "toxin_refinery/large/21_refinery-core.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/large/21_refinery-core.png",
+      "image": "res://art/biomes/toxin_refinery/tox_21.svg",
       "reward": "repair",
       "waves": [
         [
@@ -10111,7 +10111,7 @@
         },
         "image": "toxin_refinery/large/22_catalyst-exchange.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/large/22_catalyst-exchange.png",
+      "image": "res://art/biomes/toxin_refinery/tox_22.svg",
       "reward": "repair",
       "waves": [
         [
@@ -10767,7 +10767,7 @@
         },
         "image": "toxin_refinery/large/23_containment-grid.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/large/23_containment-grid.png",
+      "image": "res://art/biomes/toxin_refinery/tox_23.svg",
       "reward": "repair",
       "waves": [
         [
@@ -11444,7 +11444,7 @@
         },
         "image": "toxin_refinery/large/24_toxic-processing-floor.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/large/24_toxic-processing-floor.png",
+      "image": "res://art/biomes/toxin_refinery/tox_24.svg",
       "reward": "repair",
       "waves": [
         [
@@ -12152,7 +12152,7 @@
         },
         "image": "toxin_refinery/large/25_acid-distribution.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/large/25_acid-distribution.png",
+      "image": "res://art/biomes/toxin_refinery/tox_25.svg",
       "reward": "repair",
       "waves": [
         [
@@ -12840,7 +12840,7 @@
         },
         "image": "toxin_refinery/large/26_waste-reclaimer.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/large/26_waste-reclaimer.png",
+      "image": "res://art/biomes/toxin_refinery/tox_26.svg",
       "reward": "repair",
       "waves": [
         [
@@ -13497,7 +13497,7 @@
         },
         "image": "toxin_refinery/large/27_spill-control.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/large/27_spill-control.png",
+      "image": "res://art/biomes/toxin_refinery/tox_27.svg",
       "reward": "repair",
       "waves": [
         [
@@ -14194,7 +14194,7 @@
         },
         "image": "toxin_refinery/large/28_reaction-manifold.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/large/28_reaction-manifold.png",
+      "image": "res://art/biomes/toxin_refinery/tox_28.svg",
       "reward": "repair",
       "waves": [
         [
@@ -14889,7 +14889,7 @@
         },
         "image": "toxin_refinery/large/29_barrel-handling-complex.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/large/29_barrel-handling-complex.png",
+      "image": "res://art/biomes/toxin_refinery/tox_29.svg",
       "reward": "repair",
       "waves": [
         [
@@ -15558,7 +15558,7 @@
         },
         "image": "toxin_refinery/large/30_final-purification.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/toxin_refinery/large/30_final-purification.png",
+      "image": "res://art/biomes/toxin_refinery/tox_30.svg",
       "reward": "repair",
       "waves": [
         [

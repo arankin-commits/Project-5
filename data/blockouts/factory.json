@@ -295,7 +295,7 @@
         },
         "image": "factory/small/01_punch-press-vestibule.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/small/01_punch-press-vestibule.png",
+      "image": "res://art/biomes/factory/fac_01.svg",
       "reward": "repair",
       "waves": [
         [
@@ -614,7 +614,7 @@
         },
         "image": "factory/small/02_blade-feeder.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/small/02_blade-feeder.png",
+      "image": "res://art/biomes/factory/fac_02.svg",
       "reward": "repair",
       "waves": [
         [
@@ -926,7 +926,7 @@
         },
         "image": "factory/small/03_coil-annex.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/small/03_coil-annex.png",
+      "image": "res://art/biomes/factory/fac_03.svg",
       "reward": "repair",
       "waves": [
         [
@@ -1238,7 +1238,7 @@
         },
         "image": "factory/small/04_die-cast-nook.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/small/04_die-cast-nook.png",
+      "image": "res://art/biomes/factory/fac_04.svg",
       "reward": "repair",
       "waves": [
         [
@@ -1556,7 +1556,7 @@
         },
         "image": "factory/small/05_piston-elbow.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/small/05_piston-elbow.png",
+      "image": "res://art/biomes/factory/fac_05.svg",
       "reward": "repair",
       "waves": [
         [
@@ -1904,7 +1904,7 @@
         },
         "image": "factory/small/06_stamping-pocket.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/small/06_stamping-pocket.png",
+      "image": "res://art/biomes/factory/fac_06.svg",
       "reward": "repair",
       "waves": [
         [
@@ -2389,7 +2389,7 @@
         },
         "image": "factory/medium/07_assembly-junction.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/medium/07_assembly-junction.png",
+      "image": "res://art/biomes/factory/fac_07.svg",
       "reward": "repair",
       "waves": [
         [
@@ -2901,7 +2901,7 @@
         },
         "image": "factory/medium/08_sawtooth-transfer.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/medium/08_sawtooth-transfer.png",
+      "image": "res://art/biomes/factory/fac_08.svg",
       "reward": "repair",
       "waves": [
         [
@@ -3353,7 +3353,7 @@
         },
         "image": "factory/medium/09_capacitor-hall.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/medium/09_capacitor-hall.png",
+      "image": "res://art/biomes/factory/fac_09.svg",
       "reward": "repair",
       "waves": [
         [
@@ -3842,7 +3842,7 @@
         },
         "image": "factory/medium/10_press-line-bend.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/medium/10_press-line-bend.png",
+      "image": "res://art/biomes/factory/fac_10.svg",
       "reward": "repair",
       "waves": [
         [
@@ -4310,7 +4310,7 @@
         },
         "image": "factory/medium/11_molding-exchange.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/medium/11_molding-exchange.png",
+      "image": "res://art/biomes/factory/fac_11.svg",
       "reward": "repair",
       "waves": [
         [
@@ -4775,7 +4775,7 @@
         },
         "image": "factory/medium/12_rivet-yard.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/medium/12_rivet-yard.png",
+      "image": "res://art/biomes/factory/fac_12.svg",
       "reward": "repair",
       "waves": [
         [
@@ -5275,7 +5275,7 @@
         },
         "image": "factory/medium/13_stamping-gallery.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/medium/13_stamping-gallery.png",
+      "image": "res://art/biomes/factory/fac_13.svg",
       "reward": "repair",
       "waves": [
         [
@@ -5739,7 +5739,7 @@
         },
         "image": "factory/medium/14_switchgear-run.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/medium/14_switchgear-run.png",
+      "image": "res://art/biomes/factory/fac_14.svg",
       "reward": "repair",
       "waves": [
         [
@@ -6196,7 +6196,7 @@
         },
         "image": "factory/medium/15_conveyor-quadrant.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/medium/15_conveyor-quadrant.png",
+      "image": "res://art/biomes/factory/fac_15.svg",
       "reward": "repair",
       "waves": [
         [
@@ -6753,7 +6753,7 @@
         },
         "image": "factory/medium/16_hydraulic-turn.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/medium/16_hydraulic-turn.png",
+      "image": "res://art/biomes/factory/fac_16.svg",
       "reward": "repair",
       "waves": [
         [
@@ -7240,7 +7240,7 @@
         },
         "image": "factory/medium/17_forge-inspection.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/medium/17_forge-inspection.png",
+      "image": "res://art/biomes/factory/fac_17.svg",
       "reward": "repair",
       "waves": [
         [
@@ -7689,7 +7689,7 @@
         },
         "image": "factory/medium/18_blade-relay.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/medium/18_blade-relay.png",
+      "image": "res://art/biomes/factory/fac_18.svg",
       "reward": "repair",
       "waves": [
         [
@@ -8218,7 +8218,7 @@
         },
         "image": "factory/medium/19_die-conveyor.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/medium/19_die-conveyor.png",
+      "image": "res://art/biomes/factory/fac_19.svg",
       "reward": "repair",
       "waves": [
         [
@@ -8706,7 +8706,7 @@
         },
         "image": "factory/medium/20_final-sorting.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/medium/20_final-sorting.png",
+      "image": "res://art/biomes/factory/fac_20.svg",
       "reward": "repair",
       "waves": [
         [
@@ -9394,7 +9394,7 @@
         },
         "image": "factory/large/21_grand-assembly-floor.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/large/21_grand-assembly-floor.png",
+      "image": "res://art/biomes/factory/fac_21.svg",
       "reward": "repair",
       "waves": [
         [
@@ -10107,7 +10107,7 @@
         },
         "image": "factory/large/22_rotary-manufacturing.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/large/22_rotary-manufacturing.png",
+      "image": "res://art/biomes/factory/fac_22.svg",
       "reward": "repair",
       "waves": [
         [
@@ -10783,7 +10783,7 @@
         },
         "image": "factory/large/23_heavy-press-foundry.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/large/23_heavy-press-foundry.png",
+      "image": "res://art/biomes/factory/fac_23.svg",
       "reward": "repair",
       "waves": [
         [
@@ -11440,7 +11440,7 @@
         },
         "image": "factory/large/24_voltage-distribution.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/large/24_voltage-distribution.png",
+      "image": "res://art/biomes/factory/fac_24.svg",
       "reward": "repair",
       "waves": [
         [
@@ -12124,7 +12124,7 @@
         },
         "image": "factory/large/25_blade-exchange.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/large/25_blade-exchange.png",
+      "image": "res://art/biomes/factory/fac_25.svg",
       "reward": "repair",
       "waves": [
         [
@@ -12796,7 +12796,7 @@
         },
         "image": "factory/large/26_automated-stamping.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/large/26_automated-stamping.png",
+      "image": "res://art/biomes/factory/fac_26.svg",
       "reward": "repair",
       "waves": [
         [
@@ -13433,7 +13433,7 @@
         },
         "image": "factory/large/27_production-crossroads.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/large/27_production-crossroads.png",
+      "image": "res://art/biomes/factory/fac_27.svg",
       "reward": "repair",
       "waves": [
         [
@@ -14130,7 +14130,7 @@
         },
         "image": "factory/large/28_smelting-dispatch.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/large/28_smelting-dispatch.png",
+      "image": "res://art/biomes/factory/fac_28.svg",
       "reward": "repair",
       "waves": [
         [
@@ -14889,7 +14889,7 @@
         },
         "image": "factory/large/29_robotic-assembly.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/large/29_robotic-assembly.png",
+      "image": "res://art/biomes/factory/fac_29.svg",
       "reward": "repair",
       "waves": [
         [
@@ -15558,7 +15558,7 @@
         },
         "image": "factory/large/30_shutdown-complex.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/factory/large/30_shutdown-complex.png",
+      "image": "res://art/biomes/factory/fac_30.svg",
       "reward": "repair",
       "waves": [
         [

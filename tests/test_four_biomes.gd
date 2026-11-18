@@ -48,6 +48,26 @@ func _run() -> void:
 			root.add_child(room)
 			room.build(definition)
 			await physics_frame
+			check(ResourceLoader.exists(definition.image), "Missing room art: " + definition.id)
+			var art_count := 0
+			for child in room.get_children():
+				if str(child.name).begins_with("PaintedTrap_"):
+					art_count += 1
+			check(art_count == definition.geometry.hazards.size(), "Missing painted hazard: " + definition.id)
+			room.set_physics_process(false)
+			for j in room.painted_traps.size():
+				var sprite: Sprite2D = room.painted_traps[j]
+				var index: int = room.painted_trap_indices[j]
+				if not str(sprite.name).begins_with("PaintedTrap_spikes_"):
+					continue
+				for phase in [0.0, 3.0, 4.0]:
+					room.elapsed = phase - index * 1.1 + 48.0
+					room.hazards_enabled = true
+					room.get_node("FloorSignals").queue_redraw()
+					await process_frame
+					check(room.is_trap_active(index) == (phase == 4.0), "Spike damage phase mismatch")
+				room.hazards_enabled = false
+				check(not room.is_trap_active(index), "Disabled spikes remain active")
 			check(room.is_logical_free(SPACE.unproject(room.spawn_position),18),"Entry blocked: "+definition.id)
 			for point in room.exit_positions:
 				check(room.is_logical_free(SPACE.unproject(point),18),"Exit blocked: "+definition.id)

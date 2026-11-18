@@ -303,7 +303,7 @@
         },
         "image": "boiler_room/small/01_pilot-burner.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/small/01_pilot-burner.png",
+      "image": "res://art/biomes/boiler/boi_01.svg",
       "reward": "repair",
       "waves": [
         [
@@ -650,7 +650,7 @@
         },
         "image": "boiler_room/small/02_cinder-intake.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/small/02_cinder-intake.png",
+      "image": "res://art/biomes/boiler/boi_02.svg",
       "reward": "repair",
       "waves": [
         [
@@ -966,7 +966,7 @@
         },
         "image": "boiler_room/small/03_steam-elbow.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/small/03_steam-elbow.png",
+      "image": "res://art/biomes/boiler/boi_03.svg",
       "reward": "repair",
       "waves": [
         [
@@ -1310,7 +1310,7 @@
         },
         "image": "boiler_room/small/04_ash-pocket.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/small/04_ash-pocket.png",
+      "image": "res://art/biomes/boiler/boi_04.svg",
       "reward": "repair",
       "waves": [
         [
@@ -1648,7 +1648,7 @@
         },
         "image": "boiler_room/small/05_pressure-nook.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/small/05_pressure-nook.png",
+      "image": "res://art/biomes/boiler/boi_05.svg",
       "reward": "repair",
       "waves": [
         [
@@ -1968,7 +1968,7 @@
         },
         "image": "boiler_room/small/06_ignition-hatch.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/small/06_ignition-hatch.png",
+      "image": "res://art/biomes/boiler/boi_06.svg",
       "reward": "repair",
       "waves": [
         [
@@ -2461,7 +2461,7 @@
         },
         "image": "boiler_room/medium/07_ember-gallery.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/medium/07_ember-gallery.png",
+      "image": "res://art/biomes/boiler/boi_07.svg",
       "reward": "repair",
       "waves": [
         [
@@ -2965,7 +2965,7 @@
         },
         "image": "boiler_room/medium/08_firebox-exchange.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/medium/08_firebox-exchange.png",
+      "image": "res://art/biomes/boiler/boi_08.svg",
       "reward": "repair",
       "waves": [
         [
@@ -3417,7 +3417,7 @@
         },
         "image": "boiler_room/medium/09_flue-junction.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/medium/09_flue-junction.png",
+      "image": "res://art/biomes/boiler/boi_09.svg",
       "reward": "repair",
       "waves": [
         [
@@ -3882,7 +3882,7 @@
         },
         "image": "boiler_room/medium/10_overheat-bend.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/medium/10_overheat-bend.png",
+      "image": "res://art/biomes/boiler/boi_10.svg",
       "reward": "repair",
       "waves": [
         [
@@ -4342,7 +4342,7 @@
         },
         "image": "boiler_room/medium/11_boiler-service-court.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/medium/11_boiler-service-court.png",
+      "image": "res://art/biomes/boiler/boi_11.svg",
       "reward": "repair",
       "waves": [
         [
@@ -4855,7 +4855,7 @@
         },
         "image": "boiler_room/medium/12_furnace-relay.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/medium/12_furnace-relay.png",
+      "image": "res://art/biomes/boiler/boi_12.svg",
       "reward": "repair",
       "waves": [
         [
@@ -5331,7 +5331,7 @@
         },
         "image": "boiler_room/medium/13_soot-conveyor.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/medium/13_soot-conveyor.png",
+      "image": "res://art/biomes/boiler/boi_13.svg",
       "reward": "repair",
       "waves": [
         [
@@ -5791,7 +5791,7 @@
         },
         "image": "boiler_room/medium/14_heat-diverter.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/medium/14_heat-diverter.png",
+      "image": "res://art/biomes/boiler/boi_14.svg",
       "reward": "repair",
       "waves": [
         [
@@ -6292,7 +6292,7 @@
         },
         "image": "boiler_room/medium/15_piston-furnace.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/medium/15_piston-furnace.png",
+      "image": "res://art/biomes/boiler/boi_15.svg",
       "reward": "repair",
       "waves": [
         [
@@ -6785,7 +6785,7 @@
         },
         "image": "boiler_room/medium/16_pressure-manifold.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/medium/16_pressure-manifold.png",
+      "image": "res://art/biomes/boiler/boi_16.svg",
       "reward": "repair",
       "waves": [
         [
@@ -7292,7 +7292,7 @@
         },
         "image": "boiler_room/medium/17_ash-recovery.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/medium/17_ash-recovery.png",
+      "image": "res://art/biomes/boiler/boi_17.svg",
       "reward": "repair",
       "waves": [
         [
@@ -7745,7 +7745,7 @@
         },
         "image": "boiler_room/medium/18_flashpoint-passage.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/medium/18_flashpoint-passage.png",
+      "image": "res://art/biomes/boiler/boi_18.svg",
       "reward": "repair",
       "waves": [
         [
@@ -8238,7 +8238,7 @@
         },
         "image": "boiler_room/medium/19_steam-return.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/medium/19_steam-return.png",
+      "image": "res://art/biomes/boiler/boi_19.svg",
       "reward": "repair",
       "waves": [
         [
@@ -8694,7 +8694,7 @@
         },
         "image": "boiler_room/medium/20_combustion-hall.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/medium/20_combustion-hall.png",
+      "image": "res://art/biomes/boiler/boi_20.svg",
       "reward": "repair",
       "waves": [
         [
@@ -9394,7 +9394,7 @@
         },
         "image": "boiler_room/large/21_great-boiler-chamber.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/large/21_great-boiler-chamber.png",
+      "image": "res://art/biomes/boiler/boi_21.svg",
       "reward": "repair",
       "waves": [
         [
@@ -10095,7 +10095,7 @@
         },
         "image": "boiler_room/large/22_inferno-transfer.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/large/22_inferno-transfer.png",
+      "image": "res://art/biomes/boiler/boi_22.svg",
       "reward": "repair",
       "waves": [
         [
@@ -10751,7 +10751,7 @@
         },
         "image": "boiler_room/large/23_superheater-floor.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/large/23_superheater-floor.png",
+      "image": "res://art/biomes/boiler/boi_23.svg",
       "reward": "repair",
       "waves": [
         [
@@ -11408,7 +11408,7 @@
         },
         "image": "boiler_room/large/24_pressure-cascade.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/large/24_pressure-cascade.png",
+      "image": "res://art/biomes/boiler/boi_24.svg",
       "reward": "repair",
       "waves": [
         [
@@ -12208,7 +12208,7 @@
         },
         "image": "boiler_room/large/25_furnace-crucible.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/large/25_furnace-crucible.png",
+      "image": "res://art/biomes/boiler/boi_25.svg",
       "reward": "repair",
       "waves": [
         [
@@ -12872,7 +12872,7 @@
         },
         "image": "boiler_room/large/26_steam-crown.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/large/26_steam-crown.png",
+      "image": "res://art/biomes/boiler/boi_26.svg",
       "reward": "repair",
       "waves": [
         [
@@ -13533,7 +13533,7 @@
         },
         "image": "boiler_room/large/27_thermal-distribution.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/large/27_thermal-distribution.png",
+      "image": "res://art/biomes/boiler/boi_27.svg",
       "reward": "repair",
       "waves": [
         [
@@ -14258,7 +14258,7 @@
         },
         "image": "boiler_room/large/28_redline-compressor.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/large/28_redline-compressor.png",
+      "image": "res://art/biomes/boiler/boi_28.svg",
       "reward": "repair",
       "waves": [
         [
@@ -14993,7 +14993,7 @@
         },
         "image": "boiler_room/large/29_ashfall-exchange.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/large/29_ashfall-exchange.png",
+      "image": "res://art/biomes/boiler/boi_29.svg",
       "reward": "repair",
       "waves": [
         [
@@ -15662,7 +15662,7 @@
         },
         "image": "boiler_room/large/30_core-ignition-complex.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/boiler_room/large/30_core-ignition-complex.png",
+      "image": "res://art/biomes/boiler/boi_30.svg",
       "reward": "repair",
       "waves": [
         [

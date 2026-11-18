@@ -1,0 +1,174 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+[   0% ] first_scan_filesystem | Started Project initialization (5 steps)
+[   0% ] first_scan_filesystem | Scanning file structure...
+[  16% ] first_scan_filesystem | Loading global class names...
+[  33% ] first_scan_filesystem | Verifying GDExtensions...
+[  50% ] first_scan_filesystem | Creating autoload scripts...
+[  66% ] first_scan_filesystem | Initializing plugins...
+[  83% ] first_scan_filesystem | Starting file scan...
+[ DONE ] first_scan_filesystem
+
+WARNING: UID duplicate detected between res://rooms/Maintenance/ChatGPT Image Nov 13, 2026, 07_10_18 PM-1.png and res://Music/Flying_Liberty_Adaptive_Biome_OST_v3/Flying_Liberty_Adaptive_Biome_OST_v3/Maintenance/ChatGPT Image Nov 13, 2026, 07_10_18 PM-1.png.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://rooms/Maintenance/ChatGPT Image Nov 13, 2026, 07_10_19 PM-2.png and res://Music/Flying_Liberty_Adaptive_Biome_OST_v3/Flying_Liberty_Adaptive_Biome_OST_v3/Maintenance/ChatGPT Image Nov 13, 2026, 07_10_19 PM-2.png.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://rooms/Maintenance/ChatGPT Image Nov 13, 2026, 07_10_20 PM-3.png and res://Music/Flying_Liberty_Adaptive_Biome_OST_v3/Flying_Liberty_Adaptive_Biome_OST_v3/Maintenance/ChatGPT Image Nov 13, 2026, 07_10_20 PM-3.png.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+WARNING: UID duplicate detected between res://rooms/Maintenance/Steampunk Vent and Entrance Asset Sheet.png and res://Music/Flying_Liberty_Adaptive_Biome_OST_v3/Flying_Liberty_Adaptive_Biome_OST_v3/Maintenance/Steampunk Vent and Entrance Asset Sheet.png.
+   at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
+[   0% ] _update_scan_actions | Started Scanning actions... (44 steps)
+[   0% ] _update_scan_actions | mai_01.svg
+[   2% ] _update_scan_actions | mai_02.svg
+[   4% ] _update_scan_actions | mai_03.svg
+[   6% ] _update_scan_actions | mai_04.svg
+[   8% ] _update_scan_actions | mai_05.svg
+[  11% ] _update_scan_actions | mai_06.svg
+[  13% ] _update_scan_actions | mai_07.svg
+[  15% ] _update_scan_actions | mai_08.svg
+[  17% ] _update_scan_actions | mai_09.svg
+[  20% ] _update_scan_actions | mai_10.svg
+[  22% ] _update_scan_actions | mai_11.svg
+[  24% ] _update_scan_actions | mai_12.svg
+[  26% ] _update_scan_actions | mai_13.svg
+[  28% ] _update_scan_actions | mai_14.svg
+[  31% ] _update_scan_actions | mai_15.svg
+[  33% ] _update_scan_actions | mai_16.svg
+[  35% ] _update_scan_actions | mai_17.svg
+[  37% ] _update_scan_actions | mai_18.svg
+[  40% ] _update_scan_actions | mai_19.svg
+[  42% ] _update_scan_actions | mai_20.svg
+[  44% ] _update_scan_actions | mai_21.svg
+[  46% ] _update_scan_actions | mai_22.svg
+[  48% ] _update_scan_actions | mai_23.svg
+[  51% ] _update_scan_actions | mai_24.svg
+[  53% ] _update_scan_actions | mai_25.svg
+[  55% ] _update_scan_actions | mai_26.svg
+[  57% ] _update_scan_actions | mai_27.svg
+[  60% ] _update_scan_actions | mai_28.svg
+[  62% ] _update_scan_actions | mai_29.svg
+[  64% ] _update_scan_actions | mai_30.svg
+[  66% ] _update_scan_actions | industrial_00.svg
+[  68% ] _update_scan_actions | industrial_01.svg
+[  71% ] _update_scan_actions | industrial_02.svg
+[  73% ] _update_scan_actions | industrial_03.svg
+[  75% ] _update_scan_actions | industrial_04.svg
+[  77% ] _update_scan_actions | industrial_05.svg
+[  80% ] _update_scan_actions | industrial_06.svg
+[  82% ] _update_scan_actions | industrial_07.svg
+[  84% ] _update_scan_actions | Enemy_Stats_33.csv
+[  86% ] _update_scan_actions | Original_Enemy_Stats_33.csv
+[  88% ] _update_scan_actions | Tracklist.csv
+[  91% ] _update_scan_actions | index.apple-touch-icon.png
+[  93% ] _update_scan_actions | index.icon.png
+[  95% ] _update_scan_actions | index.png
+[ DONE ] _update_scan_actions
+
+[   0% ] reimport | Started (Re)Importing Assets (38 steps)
+[   0% ] reimport | Preparing files to reimport...
+[   2% ] reimport | Preparing files to reimport...
+[   5% ] reimport | Preparing files to reimport...
+[   7% ] reimport | Preparing files to reimport...
+[  10% ] reimport | Preparing files to reimport...
+[  12% ] reimport | Preparing files to reimport...
+[  15% ] reimport | Preparing files to reimport...
+[  17% ] reimport | Preparing files to reimport...
+[  20% ] reimport | Preparing files to reimport...
+[  23% ] reimport | Preparing files to reimport...
+[  25% ] reimport | Preparing files to reimport...
+[  28% ] reimport | Preparing files to reimport...
+[  30% ] reimport | Preparing files to reimport...
+[  33% ] reimport | Preparing files to reimport...
+[  35% ] reimport | Preparing files to reimport...
+[  38% ] reimport | Preparing files to reimport...
+[  41% ] reimport | Preparing files to reimport...
+[  43% ] reimport | Preparing files to reimport...
+[  46% ] reimport | Preparing files to reimport...
+[  48% ] reimport | Preparing files to reimport...
+[  51% ] reimport | Preparing files to reimport...
+[  53% ] reimport | Preparing files to reimport...
+[  56% ] reimport | Preparing files to reimport...
+[  58% ] reimport | Preparing files to reimport...
+[  61% ] reimport | Preparing files to reimport...
+[  64% ] reimport | Preparing files to reimport...
+[  66% ] reimport | Preparing files to reimport...
+[  69% ] reimport | Preparing files to reimport...
+[  71% ] reimport | Preparing files to reimport...
+[  74% ] reimport | Preparing files to reimport...
+[  76% ] reimport | Preparing files to reimport...
+[  79% ] reimport | Preparing files to reimport...
+[  82% ] reimport | Preparing files to reimport...
+[  84% ] reimport | Preparing files to reimport...
+[  87% ] reimport | Preparing files to reimport...
+[  89% ] reimport | Preparing files to reimport...
+[  92% ] reimport | Preparing files to reimport...
+[  94% ] reimport | Preparing files to reimport...
+[   0% ] reimport | Executing pre-reimport operations...
+[   0% ] reimport | mai_20.svg
+[   0% ] reimport | mai_20.svg
+[   2% ] reimport | mai_21.svg
+[   5% ] reimport | mai_22.svg
+[   7% ] reimport | mai_23.svg
+[  10% ] reimport | mai_24.svg
+[  12% ] reimport | mai_25.svg
+[  15% ] reimport | mai_26.svg
+[  17% ] reimport | mai_27.svg
+[  20% ] reimport | mai_28.svg
+[  23% ] reimport | mai_29.svg
+[  25% ] reimport | mai_30.svg
+[  28% ] reimport | industrial_00.svg
+[  30% ] reimport | industrial_01.svg
+[  30% ] reimport | industrial_01.svg
+[  30% ] reimport | industrial_01.svg
+[  30% ] reimport | industrial_01.svg
+[  30% ] reimport | industrial_01.svg
+[  33% ] reimport | industrial_02.svg
+[  33% ] reimport | industrial_02.svg
+[  33% ] reimport | industrial_02.svg
+[  33% ] reimport | industrial_02.svg
+[  35% ] reimport | industrial_03.svg
+[  38% ] reimport | industrial_04.svg
+[  41% ] reimport | industrial_05.svg
+[  43% ] reimport | industrial_06.svg
+[  46% ] reimport | industrial_07.svg
+[  48% ] reimport | mai_01.svg
+[  51% ] reimport | mai_02.svg
+[  53% ] reimport | mai_03.svg
+[  56% ] reimport | mai_04.svg
+[  58% ] reimport | mai_05.svg
+[  61% ] reimport | mai_06.svg
+[  64% ] reimport | mai_07.svg
+[  66% ] reimport | mai_08.svg
+[  69% ] reimport | mai_09.svg
+[  71% ] reimport | mai_10.svg
+[  74% ] reimport | mai_11.svg
+[  76% ] reimport | mai_12.svg
+[  79% ] reimport | mai_13.svg
+[  82% ] reimport | mai_14.svg
+[  84% ] reimport | mai_15.svg
+[  87% ] reimport | mai_16.svg
+[  89% ] reimport | mai_17.svg
+[  92% ] reimport | mai_18.svg
+[  94% ] reimport | mai_19.svg
+[  97% ] reimport | Finalizing Asset Import...
+[ DONE ] reimport
+
+[   0% ] reimport | Started (Re)Importing Assets (38 steps)
+[   0% ] reimport | Executing post-reimport operations...
+[ DONE ] reimport
+
+[   0% ] loading_editor_layout | Started Loading editor (5 steps)
+[   0% ] loading_editor_layout | Loading editor layout...
+[  16% ] loading_editor_layout | Loading docks...
+[  33% ] loading_editor_layout | Reopening scenes...
+[  50% ] loading_editor_layout | Loading central editor layout...
+[  66% ] loading_editor_layout | Loading plugin window layout...
+[  83% ] loading_editor_layout | Editor layout ready.
+[ DONE ] loading_editor_layout
+
+ERROR: Cannot save file 'C:/Users/Aiden/AppData/Roaming/Godot/editor_settings-4.7.tres'.
+   at: save (scene/resources/resource_format_text.cpp:1768)
+ERROR: Error saving editor settings to C:/Users/Aiden/AppData/Roaming/Godot/editor_settings-4.7.tres
+   at: save (editor/settings/editor_settings.cpp:1525)

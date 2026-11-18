@@ -54,6 +54,19 @@ const REWARD_TEXT := {
 }
 var movement_only: Array[bool] = []
 var reachable := {}
+var painted_traps: Array[Sprite2D] = []
+var painted_trap_indices: Array[int] = []
+const TRAP_ART := {
+	"maintenance": {"sheet": "res://rooms/Hazards/Maintenance.png", "regions": {
+		"turret": Rect2(0, 0, 450, 650), "fan": Rect2(450, 0, 490, 650), "wires": Rect2(0, 650, 490, 390)}},
+	"factory": {"sheet": "res://rooms/Hazards/Factory.png", "regions": {
+		"saw": Rect2(0, 0, 440, 470), "tesla": Rect2(0, 480, 440, 560), "press": Rect2(440, 470, 300, 570)}},
+	"boiler_room": {"sheet": "res://rooms/Hazards/Boiler Room.png", "regions": {
+		"spinner": Rect2(0, 0, 780, 470), "spitter": Rect2(790, 60, 650, 370),
+		"oven": Rect2(20, 490, 450, 520), "vent": Rect2(500, 590, 245, 150), "can": Rect2(1150, 600, 270, 380)}},
+	"toxin_refinery": {"sheet": "res://rooms/Hazards/Toxin Refinery.png", "regions": {
+		"acid": Rect2(65, 0, 360, 365), "spikes": Rect2(25, 390, 415, 280), "barrel": Rect2(80, 700, 320, 365)}}
+}
 
 func _project_pack(point: Vector2, size: Vector2) -> Vector2:
 	return Vector2(size.x*0.5+(point.x-50)*0.51*size.x/100-(point.y-37)*0.45*size.x/74,
@@ -108,13 +121,113 @@ func _clear_door_point(desired: Vector2) -> Vector2:
 func build(data: Dictionary) -> void:
 	super.build(data)
 	for sprite in hazard_sprites:
-		sprite.hide() # The supplied background already draws its own hazards.
+		sprite.hide() # The fitted room artwork contains each trap housing.
+	_build_reference_hazards(data)
 	var index := 0
 	for child in get_children():
 		if child is StaticBody2D and child.get_child(0) is CollisionPolygon2D:
 			if movement_only[index]:
 				child.collision_layer = 8
 			index += 1
+
+func _build_reference_hazards(data: Dictionary) -> void:
+	var biome: String = str(data.geometry.biome)
+	if not TRAP_ART.has(biome):
+		return
+	var sheet: Texture2D = load(TRAP_ART[biome].sheet)
+	var size := Vector2(data.geometry.pixel_size[0], data.geometry.pixel_size[1])
+	var active_index := 0
+	for hazard in data.geometry.hazards:
+		var timed: bool = hazard.type in ["wires", "tesla", "vent", "spikes"]
+		if hazard.type in ["saw", "oven"]:
+			# These atlas silhouettes interlock; a rectangular crop cuts the
+			# machinery or includes the neighboring asset. Trace the outer edge.
+			var outline := PackedVector2Array([Vector2(30, 350), Vector2(450, 0), Vector2(630, 0), Vector2(635, 145), Vector2(225, 470), Vector2(30, 425)]) if hazard.type == "saw" else PackedVector2Array([Vector2(0, 490), Vector2(465, 490), Vector2(465, 790), Vector2(855, 940), Vector2(855, 1040), Vector2(0, 1040)])
+			var machine := Polygon2D.new()
+			machine.name = "PaintedTrap_%s_%d" % [hazard.type, get_child_count()]
+			machine.texture = sheet
+			machine.uv = outline
+			var local := PackedVector2Array()
+			var anchor := Vector2(320, 350) if hazard.type == "saw" else Vector2(270, 920)
+			for point in outline:
+				local.append((point - anchor) * 0.25)
+			machine.polygon = local
+			machine.position = source_point(_project_pack(Vector2(hazard.center[0], hazard.center[1]), size))
+			machine.z_index = -4
+			add_child(machine)
+			continue
+		if TRAP_ART[biome].regions.has(hazard.type):
+			var art := Sprite2D.new()
+			var region: Rect2 = TRAP_ART[biome].regions[hazard.type]
+			art.texture = crop_texture(sheet, region)
+			art.name = "PaintedTrap_%s_%d" % [hazard.type, get_child_count()]
+			art.scale = Vector2.ONE * (125.0 / region.size.x)
+			art.position = source_point(_project_pack(Vector2(hazard.center[0], hazard.center[1]), size))
+			art.offset.y = -region.size.y * (0.08 if timed else 0.28)
+			art.z_index = -4
+			add_child(art)
+			painted_traps.append(art)
+			painted_trap_indices.append(active_index if timed else -1)
+		if timed:
+			active_index += 1
+
+func _draw_floor(canvas: Node2D) -> void:
+	for j in painted_traps.size():
+		var index := painted_trap_indices[j]
+		painted_traps[j].modulate = Color.WHITE if index < 0 or is_trap_active(index) else Color(0.52, 0.57, 0.59)
+		if str(painted_traps[j].name).begins_with("PaintedTrap_spikes_"):
+			# The supplied sheet contains retracted, warning, and extended poses.
+			var region := Rect2(25, 390, 415, 280)
+			if is_trap_active(index):
+				region = Rect2(985, 365, 440, 305)
+			elif hazards_enabled and fmod(elapsed + index * 1.1, 4.8) >= 2.6:
+				region = Rect2(495, 390, 420, 280)
+			var atlas := painted_traps[j].texture as AtlasTexture
+			if atlas.region != region:
+				atlas.region = region
+	# Match the reference's energy palette while retaining the exact damage footprint.
+	var biome: String = str(definition.geometry.biome)
+	var energy: Color = {"maintenance": Color("73e6ef"), "factory": Color("87bbff"),
+		"boiler_room": Color("ff9a43"), "toxin_refinery": Color("c1ef60")}.get(biome, Color("73e6ef"))
+	for i in vents.size():
+		var active := is_trap_active(i)
+		var phase := fmod(elapsed + i * 1.1, 4.8)
+		var warning := hazards_enabled and (active or phase >= 2.6)
+		canvas.draw_set_transform(vents[i], 0, Vector2(1, 0.5))
+		# Small status lamps remain distinct from the full damage-radius warning.
+		canvas.draw_circle(Vector2(0, 10), 4, energy if warning else Color("485459"))
+		if warning:
+			canvas.draw_circle(Vector2.ZERO, 65, Color(energy, 0.20 if active else 0.07))
+			canvas.draw_arc(Vector2.ZERO, 65, 0, TAU, 48, energy, 2.5, true)
+			if not active:
+				canvas.draw_arc(Vector2.ZERO, 60, -PI / 2, -PI / 2 + TAU * clampf((phase - 2.6) / 1.2, 0, 1), 48, Color("fff0ce"), 3, true)
+			else:
+				for ray in 6:
+					var angle := ray * TAU / 6 + elapsed * 2
+					var tip := Vector2.from_angle(angle) * (30 + 12 * sin(elapsed * 19 + ray))
+					if biome == "boiler_room":
+						canvas.draw_line(tip, tip + Vector2(3 * sin(elapsed * 12 + ray), -28), Color(energy, 0.65), 4, true)
+					elif biome == "toxin_refinery":
+						canvas.draw_circle(tip, 3 + 2 * sin(elapsed * 8 + ray), Color(energy, 0.7))
+					else:
+						canvas.draw_polyline(PackedVector2Array([Vector2.ZERO, tip * 0.4 + Vector2(5, -8), tip * 0.65, tip]), Color(energy, 0.9), 2, true)
+	for point in exit_positions:
+		if definition.get("final", false):
+			break
+		canvas.draw_set_transform(point, 0, Vector2(1, 0.5))
+		var exit_color := Color("6de4d7") if exit_enabled else Color("c77b54")
+		canvas.draw_arc(Vector2.ZERO, 40, 0, TAU, 40, exit_color, 3, true)
+		for step in 3:
+			var y := float(step * 13 - 18)
+			canvas.draw_polyline(PackedVector2Array([Vector2(-9, y + 5), Vector2(0, y), Vector2(9, y + 5)]), Color(exit_color, 0.7), 2, true)
+	for label in exit_previews:
+		label.modulate = Color.WHITE if exit_enabled else Color("dba986")
+	canvas.draw_set_transform(Vector2.ZERO)
+	if debug_enabled:
+		for polygon in blockers:
+			var closed := polygon.duplicate()
+			closed.append(polygon[0])
+			canvas.draw_polyline(closed, Color.GREEN, 2)
 
 func refresh_exit_previews(data: Dictionary) -> void:
 	for child in get_children():

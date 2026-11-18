@@ -20,6 +20,9 @@ for biome, boss in bosses.items():
                           size=geometry['size'], blockout=True, geometry=geometry,
                           image='res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/' + geometry['image'],
                           reward='repair', waves=[[roster[(len(rooms)*3+n) % len(roster)] for n in [0,1]], [roster[(len(rooms)*3+n) % len(roster)] for n in [2,3]]]))
+        artwork = f"art/biomes/{biome}/{geometry['id']}.svg"
+        if (root / artwork).exists():
+            rooms[-1]['image'] = 'res://' + artwork
     assert len(rooms) == 30
     target = root / 'data' / 'blockouts' / (biome + '.json')
     target.parent.mkdir(parents=True, exist_ok=True)

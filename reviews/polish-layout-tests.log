@@ -1,0 +1,429 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
+ERROR: Missing painted hazard: mai_07
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: mai_08
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: mai_09
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: mai_10
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: mai_11
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: mai_12
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: mai_13
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: mai_14
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: mai_15
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: mai_16
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: mai_17
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: mai_18
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: mai_19
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: mai_20
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: mai_21
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: mai_22
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: mai_23
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: mai_24
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: mai_25
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: mai_26
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: mai_27
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: mai_28
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: mai_29
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: mai_30
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+BIOME_LAYOUTS_CHECKED=maintenance
+ERROR: Missing painted hazard: fac_07
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: fac_08
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: fac_09
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: fac_10
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: fac_11
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: fac_12
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: fac_13
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: fac_14
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: fac_15
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: fac_16
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: fac_17
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: fac_18
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: fac_19
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: fac_20
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: fac_21
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: fac_22
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: fac_23
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: fac_24
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: fac_25
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: fac_26
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: fac_27
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: fac_28
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: fac_29
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: fac_30
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+BIOME_LAYOUTS_CHECKED=factory
+ERROR: Missing painted hazard: boi_08
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: boi_15
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: boi_21
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: boi_22
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: boi_23
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: boi_24
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: boi_25
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: boi_26
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: boi_27
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: boi_28
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: boi_29
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: boi_30
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+BIOME_LAYOUTS_CHECKED=boiler
+ERROR: Missing painted hazard: tox_07
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: tox_08
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: tox_09
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: tox_10
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: tox_11
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: tox_12
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: tox_13
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: tox_14
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: tox_15
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: tox_16
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: tox_17
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: tox_18
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: tox_19
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: tox_20
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: tox_21
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: tox_22
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: tox_23
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: tox_24
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: tox_25
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: tox_26
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: tox_27
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: tox_28
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: tox_29
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+ERROR: Missing painted hazard: tox_30
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/test_four_biomes.gd:16)
+       [1] _run (res://tests/test_four_biomes.gd:56)
+BIOME_LAYOUTS_CHECKED=toxin_refinery
+FOUR_BIOME_CHECKS=16808 FAILURES=84

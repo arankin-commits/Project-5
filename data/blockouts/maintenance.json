@@ -331,7 +331,7 @@
         },
         "image": "maintenance/small/01_intake-nook.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/small/01_intake-nook.png",
+      "image": "res://art/biomes/maintenance/mai_01.svg",
       "reward": "repair",
       "waves": [
         [
@@ -666,7 +666,7 @@
         },
         "image": "maintenance/small/02_wire-junction.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/small/02_wire-junction.png",
+      "image": "res://art/biomes/maintenance/mai_02.svg",
       "reward": "repair",
       "waves": [
         [
@@ -1002,7 +1002,7 @@
         },
         "image": "maintenance/small/03_fuse-pocket.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/small/03_fuse-pocket.png",
+      "image": "res://art/biomes/maintenance/mai_03.svg",
       "reward": "repair",
       "waves": [
         [
@@ -1302,7 +1302,7 @@
         },
         "image": "maintenance/small/04_vent-spur.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/small/04_vent-spur.png",
+      "image": "res://art/biomes/maintenance/mai_04.svg",
       "reward": "repair",
       "waves": [
         [
@@ -1616,7 +1616,7 @@
         },
         "image": "maintenance/small/05_service-elbow.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/small/05_service-elbow.png",
+      "image": "res://art/biomes/maintenance/mai_05.svg",
       "reward": "repair",
       "waves": [
         [
@@ -1928,7 +1928,7 @@
         },
         "image": "maintenance/small/06_filter-kink.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/small/06_filter-kink.png",
+      "image": "res://art/biomes/maintenance/mai_06.svg",
       "reward": "repair",
       "waves": [
         [
@@ -2465,7 +2465,7 @@
         },
         "image": "maintenance/medium/07_pump-court.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/medium/07_pump-court.png",
+      "image": "res://art/biomes/maintenance/mai_07.svg",
       "reward": "repair",
       "waves": [
         [
@@ -2941,7 +2941,7 @@
         },
         "image": "maintenance/medium/08_conveyor-turn.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/medium/08_conveyor-turn.png",
+      "image": "res://art/biomes/maintenance/mai_08.svg",
       "reward": "repair",
       "waves": [
         [
@@ -3405,7 +3405,7 @@
         },
         "image": "maintenance/medium/09_turbine-cross.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/medium/09_turbine-cross.png",
+      "image": "res://art/biomes/maintenance/mai_09.svg",
       "reward": "repair",
       "waves": [
         [
@@ -3922,7 +3922,7 @@
         },
         "image": "maintenance/medium/10_coolant-bend.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/medium/10_coolant-bend.png",
+      "image": "res://art/biomes/maintenance/mai_10.svg",
       "reward": "repair",
       "waves": [
         [
@@ -4390,7 +4390,7 @@
         },
         "image": "maintenance/medium/11_relay-hall.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/medium/11_relay-hall.png",
+      "image": "res://art/biomes/maintenance/mai_11.svg",
       "reward": "repair",
       "waves": [
         [
@@ -4875,7 +4875,7 @@
         },
         "image": "maintenance/medium/12_cable-yard.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/medium/12_cable-yard.png",
+      "image": "res://art/biomes/maintenance/mai_12.svg",
       "reward": "repair",
       "waves": [
         [
@@ -5367,7 +5367,7 @@
         },
         "image": "maintenance/medium/13_inspection-bay.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/medium/13_inspection-bay.png",
+      "image": "res://art/biomes/maintenance/mai_13.svg",
       "reward": "repair",
       "waves": [
         [
@@ -5843,7 +5843,7 @@
         },
         "image": "maintenance/medium/14_fan-gallery.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/medium/14_fan-gallery.png",
+      "image": "res://art/biomes/maintenance/mai_14.svg",
       "reward": "repair",
       "waves": [
         [
@@ -6300,7 +6300,7 @@
         },
         "image": "maintenance/medium/15_spindle-room.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/medium/15_spindle-room.png",
+      "image": "res://art/biomes/maintenance/mai_15.svg",
       "reward": "repair",
       "waves": [
         [
@@ -6805,7 +6805,7 @@
         },
         "image": "maintenance/medium/16_circuit-yard.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/medium/16_circuit-yard.png",
+      "image": "res://art/biomes/maintenance/mai_16.svg",
       "reward": "repair",
       "waves": [
         [
@@ -7292,7 +7292,7 @@
         },
         "image": "maintenance/medium/17_pressure-loop.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/medium/17_pressure-loop.png",
+      "image": "res://art/biomes/maintenance/mai_17.svg",
       "reward": "repair",
       "waves": [
         [
@@ -7741,7 +7741,7 @@
         },
         "image": "maintenance/medium/18_service-maze.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/medium/18_service-maze.png",
+      "image": "res://art/biomes/maintenance/mai_18.svg",
       "reward": "repair",
       "waves": [
         [
@@ -8222,7 +8222,7 @@
         },
         "image": "maintenance/medium/19_scrap-transit.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/medium/19_scrap-transit.png",
+      "image": "res://art/biomes/maintenance/mai_19.svg",
       "reward": "repair",
       "waves": [
         [
@@ -8778,7 +8778,7 @@
         },
         "image": "maintenance/medium/20_boiler-link.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/medium/20_boiler-link.png",
+      "image": "res://art/biomes/maintenance/mai_20.svg",
       "reward": "repair",
       "waves": [
         [
@@ -9422,7 +9422,7 @@
         },
         "image": "maintenance/large/21_main-compressor.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/large/21_main-compressor.png",
+      "image": "res://art/biomes/maintenance/mai_21.svg",
       "reward": "repair",
       "waves": [
         [
@@ -10095,7 +10095,7 @@
         },
         "image": "maintenance/large/22_duct-nexus.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/large/22_duct-nexus.png",
+      "image": "res://art/biomes/maintenance/mai_22.svg",
       "reward": "repair",
       "waves": [
         [
@@ -10787,7 +10787,7 @@
         },
         "image": "maintenance/large/23_generator-floor.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/large/23_generator-floor.png",
+      "image": "res://art/biomes/maintenance/mai_23.svg",
       "reward": "repair",
       "waves": [
         [
@@ -11456,7 +11456,7 @@
         },
         "image": "maintenance/large/24_overflow-exchange.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/large/24_overflow-exchange.png",
+      "image": "res://art/biomes/maintenance/mai_24.svg",
       "reward": "repair",
       "waves": [
         [
@@ -12148,7 +12148,7 @@
         },
         "image": "maintenance/large/25_turret-foundry.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/large/25_turret-foundry.png",
+      "image": "res://art/biomes/maintenance/mai_25.svg",
       "reward": "repair",
       "waves": [
         [
@@ -12820,7 +12820,7 @@
         },
         "image": "maintenance/large/26_cooling-manifold.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/large/26_cooling-manifold.png",
+      "image": "res://art/biomes/maintenance/mai_26.svg",
       "reward": "repair",
       "waves": [
         [
@@ -13493,7 +13493,7 @@
         },
         "image": "maintenance/large/27_maintenance-hub.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/large/27_maintenance-hub.png",
+      "image": "res://art/biomes/maintenance/mai_27.svg",
       "reward": "repair",
       "waves": [
         [
@@ -14170,7 +14170,7 @@
         },
         "image": "maintenance/large/28_rotor-basin.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/large/28_rotor-basin.png",
+      "image": "res://art/biomes/maintenance/mai_28.svg",
       "reward": "repair",
       "waves": [
         [
@@ -14865,7 +14865,7 @@
         },
         "image": "maintenance/large/29_grid-breaker.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/large/29_grid-breaker.png",
+      "image": "res://art/biomes/maintenance/mai_29.svg",
       "reward": "repair",
       "waves": [
         [
@@ -15510,7 +15510,7 @@
         },
         "image": "maintenance/large/30_waste-sorter.png"
       },
-      "image": "res://rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS/maintenance/large/30_waste-sorter.png",
+      "image": "res://art/biomes/maintenance/mai_30.svg",
       "reward": "repair",
       "waves": [
         [
