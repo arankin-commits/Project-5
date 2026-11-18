@@ -102,11 +102,9 @@ func _load_layout(data: Dictionary) -> void:
 		else:
 			exit_positions.append(source_point(point))
 	layout.exit = (exit_positions[0]-Vector2(768,620))/float(layout.scale)+Vector2(layout.center)
-	# Ground traps reuse the established timed damage pulse. Other painted
-	# machinery remains decorative until its specialized behavior is added.
+	# Every authored trap participates in the same telegraphed hazard cycle.
 	for hazard in meta.hazards:
-		if hazard.type in ["wires","tesla","vent","spikes"]:
-			layout.hazards.append(_project_pack(Vector2(hazard.center[0],hazard.center[1]),size))
+		layout.hazards.append(_project_pack(Vector2(hazard.center[0],hazard.center[1]),size))
 
 func _clear_door_point(desired: Vector2) -> Vector2:
 	if _source_free(desired):
@@ -141,8 +139,9 @@ func _build_reference_hazards(data: Dictionary) -> void:
 		return
 	var sheet: Texture2D = load(TRAP_ART[biome].sheet)
 	var size := Vector2(data.geometry.pixel_size[0], data.geometry.pixel_size[1])
-	var active_index := 0
+	var active_index := -1
 	for hazard in data.geometry.hazards:
+		active_index += 1
 		var timed: bool = hazard.type in ["wires", "tesla", "vent", "spikes"]
 		if hazard.type in ["saw", "oven"]:
 			# These atlas silhouettes interlock; a rectangular crop cuts the
@@ -172,9 +171,7 @@ func _build_reference_hazards(data: Dictionary) -> void:
 			art.z_index = -4
 			add_child(art)
 			painted_traps.append(art)
-			painted_trap_indices.append(active_index if timed else -1)
-		if timed:
-			active_index += 1
+			painted_trap_indices.append(active_index)
 
 func _draw_floor(canvas: Node2D) -> void:
 	for j in painted_traps.size():
@@ -339,3 +336,11 @@ func safe_spawns(count: int, rng: RandomNumberGenerator) -> Array[Vector2]:
 				choices.remove_at(j)
 	return result
 
+
+func hazard_damage_type(_index: int) -> String:
+	match str(definition.geometry.biome):
+		"boiler_room": return "fire"
+		"toxin_refinery": return "water"
+		"factory":
+			return "electricity" if definition.geometry.hazards[_index].type == "tesla" else "regular"
+	return "electricity"

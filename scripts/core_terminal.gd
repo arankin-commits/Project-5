@@ -2,7 +2,7 @@ extends CanvasLayer
 
 signal closed
 const DATA := preload("res://scripts/core_progression.gd")
-const ART := preload("res://Steampunk Elemental Skill Tree.png")
+const ART := preload("res://HUD/Steampunk Skill Tree Interface.png")
 const TREE_SCALE := 0.46
 @onready var progression: Node = get_node("/root/CoreProgression")
 var skill_buttons: Dictionary = {}
@@ -65,14 +65,14 @@ func _build_ui() -> void:
 	side.add_theme_constant_override("separation",22)
 	layout.add_child(side)
 	var title := Label.new()
-	title.text = "ELEMENTAL SKILL TREE"
+	title.text = "SKILL TREE"
 	title.add_theme_font_size_override("font_size",28)
 	title.add_theme_color_override("font_color",Color("ffd488"))
 	side.add_child(title)
 	skill_points_label = Label.new()
 	side.add_child(skill_points_label)
 	var legend := Label.new()
-	legend.text = "TEAL  Unlocked   |   GOLD  Available\nDIM  Locked   |   Select a node to inspect\n\nRegular nodes: XP only\nSpecial nodes: Aether Gears only\n\nEarn XP by defeating enemies and clearing rooms.\nFind an Aether Gear in chamber 4 and from the boss."
+	legend.text = "TEAL  Unlocked   |   GOLD  Available\nDIM  Locked   |   Select an outlined node to inspect\n\nRegular nodes: XP only\nSpecial nodes: Aether Gears only\n\nEarn XP by defeating enemies and clearing rooms.\nFind an Aether Gear in chamber 4 and from the boss."
 	legend.add_theme_font_size_override("font_size",16)
 	side.add_child(legend)
 	skill_detail = Label.new()

@@ -1,6 +1,8 @@
 Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
 OpenGL API 3.3.0 Core Profile Context 26.10.1.261008 - Compatibility - Using Device: ATI Technologies Inc. - AMD Radeon RX 6700S
 
+ERROR: Failed to read the root certificate store.
+   at: get_system_ca_certificates (platform/windows/os_windows.cpp:2582)
 WORKSHOP_SCREENSHOT=0
 CORE_TERMINAL_SCREENSHOT=0
 SKILL_TREE_SCREENSHOT=0

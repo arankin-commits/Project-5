@@ -3,6 +3,11 @@ extends SceneTree
 const ROOM := preload("res://scripts/blockout_room.gd")
 const POOL := preload("res://scripts/room_pool.gd")
 const SPACE := preload("res://scripts/boiler_space.gd")
+class TrapTarget extends CharacterBody2D:
+	var damage := 0.0
+	func take_damage(amount: float, _direction := Vector2.ZERO, _push := 0.0, _element := "regular") -> void:
+		damage += amount
+
 var checks := 0
 var failures := 0
 
@@ -55,6 +60,35 @@ func _run() -> void:
 					art_count += 1
 			check(art_count == definition.geometry.hazards.size(), "Missing painted hazard: " + definition.id)
 			room.set_physics_process(false)
+			check(room.vents.size() == definition.geometry.hazards.size(), "Nonfunctional trap: " + definition.id)
+			var target := TrapTarget.new()
+			var enemies := Node2D.new()
+			enemies.name = "Enemies"
+			root.add_child(enemies)
+			var foe := TrapTarget.new()
+			enemies.add_child(foe)
+			root.add_child(target)
+			room.player = target
+			for trap_index in room.vents.size():
+				target.position = room.vents[trap_index]
+				foe.position = target.position
+				target.damage = 0.0
+				foe.damage = 0.0
+				room.trap_triggers.clear()
+				check(not room.trigger_trap(trap_index, foe), "Enemy triggered trap")
+				room.hazards_enabled = true
+				room.hazard_tick = 0.0
+				room._physics_process(0.01)
+				check(target.damage > 0.0, "Trap missed player: " + definition.id)
+				check(foe.damage > target.damage, "Trap missed enemy damage bonus: " + definition.id)
+				room.hazards_enabled = false
+				var before: float = target.damage
+				room._physics_process(0.5)
+				check(target.damage == before, "Disabled trap damaged player")
+			room.trap_triggers.clear()
+			room.player = null
+			target.free()
+			enemies.free()
 			for j in room.painted_traps.size():
 				var sprite: Sprite2D = room.painted_traps[j]
 				var index: int = room.painted_trap_indices[j]
