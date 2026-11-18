@@ -8,7 +8,7 @@ var tint := Color("72f8e5")
 var kind := "slash"
 
 func _ready() -> void:
-	if kind in ["lightning_slam", "fire_slam", "tidal_slam", "earth_slam", "ice_slam", "whirlpool"]:
+	if kind in ["lightning_slam", "fire_slam", "tidal_slam", "earth_slam", "ice_slam", "whirlpool", "toxin_slam", "caustic_pool"]:
 		lifetime = 0.55
 	elif kind in ["lightning_bolt", "shockwave", "rocksplosion", "earth_fissure"]:
 		lifetime = 0.40
@@ -28,7 +28,11 @@ func _draw() -> void:
 	
 	match kind:
 		"slash":
-			draw_arc(Vector2(0, -15), radius * (0.6 + progress * 0.4), direction.angle() - 0.9, direction.angle() + 0.9, 24, color, 8 * (1 - progress) + 1, true)
+			var w := maxf(1.0, 8.0 * (1.0 - progress) + 1.0)
+			draw_arc(Vector2(0, -15), radius * (0.6 + progress * 0.4), direction.angle() - 0.9, direction.angle() + 0.9, 24, color, w, true)
+			var gleam := Color.WHITE
+			gleam.a = color.a * 0.8
+			draw_arc(Vector2(0, -15), radius * (0.6 + progress * 0.4), direction.angle() - 0.55, direction.angle() + 0.55, 20, gleam, maxf(1.0, w * 0.4), true)
 		"burst":
 			for i in range(10):
 				var radial := Vector2.from_angle(float(i) * TAU / 10.0)
@@ -61,6 +65,8 @@ func _draw() -> void:
 			_draw_rocksplosion(progress, color)
 		"whirlpool":
 			_draw_whirlpool(progress, color)
+		"toxin_slam", "caustic_pool":
+			_draw_caustic_pool(progress, color)
 		_:
 			draw_set_transform(Vector2.ZERO, 0, Vector2(1, 0.5))
 			draw_arc(Vector2.ZERO, radius * progress, 0, TAU, 48, color, 5.0, true)
@@ -177,7 +183,7 @@ func _draw_swirl(progress: float, col: Color) -> void:
 		var start_ang := progress * 8.0 + float(q) * 0.8
 		var end_ang := start_ang + PI * 1.2
 		draw_set_transform(Vector2.ZERO, 0, Vector2(1, 0.5))
-		draw_arc(Vector2.ZERO, r_curr, start_ang, end_ang, 24, col, 3.5 * (1.0 - progress) + 0.8, true)
+		draw_arc(Vector2.ZERO, r_curr, start_ang, end_ang, 24, col, maxf(1.5, 3.5 * (1.0 - progress) + 0.8), false)
 		draw_set_transform(Vector2.ZERO)
 
 func _draw_shockwave(progress: float, col: Color) -> void:
@@ -194,7 +200,7 @@ func _draw_shockwave(progress: float, col: Color) -> void:
 
 func _draw_splash(progress: float, col: Color) -> void:
 	draw_set_transform(Vector2.ZERO, 0, Vector2(1, 0.5))
-	draw_arc(Vector2.ZERO, radius * 0.8 * progress, 0, TAU, 24, col, 2.5 * (1.0 - progress), true)
+	draw_arc(Vector2.ZERO, radius * 0.8 * progress, 0, TAU, 24, col, maxf(1.0, 2.5 * (1.0 - progress)), true)
 	draw_set_transform(Vector2.ZERO)
 	for i in range(10):
 		var a := float(i) * TAU / 10.0
@@ -212,7 +218,7 @@ func _draw_flame(progress: float, col: Color) -> void:
 
 func _draw_rocksplosion(progress: float, col: Color) -> void:
 	draw_set_transform(Vector2.ZERO, 0, Vector2(1, 0.5))
-	draw_arc(Vector2.ZERO, radius * progress, 0, TAU, 24, Color("d1a873"), 3.0 * (1.0 - progress), true)
+	draw_arc(Vector2.ZERO, radius * progress, 0, TAU, 24, Color("d1a873"), maxf(1.0, 3.0 * (1.0 - progress)), true)
 	draw_set_transform(Vector2.ZERO)
 	for i in range(12):
 		var a := float(i) * TAU / 12.0 + sin(float(i) * 17.0) * 0.3
@@ -232,5 +238,18 @@ func _draw_whirlpool(progress: float, col: Color) -> void:
 		var r_curr := radius * (1.0 - float(q) * 0.18) * (1.0 - progress * 0.2)
 		var start_ang := progress * 10.0 + float(q) * 1.1
 		draw_set_transform(Vector2.ZERO, 0, Vector2(1, 0.5))
-		draw_arc(Vector2.ZERO, r_curr, start_ang, start_ang + PI * 1.3, 32, col, 3.0 * (1.0 - progress) + 0.8, true)
+		draw_arc(Vector2.ZERO, r_curr, start_ang, start_ang + PI * 1.3, 32, col, maxf(1.0, 3.0 * (1.0 - progress) + 0.8), true)
 		draw_set_transform(Vector2.ZERO)
+
+func _draw_caustic_pool(progress: float, col: Color) -> void:
+	draw_set_transform(Vector2.ZERO, 0, Vector2(1, 0.5))
+	var fill_c := col
+	fill_c.a = 0.55 * (1.0 - progress)
+	draw_circle(Vector2.ZERO, radius * progress, fill_c)
+	draw_arc(Vector2.ZERO, radius * progress, 0, TAU, 32, Color("bef264"), maxf(1.0, 3.0 * (1.0 - progress)), true)
+	draw_set_transform(Vector2.ZERO)
+	for b in range(12):
+		var a := float(b) * TAU / 12.0 + progress * 3.0
+		var r_curr := radius * progress * (0.3 + sin(float(b) * 17.0) * 0.5)
+		var b_pos := Vector2(cos(a) * r_curr, sin(a) * r_curr * 0.5 - 6.0)
+		draw_circle(b_pos, maxf(1.0, 4.0 * (1.0 - progress)), Color("84cc16"))

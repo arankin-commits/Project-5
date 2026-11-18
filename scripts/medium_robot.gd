@@ -278,6 +278,23 @@ func _update_visual(delta: float) -> void:
 		visual.rotation = dash_direction.x * 0.13
 	visual.modulate = Color(1.2, 1.5, 1.5, 0.8) if invulnerability > 0.25 else Color.WHITE
 
+func get_primary_element_color() -> Color:
+	if cards.has("lightning_attack") or cards.has("lightning_special") or cards.has("lightning_dash") or cards.has("light_speed"):
+		return Color("ffe600")
+	if cards.has("fire_attack") or cards.has("fire_special") or cards.has("fire_dash") or cards.has("fire_trail"):
+		return Color("ff4500")
+	if cards.has("water_attack") or cards.has("water_special") or cards.has("water_dash"):
+		return Color("3399ff")
+	if cards.has("wind_attack") or cards.has("wind_special") or cards.has("wind_dash"):
+		return Color("38d978")
+	if cards.has("ice_attack") or cards.has("ice_special") or cards.has("ice_dash"):
+		return Color("a8f0ff")
+	if cards.has("earthen_attack") or cards.has("earth_attack") or cards.has("earthen_special") or cards.has("earthen_armor") or cards.has("earth_arsenal") or cards.has("orbiting_fortress"):
+		return Color("c89650")
+	if cards.has("toxin_attack") or cards.has("toxin_special") or cards.has("toxin_dash"):
+		return Color("88ee33")
+	return Color(0.3, 0.95, 0.9, 0.8)
+
 func _draw() -> void:
 	if enemy_statuses.has("haze"):
 		draw_circle(Vector2(0,-30),65,Color(.5,.45,.4,.22))
@@ -287,10 +304,33 @@ func _draw() -> void:
 		draw_arc(Vector2(0,-45), 34, -PI / 2, -PI / 2 + TAU * minf(charge_time / 0.6, 1.0), 32, Color("ffce83"), 4, true)
 	draw_set_transform(Vector2(0,-2), 0, Vector2(1,0.45))
 	draw_circle(Vector2.ZERO, 22, Color(0,0,0,0.5))
-	draw_arc(Vector2.ZERO, 24, 0, TAU, 40, Color(0.3,0.95,0.9,0.8), 2, true)
+	var elem_col := get_primary_element_color()
+	draw_arc(Vector2.ZERO, 24, 0, TAU, 40, elem_col, 2, true)
 	if dash_timer > 0:
 		if cards.has("light_speed"):
 			draw_line(-dash_direction * 15, -dash_direction * 100, Color(1.0, 0.9, 0.2, 0.8), 8, true)
 			draw_line(-dash_direction * 25, -dash_direction * 80, Color(1.0, 1.0, 1.0, 0.9), 3, true)
 		else:
-			draw_line(-dash_direction * 15, -dash_direction * 100, Color(0.25,0.95,0.9,0.55), 7, true)
+			var trail_c := elem_col
+			trail_c.a = 0.65
+			draw_line(-dash_direction * 15, -dash_direction * 100, trail_c, 7, true)
+			draw_line(-dash_direction * 20, -dash_direction * 75, Color.WHITE, 2.5, true)
+	draw_set_transform(Vector2.ZERO)
+
+	# Orbiting rocks when Earth cards active
+	if cards.has("earthen_armor") or cards.has("earth_armor") or cards.has("earth_arsenal") or cards.has("orbiting_fortress"):
+		var max_rocks := 5 if cards.has("earth_arsenal") else 3
+		var t_orbit := float(Time.get_ticks_msec()) * 0.003
+		for i in range(max_rocks):
+			var a_orb := t_orbit + float(i) * TAU / float(max_rocks)
+			var r_dist := 40.0
+			var r_pos := Vector2(cos(a_orb) * r_dist, sin(a_orb) * r_dist * 0.45 - 12.0)
+			var r_pts: PackedVector2Array = [
+				r_pos + Vector2(-6, 4),
+				r_pos + Vector2(-3, -6),
+				r_pos + Vector2(5, -5),
+				r_pos + Vector2(7, 3),
+				r_pos + Vector2(1, 6)
+			]
+			draw_colored_polygon(r_pts, Color("8d6e53"))
+			draw_polyline(r_pts, Color("d1a873"), 1.5)

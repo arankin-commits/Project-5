@@ -42,6 +42,7 @@ class StatusState:
 	var frozen_timer: float = 0.0
 	var wet_timer: float = 0.0
 	var mud_timer: float = 0.0
+	var toxin_timer: float = 0.0
 	var wind_fanned_timer: float = 0.0 # Wind's 50% Burn damage bonus for 3s (refreshes duration, does not stack)
 	var rust_tick_timer: float = 0.0   # Rust damage tick timer (1s interval)
 	var rust_consecutive_ticks: int = 0 # Wear and Tear stacking (+3 per tick up to 32)
@@ -65,6 +66,9 @@ class StatusState:
 
 	func is_muddy() -> bool:
 		return mud_timer > 0.0
+
+	func is_toxin() -> bool:
+		return toxin_timer > 0.0
 
 	func can_trigger_armor_retaliation(is_projectile := false) -> bool:
 		# Elemental Armor effects do not work on projectiles
@@ -119,6 +123,7 @@ class StatusState:
 				rust_tick_timer = 0.0
 		
 		mud_timer = maxf(0.0, mud_timer - delta)
+		toxin_timer = maxf(0.0, toxin_timer - delta)
 		wind_fanned_timer = maxf(0.0, wind_fanned_timer - delta)
 		armor_retaliation_cooldown = maxf(0.0, armor_retaliation_cooldown - delta)
 		if is_boss and cc_resistance > 0.0:
@@ -142,6 +147,10 @@ static func calculate_elemental_damage(base_damage: float, element: String, stat
 	if state.is_frozen():
 		if elem in ["earth", "burn", "fire"]:
 			dmg *= 0.5
+			
+	# Toxin corrosive armor melting (+25% damage from all attack sources)
+	if state.is_toxin():
+		dmg *= 1.25
 			
 	return dmg
 

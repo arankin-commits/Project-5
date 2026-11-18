@@ -106,5 +106,21 @@ func _run() -> void:
 	comp_scene.queue_free()
 	await process_frame
 
+	# 8. Biome Boss models and atlases from PCK
+	print("Testing Biome Boss models and textures from PCK...")
+	var biome_boss_script = load("res://scripts/biome_boss.gd")
+	for biome in ["maintenance", "factory", "boiler", "toxin_refinery"]:
+		var boss_inst = biome_boss_script.new()
+		boss_inst.configure_boss(biome)
+		root.add_child(boss_inst)
+		await process_frame
+		if boss_inst.idle_texture == null or boss_inst.attack_texture == null:
+			push_error("FAIL: Boss textures failed to load from PCK for biome " + biome)
+			quit(1)
+			return
+		print("  Boss " + boss_inst.display_name + " textures loaded successfully from PCK: " + str(boss_inst.visual.texture != null))
+		boss_inst.queue_free()
+		await process_frame
+
 	print("ALL PCK SCENES FUNCTIONED PERFECTLY!")
 	quit(0)

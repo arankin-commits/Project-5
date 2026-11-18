@@ -37,6 +37,7 @@ var is_in_knockback := false
 var is_dead := false
 var enemy_size := "Medium"
 var elemental_state := ElementalSystem.StatusState.new()
+var toxin_tick_timer := 0.0
 
 func _init() -> void:
 	collision_layer = 4
@@ -111,12 +112,16 @@ func _physics_process(delta: float) -> void:
 			if p_cards.has("wear_and_tear"):
 				rust_dmg = minf(32.0, 8.0 + (elemental_state.rust_consecutive_ticks - 1) * 3.0)
 			take_damage(rust_dmg, Vector2.ZERO, 0.0, "rust", "dot")
+	if elemental_state.is_toxin():
+		toxin_tick_timer -= delta
+		if toxin_tick_timer <= 0.0:
+			toxin_tick_timer = 1.0
+			take_damage(7.0, Vector2.ZERO, 0.0, "toxin", "dot")
 	if wall_stun_timer > 0 or elemental_state.is_frozen():
 		if wall_stun_timer > 0:
 			wall_stun_timer = maxf(0, wall_stun_timer - delta)
 		velocity = Vector2.ZERO
-	if elemental_state.is_burning() or elemental_state.is_wet():
-		queue_redraw()
+		move_and_slide()
 		queue_redraw()
 		return
 	cooldown -= delta
@@ -128,7 +133,7 @@ func _physics_process(delta: float) -> void:
 	visual.position.y = -absf(sin(stride))*1.8 if velocity.length() > 5 else 0
 	visual.flip_h = facing.x > 0
 	velocity = Vector2.ZERO
-	if elemental_state.is_burning() or elemental_state.is_wet():
+	if elemental_state.is_burning() or elemental_state.is_wet() or elemental_state.is_toxin():
 		queue_redraw()
 	phase_two = kind == "boss" and health <= max_health * 0.5
 	if state == "windup":
@@ -178,6 +183,8 @@ func _physics_process(delta: float) -> void:
 		velocity *= 0.8
 	if elemental_state.is_frost():
 		velocity *= 0.75
+	if elemental_state.is_toxin():
+		velocity *= 0.6 if _player_cards().has("paralytic_venom") else 0.75
 	move_and_slide()
 	queue_redraw()
 
@@ -379,6 +386,8 @@ func take_damage(amount: float, knockback: Vector2 = Vector2.ZERO, push_distance
 			take_damage(ElementalSystem.calculate_burn_tick(8.0, elemental_state), Vector2.ZERO, 0.0, "burn", "dot")
 	elif elem == "earth":
 		ElementalSystem.apply_earth(elemental_state)
+	elif elem in ["toxin", "poison", "acid"]:
+		elemental_state.toxin_timer = 4.0
 		
 	if health <= 0:
 		_die()
@@ -488,6 +497,14 @@ func _draw() -> void:
 		draw_colored_polygon(block_pts, Color(0.34, 0.75, 0.98, 0.35))
 		draw_polyline(block_pts, Color("83ecff"), 2.5)
 		draw_line(Vector2(-w_box * 0.5, -h_box * 0.7), Vector2(w_box * 0.4, -h_box * 0.2), Color(1, 1, 1, 0.5), 1.5)
+
+	# Toxin bubbling toxic haze
+	if elemental_state.is_toxin():
+		var t_tox := float(Time.get_ticks_msec()) * 0.007
+		for k in range(5):
+			var tox_x := sin(float(k) * 2.3 + t_tox * 2.0) * 16.0
+			var tox_y := -20.0 - float(k) * 7.0 - fmod(t_tox * 20.0 + float(k) * 5.0, 22.0)
+			draw_circle(Vector2(tox_x, tox_y), 4.0, Color(0.53, 0.93, 0.21, 0.75))
 
 	if state == "windup" and not custom_attack_warning:
 		var p := attack_point-global_position

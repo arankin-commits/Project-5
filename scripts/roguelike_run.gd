@@ -8,6 +8,7 @@ const MAINTENANCE_ROOM := preload("res://scripts/maintenance_room.gd")
 const BLOCKOUT_ROOM := preload("res://scripts/blockout_room.gd")
 const ROOM_POOL := preload("res://scripts/room_pool.gd")
 const PROJECTILE := preload("res://scripts/run_projectile.gd")
+const PLAYER_ROCK := preload("res://scripts/player_rock_projectile.gd")
 const EFFECT := preload("res://scripts/run_effect.gd")
 const Space := preload("res://scripts/boiler_space.gd")
 const ElementalCards := preload("res://scripts/elemental_cards.gd")
@@ -51,6 +52,17 @@ const CORE_TINTS: Dictionary = {
 	"wind": Color("55ff99"),
 	"ice": Color("a8f0ff"),
 	"toxin": Color("88ee33")
+}
+
+const ELEMENT_SWING_COLORS: Dictionary = {
+	"fire": Color("ff4500"),
+	"lightning": Color("ffe600"),
+	"water": Color("00a8ff"),
+	"wind": Color("2ed573"),
+	"ice": Color("a8f0ff"),
+	"earth": Color("c89650"),
+	"toxin": Color("88ee33"),
+	"regular": Color("85ffe2")
 }
 
 const WEAPON_CARDS: Array[Dictionary] = [
@@ -615,6 +627,7 @@ func _load_room(index: int) -> void:
 	player.set("dash_timer",0.0)
 	player.set("dash_cooldown",0.0)
 	player.set("facing",Vector2.UP)
+	player.set("cards", player_cards)
 	config.set("best_room",maxi(int(config.get("best_room")),index+1))
 	hud.call("set_room",index,rooms[index],config.get("run_seed"))
 	_spawn_wave()
@@ -713,6 +726,12 @@ func _spawn_summons(summoner: CharacterBody2D, key: String, count: int) -> void:
 
 func _process(delta: float) -> void:
 	player_armor_cooldown = maxf(0.0, player_armor_cooldown - delta)
+	if is_instance_valid(player) and (player_cards.has("orbiting_fortress") or player_cards.has("earthen_armor") or player_cards.has("earth_armor") or player_cards.has("earth_arsenal")):
+		for proj in $Projectiles.get_children():
+			if is_instance_valid(proj) and proj.get("target") == player and proj.global_position.distance_to(player.global_position) <= 45.0:
+				_effect(proj.global_position, "rocksplosion", 40.0, Color("c89650"))
+				$Audio.play_cue("strike")
+				proj.queue_free()
 	if is_instance_valid(player) and player.get("charging") and player_cards.has("raging_tempest"):
 		charging_tempest_energy += delta * 30.0
 		if charging_tempest_energy >= 30.0:
@@ -811,11 +830,85 @@ func try_advance() -> bool:
 	call_deferred("_load_room", room_index + 1)
 	return true
 
+func get_active_element() -> String:
+	if player_cards.has("fire_attack") or player_cards.has("fire_special") or player_cards.has("fire_slam"):
+		return "fire"
+	if player_cards.has("lightning_attack") or player_cards.has("lightning_special") or player_cards.has("lightning_slam"):
+		return "lightning"
+	if player_cards.has("water_attack") or player_cards.has("water_special") or player_cards.has("tidal_slam"):
+		return "water"
+	if player_cards.has("wind_attack") or player_cards.has("wind_special") or player_cards.has("wind_bomb"):
+		return "wind"
+	if player_cards.has("ice_attack") or player_cards.has("ice_special") or player_cards.has("ice_slam"):
+		return "ice"
+	if player_cards.has("earthen_attack") or player_cards.has("earth_attack") or player_cards.has("earthen_special") or player_cards.has("earth_special") or player_cards.has("earthen_slam") or player_cards.has("earth_slam"):
+		return "earth"
+	if player_cards.has("toxin_attack") or player_cards.has("toxin_special") or player_cards.has("caustic_pool"):
+		return "toxin"
+
+	for c in player_cards:
+		if c.begins_with("fire"): return "fire"
+		if c.begins_with("lightning") or c in ["light_speed", "electric_energy"]: return "lightning"
+		if c.begins_with("water") or c in ["erosion", "drenched", "rust", "whirlpool"]: return "water"
+		if c.begins_with("wind") or c in ["pinball", "fleet_foot", "gust", "vortex", "come_hither"]: return "wind"
+		if c.begins_with("ice") or c in ["frost_recharge", "snow_down", "freeze", "everlasting_winter", "cold_spirit", "flash_freeze"]: return "ice"
+		if c.begins_with("earth") or c.begins_with("earthen") or c in ["orbiting_fortress", "rock_shot", "rocksplosion", "shotgun"]: return "earth"
+		if c.begins_with("toxin") or c in ["virulent_strain", "corrosive_bile", "paralytic_venom", "noxious_cloud"]: return "toxin"
+
+	if config != null and not config.core_elements.is_empty():
+		return config.core_elements[0]
+	return "regular"
+
+func _spawn_player_rock(origin_pos: Vector2, shoot_dir: Vector2, rock_dmg: float, can_return := false) -> void:
+	var rock := PLAYER_ROCK.new()
+	rock.position = origin_pos
+	rock.velocity = shoot_dir.normalized() * 480.0
+	rock.damage = rock_dmg
+	rock.can_return = can_return
+	rock.origin_player = player
+	rock.enemies_node = enemies
+	rock.projectiles_node = $Projectiles
+	rock.effects_callback = Callable(self, "_effect")
+	$Projectiles.add_child(rock)
+
 func _on_attack(origin: Vector2, direction: Vector2, damage: float, reach: float, heavy: bool) -> void:
 	if state != "combat":
 		return
 	$Audio.play_cue("strike")
-	_effect(origin,"ring" if heavy else "slash",reach,Color("ffcc73") if heavy else Color("85ffe2"),direction)
+
+	var active_elem := get_active_element()
+	var swing_col: Color = ELEMENT_SWING_COLORS.get(active_elem, Color("85ffe2"))
+	if heavy:
+		swing_col = swing_col.lightened(0.2)
+	_effect(origin, "ring" if heavy else "slash", reach, swing_col, direction)
+
+	# Always spawn forward elemental wave / burst so abilities show responsive visual effects on every swing
+	var effect_pos: Vector2 = origin + direction * (reach * 0.45)
+	match active_elem:
+		"fire":
+			_effect(effect_pos, "flame", reach * 0.65, Color("ff3b30"), direction)
+		"lightning":
+			_effect(origin, "lightning_bolt", reach * 1.15, Color("ffe600"), direction)
+		"water":
+			_effect(effect_pos, "splash", reach * 0.60, Color("3399ff"), direction)
+		"wind":
+			_effect(effect_pos, "swirl", reach * 0.65, Color("38d978"), direction)
+		"ice":
+			_effect(effect_pos, "ice_spikes", reach * 0.60, Color("a8f0ff"), direction)
+		"earth":
+			_effect(effect_pos, "earth_fissure", reach * 0.65, Color("a65e2e"), direction)
+		"toxin":
+			_effect(effect_pos, "splash", reach * 0.55, Color("88ee33"), direction)
+
+	# Earth rock projectiles for rock_shot and shotgun
+	if player_cards.has("rock_shot") or player_cards.has("shotgun"):
+		if heavy and player_cards.has("shotgun"):
+			for angle_off in [-0.26, 0.0, 0.26]:
+				var r_dir := direction.rotated(angle_off)
+				_spawn_player_rock(origin + r_dir * 30.0, r_dir, 12.0)
+		elif not heavy or player_cards.has("rock_shot"):
+			_spawn_player_rock(origin + direction * 30.0, direction, 32.0, player_cards.has("earth_bender"))
+
 	var combo_hit: int = player.combo if is_instance_valid(player) else 1
 	var struck_enemies: Array[CharacterBody2D] = []
 
@@ -845,7 +938,7 @@ func _on_attack(origin: Vector2, direction: Vector2, damage: float, reach: float
 
 	if not heavy:
 		for enemy in struck_enemies:
-			if player_cards.has("lightning_attack"):
+			if player_cards.has("lightning_attack") or (config != null and config.core_elements.has("lightning")):
 				var l_dmg: float = 8.0 if combo_hit < 3 else 12.0
 				enemy.take_damage(l_dmg, direction, 12.0, "lightning")
 				_effect(enemy.position - Vector2(0, 25), "lightning_bolt", 35.0, Color("ffe600"), direction)
@@ -866,25 +959,29 @@ func _on_attack(origin: Vector2, direction: Vector2, damage: float, reach: float
 							spread_count += 1
 							if spread_count >= max_spread:
 								break
-			if player_cards.has("fire_attack"):
+			if player_cards.has("fire_attack") or (config != null and config.core_elements.has("fire")):
 				enemy.take_damage(0.0, Vector2.ZERO, 0.0, "fire")
 				_effect(enemy.position - Vector2(0, 20), "flame", 35.0, Color("ff3b30"))
-			if player_cards.has("water_attack"):
+			if player_cards.has("water_attack") or (config != null and config.core_elements.has("water")):
 				enemy.take_damage(0.0, Vector2.ZERO, 0.0, "water")
 				_effect(enemy.position - Vector2(0, 15), "splash", 35.0, Color("3399ff"))
-			if player_cards.has("wind_attack"):
+			if player_cards.has("wind_attack") or (config != null and config.core_elements.has("wind")):
 				var w_dmg: float = 5.0 if combo_hit < 3 else 8.0
 				var kb_dir: Vector2 = (player.position - enemy.position).normalized() if player_cards.has("vortex") else direction
 				var kb_dist: float = 12.0 * (1.55 if player_cards.has("gust") else 1.25)
 				enemy.take_damage(w_dmg, kb_dir, kb_dist, "wind")
 				_effect(enemy.position - Vector2(0, 20), "swirl", 40.0, Color("38d978"), direction)
-			if player_cards.has("ice_attack"):
+			if player_cards.has("ice_attack") or (config != null and config.core_elements.has("ice")):
 				enemy.take_damage(0.0, Vector2.ZERO, 0.0, "ice")
 				_effect(enemy.position - Vector2(0, 15), "ice_spikes", 35.0, Color("a8f0ff"))
-			if player_cards.has("earth_attack"):
+			if player_cards.has("earthen_attack") or player_cards.has("earth_attack") or (config != null and config.core_elements.has("earth")):
 				var e_dmg: float = 12.0 if combo_hit < 3 else 18.0
 				enemy.take_damage(e_dmg, direction, 12.0, "earth")
 				_effect(enemy.position - Vector2(0, 15), "earth_fissure", 35.0, Color("a65e2e"), direction)
+			if player_cards.has("toxin_attack") or (config != null and config.core_elements.has("toxin")):
+				var tox_dmg: float = 7.0 if combo_hit < 3 else 10.0
+				enemy.take_damage(tox_dmg, direction, 8.0, "toxin")
+				_effect(enemy.position - Vector2(0, 15), "splash", 35.0, Color("88ee33"), direction)
 	else:
 		for enemy in struck_enemies:
 			if player_cards.has("lightning_special"):
@@ -903,9 +1000,12 @@ func _on_attack(origin: Vector2, direction: Vector2, damage: float, reach: float
 			if player_cards.has("ice_special"):
 				enemy.take_damage(18.0, direction, 45.0, "ice")
 				_effect(enemy.position - Vector2(0, 10), "ice_spikes", 50.0, Color("a8f0ff"))
-			if player_cards.has("earth_special"):
+			if player_cards.has("earthen_special") or player_cards.has("earth_special"):
 				enemy.take_damage(24.0, direction, 65.0, "earth")
 				_effect(enemy.position - Vector2(0, 15), "earth_fissure", 60.0, Color("a65e2e"), direction)
+			if player_cards.has("toxin_special"):
+				enemy.take_damage(18.0, direction, 30.0, "toxin")
+				_effect(enemy.position - Vector2(0, 15), "splash", 55.0, Color("88ee33"), direction)
 
 		if player_cards.has("lightning_slam"):
 			_effect(origin, "ring", reach * 1.2, Color("ffe600"))
@@ -933,23 +1033,62 @@ func _on_attack(origin: Vector2, direction: Vector2, damage: float, reach: float
 					enemy.wall_stun_timer = maxf(enemy.wall_stun_timer, 2.0)
 					enemy.take_damage(22.0, Vector2.ZERO, 0.0, "ice")
 					_effect(enemy.position, "ice_spikes", 45.0, Color("a8f0ff"))
-		if player_cards.has("earth_slam"):
+		if player_cards.has("earthen_slam") or player_cards.has("earth_slam"):
 			_effect(origin, "earth_slam", reach * 1.3, Color("a65e2e"))
 			for enemy in enemies.get_children():
 				if enemy.health > 0 and enemy.position.distance_to(origin) <= reach * 1.2:
 					enemy.take_damage(26.0, Vector2.ZERO, 0.0, "earth")
+		if player_cards.has("caustic_pool") or player_cards.has("toxin_slam"):
+			_effect(origin, "caustic_pool", reach * 1.3, Color("88ee33"))
+			for enemy in enemies.get_children():
+				if enemy.health > 0 and enemy.position.distance_to(origin) <= reach * 1.2:
+					enemy.take_damage(35.0, Vector2.ZERO, 0.0, "toxin")
 
 func _on_player_dashed() -> void:
-	if state != "combat" or not is_instance_valid(player):
+	if not is_instance_valid(player):
 		return
 	var dash_from: Vector2 = player.last_dash_start
 	var dash_to: Vector2 = player.position
 	if dash_to.is_equal_approx(dash_from) and player.get("last_dash_end") != null and player.last_dash_end != Vector2.ZERO:
 		dash_to = player.last_dash_end
+
+	# Spawn elemental dash effects along path so visual feedback is immediate
 	if player_cards.has("light_speed"):
 		_effect(dash_from, "lightning_bolt", dash_from.distance_to(dash_to), Color("ffe600"), (dash_to - dash_from).normalized())
 		_effect(dash_from, "ring", 45.0, Color("ffe600"))
 		_effect(dash_to, "burst", 45.0, Color("ffe600"))
+	elif player_cards.has("lightning_dash") or (config != null and config.core_elements.has("lightning")):
+		_effect(dash_from.lerp(dash_to, 0.5), "lightning_bolt", dash_from.distance_to(dash_to), Color("ffe600"), (dash_to - dash_from).normalized())
+		_effect(dash_to, "burst", 35.0, Color("ffe600"))
+
+	if player_cards.has("fire_dash") or player_cards.has("fire_trail") or (config != null and config.core_elements.has("fire")):
+		_effect(dash_from, "flame", 40.0, Color("ff3b30"))
+		_effect(dash_from.lerp(dash_to, 0.5), "flame", 50.0, Color("ff3b30"))
+		_effect(dash_to, "flame", 40.0, Color("ff3b30"))
+
+	if player_cards.has("water_dash") or (config != null and config.core_elements.has("water")):
+		_effect(dash_from.lerp(dash_to, 0.5), "splash", 45.0, Color("3399ff"))
+		_effect(dash_to, "splash", 35.0, Color("3399ff"))
+
+	if player_cards.has("wind_dash") or (config != null and config.core_elements.has("wind")):
+		_effect(dash_from.lerp(dash_to, 0.5), "swirl", 45.0, Color("38d978"))
+		_effect(dash_to, "swirl", 35.0, Color("38d978"))
+
+	if player_cards.has("ice_dash") or player_cards.has("blizzard") or (config != null and config.core_elements.has("ice")):
+		_effect(dash_from.lerp(dash_to, 0.5), "ice_spikes", 45.0, Color("a8f0ff"))
+		_effect(dash_to, "ice_spikes", 35.0, Color("a8f0ff"))
+
+	if player_cards.has("earthen_dash") or player_cards.has("earth_dash") or (config != null and config.core_elements.has("earth")):
+		_effect(dash_from, "earth_fissure", 45.0, Color("a65e2e"))
+		_effect(dash_to, "burst", 35.0, Color("a65e2e"))
+
+	if player_cards.has("toxin_dash") or (config != null and config.core_elements.has("toxin")):
+		_effect(dash_from.lerp(dash_to, 0.5), "splash", 45.0, Color("88ee33"))
+		_effect(dash_to, "burst", 35.0, Color("88ee33"))
+
+	if state != "combat":
+		return
+
 	var enemies_hit: Array[CharacterBody2D] = []
 	for enemy in enemies.get_children():
 		if enemy.health <= 0:
@@ -963,22 +1102,25 @@ func _on_player_dashed() -> void:
 			enemy.take_damage(18.0, Vector2.ZERO, 0.0, "lightning")
 			_effect(enemy.position - Vector2(0, 100), "lightning_bolt", 100.0, Color("ffe600"), Vector2.DOWN)
 			_effect(enemy.position - Vector2(0, 30), "burst", 35.0, Color("ffe600"))
-		if player_cards.has("fire_dash"):
+		if player_cards.has("fire_dash") or (config != null and config.core_elements.has("fire")):
 			enemy.take_damage(0.0, Vector2.ZERO, 0.0, "fire")
 			_effect(enemy.position - Vector2(0, 20), "flame", 35.0, Color("ff3b30"))
-		if player_cards.has("water_dash"):
+		if player_cards.has("water_dash") or (config != null and config.core_elements.has("water")):
 			enemy.take_damage(0.0, Vector2.ZERO, 0.0, "water")
 			_effect(enemy.position - Vector2(0, 15), "splash", 35.0, Color("3399ff"))
-		if player_cards.has("wind_dash"):
+		if player_cards.has("wind_dash") or (config != null and config.core_elements.has("wind")):
 			var pull_dir: Vector2 = (dash_from - enemy.position).normalized()
 			enemy.take_damage(8.0, pull_dir, 60.0, "wind")
 			_effect(enemy.position - Vector2(0, 20), "swirl", 45.0, Color("38d978"))
-		if player_cards.has("ice_dash"):
+		if player_cards.has("ice_dash") or (config != null and config.core_elements.has("ice")):
 			enemy.take_damage(0.0, Vector2.ZERO, 0.0, "ice")
 			_effect(enemy.position - Vector2(0, 15), "ice_spikes", 35.0, Color("a8f0ff"))
-		if player_cards.has("earth_dash"):
+		if player_cards.has("earthen_dash") or player_cards.has("earth_dash") or (config != null and config.core_elements.has("earth")):
 			enemy.take_damage(16.0, Vector2.ZERO, 0.0, "earth")
 			_effect(dash_from, "earth_fissure", 45.0, Color("a65e2e"))
+		if player_cards.has("toxin_dash") or (config != null and config.core_elements.has("toxin")):
+			enemy.take_damage(12.0, Vector2.ZERO, 0.0, "toxin")
+			_effect(enemy.position - Vector2(0, 15), "splash", 35.0, Color("88ee33"))
 
 	if not enemies_hit.is_empty() and player_cards.has("fleet_foot"):
 		var orig_speed: float = float(player.get("speed"))
@@ -1011,31 +1153,49 @@ func _on_damage(amount: float, attacker: Node2D = null, is_projectile := false) 
 	if is_instance_valid(player) and player.get("charging") and is_instance_valid(attacker) and attacker.has_method("take_damage"):
 		if player_cards.has("lightning_armor") or config.core_elements.has("lightning"):
 			attacker.take_damage(16.0, Vector2.ZERO, 0.0, "lightning")
+			_effect(attacker.position - Vector2(0, 20), "lightning_bolt", 40.0, Color("ffe600"), Vector2.UP)
 		if player_cards.has("fire_armor") or config.core_elements.has("fire"):
 			attacker.take_damage(6.0, Vector2.ZERO, 0.0, "fire")
+			_effect(attacker.position - Vector2(0, 20), "flame", 40.0, Color("ff3b30"))
 		if player_cards.has("water_armor") or config.core_elements.has("water"):
 			attacker.take_damage(0.0, Vector2.ZERO, 0.0, "water")
+			_effect(attacker.position - Vector2(0, 15), "splash", 40.0, Color("3399ff"))
 		if player_cards.has("wind_armor") or config.core_elements.has("wind"):
 			attacker.take_damage(10.0, player.position.direction_to(attacker.position), 80.0, "wind")
+			_effect(attacker.position - Vector2(0, 20), "swirl", 45.0, Color("38d978"))
 		if player_cards.has("ice_armor") or config.core_elements.has("ice"):
 			attacker.take_damage(0.0, Vector2.ZERO, 0.0, "ice")
-		if player_cards.has("earth_armor") or config.core_elements.has("earth"):
+			_effect(attacker.position - Vector2(0, 10), "ice_spikes", 40.0, Color("a8f0ff"))
+		if player_cards.has("earthen_armor") or player_cards.has("earth_armor") or config.core_elements.has("earth"):
 			attacker.take_damage(18.0, Vector2.ZERO, 0.0, "earth")
+			_effect(attacker.position - Vector2(0, 15), "earth_fissure", 45.0, Color("a65e2e"))
+		if player_cards.has("toxin_armor") or config.core_elements.has("toxin"):
+			attacker.take_damage(14.0, Vector2.ZERO, 0.0, "toxin")
+			_effect(attacker.position - Vector2(0, 15), "splash", 40.0, Color("88ee33"))
 
 	if not is_projectile and is_instance_valid(attacker) and attacker.has_method("take_damage") and player_armor_cooldown <= 0.0:
 		player_armor_cooldown = 0.5
 		if player_cards.has("lightning_armor"):
 			attacker.take_damage(16.0, Vector2.ZERO, 0.0, "lightning")
+			_effect(attacker.position - Vector2(0, 20), "lightning_bolt", 40.0, Color("ffe600"), Vector2.UP)
 		if player_cards.has("fire_armor"):
 			attacker.take_damage(6.0, Vector2.ZERO, 0.0, "fire")
+			_effect(attacker.position - Vector2(0, 20), "flame", 40.0, Color("ff3b30"))
 		if player_cards.has("water_armor"):
 			attacker.take_damage(0.0, Vector2.ZERO, 0.0, "water")
+			_effect(attacker.position - Vector2(0, 15), "splash", 40.0, Color("3399ff"))
 		if player_cards.has("wind_armor"):
 			attacker.take_damage(10.0, player.position.direction_to(attacker.position), 80.0, "wind")
+			_effect(attacker.position - Vector2(0, 20), "swirl", 45.0, Color("38d978"))
 		if player_cards.has("ice_armor"):
 			attacker.take_damage(0.0, Vector2.ZERO, 0.0, "ice")
-		if player_cards.has("earth_armor"):
+			_effect(attacker.position - Vector2(0, 10), "ice_spikes", 40.0, Color("a8f0ff"))
+		if player_cards.has("earthen_armor") or player_cards.has("earth_armor"):
 			attacker.take_damage(18.0, Vector2.ZERO, 0.0, "earth")
+			_effect(attacker.position - Vector2(0, 15), "earth_fissure", 45.0, Color("a65e2e"))
+		if player_cards.has("toxin_armor"):
+			attacker.take_damage(14.0, Vector2.ZERO, 0.0, "toxin")
+			_effect(attacker.position - Vector2(0, 15), "splash", 40.0, Color("88ee33"))
 
 	if health <= 0:
 		if player.skills.has("final_stand") and not final_stand_used:
@@ -1166,6 +1326,13 @@ func choose_reward(id: String) -> bool:
 		return false
 	if config.is_element_reward(id) and not config.pick_element(id.trim_prefix("core_")):
 		return false
+	if config.is_element_reward(id):
+		var core_elem := id.trim_prefix("core_")
+		if not player_cards.has(id):
+			player_cards.append(id)
+		if is_instance_valid(player):
+			player.set("cards", player_cards)
+		_player_say("Acquired " + core_elem.to_upper() + " CORE!")
 	if ElementalCards.has_card(id):
 		var card: Dictionary = ElementalCards.get_card(id)
 		var elem: String = card.get("element", "")
