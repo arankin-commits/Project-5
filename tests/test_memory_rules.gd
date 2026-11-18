@@ -134,9 +134,13 @@ func _run() -> void:
 	check(not run.hud.modal.visible, "Rule 1 violated: reward modal opened before interaction")
 	
 	# Non-choice reward (e.g. repair/hull/xp/cds) does not open modal and collects directly
+	var prev_max_hp: float = run.maximum_health
 	run.activate_reward_item()
 	check(not run.hud.modal.visible, "Non-choice reward item must not open choice modal")
 	check(run.reward_collected, "Non-choice reward was not collected directly upon pickup")
+	check(run.maximum_health == prev_max_hp + 25.0, "Repair reward did not add 25 max health upon pickup")
+	run.maximum_health = 50.0
+	run.health = 50.0
 
 	# Choice rewards (element, element upgrade, weapon upgrade) DO open modal
 	run.reward_collected = false
