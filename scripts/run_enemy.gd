@@ -33,6 +33,7 @@ var stride := 0.0
 var visual: Sprite2D
 var custom_attack_warning := false
 var is_in_knockback := false
+var is_dead := false
 var elemental_state := ElementalSystem.StatusState.new()
 
 func _init() -> void:
@@ -233,7 +234,7 @@ func apply_knockback(direction: Vector2, distance: float, knockback_source := "r
 		queue_redraw()
 
 func take_damage(amount: float, knockback: Vector2 = Vector2.ZERO, push_distance := 12.0, element := "regular", knockback_source := "regular") -> void:
-	if health <= 0 or not active:
+	if health <= 0 or is_dead:
 		return
 	var final_amount := ElementalSystem.calculate_elemental_damage(amount, element, elemental_state)
 	health = maxf(0, health - final_amount)
@@ -265,8 +266,9 @@ func take_damage(amount: float, knockback: Vector2 = Vector2.ZERO, push_distance
 		queue_redraw()
 
 func _die() -> void:
-	if not active and health <= 0:
+	if is_dead:
 		return
+	is_dead = true
 	active = false
 	defeated.emit(self)
 	queue_free()

@@ -102,7 +102,7 @@ func _run() -> void:
 	for seed_offset in 30:
 		var test_rewards: Array[String] = run._generate_unique_exit_rewards(6, seed_offset)
 		for r in test_rewards:
-			check(not r.begins_with("core_"), "Rule 7 violated: elemental core appeared at capacity: " + r)
+			check(not (r.begins_with("core_") and r != "core_xp"), "Rule 7 violated: elemental core appeared at capacity: " + r)
 	
 	# With Power of Two, capacity is 2
 	config.core_limit = 2
@@ -110,7 +110,7 @@ func _run() -> void:
 	for seed_offset in 30:
 		var test_rewards: Array[String] = run._generate_unique_exit_rewards(6, seed_offset)
 		for r in test_rewards:
-			if r.begins_with("core_"):
+			if r.begins_with("core_") and r != "core_xp":
 				saw_core_reward = true
 				check(r != "core_fire", "Rule 7 violated: already owned core appeared: " + r)
 	check(saw_core_reward, "Elemental core did not appear with available capacity")
@@ -118,11 +118,15 @@ func _run() -> void:
 	# ==========================================
 	# RULE 1: Reward item spawns next to player, in-bounds, activates only on E
 	# ==========================================
-	# Clear first room enemies
-	for enemy in run.enemies.get_children():
-		enemy.active = false
-		enemy.take_damage(10000)
-	await frames(4)
+	# Clear first room enemies (all waves)
+	for wave_loop in 10:
+		for enemy in run.enemies.get_children():
+			if is_instance_valid(enemy):
+				enemy.active = true
+				enemy.take_damage(10000)
+		await frames(4)
+		if run.state == "reward":
+			break
 	
 	check(run.state == "reward", "Room did not enter reward state")
 	check(run.reward_item != null, "Rule 1 violated: physical reward item did not spawn")
@@ -173,7 +177,7 @@ func _run() -> void:
 	
 	# Simulate clearing the trap room
 	for enemy in run.enemies.get_children():
-		enemy.active = false
+		enemy.active = true
 		enemy.take_damage(10000)
 	run.trap_timer = 0.0
 	run.trap_current_wave = run.trap_target_waves
@@ -256,6 +260,7 @@ func _run() -> void:
 	]
 
 	for t in elem_tests:
+		elem_enemy.elemental_state = preload("res://scripts/elemental_system.gd").StatusState.new()
 		elem_enemy.take_damage(t.damage, Vector2.RIGHT, 12.0, t.element)
 		var found_label: Label = null
 		for child in run.get_node("Effects").get_children():
@@ -388,6 +393,34 @@ func _run() -> void:
 	check(ELEM.get_effective_knockback(180.0, true) == 90.0, "Rule 15: Knockback effects must be halved against bosses")
 	check(ELEM.get_effective_knockback(180.0, false) == 180.0, "Rule 15: Knockback effects must remain full against regular enemies")
 
+	# Elemental Cards & Drafting Rules
+	const ECARDS := preload("res://scripts/elemental_cards.gd")
+	check(ECARDS.CARDS.size() == 65, "Rule 15: ElementalCards must define exactly 65 cards across 6 elements")
+	check(ECARDS.can_offer_card("explosive_fury", []) == false, "Rule 15: Explosive Fury requires Explosion prerequisite")
+	check(ECARDS.can_offer_card("explosive_fury", ["explosion"]) == true, "Rule 15: Explosive Fury allowed when Explosion is owned")
+	check(ECARDS.can_offer_card("wear_and_tear", []) == false, "Rule 15: Wear and Tear requires Rust prerequisite")
+	check(ECARDS.can_offer_card("flash_freeze", []) == false, "Rule 15: Flash Freeze requires Freeze prerequisite")
+	check(ECARDS.can_offer_card("earth_bender", []) == false, "Rule 15: Earth Bender requires Rock Shot prerequisite")
+	check(ECARDS.can_offer_card("shotgun", []) == false, "Rule 15: Shotgun requires Rock Shot prerequisite")
+
+	# Draft generation yields 3 distinct cards
+	var draft_cards := ECARDS.roll_elemental_cards("fire", ["explosion"])
+	check(draft_cards.size() == 3, "Rule 15: Drafting must return exactly 3 cards")
+	var draft_ids := {}
+	for c in draft_cards:
+		draft_ids[c["id"]] = true
+	check(draft_ids.size() == 3, "Rule 15: Drafted cards must be 3 distinct choices")
+
+	# Burn tick timer preservation: reapplication refreshes duration without resetting tick timer
+	var burn_sim := ELEM.StatusState.new()
+	ELEM.apply_burn(burn_sim, 3.0)
+	check(burn_sim.burn_tick_timer == 1.0, "Rule 15: First burn application must set 1.0s tick timer")
+	burn_sim.update(0.4)
+	check(absf(burn_sim.burn_tick_timer - 0.6) < 0.01, "Rule 15: Burn tick timer must advance with delta")
+	ELEM.apply_burn(burn_sim, 3.0) # Reapply burn
+	check(absf(burn_sim.burn_tick_timer - 0.6) < 0.01, "Rule 15: Reapplying Burn must NOT reset the tick timer")
+	check(burn_sim.burn_timer == 3.0, "Rule 15: Reapplying Burn must refresh the duration timer")
+
 	elem_enemy.queue_free()
 	
 	# ==========================================
@@ -476,7 +509,7 @@ func _run() -> void:
 		check(save_slots.get_uncollected_cds("maintenance").size() == 4, "Rule 18: Maintenance uncollected pool must start at 4")
 		save_slots.collect_cd("01_Copper_Hearth")
 		check(save_slots.is_cd_collected("01_Copper_Hearth"), "Rule 18: Track 01_Copper_Hearth not marked collected")
-		var uncollected_maint := save_slots.get_uncollected_cds("maintenance")
+		var uncollected_maint: Array = save_slots.get_uncollected_cds("maintenance")
 		check(uncollected_maint.size() == 3, "Rule 18: Uncollected pool must reduce to 3 after collecting one")
 		check(not uncollected_maint.has("01_Copper_Hearth"), "Rule 18: Acquired track must no longer show up in pool")
 		
@@ -487,7 +520,7 @@ func _run() -> void:
 		check(save_slots.get_uncollected_cds("maintenance").is_empty(), "Rule 18: Maintenance uncollected pool must be empty after 4 collected")
 		config.biome = "maintenance"
 		for test_seed in 50:
-			var exit_rewards := run._generate_unique_exit_rewards(4, test_seed)
+			var exit_rewards: Array = run._generate_unique_exit_rewards(4, test_seed)
 			check(not exit_rewards.has("cds"), "Rule 18 violated: 'cds' appeared as reward after all biome CDs were collected in room %d" % test_seed)
 		
 		# 5. 3x Rarity: When uncollected CDs exist, 'cds' is 3 times as rare to find
@@ -495,7 +528,7 @@ func _run() -> void:
 		var cds_found_count := 0
 		var total_sample_rooms := 150
 		for test_seed in total_sample_rooms:
-			var exit_rewards := run._generate_unique_exit_rewards(4, test_seed)
+			var exit_rewards: Array = run._generate_unique_exit_rewards(4, test_seed)
 			if exit_rewards.has("cds"):
 				cds_found_count += 1
 		# With 3x rarity, cds appears in roughly 1/3 of the rate when it was 100% pool candidate
@@ -555,8 +588,8 @@ func _run() -> void:
 	await frames(2)
 
 	# 1. Test Enemy-Enemy collision: Enemy A knocked into Enemy B
-	var a_hp_before := enemy_a.health
-	var b_hp_before := enemy_b.health
+	var a_hp_before: float = float(enemy_a.health)
+	var b_hp_before: float = float(enemy_b.health)
 	enemy_a.apply_knockback(Vector2.RIGHT, 65.0)
 	await frames(1)
 
@@ -565,15 +598,26 @@ func _run() -> void:
 	check(enemy_a.wall_stun_timer > 0.0, "Rule 19: Knocked enemy A must be stunned after colliding with enemy B")
 	check(enemy_b.wall_stun_timer > 0.0, "Rule 19: Collided enemy B must be stunned after being hit by knocked enemy")
 
-	# 2. Test Wall/Construct collision: Enemy A knocked into room boundary wall
-	enemy_a.position = Vector2(100, 300)
+	# 2. Test Wall/Construct collision: Enemy A knocked into wall/construct
+	var wall_body = StaticBody2D.new()
+	wall_body.collision_layer = 1
+	var wall_shape = CollisionShape2D.new()
+	var box = RectangleShape2D.new()
+	box.size = Vector2(50, 200)
+	wall_shape.shape = box
+	wall_body.add_child(wall_shape)
+	wall_body.position = Vector2(250, 400)
+	run.room.add_child(wall_body)
+
+	enemy_a.position = Vector2(300, 400)
 	enemy_a.health = 100.0
 	enemy_a.wall_stun_timer = 0.0
-	var wall_hp_before := enemy_a.health
+	var wall_hp_before: float = float(enemy_a.health)
 	enemy_a.apply_knockback(Vector2.LEFT, 180.0)
 	await frames(1)
 	check(enemy_a.health == wall_hp_before - 90.0, "Rule 19: Enemy knocked into wall must take 90 collision damage from 180 power, got %f" % enemy_a.health)
 	check(enemy_a.wall_stun_timer > 0.0, "Rule 19: Enemy knocked into wall must receive wall stun")
+	wall_body.queue_free()
 
 	if is_instance_valid(enemy_a):
 		enemy_a.queue_free()

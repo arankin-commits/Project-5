@@ -32,6 +32,8 @@ var attack_pose := 0.0
 var visual: Sprite2D
 var base_scale := Vector2(0.32, 0.32)
 var skills: Array[String] = []
+var cards: Array[String] = []
+var charge_speed_mult := 1.0
 var energy := 0.0
 var charge_time := 0.0
 var charging := false
@@ -148,7 +150,10 @@ func _physics_process(delta: float) -> void:
 			if Input.is_action_pressed("attack"):
 				charging = true
 				facing = _aim_direction()
-				charge_time = minf(1.2, charge_time + delta)
+				if cards.has("electric_energy") or charge_speed_mult > 1.0:
+					velocity = Vector2.ZERO
+				var mult: float = 3.0 if cards.has("electric_energy") else charge_speed_mult
+				charge_time = minf(1.2, charge_time + delta * mult)
 			elif charging:
 				release_charge(_aim_direction())
 		elif Input.is_action_pressed("attack"):

@@ -525,6 +525,8 @@ def test_all():
     assert "Wind's 50% Burn damage bonus does not stack. Repeated Wind attacks refresh it" in mem_text
     assert "Armor retaliation has a 0.5-second cooldown" in mem_text
     assert "Elemental Armor effects do not work on projectiles" in mem_text
+    assert "Burn Tick Timer Preservation" in mem_text
+    assert "Elemental Cards & Drafting System" in mem_text
     assert "Orbiting rocks and stationary constructs have separate capacity limits" in mem_text
     assert "Rock fragments do not inherit Rock Shot triggers" in mem_text
 
@@ -538,6 +540,8 @@ def test_all():
     assert "Wind's 50% Burn damage bonus does not stack" in er_text
     assert "Armor retaliation has a 0.5-second cooldown" in er_text
     assert "Elemental Armor effects do not work on projectiles" in er_text
+    assert "Burn Tick Timer Preservation" in er_text
+    assert "Elemental Cards & Drafting System" in er_text
     assert "Orbiting rocks and stationary constructs have separate capacity limits" in er_text
     assert "Rock fragments do not inherit Rock Shot triggers" in er_text
 

@@ -9,6 +9,7 @@ const ROOM_POOL := preload("res://scripts/room_pool.gd")
 const PROJECTILE := preload("res://scripts/run_projectile.gd")
 const EFFECT := preload("res://scripts/run_effect.gd")
 const Space := preload("res://scripts/boiler_space.gd")
+const ElementalCards := preload("res://scripts/elemental_cards.gd")
 const REWARDS := [
 	{"id":"power", "name":"FORGED KNUCKLES", "description":"+20% strike damage"},
 	{"id":"hull", "name":"RIVETED PLATING", "description":"+20 maximum hull\nRepair 25 hull"},
@@ -69,6 +70,7 @@ var state := "combat"
 var outcome := ""
 var boss: CharacterBody2D
 var reward_choices: Array = []
+var player_cards: Array[String] = []
 var debug_enabled := false
 var camera_shake := 0.0
 var progression: Node
@@ -277,13 +279,21 @@ func _player_say(text: String) -> void:
 	if is_instance_valid(hud) and is_instance_valid(hud.objective):
 		hud.objective.text = text
 
+func _get_save_slots() -> Node:
+	if is_inside_tree():
+		return get_node_or_null("/root/SaveSlots")
+	var loop = Engine.get_main_loop()
+	if loop != null and loop is SceneTree:
+		return loop.root.get_node_or_null("SaveSlots")
+	return null
+
 func _generate_unique_exit_rewards(count: int, current_room_index: int) -> Array[String]:
 	var exit_rng := RandomNumberGenerator.new()
 
 	exit_rng.seed = int(config.get("run_seed")) + current_room_index * 137
 	var pool: Array[String] = []
 	pool.append("max_hp_increase")
-	var save_slots = get_node_or_null("/root/SaveSlots")
+	var save_slots = _get_save_slots()
 	var uncollected: Array[String] = []
 	if save_slots != null and save_slots.has_method("get_uncollected_cds"):
 		uncollected = save_slots.get_uncollected_cds(config.biome)
@@ -295,7 +305,7 @@ func _generate_unique_exit_rewards(count: int, current_room_index: int) -> Array
 	# Generic power/speed rewards reuse elemental artwork and cannot be door previews.
 	pool.append("trap_room")
 	
-	var raw_reward_str: String = str(rooms[current_room_index].get("reward", ""))
+	var raw_reward_str: String = str(rooms[current_room_index].get("reward", "")) if current_room_index >= 0 and current_room_index < rooms.size() else ""
 	var pending_core: String = raw_reward_str.trim_prefix("core_") if config.is_element_reward(raw_reward_str) else ""
 	var reserves_slot: bool = not pending_core.is_empty() and not config.core_elements.has(pending_core)
 	var current_cores_count: int = config.core_elements.size() + (1 if reserves_slot else 0)
@@ -401,7 +411,7 @@ func _load_room(index: int) -> void:
 			trap_target_waves = trap_rng.randi_range(10, 15)
 			trap_current_wave = 1
 	if rooms[index].get("reward") == "cds" and not rooms[index].has("cd_track"):
-		var save_slots = get_node_or_null("/root/SaveSlots")
+		var save_slots = _get_save_slots()
 		if save_slots != null and save_slots.has_method("get_uncollected_cds"):
 			var uncollected: Array[String] = save_slots.get_uncollected_cds(config.biome)
 			if not uncollected.is_empty():
@@ -598,7 +608,7 @@ func try_advance() -> bool:
 		if door >= 0 and door < rooms[room_index].exit_rewards.size() and room_index + 1 < rooms.size():
 			rooms[room_index+1].reward = rooms[room_index].exit_rewards[door]
 
-	_load_room(room_index+1)
+	call_deferred("_load_room", room_index + 1)
 	return true
 
 func _on_attack(origin: Vector2, direction: Vector2, damage: float, reach: float, heavy: bool) -> void:
@@ -685,13 +695,27 @@ func _check_clear() -> void:
 				found_promised = true
 				break
 		if not found_promised:
-			if config.is_element_reward(promised):
-				var element := promised.trim_prefix("core_")
-				reward_choices.append({"id":promised,"name":element.to_upper()+" CORE","description":"Bind %s core\nQ / 25 energy" % element})
-			elif promised.begins_with("upgrade_"):
-				var element := promised.trim_prefix("upgrade_")
-				var bonus_text := "+45% (High Rarity)" if trap_buff_active else "+25%"
-				reward_choices.append({"id":promised,"name":element.to_upper()+" UPGRADE","description":"Enhance %s core power\n%s effectiveness" % [element, bonus_text]})
+			if config.is_element_reward(promised) or promised.begins_with("upgrade_"):
+				var element := promised.trim_prefix("core_").trim_prefix("upgrade_")
+				var rolled: Array[Dictionary] = ElementalCards.roll_elemental_cards(element, player_cards, trap_buff_active, rng)
+				if not rolled.is_empty():
+					for card in rolled:
+						reward_choices.append({
+							"id": card["id"],
+							"element": element,
+							"name": card["name"].to_upper(),
+							"description": "[%s]
+%s" % [card["rarity"].to_upper(), card["description"]],
+							"rarity": card["rarity"],
+							"is_element_card": true
+						})
+				elif config.is_element_reward(promised):
+					reward_choices.append({"id":promised,"name":element.to_upper()+" CORE","description":"Bind %s core
+Q / 25 energy" % element})
+				else:
+					var bonus_text := "+45% (High Rarity)" if trap_buff_active else "+25%"
+					reward_choices.append({"id":promised,"name":element.to_upper()+" UPGRADE","description":"Enhance %s core power
+%s effectiveness" % [element, bonus_text]})
 			elif promised == "trap_room":
 				reward_choices.append({"id":"trap_room","name":"TRAP SURVIVAL CACHE","description":"Upgrade rarity increased for future rewards"})
 			elif promised == "core_xp":
@@ -700,7 +724,7 @@ func _check_clear() -> void:
 				reward_choices.append({"id":"aether_cores","name":"AETHER GEAR","description":"+1 Aether Gear"})
 			elif promised == "cds":
 				var track_id: String = rooms[room_index].get("cd_track", "")
-				var save_slots = get_node_or_null("/root/SaveSlots")
+				var save_slots = _get_save_slots()
 				if track_id.is_empty() and save_slots != null and save_slots.has_method("get_uncollected_cds"):
 					var uncollected: Array[String] = save_slots.get_uncollected_cds(config.biome)
 					if not uncollected.is_empty():
@@ -721,7 +745,14 @@ func _check_clear() -> void:
 		var elements: Array[String] = config.available_elements()
 		if not elements.is_empty():
 			var element: String = elements[rng.randi_range(0, elements.size() - 1)]
-			var effect_text: String = {"fire": "High-damage burst", "water": "Burst + 3s slow", "lightning": "Burst + knockback"}[element]
+			var effect_text: String = {
+				"fire": "High-damage burn & explosion",
+				"water": "Weakening, rust & synergy",
+				"lightning": "Burst, speed & chaining",
+				"ice": "Slowing, freezing & execution",
+				"wind": "Knockback, collision & stuns",
+				"earth": "Heavy defense, constructs & rocks"
+			}.get(element, "Elemental power")
 			reward_choices[0] = {"id": "core_" + element, "name": element.to_upper() + " CORE", "description": "%s\nBind slot %d/%d\nQ / 25 energy" % [effect_text, config.core_elements.size() + 1, config.core_limit]}
 	reward_collected = false
 	door_exit_warned = false
@@ -740,9 +771,24 @@ func choose_reward(id: String) -> bool:
 		return false
 	if config.is_element_reward(id) and not config.pick_element(id.trim_prefix("core_")):
 		return false
-	if config.is_element_reward(id) and room is BLOCKOUT_ROOM and not rooms[room_index].get("final", false):
+	if ElementalCards.has_card(id):
+		var card: Dictionary = ElementalCards.get_card(id)
+		var elem: String = card.get("element", "")
+		if not config.core_elements.has(elem) and config.core_elements.size() < config.core_limit:
+			config.pick_element(elem)
+		if not player_cards.has(id):
+			player_cards.append(id)
+		_apply_elemental_card(id)
+
+	var chosen_element := ""
+	if config.is_element_reward(id):
+		chosen_element = id.trim_prefix("core_")
+	elif ElementalCards.has_card(id):
+		chosen_element = ElementalCards.get_card(id).get("element", "")
+
+	if not chosen_element.is_empty() and room is BLOCKOUT_ROOM and not rooms[room_index].get("final", false):
 		# These previews were built before the player owned the newly collected core.
-		var upgrade := "upgrade_" + id.trim_prefix("core_")
+		var upgrade := "upgrade_" + chosen_element
 		var exits: Array = rooms[room_index].exit_rewards
 		if not exits.is_empty() and not exits.has(upgrade):
 			exits[0] = upgrade
@@ -762,7 +808,7 @@ func choose_reward(id: String) -> bool:
 			health = minf(maximum_health,health+35)
 		"dash": player.set("dash_recharge",maxf(0.3,float(player.get("dash_recharge"))*0.85))
 		"cds":
-			var save_slots = get_node_or_null("/root/SaveSlots")
+			var save_slots = _get_save_slots()
 			var awarded_track: String = rooms[room_index].get("cd_track", "")
 			if awarded_track.is_empty() and save_slots != null and save_slots.has_method("get_uncollected_cds"):
 				var uncollected: Array[String] = save_slots.get_uncollected_cds(config.biome)
@@ -794,6 +840,17 @@ func choose_reward(id: String) -> bool:
 	player.set("controls_enabled",true)
 	hud.modal.hide()
 	return true
+
+func _apply_elemental_card(id: String) -> void:
+	var card: Dictionary = ElementalCards.get_card(id)
+	if card.is_empty():
+		return
+	if is_instance_valid(player):
+		player.set("cards", player_cards)
+		match id:
+			"electric_energy":
+				player.set("charge_speed_mult", 3.0)
+	_player_say("Card Acquired: " + card.get("name", id))
 
 func _award_progress(amount: int, items := 0) -> void:
 	if player.perfect_reward_timer > 0:
@@ -848,6 +905,12 @@ func use_core_power() -> bool:
 				enemy.slow_timer = 3.0
 			elif element == "lightning":
 				enemy.apply_knockback(player.position.direction_to(enemy.position), 90)
+			elif element == "ice":
+				enemy.slow_timer = 3.0
+			elif element == "wind":
+				enemy.apply_knockback(player.position.direction_to(enemy.position), 120, "wind")
+			elif element == "earth":
+				enemy.take_damage(28.0, Vector2.ZERO, 0.0, "earth")
 
 	return true
 

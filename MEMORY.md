@@ -159,6 +159,12 @@ Indexed from left to right, top to bottom:
   - **Multi-Core Attack Damage Separation:** Three-core builds should not automatically deal triple regular attack damage. Additional cores provide extra elemental effects and possible synergies, but regular attack damage remains separate.
   - **Armor Retaliation Cooldown:** Armor retaliation has a 0.5-second cooldown to prevent enemies with rapid attacks from triggering excessive damage.
   - **Elemental Armor Projectile Restriction:** Elemental Armor effects do not work on projectiles. Retaliation damage, reactive procs, and armor defense mechanisms do not activate against or apply to projectile damage.
+  - **Burn Tick Timer Preservation:** Reapplying Burn refreshes its expiration timer but does not reset the tick timer. Otherwise, fast attacks could prevent Burn damage from ever ticking.
+- **Elemental Cards & Drafting System:**
+  - When getting an element as a reward, the player picks from exactly **3 choices** of cards for that element.
+  - **Rarity Weights:** Commons appear more often than Rares, Rares more often than Epics, and Epics more often than Legendaries.
+  - **Prerequisites:** Cards that have prerequisites cannot show up if the player does not possess the prerequisite (e.g., Explosive Fury requires Explosion; Wear and Tear requires Rust; Flash Freeze requires Freeze; Earth Bender and Shotgun require Rock Shot).
+  - **Elements Covered:** Full card suites across Lightning, Fire, Water, Wind, Ice, and Earth (11 cards per element: 4 Common, 3 Rare, 3 Epic, 1 Legendary). Base core effects define fundamental status behavior for each element.
 
 ## Run Setup & Robot Deployment
 

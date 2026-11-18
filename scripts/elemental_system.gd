@@ -35,6 +35,7 @@ static func get_element_color(element: String) -> Color:
 # 2. Elemental Status State per Entity
 class StatusState:
 	var burn_timer: float = 0.0
+	var burn_tick_timer: float = 0.0   # Tick timer: preserved across reapplication
 	var burn_meter: float = 0.0
 	var frost_timer: float = 0.0
 	var frost_meter: float = 0.0
@@ -42,6 +43,8 @@ class StatusState:
 	var wet_timer: float = 0.0
 	var mud_timer: float = 0.0
 	var wind_fanned_timer: float = 0.0 # Wind's 50% Burn damage bonus for 3s (refreshes duration, does not stack)
+	var rust_tick_timer: float = 0.0   # Rust damage tick timer (1s interval)
+	var rust_consecutive_ticks: int = 0 # Wear and Tear stacking (+3 per tick up to 32)
 	var cc_resistance: float = 0.0     # Boss diminishing returns on hard CC
 	var is_boss: bool = false
 	var last_reaction: String = ""
@@ -97,20 +100,30 @@ class StatusState:
 		return true
 
 	func update(delta: float) -> void:
-		burn_timer = maxf(0.0, burn_timer - delta)
+		if burn_timer > 0.0:
+			burn_timer = maxf(0.0, burn_timer - delta)
+			burn_tick_timer = maxf(0.0, burn_tick_timer - delta)
+			if burn_timer <= 0.0:
+				burn_meter = 0.0
+				burn_tick_timer = 0.0
+				wind_fanned_timer = 0.0
+		
 		frost_timer = maxf(0.0, frost_timer - delta)
 		frozen_timer = maxf(0.0, frozen_timer - delta)
-		wet_timer = maxf(0.0, wet_timer - delta)
+		
+		if wet_timer > 0.0:
+			wet_timer = maxf(0.0, wet_timer - delta)
+			rust_tick_timer = maxf(0.0, rust_tick_timer - delta)
+			if wet_timer <= 0.0:
+				rust_consecutive_ticks = 0
+				rust_tick_timer = 0.0
+		
 		mud_timer = maxf(0.0, mud_timer - delta)
 		wind_fanned_timer = maxf(0.0, wind_fanned_timer - delta)
 		armor_retaliation_cooldown = maxf(0.0, armor_retaliation_cooldown - delta)
 		if is_boss and cc_resistance > 0.0:
 			cc_resistance = maxf(0.0, cc_resistance - delta * 0.1)
 		
-		# If burn ends, meter resets
-		if burn_timer <= 0.0:
-			burn_meter = 0.0
-			wind_fanned_timer = 0.0
 		# If frost ends and not frozen, frost meter resets
 		if frost_timer <= 0.0 and frozen_timer <= 0.0:
 			frost_meter = 0.0
@@ -175,12 +188,16 @@ static func apply_burn(state: StatusState, duration := 4.0, buildup := 25.0, is_
 		state.frost_meter = 0.0
 		state.frozen_timer = 0.0
 		state.burn_timer = 0.0
+		state.burn_tick_timer = 0.0
 		state.burn_meter = 0.0
 		state.wet_timer = 4.0
 		state.last_reaction = "vaporize_wet"
 		return {"applied": true, "reaction": "vaporize_wet", "result": "wet"}
 	
-	# Reapplying Burn resets its duration instead of adding time
+	# Important: Reapplying Burn refreshes its expiration timer but does not reset the tick timer.
+	# Otherwise, fast attacks could prevent Burn damage from ever ticking.
+	if state.burn_timer <= 0.0:
+		state.burn_tick_timer = 1.0 # First application sets initial tick timer
 	state.burn_timer = duration
 	
 	# Burn meter can only increase from qualifying elemental applications.
@@ -201,11 +218,12 @@ static func apply_burn(state: StatusState, duration := 4.0, buildup := 25.0, is_
 	state.last_reaction = "burn"
 	return {"applied": true, "reaction": "burn"}
 
-static func apply_frost(state: StatusState, duration := 4.0, buildup := 25.0, is_qualifying := true, is_dot := false, is_secondary := false, attack_id := "", current_time := 0.0, attack_interval := 0.25) -> Dictionary:
+static func apply_frost(state: StatusState, duration := 4.0, buildup := 25.0, is_qualifying := true, is_dot := false, is_secondary := false, attack_id := "", current_time := 0.0, attack_interval := 0.25, has_flash_freeze := false) -> Dictionary:
 	# Applying Frost to a burning enemy cancels both statuses and applies Wet
 	# Enemies cannot be under frost or frozen status while under burn
 	if state.is_burning():
 		state.burn_timer = 0.0
+		state.burn_tick_timer = 0.0
 		state.burn_meter = 0.0
 		state.wind_fanned_timer = 0.0
 		state.frost_timer = 0.0
@@ -236,12 +254,16 @@ static func apply_frost(state: StatusState, duration := 4.0, buildup := 25.0, is
 		# Freeze Meter cannot rise above 100. When freezing occurs, meter resets to zero
 		if state.frost_meter >= 100.0:
 			state.frost_meter = 0.0
-			var freeze_dur := duration
 			if state.is_boss:
-				# Bosses cannot be permanently stunned, frozen, or trapped.
-				# Repeated hard crowd control grants temporary resistance
-				freeze_dur *= maxf(0.2, 1.0 - state.cc_resistance)
-				state.cc_resistance = minf(0.8, state.cc_resistance + 0.3)
+				# Bosses take 80 Ice damage when their Freeze meter reaches 100 instead of freezing.
+				# Flash Freeze increases to 160. Against Wet bosses, 160 -> 240 (or 80 -> 120).
+				var base_boss_burst := 160.0 if has_flash_freeze else 80.0
+				if state.is_wet():
+					base_boss_burst *= 1.5
+				state.last_reaction = "boss_freeze_damage"
+				return {"applied": true, "reaction": "boss_freeze_damage", "boss_damage": base_boss_burst}
+			
+			var freeze_dur := duration
 			state.frozen_timer = freeze_dur
 			state.last_reaction = "freeze"
 			return {"applied": true, "reaction": "freeze"}
@@ -253,11 +275,14 @@ static func apply_wet(state: StatusState, duration := 4.0) -> Dictionary:
 	# Applying Wet to a burning enemy extinguishes Burn and resets its Burn meter to zero
 	if state.is_burning():
 		state.burn_timer = 0.0
+		state.burn_tick_timer = 0.0
 		state.burn_meter = 0.0
 		state.wind_fanned_timer = 0.0
 	
 	# Reapplying Wet resets its duration instead of adding time
 	state.wet_timer = duration
+	state.last_reaction = "wet"
+	return {"applied": true, "reaction": "wet"}
 	state.last_reaction = "wet"
 	return {"applied": true, "reaction": "wet"}
 
