@@ -13,6 +13,7 @@ var portrait: Polygon2D
 var speaker: Label
 var dialogue_text: Label
 var next_button: Button
+var current_portrait_id := ""
 
 func _ready() -> void:
 	layer = 30
@@ -52,7 +53,7 @@ func _ready() -> void:
 	text_box.add_child(next_button)
 	screen.hide()
 
-func open(id: String, actor: CharacterBody2D) -> void:
+func open(id: String, actor: CharacterBody2D, custom_lines: Array = []) -> void:
 	if active:
 		return
 	npc_id = id
@@ -60,24 +61,52 @@ func open(id: String, actor: CharacterBody2D) -> void:
 	restore_controls = player.controls_enabled
 	player.controls_enabled = false
 	player.velocity = Vector2.ZERO
-	player.visual.play("idle")
-	lines = CATALOG.NPCS[id].lines
+	if player.get("visual") != null and player.visual.has_method("play"):
+		player.visual.play("idle")
+	if custom_lines.size() > 0:
+		lines = custom_lines
+	else:
+		lines = CATALOG.get_lines(id)
 	line_index = 0
-	if is_instance_valid(portrait):
-		portrait.queue_free()
-	portrait = CATALOG.visual(id,true)
-	portrait.scale = Vector2.ONE * 0.46
-	portrait.position = Vector2(-200,180)
-	screen.add_child(portrait)
-	speaker.text = CATALOG.NPCS[id].name.to_upper()
+	current_portrait_id = ""
 	active = true
 	screen.show()
 	_refresh()
 	next_button.grab_focus()
 
 func _refresh() -> void:
-	dialogue_text.text = lines[line_index]
-	next_button.text = "Continue [E]" if line_index < lines.size()-1 else "Leave [E]"
+	if line_index < 0 or line_index >= lines.size():
+		return
+	var item = lines[line_index]
+	var text_content := ""
+	var speaker_name := ""
+	var portrait_id := npc_id
+	
+	if item is Dictionary:
+		text_content = str(item.get("text", ""))
+		speaker_name = str(item.get("speaker", CATALOG.NPCS[npc_id].name if CATALOG.NPCS.has(npc_id) else npc_id)).to_upper()
+		portrait_id = str(item.get("portrait", npc_id))
+	else:
+		text_content = str(item)
+		speaker_name = CATALOG.NPCS[npc_id].name.to_upper() if CATALOG.NPCS.has(npc_id) else npc_id.to_upper()
+		portrait_id = npc_id
+	
+	dialogue_text.text = text_content
+	speaker.text = speaker_name
+	
+	if portrait_id != current_portrait_id or not is_instance_valid(portrait):
+		if is_instance_valid(portrait):
+			portrait.queue_free()
+		if CATALOG.NPCS.has(portrait_id):
+			portrait = CATALOG.visual(portrait_id, true)
+			portrait.scale = Vector2.ONE * 0.46
+			portrait.position = Vector2(-200, 180)
+			screen.add_child(portrait)
+			current_portrait_id = portrait_id
+		else:
+			current_portrait_id = ""
+	
+	next_button.text = "Continue [E]" if line_index < lines.size() - 1 else "Leave [E]"
 
 func advance() -> void:
 	if not active:
@@ -93,6 +122,10 @@ func close() -> void:
 		return
 	active = false
 	screen.hide()
+	current_portrait_id = ""
+	if is_instance_valid(portrait):
+		portrait.queue_free()
+		portrait = null
 	if is_instance_valid(player):
 		player.controls_enabled = restore_controls
 	closed.emit()

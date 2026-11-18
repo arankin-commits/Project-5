@@ -85,8 +85,16 @@ func _build_interactions() -> void:
 func open_run_setup() -> void:
 	if returning:
 		return
+	var config = get_node_or_null("/root/RunConfig")
+	if config != null and config.has_method("is_sync_machine_locked") and config.is_sync_machine_locked():
+		_show_handler_sync_blocked()
+		return
 	player.set("controls_enabled", false)
 	run_setup.call("open_setup")
+
+func _show_handler_sync_blocked() -> void:
+	if npc_controller != null and npc_controller.dialogue != null:
+		npc_controller.dialogue.open("handler", player)
 
 func _on_setup_closed() -> void:
 	player.set("controls_enabled", not returning)

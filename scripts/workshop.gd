@@ -66,6 +66,9 @@ func _build_interactions() -> void:
 	interactables.append(station)
 
 func open_core_terminal() -> void:
+	var config = get_node_or_null("/root/RunConfig")
+	if config != null and config.has_method("mark_skill_tree_opened"):
+		config.mark_skill_tree_opened()
 	player.set("controls_enabled", false)
 	core_terminal.call("open_terminal")
 

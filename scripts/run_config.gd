@@ -28,6 +28,8 @@ var active := false
 var run_seed := 0
 var best_room := 0
 var victories := 0
+var runs_completed := 0
+var skill_tree_opened_after_run := false
 var sync_return_pending := false
 const ELEMENTS := ["fire", "water", "lightning", "ice", "wind", "earth"]
 var core_elements: Array = []
@@ -64,11 +66,96 @@ func next_biome() -> String:
 func end_run() -> void:
 	if active:
 		get_node("/root/ShipCrew").returned_from_run()
+	runs_completed += 1
 	active = false
 	sync_return_pending = true
 	trap_buff_active = false
 	shop_rewards_count = 0
 	get_node("/root/SaveSlots").save_current()
+
+func get_runs_completed() -> int:
+	var crew = get_node_or_null("/root/ShipCrew")
+	var crew_returns: int = crew.return_count if crew != null else 0
+	return maxi(runs_completed, crew_returns)
+
+func is_sync_machine_locked() -> bool:
+	return get_runs_completed() >= 1 and not skill_tree_opened_after_run
+
+func mark_skill_tree_opened() -> void:
+	if not skill_tree_opened_after_run:
+		skill_tree_opened_after_run = true
+		var saves = get_node_or_null("/root/SaveSlots")
+		if saves != null and saves.has_method("save_current"):
+			saves.save_current()
+
+func get_npc_dialogue(npc_id: String) -> Array:
+	if is_sync_machine_locked():
+		match npc_id:
+			"handler":
+				return [
+					{
+						"speaker": "HANDLER",
+						"portrait": "handler",
+						"text": "What are you doing? You know the machine has to recharge before you can use it again. You should go relax; we need you at your best when you sync up. The eccentric one needed you for something. Why don’t you go talk to her?"
+					}
+				]
+			"mechanic":
+				return [
+					{
+						"speaker": "MECHANIC",
+						"portrait": "mechanic",
+						"text": "Heya Josh. May’s been bugging me all day about this machine of hers; why don’t you go talk to her?"
+					}
+				]
+			"engineer":
+				return [
+					{
+						"speaker": "ENGINEER",
+						"portrait": "engineer",
+						"text": "Why hello there, my fellow bipedal primate, I have used my grand ingenuity to create that machine in the middle of the room. What machine, you ask? The large one in front of your face. Well, pray tell, what does it do? I’m glad you asked, my meat-headed companion; this machine is able to strengthen the core of your combat robots. All you need to do is fight, and this puppy’ll do the rest. Through an automated telemetry acquisition system, it continuously receives, processes, and analyzes combat data transmitted from your robot, cataloging everything from energy consumption and elemental output to combat efficiency and core performance. Using advanced adaptive algorithms, it identifies structural inefficiencies…"
+					},
+					{
+						"speaker": "JOSH",
+						"portrait": "josh",
+						"text": "As much as I would love to hear more about the.. Intricacies of this machine of yours, how about we keep it short?"
+					},
+					{
+						"speaker": "ENGINEER",
+						"portrait": "engineer",
+						"text": "Fine. Do fight. Get strong. Was that short enough?"
+					},
+					{
+						"speaker": "JOSH",
+						"portrait": "josh",
+						"text": "Very funny. I’ll listen to the whole rundown later. Just give the synopsis."
+					},
+					{
+						"speaker": "ENGINEER",
+						"portrait": "engineer",
+						"text": "Basically, the power you siphon from enemies can be used to strengthen your robot cores; it’s easier shown than told. Why don’t you walk over there and test it out?"
+					}
+				]
+	elif skill_tree_opened_after_run:
+		match npc_id:
+			"engineer":
+				return [
+					{
+						"speaker": "ENGINEER",
+						"portrait": "engineer",
+						"text": "Sooooooooo what you’d think? Impressive right. Genius even."
+					},
+					{
+						"speaker": "JOSH",
+						"portrait": "josh",
+						"text": "Yeah, I gotta admit it’s impressive. This’ll be a big help, thanks."
+					},
+					{
+						"speaker": "ENGINEER",
+						"portrait": "engineer",
+						"text": "No problem, just make sure to find some aether cores or, even better, some Lancrest blueprints. Oh, if only he wasn’t so evil."
+					}
+				]
+	return []
 
 func consume_sync_return() -> bool:
 	var pending := sync_return_pending

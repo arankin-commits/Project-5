@@ -206,6 +206,8 @@ func delete_slot(slot: int) -> Error:
 			config.active = false
 			config.sync_return_pending = false
 			config.core_elements.clear()
+			config.runs_completed = 0
+			config.skill_tree_opened_after_run = false
 		var crew = get_node_or_null("/root/ShipCrew")
 		if crew != null:
 			crew.return_count = 0
@@ -242,6 +244,9 @@ func select_slot(slot: int) -> Error:
 	config.core_elements.clear()
 	crew.return_count = int(data.get_value("ship", "returns", 0))
 	crew.cockpit_layout = data.get_value("ship", "crew", crew.COCKPIT_LAYOUTS[0]).duplicate()
+	config.runs_completed = int(data.get_value("ship", "runs_completed", crew.return_count))
+	var default_tree_unlocked: bool = (progress.unlocked_skills.size() > 1)
+	config.skill_tree_opened_after_run = bool(data.get_value("ship", "skill_tree_opened_after_run", default_tree_unlocked))
 	progress.changed.emit()
 	return save_current()
 
@@ -263,4 +268,6 @@ func save_current() -> Error:
 	data.set_value("ship", "returns", crew.return_count)
 	data.set_value("ship", "crew", crew.cockpit_layout)
 	data.set_value("ship", "collected_cds", collected_cds)
+	data.set_value("ship", "runs_completed", config.runs_completed)
+	data.set_value("ship", "skill_tree_opened_after_run", config.skill_tree_opened_after_run)
 	return data.save(path(active_slot))

@@ -17,6 +17,9 @@ func _ready() -> void:
 	visible = false
 
 func open_terminal() -> void:
+	var config = get_node_or_null("/root/RunConfig")
+	if config != null and config.has_method("mark_skill_tree_opened"):
+		config.mark_skill_tree_opened()
 	_refresh()
 	visible = true
 

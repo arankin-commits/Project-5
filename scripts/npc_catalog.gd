@@ -12,8 +12,20 @@ const NPCS := {
 	"engineer": {"name":"Engineer", "file":"engineer", "anchor":Vector2(250,980), "scale":0.16, "split":[Vector2(470,0),Vector2(470,530),Vector2(390,680),Vector2(390,1086)], "lines":["Every system has a weak point. My job is to find ours before someone else does.", "The skill terminal is ready. Bring back salvage and we can make your next run better."]},
 	"mechanic": {"name":"Mechanic", "file":"Mechanic", "anchor":Vector2(230,980), "scale":0.15, "key_black":true, "split":[Vector2(420,0),Vector2(420,540),Vector2(395,1086)], "lines":["Something rattling? Bring it here. If it is not rattling, I can probably improve it anyway.", "Leave the heavy lifting to me. You concentrate on making it back."]},
 	"cyber_security": {"name":"Cyber Security Analyst", "file":"Cyber Security", "anchor":Vector2(230,1025), "scale":0.13, "split":[Vector2(430,0),Vector2(430,730),Vector2(365,900),Vector2(365,1086)], "lines":["The ship's network is secure."]},
-	"info_broker": {"name":"Info Broker", "file":"Info Broker", "anchor":Vector2(235,845), "scale":0.15, "split":[Vector2(460,0),Vector2(460,1086)], "lines":["Information has a way of finding its audience."]}
+	"info_broker": {"name":"Info Broker", "file":"Info Broker", "anchor":Vector2(235,845), "scale":0.15, "split":[Vector2(460,0),Vector2(460,1086)], "lines":["Information has a way of finding its audience."]},
+	"josh": {"name":"Josh", "file":"res://characters/MC/Main Character.png", "anchor":Vector2(205,965), "scale":0.13, "split":[Vector2(450,0),Vector2(450,1086)]},
+	"main_character": {"name":"Josh", "file":"res://characters/MC/Main Character.png", "anchor":Vector2(205,965), "scale":0.13, "split":[Vector2(450,0),Vector2(450,1086)]}
 }
+
+static func get_lines(id: String) -> Array:
+	var tree = Engine.get_main_loop() as SceneTree
+	if tree != null and tree.root != null:
+		var config = tree.root.get_node_or_null("RunConfig")
+		if config != null and config.has_method("get_npc_dialogue"):
+			var custom: Array = config.get_npc_dialogue(id)
+			if custom.size() > 0:
+				return custom
+	return NPCS[id].lines if NPCS.has(id) and NPCS[id].has("lines") else []
 
 static func visual(id: String, portrait := false) -> Polygon2D:
 	var data: Dictionary = NPCS[id]
@@ -29,7 +41,10 @@ static func visual(id: String, portrait := false) -> Polygon2D:
 			points.append(point)
 		points.append(Vector2(0,1086))
 	var art := Polygon2D.new()
-	art.texture = load("res://characters/NPCS/" + data.file + ".png")
+	var file_path: String = str(data.file)
+	if not file_path.begins_with("res://"):
+		file_path = "res://characters/NPCS/" + file_path + ".png"
+	art.texture = load(file_path)
 	art.polygon = points
 	art.uv = points
 	art.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
