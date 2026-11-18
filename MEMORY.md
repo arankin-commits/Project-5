@@ -182,6 +182,14 @@ Indexed from left to right, top to bottom:
 - **Base Player Health:** The base maximum health of the player (Medium Robot) is 50 (`RunConfig.max_health() == 50`, `RoguelikeRun.maximum_health == 50.0`).
 - **HP Reward Scaling & Healing:** The HP reward (`"max_hp_increase"` and `"hull"`) increases player maximum health by 25 (`maximum_health += 25`) and simultaneously heals 25 health (`health = minf(maximum_health, health + 25)`).
 
+## Enemy Speeds & Scaling by Size Category
+
+- **Tiny Enemies:** 25% faster than the medium robot speed (`265.0 * 1.25 = 331.25` px/s; `12.740385` movement units in `data/enemies/industrial.json`).
+- **Small Enemies:** 15% faster than the medium robot speed (`265.0 * 1.15 = 304.75` px/s; `11.721154` movement units in `data/enemies/industrial.json`).
+- **Medium Enemies:** Same speed as the medium robot speed (`265.0` px/s; `10.192308` movement units in `data/enemies/industrial.json`).
+- **Large Enemies:** Same speed as the heavy robot (`265.0 * 0.7 = 185.5` px/s; `7.134615` movement units in `data/enemies/industrial.json`).
+- **Difficulty & Modifiers:** Overclocked enemy difficulty modifier (+25% speed) multiplies size-based speed accordingly (`speed = get_base_enemy_speed_by_size(size) * (enemy_speed() / 104.0)`). Generic enemy kinds follow their sizes: crawler is Medium (265.0 px/s), brute and boss are Large (185.5 px/s), and sentry is stationary (0.0 px/s).
+
 ## Save File Management
 
 - **Save Deletion:** Non-empty save slots display a "Delete" button styled in crimson warning colors alongside the "Continue" button on the Save Selection screen.

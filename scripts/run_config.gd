@@ -101,5 +101,27 @@ func pick_element(element: String) -> bool:
 func enemy_count() -> int:
 	return 5 if modifiers["reinforcements"] else 3
 
+const BASE_MEDIUM_ROBOT_SPEED := 265.0
+
 func enemy_speed() -> float:
 	return 130.0 if modifiers["overclocked_enemies"] else 104.0
+
+func get_base_enemy_speed_by_size(size_category: String) -> float:
+	var base_medium := BASE_MEDIUM_ROBOT_SPEED
+	var heavy_speed := base_medium * ROBOT_STATS["heavy"]["speed"]
+	match size_category.to_lower().strip_edges():
+		"tiny":
+			return base_medium * 1.25
+		"small":
+			return base_medium * 1.15
+		"medium":
+			return base_medium
+		"large":
+			return heavy_speed
+		_:
+			return base_medium
+
+func get_enemy_speed_by_size(size_category: String) -> float:
+	var base_spd := get_base_enemy_speed_by_size(size_category)
+	var mult: float = (enemy_speed() / 104.0)
+	return base_spd * mult

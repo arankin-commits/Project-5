@@ -356,7 +356,8 @@ func _spawn_trap_wave() -> void:
 		enemy.position = points[i] if i < points.size() else player.position + Vector2(200, 0)
 		enemy.room = room
 		enemy.target = player
-		enemy.speed = config.call("enemy_speed")
+		var spawn_size: String = str(enemy_designs[kinds[i]].get("size", "Medium")) if enemy_designs.has(kinds[i]) else ("Large" if kinds[i] in ["boss", "brute"] else "Medium")
+		enemy.speed = config.get_enemy_speed_by_size(spawn_size)
 		enemy.cooldown = 1.4 + i * 0.2
 		if enemy is INDUSTRIAL_ENEMY:
 			enemy.design = enemy_designs[kind]
@@ -471,7 +472,8 @@ func _spawn_wave() -> void:
 			boss = enemy
 		enemy.target = player
 		enemy.room = room
-		enemy.speed = config.call("enemy_speed")
+		var spawn_size: String = str(enemy_designs[kinds[i]].get("size", "Medium")) if enemy_designs.has(kinds[i]) else ("Large" if kinds[i] in ["boss", "brute"] else "Medium")
+		enemy.speed = config.get_enemy_speed_by_size(spawn_size)
 		enemy.cooldown = 1.4 + i*0.2
 		enemy.defeated.connect(_on_enemy_defeated)
 		if not enemy.damaged.is_connected(_on_enemy_damaged):

@@ -11,6 +11,10 @@ func check(ok: bool, message: String) -> void:
 		push_error(message)
 
 func _run() -> void:
+	var progression = root.get_node("CoreProgression")
+	var saved_skills: Array[String] = progression.unlocked_skills.duplicate()
+	progression.unlocked_skills.clear()
+	progression.unlocked_skills.append("root")
 	var config = root.get_node("RunConfig")
 	var expected := {"heavy": [185.5, 75, 1.3, 2.0], "light": [331.25, 30, 0.7, 6.0], "medium": [265.0, 50, 1.0, 2.0]}
 	for kind in expected:
@@ -25,10 +29,16 @@ func _run() -> void:
 		check(is_equal_approx(run.player.damage_multiplier, stats[2]), kind + " damage")
 		check(run.player.backstab_multiplier == stats[3], kind + " backstab")
 		run.room.hazards_enabled = false
-		for foe in run.enemies.get_children():
-			foe.active = false
+		run.state = "combat"
 		var enemy = run.enemies.get_child(0)
-		run.player.position = preload("res://scripts/boiler_space.gd").project(Vector2(730,730))
+		enemy.collision_mask = 0
+		for foe in run.enemies.get_children():
+			if foe != enemy:
+				foe.queue_free()
+			else:
+				foe.active = false
+		await process_frame
+		run.player.position = run.room.spawn_position
 		for rear in [false, true]:
 			for heavy in [false, true]:
 				enemy.position = run.player.position + Vector2(70,0)
@@ -46,5 +56,7 @@ func _run() -> void:
 		run.queue_free()
 		await process_frame
 		current_scene = null
+	progression.unlocked_skills.clear()
+	progression.unlocked_skills.append_array(saved_skills)
 	print("ROBOT_STATS_FAILURES=", failures)
 	quit(1 if failures else 0)

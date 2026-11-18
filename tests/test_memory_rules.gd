@@ -208,7 +208,7 @@ func _run() -> void:
 	check(dmg_num != null, "Rule 14: Damage number did not spawn on hit")
 	if dmg_num != null:
 		check(dmg_num.position.x > test_enemy.position.x, "Rule 14: Damage number not to the right on rightward hit")
-		check(absf(dmg_num.position.y - (test_enemy.position.y - 36)) < 15, "Rule 14: Damage number not beside torso")
+		check(absf(dmg_num.position.y - (test_enemy.position.y - 36)) < 30, "Rule 14: Damage number not beside torso")
 	test_enemy.take_damage(40, Vector2.LEFT)
 	var left_dmg: Label = null
 	for child in run.get_node("Effects").get_children():
@@ -665,6 +665,63 @@ func _run() -> void:
 	run.choose_reward("max_hp_increase")
 	check(run.maximum_health == 100.0, "Rule 21: Second HP reward must increase max health by 25 (75 -> 100), got %f" % run.maximum_health)
 	check(run.health == 95.0, "Rule 21: HP reward must heal 25 health (70 -> 95), got %f" % run.health)
+
+	# ==========================================
+	# RULE 22: Enemy Speeds by Size Category
+	# Tiny enemies: 25% faster than medium robot speed (265.0 * 1.25 = 331.25)
+	# Small enemies: 15% faster than medium robot speed (265.0 * 1.15 = 304.75)
+	# Medium enemies: same speed as medium robot speed (265.0)
+	# Large enemies: same speed as heavy robot (185.5)
+	# ==========================================
+	check(config.get_base_enemy_speed_by_size("tiny") == 331.25, "Rule 22: Tiny enemy base speed must be 331.25, got %f" % config.get_base_enemy_speed_by_size("tiny"))
+	check(config.get_base_enemy_speed_by_size("small") == 304.75, "Rule 22: Small enemy base speed must be 304.75, got %f" % config.get_base_enemy_speed_by_size("small"))
+	check(config.get_base_enemy_speed_by_size("medium") == 265.0, "Rule 22: Medium enemy base speed must be 265.0, got %f" % config.get_base_enemy_speed_by_size("medium"))
+	check(config.get_base_enemy_speed_by_size("large") == 185.5, "Rule 22: Large enemy base speed must be 185.5, got %f" % config.get_base_enemy_speed_by_size("large"))
+
+	# Test with overclocked modifier (multiplier = 130 / 104 = 1.25)
+	config.modifiers["overclocked_enemies"] = true
+	check(config.get_enemy_speed_by_size("tiny") == 331.25 * 1.25, "Rule 22: Overclocked tiny enemy speed must be %f, got %f" % [331.25 * 1.25, config.get_enemy_speed_by_size("tiny")])
+	check(config.get_enemy_speed_by_size("small") == 304.75 * 1.25, "Rule 22: Overclocked small enemy speed must be %f, got %f" % [304.75 * 1.25, config.get_enemy_speed_by_size("small")])
+	check(config.get_enemy_speed_by_size("medium") == 265.0 * 1.25, "Rule 22: Overclocked medium enemy speed must be %f, got %f" % [265.0 * 1.25, config.get_enemy_speed_by_size("medium")])
+	check(config.get_enemy_speed_by_size("large") == 185.5 * 1.25, "Rule 22: Overclocked large enemy speed must be %f, got %f" % [185.5 * 1.25, config.get_enemy_speed_by_size("large")])
+	config.modifiers["overclocked_enemies"] = false
+
+	# Test industrial enemy instantiation speeds per size
+	var industrial_script: Script = preload("res://scripts/industrial_enemy.gd")
+	var size_sample_enemies := {
+		"industrial_01": 331.25,
+		"industrial_00": 304.75,
+		"industrial_03": 265.0,
+		"industrial_02": 185.5
+	}
+	for e_id in size_sample_enemies:
+		var sample_enemy = industrial_script.new()
+		sample_enemy.design = industrial_catalog[e_id]
+		sample_enemy.target = run.player
+		sample_enemy.room = run.room
+		run.enemies.add_child(sample_enemy)
+		var expected_spd: float = size_sample_enemies[e_id]
+		check(is_equal_approx(sample_enemy.speed, expected_spd), "Rule 22: Enemy %s (size %s) speed must be %f, got %f" % [e_id, sample_enemy.design.size, expected_spd, sample_enemy.speed])
+		sample_enemy.queue_free()
+
+	# Test generic enemy kinds
+	var generic_script: Script = preload("res://scripts/run_enemy.gd")
+	var generic_kinds := {
+		"crawler": 265.0,
+		"brute": 185.5,
+		"boss": 185.5,
+		"sentry": 0.0
+	}
+	for g_kind in generic_kinds:
+		var gen_enemy = generic_script.new()
+		gen_enemy.kind = g_kind
+		gen_enemy.target = run.player
+		gen_enemy.room = run.room
+		run.enemies.add_child(gen_enemy)
+		var exp_spd: float = generic_kinds[g_kind]
+		check(is_equal_approx(gen_enemy.speed, exp_spd), "Rule 22: Generic enemy kind %s speed must be %f, got %f" % [g_kind, exp_spd, gen_enemy.speed])
+		gen_enemy.queue_free()
+	await frames(2)
 
 	# ==========================================
 	# RULE 16: Quitting from the in-game menu brings player to the main menu

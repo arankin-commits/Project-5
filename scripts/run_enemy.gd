@@ -34,6 +34,7 @@ var visual: Sprite2D
 var custom_attack_warning := false
 var is_in_knockback := false
 var is_dead := false
+var enemy_size := "Medium"
 var elemental_state := ElementalSystem.StatusState.new()
 
 func _init() -> void:
@@ -49,18 +50,34 @@ func _ready() -> void:
 		cell = 4
 		size = 0.28
 		health = 75
-		speed = 0
+		speed = 0.0
+		enemy_size = "Medium"
 	elif kind == "brute":
 		size = 0.34
 		health = 145
 		damage = 18
-		speed *= 0.7
+		enemy_size = "Large"
 	elif kind == "boss":
 		cell = 5
 		size = 0.59
 		health = 1250
 		damage = 22
-		speed *= 0.65
+		enemy_size = "Large"
+	else:
+		enemy_size = "Medium"
+
+	var config = get_node_or_null("/root/RunConfig")
+	if kind == "sentry":
+		speed = 0.0
+	elif config != null and config.has_method("get_enemy_speed_by_size"):
+		speed = config.get_enemy_speed_by_size(enemy_size)
+	else:
+		match enemy_size.to_lower():
+			"tiny": speed = 331.25
+			"small": speed = 304.75
+			"medium": speed = 265.0
+			"large": speed = 185.5
+			_: speed = 265.0
 	max_health = health
 	elemental_state.is_boss = (kind == "boss")
 	var shape := CircleShape2D.new()

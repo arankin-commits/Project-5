@@ -38,8 +38,19 @@ func _ready() -> void:
 	moves = ability_catalog["industrial_%02d" % int(design.id)]
 	health = float(design.hp)
 	max_health = health
-	# Source movement units map to 26 game pixels; retain difficulty modifiers.
-	speed = float(design.speed)*26.0*(get_node("/root/RunConfig").enemy_speed()/104.0)
+	# Enemy speed is determined by size category relative to robot speeds.
+	var config = get_node_or_null("/root/RunConfig")
+	var size_str: String = str(design.get("size", "Medium"))
+	enemy_size = size_str
+	if config != null and config.has_method("get_enemy_speed_by_size"):
+		speed = config.get_enemy_speed_by_size(size_str)
+	else:
+		match size_str.to_lower().strip_edges():
+			"tiny": speed = 331.25
+			"small": speed = 304.75
+			"medium": speed = 265.0
+			"large": speed = 185.5
+			_: speed = 265.0
 	damage = float(design.get("contact_damage",maxi(4,int(design.danger)*4)))
 	visual.texture = load(design.texture)
 	visual.hframes = 8
@@ -321,7 +332,7 @@ func _update_animation(delta: float) -> void:
 			queue_free()
 
 func take_damage(amount: float, knockback: Vector2 = Vector2.ZERO, push_distance := 12.0, element := "regular", knockback_source := "regular") -> void:
-	if health <= 0 or dying or not active:
+	if health <= 0 or dying or is_dead:
 		return
 	# Ground hazards and radial core damage have no incoming direction.
 	if guard_timer > 0 and knockback.length_squared() > 0:

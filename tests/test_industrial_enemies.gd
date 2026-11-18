@@ -42,7 +42,8 @@ func _run() -> void:
 		enemy.position = run.room.spawn_position
 		run.enemies.add_child(enemy)
 		check(enemy.health == float(catalog[key].hp),"Wrong health: "+key)
-		check(is_equal_approx(enemy.speed,float(catalog[key].speed)*26),"Wrong speed: "+key)
+		check(is_equal_approx(enemy.speed, float(catalog[key].speed) * 26.0), "Wrong speed: " + key)
+		check(is_equal_approx(enemy.speed, config.get_enemy_speed_by_size(str(catalog[key].get("size", "Medium")))), "Wrong speed by size: " + key)
 		check(enemy.visual.texture != null and enemy.visual.texture.get_size() == Vector2(1024,2048),"Invalid animation atlas: "+key)
 		var directions := {}
 		for angle in 8:
