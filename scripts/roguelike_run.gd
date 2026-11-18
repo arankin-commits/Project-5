@@ -2,6 +2,7 @@ extends Node2D
 
 const ENEMY := preload("res://scripts/run_enemy.gd")
 const INDUSTRIAL_ENEMY := preload("res://scripts/industrial_enemy.gd")
+const BIOME_BOSS := preload("res://scripts/biome_boss.gd")
 const ROOM := preload("res://scripts/boiler_room.gd")
 const MAINTENANCE_ROOM := preload("res://scripts/maintenance_room.gd")
 const BLOCKOUT_ROOM := preload("res://scripts/blockout_room.gd")
@@ -150,7 +151,7 @@ func _prepare_biome() -> void:
 		elif config.biome == "maintenance" and i+1 < rooms.size():
 			var reward_id: String = str(rooms[i+1].get("reward", "repair"))
 			var reward_text: String = BLOCKOUT_ROOM.REWARD_TEXT.get(reward_id, "+25 MAX HULL / REPAIR 25")
-			rooms[i]["next_preview"] = ("BOSS: MAINTENANCE GUARDIAN" if rooms[i+1].get("boss",false) else "NEXT: " + str(rooms[i+1].name).to_upper()) + "\n" + reward_text
+			rooms[i]["next_preview"] = (("BOSS: " + str(rooms[i+1].get("boss_name", "OVERSEER SERAPH"))) if rooms[i+1].get("boss",false) else "NEXT: " + str(rooms[i+1].name).to_upper()) + "\n" + reward_text
 
 func _complete_biome() -> void:
 	var next: String = config.next_biome()
@@ -507,17 +508,25 @@ func _spawn_wave() -> void:
 	var points: Array[Vector2] = room.call("safe_spawns",kinds.size(),rng)
 	living_enemies = kinds.size()
 	for i in kinds.size():
-		var enemy = INDUSTRIAL_ENEMY.new() if enemy_designs.has(kinds[i]) else ENEMY.new()
-		if enemy_designs.has(kinds[i]):
+		var is_boss: bool = (kinds[i] == "boss")
+		var enemy
+		if is_boss:
+			enemy = BIOME_BOSS.new()
+			enemy.configure_boss(config.biome)
+		elif enemy_designs.has(kinds[i]):
+			enemy = INDUSTRIAL_ENEMY.new()
 			enemy.design = enemy_designs[kinds[i]]
 			enemy.summon_requested.connect(_spawn_summons)
+		else:
+			enemy = ENEMY.new()
 		enemy.kind = kinds[i]
 		enemy.position = points[i]
-		if kinds[i] == "boss":
+		if is_boss:
 			if not room is MAINTENANCE_ROOM:
 				enemy.position = Space.project(Vector2(380,380))
-			enemy.display_name = rooms[room_index].get("boss_name","FURNACE WARDEN")
 			boss = enemy
+			if enemy.has_signal("summon_requested"):
+				enemy.summon_requested.connect(_spawn_summons)
 		enemy.target = player
 		enemy.room = room
 		var spawn_size: String = str(enemy_designs[kinds[i]].get("size", "Medium")) if enemy_designs.has(kinds[i]) else ("Large" if kinds[i] in ["boss", "brute"] else "Medium")
@@ -529,7 +538,7 @@ func _spawn_wave() -> void:
 		enemy.projectile_requested.connect(_spawn_projectile)
 		enemy.impact_requested.connect(_on_impact)
 		enemies.add_child(enemy)
-		if not (enemy is INDUSTRIAL_ENEMY):
+		if not (enemy is INDUSTRIAL_ENEMY) and not is_boss:
 			if config.biome == "maintenance" or room is MAINTENANCE_ROOM:
 				enemy.health *= 3.0
 				enemy.max_health = enemy.health

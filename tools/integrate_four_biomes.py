@@ -6,8 +6,8 @@ root = Path(__file__).resolve().parents[1]
 pack = root / 'rooms/ALL_4_BIOMES_120_UNIQUE_BLOCKOUTS'
 source = json.loads((pack / 'all_room_geometry.json').read_text())
 enemies = json.loads((root / 'data/enemies/industrial.json').read_text())
-bosses = {'maintenance': 'MAINTENANCE GUARDIAN', 'factory': 'ASSEMBLY OVERSEER',
-          'boiler': 'FURNACE WARDEN', 'toxin_refinery': 'REFINERY GUARDIAN'}
+bosses = {'maintenance': 'OVERSEER SERAPH', 'factory': 'FOUNDRY TYRANT',
+          'boiler': 'MAGMA COLOSSUS', 'toxin_refinery': 'VENOM COIL LEVIATHAN'}
 for biome, boss in bosses.items():
     source_biome = 'boiler_room' if biome == 'boiler' else biome
     rooms = []

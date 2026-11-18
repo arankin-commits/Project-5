@@ -1,9 +1,9 @@
 {
   "area": "Maintenance",
   "boss_encounter": {
-    "name": "Maintenance Control",
+    "name": "Overseer Seraph",
     "boss": true,
-    "boss_name": "MAINTENANCE GUARDIAN",
+    "boss_name": "OVERSEER SERAPH",
     "reward": "hull",
     "waves": [
       [

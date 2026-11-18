@@ -15573,9 +15573,9 @@
     }
   ],
   "boss_encounter": {
-    "name": "Refinery Guardian",
+    "name": "Venom Coil Leviathan",
     "boss": true,
-    "boss_name": "REFINERY GUARDIAN",
+    "boss_name": "VENOM COIL LEVIATHAN",
     "reward": "hull",
     "waves": [
       [

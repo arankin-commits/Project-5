@@ -210,7 +210,8 @@ func set_boss(boss: Node) -> void:
 	if boss_box.visible:
 		boss_bar.max_value = boss.get("max_health")
 		boss_bar.value = boss.get("health")
-		boss_title.text = boss.display_name + ("  /  OVERPRESSURE" if boss.get("phase_two") else "")
+		var subtitle: String = str(boss.get("phase_subtitle")) if boss.get("phase_subtitle") != null and not str(boss.get("phase_subtitle")).is_empty() else "OVERPRESSURE"
+		boss_title.text = boss.display_name + (("  /  " + subtitle) if boss.get("phase_two") else "")
 
 func _clear_actions() -> void:
 	for child in modal_actions.get_children():

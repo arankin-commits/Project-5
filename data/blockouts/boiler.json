@@ -15677,9 +15677,9 @@
     }
   ],
   "boss_encounter": {
-    "name": "Furnace Warden",
+    "name": "Magma Colossus",
     "boss": true,
-    "boss_name": "FURNACE WARDEN",
+    "boss_name": "MAGMA COLOSSUS",
     "reward": "hull",
     "waves": [
       [

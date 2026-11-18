@@ -326,12 +326,47 @@
       "background": "condensate",
       "subtitle": "Follow the return line",
       "tint": "ffffff",
-      "props": [["condenser",300,350],["coal",650,350],["boiler",450,650]],
-      "vents": [[700,600],[300,700]],
-      "waves": [["crawler","sentry","crawler"],["brute","crawler"]]
+      "props": [
+        [
+          "condenser",
+          300,
+          350
+        ],
+        [
+          "coal",
+          650,
+          350
+        ],
+        [
+          "boiler",
+          450,
+          650
+        ]
+      ],
+      "vents": [
+        [
+          700,
+          600
+        ],
+        [
+          300,
+          700
+        ]
+      ],
+      "waves": [
+        [
+          "crawler",
+          "sentry",
+          "crawler"
+        ],
+        [
+          "brute",
+          "crawler"
+        ]
+      ]
     },
     {
-      "name": "Heart of the Boiler",
+      "name": "Magma Colossus",
       "background": "heart",
       "subtitle": "THE FURNACE WARDEN",
       "tint": "ffca9e",
@@ -362,7 +397,8 @@
           "boss"
         ]
       ],
-      "boss": true
+      "boss": true,
+      "boss_name": "MAGMA COLOSSUS"
     }
   ]
 }

@@ -15573,9 +15573,9 @@
     }
   ],
   "boss_encounter": {
-    "name": "Assembly Overseer",
+    "name": "Foundry Tyrant",
     "boss": true,
-    "boss_name": "ASSEMBLY OVERSEER",
+    "boss_name": "FOUNDRY TYRANT",
     "reward": "hull",
     "waves": [
       [

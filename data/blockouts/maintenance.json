@@ -15525,9 +15525,9 @@
     }
   ],
   "boss_encounter": {
-    "name": "Maintenance Guardian",
+    "name": "Overseer Seraph",
     "boss": true,
-    "boss_name": "MAINTENANCE GUARDIAN",
+    "boss_name": "OVERSEER SERAPH",
     "reward": "hull",
     "waves": [
       [
