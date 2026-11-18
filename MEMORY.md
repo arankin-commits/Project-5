@@ -158,6 +158,7 @@ Indexed from left to right, top to bottom:
   - **Player Damage Immunity:** Elemental attacks and hazards created by the player cannot damage the player unless a specific mechanic states otherwise.
   - **Multi-Core Attack Damage Separation:** Three-core builds should not automatically deal triple regular attack damage. Additional cores provide extra elemental effects and possible synergies, but regular attack damage remains separate.
   - **Armor Retaliation Cooldown:** Armor retaliation has a 0.5-second cooldown to prevent enemies with rapid attacks from triggering excessive damage.
+  - **Elemental Armor Projectile Restriction:** Elemental Armor effects do not work on projectiles. Retaliation damage, reactive procs, and armor defense mechanisms do not activate against or apply to projectile damage.
 
 ## Run Setup & Robot Deployment
 

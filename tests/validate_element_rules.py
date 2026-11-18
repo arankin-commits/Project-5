@@ -56,10 +56,17 @@ class StatusState:
     def is_muddy(self):
         return self.mud_timer > 0.0
 
-    def can_trigger_armor_retaliation(self):
+    def can_trigger_armor_retaliation(self, is_projectile=False):
+        if is_projectile:
+            return False
         return self.armor_retaliation_cooldown <= 0.0
 
-    def trigger_armor_retaliation(self, cooldown=0.5):
+    def trigger_armor_retaliation(self, is_projectile=False, cooldown=0.5):
+        if not isinstance(is_projectile, bool) and isinstance(is_projectile, (int, float)):
+            cooldown = float(is_projectile)
+            is_projectile = False
+        if is_projectile:
+            return False
         if self.armor_retaliation_cooldown <= 0.0:
             self.armor_retaliation_cooldown = cooldown
             return True
@@ -231,6 +238,10 @@ def get_effective_knockback(distance: float, is_boss: bool) -> float:
 # Secondary effects cannot trigger themselves. Lightning splash damage cannot create another splash. Wind Bomb cannot endlessly create more Wind Bombs.
 def can_trigger_secondary_effect(is_secondary: bool) -> bool:
     return not is_secondary
+
+# Elemental Armor effects do not work on projectiles.
+def can_armor_affect_damage(is_projectile: bool) -> bool:
+    return not is_projectile
 
 # Orbiting rocks and stationary constructs have separate capacity limits.
 class EarthConstructLimits:
@@ -468,7 +479,7 @@ def test_all():
     assert s_multi.can_receive_multi_hit_buildup("beam_tick", 0.3, 0.25) == True
     print("[PASS] Multi-hit abilities have controlled buildup per application/interval")
 
-    # Rule 20: Armor retaliation 0.5s cooldown
+    # Rule 20: Armor retaliation 0.5s cooldown & Projectile Restriction
     s_retal = StatusState()
     assert s_retal.can_trigger_armor_retaliation() == True
     assert s_retal.trigger_armor_retaliation() == True
@@ -477,7 +488,13 @@ def test_all():
     s_retal.update(0.51)
     assert s_retal.can_trigger_armor_retaliation() == True
     assert s_retal.trigger_armor_retaliation() == True
-    print("[PASS] Armor retaliation has a 0.5-second cooldown")
+    # Elemental Armor effects do not work on projectiles
+    s_retal.update(0.51)
+    assert s_retal.can_trigger_armor_retaliation(is_projectile=True) == False
+    assert s_retal.trigger_armor_retaliation(is_projectile=True) == False
+    assert can_armor_affect_damage(True) == False
+    assert can_armor_affect_damage(False) == True
+    print("[PASS] Armor retaliation has a 0.5-second cooldown and does not work on projectiles")
 
     # Rule 21: Orbiting rocks and stationary constructs have separate capacity limits
     limits = EarthConstructLimits(max_orbiting=5, max_stationary=3)
@@ -507,6 +524,7 @@ def test_all():
     assert "Wet multiplies Ice and Lightning damage by 1.5. It does not increase the regular attack component" in mem_text
     assert "Wind's 50% Burn damage bonus does not stack. Repeated Wind attacks refresh it" in mem_text
     assert "Armor retaliation has a 0.5-second cooldown" in mem_text
+    assert "Elemental Armor effects do not work on projectiles" in mem_text
     assert "Orbiting rocks and stationary constructs have separate capacity limits" in mem_text
     assert "Rock fragments do not inherit Rock Shot triggers" in mem_text
 
@@ -519,6 +537,7 @@ def test_all():
     assert "Wet multiplies Ice and Lightning damage by 1.5" in er_text
     assert "Wind's 50% Burn damage bonus does not stack" in er_text
     assert "Armor retaliation has a 0.5-second cooldown" in er_text
+    assert "Elemental Armor effects do not work on projectiles" in er_text
     assert "Orbiting rocks and stationary constructs have separate capacity limits" in er_text
     assert "Rock fragments do not inherit Rock Shot triggers" in er_text
 

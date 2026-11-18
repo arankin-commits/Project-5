@@ -63,10 +63,24 @@ class StatusState:
 	func is_muddy() -> bool:
 		return mud_timer > 0.0
 
-	func can_trigger_armor_retaliation() -> bool:
+	func can_trigger_armor_retaliation(is_projectile := false) -> bool:
+		# Elemental Armor effects do not work on projectiles
+		if is_projectile:
+			return false
 		return armor_retaliation_cooldown <= 0.0
 
-	func trigger_armor_retaliation(cooldown := 0.5) -> bool:
+	func trigger_armor_retaliation(is_projectile_or_cooldown = false, cooldown_arg := 0.5) -> bool:
+		# Elemental Armor effects do not work on projectiles
+		var is_projectile := false
+		var cooldown := 0.5
+		if typeof(is_projectile_or_cooldown) == TYPE_BOOL:
+			is_projectile = is_projectile_or_cooldown
+			cooldown = cooldown_arg
+		elif typeof(is_projectile_or_cooldown) in [TYPE_FLOAT, TYPE_INT]:
+			cooldown = float(is_projectile_or_cooldown)
+		
+		if is_projectile:
+			return false
 		if armor_retaliation_cooldown <= 0.0:
 			armor_retaliation_cooldown = cooldown
 			return true
@@ -335,9 +349,13 @@ class TerrainInteractions:
 static func can_trigger_secondary_effect(is_secondary: bool) -> bool:
 	return not is_secondary
 
-# 11. Armor Retaliation Cooldown
+# 11. Armor Retaliation & Elemental Armor
 # Armor retaliation has a 0.5-second cooldown to prevent enemies with rapid attacks from triggering excessive damage.
+# Elemental Armor effects do not work on projectiles.
 const ARMOR_RETALIATION_COOLDOWN: float = 0.5
+
+static func can_armor_affect_damage(is_projectile: bool) -> bool:
+	return not is_projectile
 
 # 12. Earth Constructs Separate Capacity Limits
 # Orbiting rocks and stationary constructs have separate capacity limits.

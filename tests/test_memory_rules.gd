@@ -359,12 +359,18 @@ func _run() -> void:
 	check(state_multi.can_receive_multi_hit_buildup("flurry_1", 1.1, 0.25) == false, "Rule 15: Second hit within interval must reject buildup")
 	check(state_multi.can_receive_multi_hit_buildup("flurry_1", 1.3, 0.25) == true, "Rule 15: Hit after interval must allow buildup")
 
-	# Armor retaliation 0.5s cooldown
+	# Armor retaliation 0.5s cooldown and projectile restriction
 	var state_armor := ELEM.StatusState.new()
 	check(state_armor.trigger_armor_retaliation() == true, "Rule 15: First armor retaliation must trigger")
 	check(state_armor.trigger_armor_retaliation() == false, "Rule 15: Immediate second retaliation must be blocked by 0.5s cooldown")
 	state_armor.update(0.51)
 	check(state_armor.trigger_armor_retaliation() == true, "Rule 15: Retaliation after cooldown elapsed must trigger")
+	# Elemental Armor effects do not work on projectiles
+	state_armor.update(0.51)
+	check(state_armor.can_trigger_armor_retaliation(true) == false, "Rule 15: Elemental armor cannot trigger on projectiles")
+	check(state_armor.trigger_armor_retaliation(true) == false, "Rule 15: Projectile damage must not trigger armor retaliation")
+	check(ELEM.can_armor_affect_damage(true) == false, "Rule 15: Elemental armor must not affect projectiles")
+	check(ELEM.can_armor_affect_damage(false) == true, "Rule 15: Elemental armor affects melee/contact damage")
 
 	# Orbiting rocks and stationary constructs separate capacity limits
 	var limits := ELEM.EarthConstructLimits.new()
