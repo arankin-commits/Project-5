@@ -34,10 +34,26 @@ func _run() -> void:
 			camera.force_update_scroll()
 			await process_frame
 			await process_frame
-			print("BIOME_CAPTURE=",biome," ",index," RESULT=",root.get_texture().get_image().save_png("res://reviews/polish_%s_%02d.png" % [biome,index]))
+			print("BIOME_CAPTURE=",biome," ",index," RESULT=",root.get_texture().get_image().save_png("res://reviews/painted_%s_%02d.png" % [biome,index]))
+			if index == 0:
+				# A separate whole-room view makes comparison with the references useful.
+				var previous_zoom := camera.zoom
+				run.set_process(false)
+				camera.position = run.room.world_bounds.get_center() - Vector2(0, 65)
+				camera.zoom = Vector2.ONE * minf(1120.0 / (run.room.world_bounds.size.x + 180), 560.0 / (run.room.world_bounds.size.y + 230))
+				camera.reset_smoothing()
+				camera.force_update_scroll()
+				run.hud.hide()
+				await process_frame
+				await process_frame
+				print("OVERVIEW_CAPTURE=", biome, " RESULT=", root.get_texture().get_image().save_png("res://reviews/painted_%s_overview.png" % biome))
+				run.hud.show()
+				camera.zoom = previous_zoom
+				run.set_process(true)
 	current_scene.queue_free()
 	await process_frame
-	await _capture_enemies()
+	if OS.get_cmdline_user_args().has("--enemy-gallery"):
+		await _capture_enemies()
 	quit()
 
 

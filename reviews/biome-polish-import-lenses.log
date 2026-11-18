@@ -17,11 +17,59 @@ WARNING: UID duplicate detected between res://rooms/Maintenance/ChatGPT Image No
    at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
 WARNING: UID duplicate detected between res://rooms/Maintenance/Steampunk Vent and Entrance Asset Sheet.png and res://Music/Flying_Liberty_Adaptive_Biome_OST_v3/Flying_Liberty_Adaptive_Biome_OST_v3/Maintenance/Steampunk Vent and Entrance Asset Sheet.png.
    at: _process_file_system (editor/file_system/editor_file_system.cpp:1405)
-[   0% ] _update_scan_actions | Started Scanning actions... (3 steps)
-[   0% ] _update_scan_actions | Enemy_Stats_33.csv
-[  25% ] _update_scan_actions | Original_Enemy_Stats_33.csv
-[  50% ] _update_scan_actions | Tracklist.csv
+[   0% ] _update_scan_actions | Started Scanning actions... (24 steps)
+[   0% ] _update_scan_actions | boiler-atlas.png
+[   4% ] _update_scan_actions | toxin-atlas.png
+[   8% ] _update_scan_actions | Enemy_Stats_33.csv
+[  12% ] _update_scan_actions | Original_Enemy_Stats_33.csv
+[  16% ] _update_scan_actions | Tracklist.csv
+[  20% ] _update_scan_actions | polish_enemies_boiler_attack.png
+[  24% ] _update_scan_actions | polish_enemies_boiler_death.png
+[  28% ] _update_scan_actions | polish_enemies_boiler_walk.png
+[  32% ] _update_scan_actions | polish_enemies_boiler_windup.png
+[  36% ] _update_scan_actions | polish_enemies_factory_attack.png
+[  40% ] _update_scan_actions | polish_enemies_factory_death.png
+[  44% ] _update_scan_actions | polish_enemies_factory_walk.png
+[  48% ] _update_scan_actions | polish_enemies_factory_windup.png
+[  52% ] _update_scan_actions | polish_enemies_maintenance_attack.png
+[  56% ] _update_scan_actions | polish_enemies_maintenance_death.png
+[  60% ] _update_scan_actions | polish_enemies_maintenance_walk.png
+[  64% ] _update_scan_actions | polish_enemies_maintenance_windup.png
+[  68% ] _update_scan_actions | polish_enemies_toxin_refinery_attack.png
+[  72% ] _update_scan_actions | polish_enemies_toxin_refinery_death.png
+[  76% ] _update_scan_actions | polish_enemies_toxin_refinery_walk.png
+[  80% ] _update_scan_actions | polish_enemies_toxin_refinery_windup.png
+[  84% ] _update_scan_actions | polish_maintenance_00.png
+[  88% ] _update_scan_actions | polish_maintenance_06.png
+[  92% ] _update_scan_actions | polish_maintenance_20.png
 [ DONE ] _update_scan_actions
+
+[   0% ] reimport | Started (Re)Importing Assets (9 steps)
+[   0% ] reimport | Preparing files to reimport...
+[  10% ] reimport | Preparing files to reimport...
+[  20% ] reimport | Preparing files to reimport...
+[  30% ] reimport | Preparing files to reimport...
+[  40% ] reimport | Preparing files to reimport...
+[  50% ] reimport | Preparing files to reimport...
+[  60% ] reimport | Preparing files to reimport...
+[  70% ] reimport | Preparing files to reimport...
+[  80% ] reimport | Preparing files to reimport...
+[   0% ] reimport | Executing pre-reimport operations...
+[   0% ] reimport | boiler-atlas.png
+[  10% ] reimport | toxin-atlas.png
+[  20% ] reimport | polish_enemies_boiler_attack.png
+[  30% ] reimport | polish_enemies_factory_attack.png
+[  40% ] reimport | polish_enemies_maintenance_attack.png
+[  50% ] reimport | polish_enemies_toxin_refinery_attack.png
+[  60% ] reimport | polish_maintenance_00.png
+[  70% ] reimport | polish_maintenance_06.png
+[  80% ] reimport | polish_maintenance_20.png
+[  90% ] reimport | Finalizing Asset Import...
+[ DONE ] reimport
+
+[   0% ] reimport | Started (Re)Importing Assets (9 steps)
+[   0% ] reimport | Executing post-reimport operations...
+[ DONE ] reimport
 
 [   0% ] loading_editor_layout | Started Loading editor (5 steps)
 [   0% ] loading_editor_layout | Loading editor layout...

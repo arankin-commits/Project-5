@@ -102,8 +102,8 @@ func _load_layout(data: Dictionary) -> void:
 		else:
 			exit_positions.append(source_point(point))
 	layout.exit = (exit_positions[0]-Vector2(768,620))/float(layout.scale)+Vector2(layout.center)
-	# Ground traps reuse the established timed damage pulse. Other drawn
-	# machinery remains blockout art until its specialized behavior is added.
+	# Ground traps reuse the established timed damage pulse. Other painted
+	# machinery remains decorative until its specialized behavior is added.
 	for hazard in meta.hazards:
 		if hazard.type in ["wires","tesla","vent","spikes"]:
 			layout.hazards.append(_project_pack(Vector2(hazard.center[0],hazard.center[1]),size))
@@ -120,8 +120,13 @@ func _clear_door_point(desired: Vector2) -> Vector2:
 
 func build(data: Dictionary) -> void:
 	super.build(data)
+	var painted := preload("res://scripts/painted_biome_room.gd").new()
+	painted.name = "PaintedEnvironment"
+	add_child(painted)
+	painted.build(self, data)
+	get_node("MaintenanceArtwork").hide()
 	for sprite in hazard_sprites:
-		sprite.hide() # The fitted room artwork contains each trap housing.
+		sprite.hide() # Biome-specific painted trap sprites replace this inherited art.
 	_build_reference_hazards(data)
 	var index := 0
 	for child in get_children():
