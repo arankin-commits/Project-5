@@ -115,6 +115,8 @@ func _physics_process(delta: float) -> void:
 		if wall_stun_timer > 0:
 			wall_stun_timer = maxf(0, wall_stun_timer - delta)
 		velocity = Vector2.ZERO
+	if elemental_state.is_burning() or elemental_state.is_wet():
+		queue_redraw()
 		queue_redraw()
 		return
 	cooldown -= delta
@@ -126,6 +128,8 @@ func _physics_process(delta: float) -> void:
 	visual.position.y = -absf(sin(stride))*1.8 if velocity.length() > 5 else 0
 	visual.flip_h = facing.x > 0
 	velocity = Vector2.ZERO
+	if elemental_state.is_burning() or elemental_state.is_wet():
+		queue_redraw()
 	phase_two = kind == "boss" and health <= max_health * 0.5
 	if state == "windup":
 		windup -= delta
@@ -405,12 +409,86 @@ func _die() -> void:
 	queue_free()
 
 func _draw() -> void:
-	if wall_stun_timer > 0:
-		draw_arc(Vector2(0,-95), 18, 0, TAU, 24, Color("fff0a0"), 3, true)
+	if wall_stun_timer > 0.0:
+		var halo_center := Vector2(0, -95)
+		draw_set_transform(halo_center, 0, Vector2(1, 0.45))
+		draw_arc(Vector2.ZERO, 20, 0, TAU, 24, Color("ffe600"), 3, true)
+		draw_set_transform(Vector2.ZERO)
+		var t_ms := float(Time.get_ticks_msec()) * 0.006
+		for s in range(3):
+			var a_s := t_ms + float(s) * TAU / 3.0
+			var s_pos := halo_center + Vector2(cos(a_s) * 20.0, sin(a_s) * 9.0)
+			draw_circle(s_pos, 3.5, Color("fff0a0"))
+
 	draw_set_transform(Vector2.ZERO,0,Vector2(1,0.5))
 	draw_circle(Vector2.ZERO,30 if kind != "boss" else 70,Color(0,0,0,0.45))
 	draw_arc(Vector2.ZERO,23 if kind != "boss" else 65,0,TAU,32,Color(1,0.3,0.1,0.65),2,true)
 	draw_set_transform(Vector2.ZERO)
+
+	# Mud ground effect
+	if elemental_state.is_muddy():
+		draw_set_transform(Vector2.ZERO, 0, Vector2(1, 0.5))
+		draw_circle(Vector2.ZERO, 24, Color(0.39, 0.27, 0.17, 0.6))
+		draw_set_transform(Vector2.ZERO)
+
+	# Wet status splash droplets and ripple
+	if elemental_state.is_wet():
+		var t_wet := float(Time.get_ticks_msec()) * 0.006
+		draw_set_transform(Vector2.ZERO, 0, Vector2(1, 0.5))
+		draw_arc(Vector2.ZERO, 28, 0, TAU, 24, Color(0.2, 0.6, 1.0, 0.5), 2.5, true)
+		draw_set_transform(Vector2.ZERO)
+		for i in range(5):
+			var a_w := float(i) * 1.3 + t_wet
+			var drop_x := cos(a_w) * 18.0
+			var drop_y := -15.0 - fmod(float(i) * 12.0 + t_wet * 25.0, 35.0)
+			draw_circle(Vector2(drop_x, drop_y), 3.0, Color("52c9fd"))
+
+	# Rust corrosion patina spots
+	if elemental_state.rust_consecutive_ticks > 0:
+		for r in range(4):
+			var r_x := sin(float(r) * 19.0) * 14.0
+			var r_y := -30.0 - float(r) * 8.0
+			draw_circle(Vector2(r_x, r_y), 4.5, Color(0.15, 0.71, 0.69, 0.7))
+
+	# Burn status flames
+	if elemental_state.is_burning():
+		var t_burn := float(Time.get_ticks_msec()) * 0.008
+		for j in range(6):
+			var off_x := sin(float(j) * 1.7 + t_burn * 3.0) * 14.0
+			var fy := -25.0 - float(j) * 8.0 - fmod(t_burn * 30.0 + float(j) * 7.0, 22.0)
+			var rad := 6.5 * (1.0 - (float(j) / 8.0))
+			var f_col := Color("ff3b30") if j % 2 == 0 else Color("ffc75e")
+			f_col.a = 0.85
+			draw_circle(Vector2(off_x, fy), rad, f_col)
+
+	# Frost crystal spikes
+	if elemental_state.is_frost() and not elemental_state.is_frozen():
+		for j in range(5):
+			var sp_x := -18.0 + float(j) * 9.0
+			var sp_h := 14.0 + sin(float(j) * 23.0) * 6.0
+			var pts: PackedVector2Array = [
+				Vector2(sp_x - 3, -40),
+				Vector2(sp_x, -40 - sp_h),
+				Vector2(sp_x + 3, -40)
+			]
+			draw_colored_polygon(pts, Color(0.6, 0.9, 1.0, 0.75))
+			draw_polyline(pts, Color.WHITE, 1.2)
+
+	# Freeze translucent ice block encasing enemy
+	if elemental_state.is_frozen():
+		var w_box := 32.0 if kind != "boss" else 55.0
+		var h_box := 75.0 if kind != "boss" else 110.0
+		var block_pts: PackedVector2Array = [
+			Vector2(-w_box, 8),
+			Vector2(-w_box - 4, -h_box * 0.8),
+			Vector2(-w_box * 0.3, -h_box),
+			Vector2(w_box * 0.8, -h_box * 0.85),
+			Vector2(w_box + 4, 8)
+		]
+		draw_colored_polygon(block_pts, Color(0.34, 0.75, 0.98, 0.35))
+		draw_polyline(block_pts, Color("83ecff"), 2.5)
+		draw_line(Vector2(-w_box * 0.5, -h_box * 0.7), Vector2(w_box * 0.4, -h_box * 0.2), Color(1, 1, 1, 0.5), 1.5)
+
 	if state == "windup" and not custom_attack_warning:
 		var p := attack_point-global_position
 		if attack_kind == "slam":

@@ -1,0 +1,327 @@
+[
+  {
+    "element": "Lightning",
+    "name": "Lightning Attack",
+    "gif": "Animations/Lightning/Lightning_Attack.gif"
+  },
+  {
+    "element": "Lightning",
+    "name": "Lightning Special",
+    "gif": "Animations/Lightning/Lightning_Special.gif"
+  },
+  {
+    "element": "Lightning",
+    "name": "Lightning Armor",
+    "gif": "Animations/Lightning/Lightning_Armor.gif"
+  },
+  {
+    "element": "Lightning",
+    "name": "Lightning Dash",
+    "gif": "Animations/Lightning/Lightning_Dash.gif"
+  },
+  {
+    "element": "Lightning",
+    "name": "Lightning Slam",
+    "gif": "Animations/Lightning/Lightning_Slam.gif"
+  },
+  {
+    "element": "Lightning",
+    "name": "Electric Energy",
+    "gif": "Animations/Lightning/Electric_Energy.gif"
+  },
+  {
+    "element": "Lightning",
+    "name": "Stronger Lightning",
+    "gif": "Animations/Lightning/Stronger_Lightning.gif"
+  },
+  {
+    "element": "Lightning",
+    "name": "Raging Tempest",
+    "gif": "Animations/Lightning/Raging_Tempest.gif"
+  },
+  {
+    "element": "Lightning",
+    "name": "Chain Lightning",
+    "gif": "Animations/Lightning/Chain_Lightning.gif"
+  },
+  {
+    "element": "Lightning",
+    "name": "Light Speed",
+    "gif": "Animations/Lightning/Light_Speed.gif"
+  },
+  {
+    "element": "Lightning",
+    "name": "Lightning Overload",
+    "gif": "Animations/Lightning/Lightning_Overload.gif"
+  },
+  {
+    "element": "Fire",
+    "name": "Fire Attack",
+    "gif": "Animations/Fire/Fire_Attack.gif"
+  },
+  {
+    "element": "Fire",
+    "name": "Fire Special",
+    "gif": "Animations/Fire/Fire_Special.gif"
+  },
+  {
+    "element": "Fire",
+    "name": "Fire Armor",
+    "gif": "Animations/Fire/Fire_Armor.gif"
+  },
+  {
+    "element": "Fire",
+    "name": "Fire Dash",
+    "gif": "Animations/Fire/Fire_Dash.gif"
+  },
+  {
+    "element": "Fire",
+    "name": "Fire Trail",
+    "gif": "Animations/Fire/Fire_Trail.gif"
+  },
+  {
+    "element": "Fire",
+    "name": "Fire Spread",
+    "gif": "Animations/Fire/Fire_Spread.gif"
+  },
+  {
+    "element": "Fire",
+    "name": "Fire Slam",
+    "gif": "Animations/Fire/Fire_Slam.gif"
+  },
+  {
+    "element": "Fire",
+    "name": "Explosion",
+    "gif": "Animations/Fire/Explosion.gif"
+  },
+  {
+    "element": "Fire",
+    "name": "Scorching End",
+    "gif": "Animations/Fire/Scorching_End.gif"
+  },
+  {
+    "element": "Fire",
+    "name": "Lasting Fire",
+    "gif": "Animations/Fire/Lasting_Fire.gif"
+  },
+  {
+    "element": "Fire",
+    "name": "Explosive Fury",
+    "gif": "Animations/Fire/Explosive_Fury.gif"
+  },
+  {
+    "element": "Water",
+    "name": "Water Attack",
+    "gif": "Animations/Water/Water_Attack.gif"
+  },
+  {
+    "element": "Water",
+    "name": "Water Special",
+    "gif": "Animations/Water/Water_Special.gif"
+  },
+  {
+    "element": "Water",
+    "name": "Water Armor",
+    "gif": "Animations/Water/Water_Armor.gif"
+  },
+  {
+    "element": "Water",
+    "name": "Water Dash",
+    "gif": "Animations/Water/Water_Dash.gif"
+  },
+  {
+    "element": "Water",
+    "name": "Tidal Slam",
+    "gif": "Animations/Water/Tidal_Slam.gif"
+  },
+  {
+    "element": "Water",
+    "name": "Water Damage",
+    "gif": "Animations/Water/Water_Damage.gif"
+  },
+  {
+    "element": "Water",
+    "name": "Erosion",
+    "gif": "Animations/Water/Erosion.gif"
+  },
+  {
+    "element": "Water",
+    "name": "Drenched",
+    "gif": "Animations/Water/Drenched.gif"
+  },
+  {
+    "element": "Water",
+    "name": "Whirlpool",
+    "gif": "Animations/Water/Whirlpool.gif"
+  },
+  {
+    "element": "Water",
+    "name": "Rust",
+    "gif": "Animations/Water/Rust.gif"
+  },
+  {
+    "element": "Water",
+    "name": "Wear and Tear",
+    "gif": "Animations/Water/Wear_and_Tear.gif"
+  },
+  {
+    "element": "Wind",
+    "name": "Wind Attack",
+    "gif": "Animations/Wind/Wind_Attack.gif"
+  },
+  {
+    "element": "Wind",
+    "name": "Wind Special",
+    "gif": "Animations/Wind/Wind_Special.gif"
+  },
+  {
+    "element": "Wind",
+    "name": "Wind Armor",
+    "gif": "Animations/Wind/Wind_Armor.gif"
+  },
+  {
+    "element": "Wind",
+    "name": "Wind Dash",
+    "gif": "Animations/Wind/Wind_Dash.gif"
+  },
+  {
+    "element": "Wind",
+    "name": "Pinball",
+    "gif": "Animations/Wind/Pinball.gif"
+  },
+  {
+    "element": "Wind",
+    "name": "Fleet Foot",
+    "gif": "Animations/Wind/Fleet_Foot.gif"
+  },
+  {
+    "element": "Wind",
+    "name": "Gust",
+    "gif": "Animations/Wind/Gust.gif"
+  },
+  {
+    "element": "Wind",
+    "name": "Vortex",
+    "gif": "Animations/Wind/Vortex.gif"
+  },
+  {
+    "element": "Wind",
+    "name": "Come Hither",
+    "gif": "Animations/Wind/Come_Hither.gif"
+  },
+  {
+    "element": "Wind",
+    "name": "Wind Bomb",
+    "gif": "Animations/Wind/Wind_Bomb.gif"
+  },
+  {
+    "element": "Ice",
+    "name": "Ice Attack",
+    "gif": "Animations/Ice/Ice_Attack.gif"
+  },
+  {
+    "element": "Ice",
+    "name": "Ice Special",
+    "gif": "Animations/Ice/Ice_Special.gif"
+  },
+  {
+    "element": "Ice",
+    "name": "Ice Armor",
+    "gif": "Animations/Ice/Ice_Armor.gif"
+  },
+  {
+    "element": "Ice",
+    "name": "Ice Dash",
+    "gif": "Animations/Ice/Ice_Dash.gif"
+  },
+  {
+    "element": "Ice",
+    "name": "Ice Slam",
+    "gif": "Animations/Ice/Ice_Slam.gif"
+  },
+  {
+    "element": "Ice",
+    "name": "Frost Recharge",
+    "gif": "Animations/Ice/Frost_Recharge.gif"
+  },
+  {
+    "element": "Ice",
+    "name": "Snow Down",
+    "gif": "Animations/Ice/Snow_Down.gif"
+  },
+  {
+    "element": "Ice",
+    "name": "Freeze",
+    "gif": "Animations/Ice/Freeze.gif"
+  },
+  {
+    "element": "Ice",
+    "name": "Everlasting Winter",
+    "gif": "Animations/Ice/Everlasting_Winter.gif"
+  },
+  {
+    "element": "Ice",
+    "name": "Cold Spirit",
+    "gif": "Animations/Ice/Cold_Spirit.gif"
+  },
+  {
+    "element": "Ice",
+    "name": "Flash Freeze",
+    "gif": "Animations/Ice/Flash_Freeze.gif"
+  },
+  {
+    "element": "Earth",
+    "name": "Earthen Attack",
+    "gif": "Animations/Earth/Earthen_Attack.gif"
+  },
+  {
+    "element": "Earth",
+    "name": "Earthen Special",
+    "gif": "Animations/Earth/Earthen_Special.gif"
+  },
+  {
+    "element": "Earth",
+    "name": "Earthen Armor: Orbiting Wall",
+    "gif": "Animations/Earth/Earthen_Armor_Orbiting_Wall.gif"
+  },
+  {
+    "element": "Earth",
+    "name": "Earthen Dash: Stone Creation",
+    "gif": "Animations/Earth/Earthen_Dash_Stone_Creation.gif"
+  },
+  {
+    "element": "Earth",
+    "name": "Earthen Slam",
+    "gif": "Animations/Earth/Earthen_Slam.gif"
+  },
+  {
+    "element": "Earth",
+    "name": "Earth Arsenal",
+    "gif": "Animations/Earth/Earth_Arsenal.gif"
+  },
+  {
+    "element": "Earth",
+    "name": "Orbiting Fortress",
+    "gif": "Animations/Earth/Orbiting_Fortress.gif"
+  },
+  {
+    "element": "Earth",
+    "name": "Rock Shot",
+    "gif": "Animations/Earth/Rock_Shot.gif"
+  },
+  {
+    "element": "Earth",
+    "name": "Rocksplosion",
+    "gif": "Animations/Earth/Rocksplosion.gif"
+  },
+  {
+    "element": "Earth",
+    "name": "Earth Bender",
+    "gif": "Animations/Earth/Earth_Bender.gif"
+  },
+  {
+    "element": "Earth",
+    "name": "Shotgun",
+    "gif": "Animations/Earth/Shotgun.gif"
+  }
+]

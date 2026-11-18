@@ -18,12 +18,24 @@ const SKILLS := {
 	"heavy_grapple": {"name":"Heavy Grapple", "description":"Your grappling hook can also pull large brutes. Bosses remain anchored.", "requires":"charged_attack", "xp":0, "item":1, "at":Vector2(236,1098), "radius":65},
 	"power_two": {"name":"The Power of Two", "description":"Hold two distinct elemental cores. Core encounters stop once both slots are filled.", "requires":"root", "xp":0, "item":2, "at":Vector2(538,809), "radius":101},
 	"power_three": {"name":"The Power of Three", "description":"Hold three distinct elemental cores. Core encounters stop once all three slots are filled.", "requires":"power_two", "xp":0, "item":3, "at":Vector2(538,554), "radius":105},
+	"toxin_mastery": {"name":"Toxin Core Unlocked", "description":"Toxin core now enters the pool of possible elemental cores.", "requires":"power_three", "xp":0, "item":2, "at":Vector2(538,290), "radius":85},
 	"final_stand": {"name":"Final Stand", "description":"Once per run, survive lethal damage with half your maximum health and 2 seconds of protection.", "requires":"root", "xp":150, "item":0, "at":Vector2(872,272), "radius":69},
 	"nanobots_1": {"name":"Nanobots I", "description":"Heal 5 health when entering a new room.", "requires":"final_stand", "xp":100, "item":0, "at":Vector2(714,435), "radius":37},
 	"nanobots_2": {"name":"Nanobots II", "description":"Heal 10 health when entering a new room.", "requires":"nanobots_1", "xp":150, "item":0, "at":Vector2(794,435), "radius":37},
 	"nanobots_3": {"name":"Nanobots III", "description":"Heal 15 health when entering a new room.", "requires":"nanobots_2", "xp":200, "item":0, "at":Vector2(874,435), "radius":37},
 	"nanobots_4": {"name":"Nanobots IV", "description":"Heal 20 health when entering a new room.", "requires":"nanobots_3", "xp":250, "item":0, "at":Vector2(954,435), "radius":37},
-	"nanobots_5": {"name":"Nanobots V", "description":"Heal 25 health when entering a new room.", "requires":"nanobots_4", "xp":300, "item":0, "at":Vector2(1034,435), "radius":37}
+	"nanobots_5": {"name":"Nanobots V", "description":"Heal 25 health when entering a new room.", "requires":"nanobots_4", "xp":300, "item":0, "at":Vector2(1034,435), "radius":37},
+	"core_weapon_rewards": {"name":"Core & Weapon Bounty", "description":"Increases the chance of finding core and weapon rewards over other rewards.", "requires":"final_stand", "xp":200, "item":0, "at":Vector2(870,770), "radius":55},
+	"rarer_cards": {"name":"Rare Discoveries", "description":"Increases the chance of finding rarer cards for core and weapon upgrades.", "requires":"core_weapon_rewards", "xp":250, "item":0, "at":Vector2(730,770), "radius":55},
+	"trap_rooms": {"name":"Hazard Hunter", "description":"Increases the chance of finding trap rooms.", "requires":"core_weapon_rewards", "xp":200, "item":0, "at":Vector2(1010,770), "radius":55},
+	"affinity_fire": {"name":"Fire Affinity", "description":"Makes it more likely to see fire element rewards.", "requires":"core_weapon_rewards", "xp":150, "item":0, "at":Vector2(680,935), "radius":36},
+	"affinity_ice": {"name":"Ice Affinity", "description":"Makes it more likely to see ice element rewards.", "requires":"core_weapon_rewards", "xp":150, "item":0, "at":Vector2(755,935), "radius":36},
+	"affinity_water": {"name":"Water Affinity", "description":"Makes it more likely to see water element rewards.", "requires":"core_weapon_rewards", "xp":150, "item":0, "at":Vector2(825,935), "radius":36},
+	"affinity_lightning": {"name":"Lightning Affinity", "description":"Makes it more likely to see lightning element rewards.", "requires":"core_weapon_rewards", "xp":150, "item":0, "at":Vector2(895,935), "radius":36},
+	"affinity_earth": {"name":"Earth Affinity", "description":"Makes it more likely to see earth element rewards.", "requires":"core_weapon_rewards", "xp":150, "item":0, "at":Vector2(970,935), "radius":36},
+	"affinity_wind": {"name":"Wind Affinity", "description":"Makes it more likely to see wind element rewards.", "requires":"core_weapon_rewards", "xp":150, "item":0, "at":Vector2(1040,935), "radius":36},
+	"reroll_element": {"name":"Element Flux", "description":"Allows the player to reroll element cards once per reward chamber.", "requires":"rarer_cards", "xp":0, "item":1, "at":Vector2(760,1105), "radius":55},
+	"reroll_weapon": {"name":"Arsenal Recalibration", "description":"Allows the player to reroll weapon cards once per reward chamber.", "requires":"trap_rooms", "xp":0, "item":1, "at":Vector2(930,1105), "radius":55}
 }
 
 var unlocked_skills: Array[String] = ["root"]

@@ -26,7 +26,10 @@ const REWARD_ICONS := {
 	"hull": Rect2(0, 547, 273, 274),
 	"power": Rect2(273, 547, 274, 274),
 	"dash": Rect2(1642, 273, 274, 274),
-	"speed": Rect2(1642, 0, 274, 273)
+	"speed": Rect2(1642, 0, 274, 273),
+	"core_toxin": Rect2(821, 273, 273, 274),
+	"upgrade_toxin": Rect2(547, 0, 274, 273),
+	"weapon_upgrade": Rect2(1642, 547, 274, 274)
 }
 const REWARD_TEXT := {
 	"repair": "+25 MAX HULL / REPAIR 25",
@@ -34,6 +37,7 @@ const REWARD_TEXT := {
 	"power": "+20% STRIKE DAMAGE",
 	"dash": "15% FASTER DASH RECHARGE",
 	"speed": "+10% MOVEMENT SPEED",
+	"weapon_upgrade": "WEAPON UPGRADE",
 	"max_hp_increase": "+25 MAX HULL / REPAIR 25",
 	"cds": "MUSIC CD",
 	"core_xp": "+100 CORE XP",
@@ -45,12 +49,14 @@ const REWARD_TEXT := {
 	"core_ice": "ICE CORE",
 	"core_wind": "WIND CORE",
 	"core_earth": "EARTH CORE",
+	"core_toxin": "TOXIN CORE",
 	"upgrade_fire": "FIRE CORE UPGRADE",
 	"upgrade_water": "WATER CORE UPGRADE",
 	"upgrade_lightning": "LIGHTNING CORE UPGRADE",
 	"upgrade_ice": "ICE CORE UPGRADE",
 	"upgrade_wind": "WIND CORE UPGRADE",
-	"upgrade_earth": "EARTH CORE UPGRADE"
+	"upgrade_earth": "EARTH CORE UPGRADE",
+	"upgrade_toxin": "TOXIN CORE UPGRADE"
 }
 var turret_cooldowns: Dictionary = {}
 var trap_shots: Array[Dictionary] = []

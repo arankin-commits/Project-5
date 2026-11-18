@@ -210,7 +210,10 @@ func _build_ui() -> void:
 func _resolve_art_texture() -> Texture2D:
 	var card_id: String = str(choice_data.get("id", "")).to_lower()
 	# Check specific cards first
-	if card_id == "lightning_attack" and ResourceLoader.exists("res://art/card_hud/art_lightning_attack.png"):
+	var direct_path := "res://art/card_hud/art_%s.png" % card_id
+	if ResourceLoader.exists(direct_path):
+		return load(direct_path)
+	elif card_id == "lightning_attack" and ResourceLoader.exists("res://art/card_hud/art_lightning_attack.png"):
 		return load("res://art/card_hud/art_lightning_attack.png")
 	elif card_id == "fire_slam" and ResourceLoader.exists("res://art/card_hud/art_fire_slam.png"):
 		return load("res://art/card_hud/art_fire_slam.png")

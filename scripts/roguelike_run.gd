@@ -33,6 +33,9 @@ const ELEMENT_COLORS: Dictionary = {
 	"frost": Color("a8f0ff"),
 	"frozen blue": Color("a8f0ff"),
 	"frozen_blue": Color("a8f0ff"),
+	"toxin": Color("88ee33"),
+	"poison": Color("88ee33"),
+	"acid": Color("88ee33"),
 	"regular": Color("cccccc"),
 	"normal": Color("cccccc"),
 	"physical": Color("cccccc"),
@@ -46,8 +49,18 @@ const CORE_TINTS: Dictionary = {
 	"lightning": Color("df88ff"),
 	"earth": Color("b26a3c"),
 	"wind": Color("55ff99"),
-	"ice": Color("a8f0ff")
+	"ice": Color("a8f0ff"),
+	"toxin": Color("88ee33")
 }
+
+const WEAPON_CARDS: Array[Dictionary] = [
+	{"id":"weapon_heavy_impact", "name":"HEAVY IMPACT", "description":"[COMMON]\n+25% strike damage and increased knockback", "rarity":"common", "is_weapon_card":true},
+	{"id":"weapon_rapid_servos", "name":"RAPID SERVOS", "description":"[COMMON]\n+20% faster attack recharge", "rarity":"common", "is_weapon_card":true},
+	{"id":"weapon_serrated_edge", "name":"SERRATED BLADE", "description":"[RARE]\nStrikes tear enemy armor, dealing 15 bleed damage over 3s", "rarity":"rare", "is_weapon_card":true},
+	{"id":"weapon_kinetic_amp", "name":"KINETIC AMPLIFIER", "description":"[RARE]\nDeal +35% damage to enemies above 75% health", "rarity":"rare", "is_weapon_card":true},
+	{"id":"weapon_overcharge", "name":"OVERCHARGED EDGE", "description":"[EPIC]\nEvery 3rd strike triggers a concussive shockwave for 40 damage", "rarity":"epic", "is_weapon_card":true},
+	{"id":"weapon_executioner", "name":"EXECUTION PROTOCOL", "description":"[LEGENDARY]\nDeal +60% damage to enemies below 35% health", "rarity":"legendary", "is_weapon_card":true}
+]
 
 static func element_color(element: String) -> Color:
 	var key := element.to_lower().strip_edges()
@@ -98,6 +111,7 @@ var trap_current_wave := 0
 var trap_buff_active := false
 var player_armor_cooldown := 0.0
 var charging_tempest_energy := 0.0
+var reroll_used := false
 
 func _ready() -> void:
 	get_node("/root/BackgroundMusic").play_boiler()
@@ -130,6 +144,7 @@ func _ready() -> void:
 	player.dashed.connect(_on_player_dashed)
 	enemies.child_entered_tree.connect(_on_enemy_child_entered)
 	hud.reward_selected.connect(choose_reward)
+	hud.reroll_requested.connect(_on_reroll_requested)
 	hud.retry_requested.connect(_retry)
 	hud.return_requested.connect(return_to_sync_chamber)
 	hud.pause_requested.connect(_toggle_pause)
@@ -295,10 +310,89 @@ func activate_reward_item() -> void:
 	if reward_collected or not is_instance_valid(reward_item):
 		return
 	if is_choice_reward():
-		hud.call("show_rewards", reward_choices)
+		var can_reroll := false
+		var has_element_cards := false
+		var has_weapon_cards := false
+		for choice in reward_choices:
+			var cid := str(choice.get("id", ""))
+			if choice.get("is_element_card", false) or ElementalCards.has_card(cid):
+				has_element_cards = true
+			if choice.get("is_weapon_card", false) or choice.get("is_weapon_upgrade", false) or cid.begins_with("weapon"):
+				has_weapon_cards = true
+		var prog = progression if progression != null else (get_node_or_null("/root/CoreProgression") if is_inside_tree() else null)
+		if not reroll_used and prog != null:
+			if has_element_cards and prog.has_skill("reroll_element"):
+				can_reroll = true
+			elif has_weapon_cards and prog.has_skill("reroll_weapon"):
+				can_reroll = true
+		hud.call("show_rewards", reward_choices, can_reroll)
 		player.set("controls_enabled", false)
 	else:
 		_collect_direct_reward()
+
+func _roll_weapon_cards() -> Array[Dictionary]:
+	var weapon_pool := WEAPON_CARDS.duplicate()
+	var prog = progression if progression != null else (get_node_or_null("/root/CoreProgression") if is_inside_tree() else null)
+	var has_rarer: bool = (prog != null and prog.has_skill("rarer_cards"))
+	var chosen_weapons: Array[Dictionary] = []
+	while chosen_weapons.size() < 3 and not weapon_pool.is_empty():
+		var w_weights: Array[int] = []
+		var total_w := 0
+		for wc in weapon_pool:
+			var r: String = wc.get("rarity", "common")
+			var wt: int = 10
+			if has_rarer:
+				wt = {"common": 38, "rare": 34, "epic": 20, "legendary": 8}.get(r, 10)
+			else:
+				wt = {"common": 58, "rare": 26, "epic": 12, "legendary": 4}.get(r, 10)
+			w_weights.append(wt)
+			total_w += wt
+		var roll := rng.randi_range(1, total_w)
+		var accum := 0
+		var picked_idx := 0
+		for idx in weapon_pool.size():
+			accum += w_weights[idx]
+			if roll <= accum:
+				picked_idx = idx
+				break
+		chosen_weapons.append(weapon_pool[picked_idx])
+		weapon_pool.remove_at(picked_idx)
+	return chosen_weapons
+
+func _on_reroll_requested() -> void:
+	if reroll_used or reward_collected or state != "reward":
+		return
+	reroll_used = true
+	reward_choices.clear()
+	var promised: String = rooms[room_index].reward if room_index >= 0 and room_index < rooms.size() else ""
+	if config.is_element_reward(promised) or promised.begins_with("upgrade_"):
+		var element := promised.trim_prefix("core_").trim_prefix("upgrade_")
+		var rolled: Array[Dictionary] = ElementalCards.roll_elemental_cards(element, player_cards, trap_buff_active, rng)
+		if not rolled.is_empty():
+			for card in rolled:
+				reward_choices.append({
+					"id": card["id"],
+					"element": element,
+					"name": card["name"].to_upper(),
+					"description": "[%s]\n%s" % [card["rarity"].to_upper(), card["description"]],
+					"rarity": card["rarity"],
+					"is_element_card": true
+				})
+		elif config.is_element_reward(promised):
+			reward_choices.append({"id":promised,"name":element.to_upper()+" CORE","description":"Bind %s core\nQ / 25 energy" % element})
+		else:
+			var bonus_text := "+45% (High Rarity)" if trap_buff_active else "+25%"
+			reward_choices.append({"id":promised,"name":element.to_upper()+" UPGRADE","description":"Enhance %s core power\n%s effectiveness" % [element, bonus_text]})
+	elif promised == "weapon_upgrade" or promised.begins_with("weapon"):
+		reward_choices.append_array(_roll_weapon_cards())
+	else:
+		var available := REWARDS.duplicate(true)
+		for i in 3:
+			var pick := rng.randi_range(0, available.size() - 1)
+			reward_choices.append(available[pick])
+			available.remove_at(pick)
+	hud.call("show_rewards", reward_choices, false)
+	_player_say("Rewards Rerolled!")
 
 func interact_reward() -> void:
 	activate_reward_item()
@@ -373,10 +467,39 @@ func _generate_unique_exit_rewards(count: int, current_room_index: int) -> Array
 		selected.append(upgrade)
 		available.erase(upgrade)
 	
+	var prog = progression if progression != null else (get_node_or_null("/root/CoreProgression") if is_inside_tree() else null)
+	var boost_core_weapon: bool = (prog != null and prog.has_skill("core_weapon_rewards"))
+	var boost_trap: bool = (prog != null and prog.has_skill("trap_rooms"))
+
 	for i in count - selected.size():
 		if available.is_empty():
 			break
-		var pick_idx := exit_rng.randi_range(0, available.size() - 1)
+		# Calculate candidate weights based on unlocked skills
+		var cand_weights: Array[int] = []
+		var total_weight := 0
+		for cand in available:
+			var w := 10
+			if boost_core_weapon:
+				if cand.begins_with("core_") or cand.begins_with("upgrade_") or cand == "weapon_upgrade" or cand.begins_with("weapon"):
+					w += 20
+			if boost_trap and cand == "trap_room":
+				w += 20
+			if cand.begins_with("core_") or cand.begins_with("upgrade_"):
+				var elem: String = cand.trim_prefix("core_").trim_prefix("upgrade_")
+				if prog != null and prog.has_skill("affinity_" + elem):
+					w += 30
+			cand_weights.append(w)
+			total_weight += w
+
+		var roll := exit_rng.randi_range(1, total_weight)
+		var accum := 0
+		var pick_idx := 0
+		for idx in available.size():
+			accum += cand_weights[idx]
+			if roll <= accum:
+				pick_idx = idx
+				break
+
 		selected.append(available[pick_idx])
 		var selected_icon: Rect2 = BLOCKOUT_ROOM.REWARD_ICONS[available[pick_idx]]
 		available.remove_at(pick_idx)
@@ -427,6 +550,7 @@ func _spawn_trap_wave() -> void:
 func _load_room(index: int) -> void:
 	_end_perfect_slow()
 	player.clear_enemy_statuses()
+	reroll_used = false
 	if not visited_rooms.has(index):
 		if not visited_rooms.is_empty():
 			health = minf(maximum_health, health + nanobot_healing)
@@ -724,74 +848,93 @@ func _on_attack(origin: Vector2, direction: Vector2, damage: float, reach: float
 			if player_cards.has("lightning_attack"):
 				var l_dmg: float = 8.0 if combo_hit < 3 else 12.0
 				enemy.take_damage(l_dmg, direction, 12.0, "lightning")
+				_effect(enemy.position - Vector2(0, 25), "lightning_bolt", 35.0, Color("ffe600"), direction)
 				if player_cards.has("lightning_overload"):
+					_effect(enemy.position, "shockwave", 140.0, Color("ffe600"))
 					for other in enemies.get_children():
 						if other != enemy and other.health > 0 and enemy.position.distance_to(other.position) <= 140.0:
 							other.take_damage(l_dmg * 0.60, Vector2.ZERO, 0.0, "lightning", "secondary")
 				elif rng.randf() <= 0.35:
 					var max_spread := 4 if player_cards.has("chain_lightning") else (3 if player_cards.has("stronger_lightning") else 1)
 					var spread_count := 0
+					var prev_pos: Vector2 = enemy.position
 					for other in enemies.get_children():
 						if other != enemy and other.health > 0 and enemy.position.distance_to(other.position) <= 180.0:
+							_effect(prev_pos - Vector2(0, 20), "lightning_bolt", prev_pos.distance_to(other.position), Color("ffe600"), (other.position - prev_pos).normalized())
 							other.take_damage(l_dmg * 0.50, Vector2.ZERO, 0.0, "lightning", "secondary")
+							prev_pos = other.position
 							spread_count += 1
 							if spread_count >= max_spread:
 								break
 			if player_cards.has("fire_attack"):
 				enemy.take_damage(0.0, Vector2.ZERO, 0.0, "fire")
+				_effect(enemy.position - Vector2(0, 20), "flame", 35.0, Color("ff3b30"))
 			if player_cards.has("water_attack"):
 				enemy.take_damage(0.0, Vector2.ZERO, 0.0, "water")
+				_effect(enemy.position - Vector2(0, 15), "splash", 35.0, Color("3399ff"))
 			if player_cards.has("wind_attack"):
 				var w_dmg: float = 5.0 if combo_hit < 3 else 8.0
 				var kb_dir: Vector2 = (player.position - enemy.position).normalized() if player_cards.has("vortex") else direction
 				var kb_dist: float = 12.0 * (1.55 if player_cards.has("gust") else 1.25)
 				enemy.take_damage(w_dmg, kb_dir, kb_dist, "wind")
+				_effect(enemy.position - Vector2(0, 20), "swirl", 40.0, Color("38d978"), direction)
 			if player_cards.has("ice_attack"):
 				enemy.take_damage(0.0, Vector2.ZERO, 0.0, "ice")
+				_effect(enemy.position - Vector2(0, 15), "ice_spikes", 35.0, Color("a8f0ff"))
 			if player_cards.has("earth_attack"):
 				var e_dmg: float = 12.0 if combo_hit < 3 else 18.0
 				enemy.take_damage(e_dmg, direction, 12.0, "earth")
+				_effect(enemy.position - Vector2(0, 15), "earth_fissure", 35.0, Color("a65e2e"), direction)
 	else:
 		for enemy in struck_enemies:
 			if player_cards.has("lightning_special"):
 				enemy.take_damage(20.0, direction, 45.0, "lightning")
+				_effect(enemy.position - Vector2(0, 120), "lightning_bolt", 120.0, Color("ffe600"), Vector2.DOWN)
+				_effect(enemy.position - Vector2(0, 25), "burst", 40.0, Color("ffe600"))
 			if player_cards.has("fire_special"):
 				enemy.take_damage(18.0, direction, 45.0, "fire")
+				_effect(enemy.position - Vector2(0, 20), "flame", 55.0, Color("ff3b30"))
 			if player_cards.has("water_special"):
 				enemy.take_damage(16.0, direction, 45.0, "water")
+				_effect(enemy.position - Vector2(0, 15), "splash", 55.0, Color("3399ff"))
 			if player_cards.has("wind_special"):
 				enemy.take_damage(14.0, direction, 80.0, "wind")
+				_effect(enemy.position - Vector2(0, 20), "swirl", 75.0, Color("38d978"))
 			if player_cards.has("ice_special"):
 				enemy.take_damage(18.0, direction, 45.0, "ice")
+				_effect(enemy.position - Vector2(0, 10), "ice_spikes", 50.0, Color("a8f0ff"))
 			if player_cards.has("earth_special"):
 				enemy.take_damage(24.0, direction, 65.0, "earth")
+				_effect(enemy.position - Vector2(0, 15), "earth_fissure", 60.0, Color("a65e2e"), direction)
 
 		if player_cards.has("lightning_slam"):
 			_effect(origin, "ring", reach * 1.2, Color("ffe600"))
 			get_tree().create_timer(1.0).timeout.connect(func():
+				_effect(origin, "lightning_slam", reach * 1.3, Color("ffe600"))
 				for enemy in enemies.get_children():
 					if enemy.health > 0 and enemy.position.distance_to(origin) <= reach * 1.2:
 						enemy.take_damage(40.0, Vector2.ZERO, 0.0, "lightning")
 						_effect(enemy.position - Vector2(0, 35), "burst", 45, Color("ffe600"))
 			)
 		if player_cards.has("fire_slam"):
-			_effect(origin, "ring", reach * 1.3, Color("ff3b30"))
+			_effect(origin, "fire_slam", reach * 1.3, Color("ff3b30"))
 			for enemy in enemies.get_children():
 				if enemy.health > 0 and enemy.position.distance_to(origin) <= reach * 1.3:
 					enemy.take_damage(18.0, Vector2.ZERO, 0.0, "fire")
 		if player_cards.has("tidal_slam"):
-			_effect(origin, "ring", reach * 1.3, Color("3399ff"))
+			_effect(origin, "tidal_slam", reach * 1.3, Color("3399ff"))
 			for enemy in enemies.get_children():
 				if enemy.health > 0 and enemy.position.distance_to(origin) <= reach * 1.3:
 					enemy.take_damage(16.0, origin.direction_to(enemy.position), 90.0, "water")
 		if player_cards.has("ice_slam"):
-			_effect(origin, "ring", reach * 1.2, Color("a8f0ff"))
+			_effect(origin, "ice_slam", reach * 1.3, Color("a8f0ff"))
 			for enemy in enemies.get_children():
 				if enemy.health > 0 and enemy.position.distance_to(origin) <= reach * 1.2:
 					enemy.wall_stun_timer = maxf(enemy.wall_stun_timer, 2.0)
 					enemy.take_damage(22.0, Vector2.ZERO, 0.0, "ice")
+					_effect(enemy.position, "ice_spikes", 45.0, Color("a8f0ff"))
 		if player_cards.has("earth_slam"):
-			_effect(origin, "ring", reach * 1.2, Color("a65e2e"))
+			_effect(origin, "earth_slam", reach * 1.3, Color("a65e2e"))
 			for enemy in enemies.get_children():
 				if enemy.health > 0 and enemy.position.distance_to(origin) <= reach * 1.2:
 					enemy.take_damage(26.0, Vector2.ZERO, 0.0, "earth")
@@ -804,6 +947,7 @@ func _on_player_dashed() -> void:
 	if dash_to.is_equal_approx(dash_from) and player.get("last_dash_end") != null and player.last_dash_end != Vector2.ZERO:
 		dash_to = player.last_dash_end
 	if player_cards.has("light_speed"):
+		_effect(dash_from, "lightning_bolt", dash_from.distance_to(dash_to), Color("ffe600"), (dash_to - dash_from).normalized())
 		_effect(dash_from, "ring", 45.0, Color("ffe600"))
 		_effect(dash_to, "burst", 45.0, Color("ffe600"))
 	var enemies_hit: Array[CharacterBody2D] = []
@@ -817,26 +961,35 @@ func _on_player_dashed() -> void:
 	for enemy in enemies_hit:
 		if player_cards.has("lightning_dash"):
 			enemy.take_damage(18.0, Vector2.ZERO, 0.0, "lightning")
-			_effect(enemy.position - Vector2(0, 35), "burst", 35, Color("ffe600"))
+			_effect(enemy.position - Vector2(0, 100), "lightning_bolt", 100.0, Color("ffe600"), Vector2.DOWN)
+			_effect(enemy.position - Vector2(0, 30), "burst", 35.0, Color("ffe600"))
 		if player_cards.has("fire_dash"):
 			enemy.take_damage(0.0, Vector2.ZERO, 0.0, "fire")
+			_effect(enemy.position - Vector2(0, 20), "flame", 35.0, Color("ff3b30"))
 		if player_cards.has("water_dash"):
 			enemy.take_damage(0.0, Vector2.ZERO, 0.0, "water")
+			_effect(enemy.position - Vector2(0, 15), "splash", 35.0, Color("3399ff"))
 		if player_cards.has("wind_dash"):
 			var pull_dir: Vector2 = (dash_from - enemy.position).normalized()
 			enemy.take_damage(8.0, pull_dir, 60.0, "wind")
+			_effect(enemy.position - Vector2(0, 20), "swirl", 45.0, Color("38d978"))
 		if player_cards.has("ice_dash"):
 			enemy.take_damage(0.0, Vector2.ZERO, 0.0, "ice")
+			_effect(enemy.position - Vector2(0, 15), "ice_spikes", 35.0, Color("a8f0ff"))
 		if player_cards.has("earth_dash"):
 			enemy.take_damage(16.0, Vector2.ZERO, 0.0, "earth")
+			_effect(dash_from, "earth_fissure", 45.0, Color("a65e2e"))
 
 	if not enemies_hit.is_empty() and player_cards.has("fleet_foot"):
 		var orig_speed: float = float(player.get("speed"))
 		player.set("speed", orig_speed * 1.25)
+		_effect(dash_to, "swirl", 35.0, Color("38d978"))
 		get_tree().create_timer(2.0).timeout.connect(func(): if is_instance_valid(player): player.set("speed", orig_speed))
 
 	if player_cards.has("fire_trail"):
-		_effect(dash_from.lerp(dash_to, 0.5), "ring", 60.0, Color("ff3b30"))
+		_effect(dash_from.lerp(dash_to, 0.5), "flame", 60.0, Color("ff3b30"))
+		_effect(dash_from, "flame", 40.0, Color("ff3b30"))
+		_effect(dash_to, "flame", 40.0, Color("ff3b30"))
 		for enemy in enemies.get_children():
 			if enemy.health > 0 and enemy.position.distance_to(dash_from.lerp(dash_to, 0.5)) <= 80.0:
 				enemy.take_damage(0.0, Vector2.ZERO, 0.0, "fire")
@@ -954,6 +1107,8 @@ Q / 25 energy" % element})
 					var bonus_text := "+45% (High Rarity)" if trap_buff_active else "+25%"
 					reward_choices.append({"id":promised,"name":element.to_upper()+" UPGRADE","description":"Enhance %s core power
 %s effectiveness" % [element, bonus_text]})
+			elif promised == "weapon_upgrade" or promised.begins_with("weapon"):
+				reward_choices.append_array(_roll_weapon_cards())
 			elif promised == "trap_room":
 				reward_choices.append({"id":"trap_room","name":"TRAP SURVIVAL CACHE","description":"Upgrade rarity increased for future rewards"})
 			elif promised == "core_xp":
@@ -989,7 +1144,8 @@ Q / 25 energy" % element})
 				"lightning": "Burst, speed & chaining",
 				"ice": "Slowing, freezing & execution",
 				"wind": "Knockback, collision & stuns",
-				"earth": "Heavy defense, constructs & rocks"
+				"earth": "Heavy defense, constructs & rocks",
+				"toxin": "Corrosive poison & damage over time"
 			}.get(element, "Elemental power")
 			reward_choices[0] = {"id": "core_" + element, "name": element.to_upper() + " CORE", "description": "%s\nBind slot %d/%d\nQ / 25 energy" % [effect_text, config.core_elements.size() + 1, config.core_limit]}
 	reward_collected = false
@@ -1031,7 +1187,11 @@ func choose_reward(id: String) -> bool:
 		var exits: Array = rooms[room_index].exit_rewards
 		if not exits.is_empty() and not exits.has(upgrade):
 			exits[0] = upgrade
-			room.refresh_exit_previews(rooms[room_index])
+		if config.core_elements.size() >= config.core_limit:
+			for i in exits.size():
+				if str(exits[i]).begins_with("core_"):
+					exits[i] = "upgrade_" + chosen_element
+		room.refresh_exit_previews(rooms[room_index])
 	reward_collected = true
 	door_exit_warned = false
 	if is_instance_valid(reward_item):
@@ -1075,7 +1235,7 @@ func choose_reward(id: String) -> bool:
 		"trap_room":
 			trap_buff_active = true
 			_player_say("Trap Survival Cache: Rarity Boost Active")
-		"upgrade_fire", "upgrade_lightning", "upgrade_ice", "upgrade_wind", "upgrade_earth":
+		"upgrade_fire", "upgrade_lightning", "upgrade_ice", "upgrade_wind", "upgrade_earth", "upgrade_toxin":
 			var mult: float = 1.45 if trap_buff_active else 1.25
 			player.set("damage_multiplier", float(player.get("damage_multiplier")) * mult)
 		"upgrade_water":
@@ -1083,7 +1243,19 @@ func choose_reward(id: String) -> bool:
 			player.set("speed", float(player.get("speed")) * mult)
 		_:
 			if id.begins_with("weapon") or id == "weapon_upgrade":
-				player.set("damage_multiplier", float(player.get("damage_multiplier")) * 1.2)
+				match id:
+					"weapon_heavy_impact":
+						player.set("damage_multiplier", float(player.get("damage_multiplier")) * 1.25)
+					"weapon_rapid_servos":
+						player.set("attack_cooldown_mult", 0.8)
+					"weapon_kinetic_amp":
+						player.set("damage_multiplier", float(player.get("damage_multiplier")) * 1.2)
+					"weapon_overcharge":
+						player.set("damage_multiplier", float(player.get("damage_multiplier")) * 1.3)
+					"weapon_executioner":
+						player.set("damage_multiplier", float(player.get("damage_multiplier")) * 1.3)
+					_:
+						player.set("damage_multiplier", float(player.get("damage_multiplier")) * 1.2)
 				_player_say("Weapon Upgrade Applied")
 	if room_index == rooms.size()-1:
 		hud.modal.hide()
@@ -1165,6 +1337,9 @@ func use_core_power() -> bool:
 				enemy.apply_knockback(player.position.direction_to(enemy.position), 120, "wind")
 			elif element == "earth":
 				enemy.take_damage(28.0, Vector2.ZERO, 0.0, "earth")
+			elif element == "toxin":
+				enemy.take_damage(25.0, Vector2.ZERO, 0.0, "toxin")
+				enemy.slow_timer = 2.0
 
 	return true
 

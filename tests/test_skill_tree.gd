@@ -17,6 +17,9 @@ func check(ok: bool, message: String) -> void:
 func _run() -> void:
 	var progress = root.get_node("CoreProgression")
 	progress.persistence_enabled = false
+	progress.unlocked_skills.assign(["root"])
+	progress.xp = 0
+	progress.special_items = 0
 	check(not progress.unlock_skill("final_stand"), "Regular node unlocked without XP")
 	progress.award(10000)
 	check(not progress.unlock_skill("power_two"), "XP purchased special node")
@@ -73,7 +76,7 @@ func _run() -> void:
 	for foe in run.enemies.get_children():
 		foe.active = false
 	var player = run.player
-	player.position = Space.project(Vector2(730,730))
+	player.position = run.room.spawn_position
 	check(is_equal_approx(player.backstab_multiplier,3.2), "Backstab ranks not applied")
 	player.energy = 0
 	player.gain_hit_energy()
@@ -106,6 +109,7 @@ func _run() -> void:
 	run._award_progress(10,1)
 	check(player.perfect_reward_timer == 0 and player.perfect_damage_timer == 0 and progress.xp == initial_xp+50 and progress.special_items == initial_items+3, "Rewards stayed doubled after expiration")
 	player.set_physics_process(true)
+	player.position = run.room.spawn_position
 	player.perfect_reward_timer = 5.0
 	player.perfect_damage_timer = 5.0
 	player.dash_timer = 0
@@ -131,7 +135,9 @@ func _run() -> void:
 		check(absf(hit_label.position.y - (enemy.position.y - 36)) < 15, "Damage number should be positioned next to torso")
 	player.perfect_reward_timer = 0
 	player.perfect_damage_timer = 0
+	player.position = Vector2(12000, 12000)
 	enemy.wall_stun_timer = 0
+	enemy.facing = Vector2.LEFT
 	enemy.position = player.position + Vector2(70,0)
 	enemy.health = 1000
 	player.combo = 0
@@ -143,8 +149,10 @@ func _run() -> void:
 
 	# Leftward attack damage number placement
 	enemy.health = 1000
-	enemy.position = Vector2(800, 500)
-	player.position = Vector2(870, 500)
+	enemy.wall_stun_timer = 0.0
+	player.position = Vector2(12000, 12000)
+	enemy.position = player.position + Vector2(-70, 0)
+	enemy.facing = Vector2.RIGHT
 	player.combo = 0
 	player.attack_cooldown = 0
 	player.perform_attack(Vector2.LEFT)
@@ -199,12 +207,14 @@ func _run() -> void:
 	enemy.apply_knockback(Vector2.RIGHT,250)
 	check(is_equal_approx(enemy.wall_stun_timer, 0.3), "Knockback against construct did not stun for 0.3s")
 	construct.queue_free()
+	await physics_frame
 
 	# Knockback in open space without walls or constructs should not stun
 	enemy.wall_stun_timer = 0.0
 	enemy.position = Vector2(12000,12000)
 	enemy.apply_knockback(Vector2.RIGHT,50)
 	check(enemy.wall_stun_timer == 0.0, "Knockback in open space should not stun")
+	player.position = Vector2(12000, 12000)
 	enemy.kind = "brute"
 	enemy.position = player.position + Vector2(220,0)
 	player.grapple_cooldown = 0
@@ -223,10 +233,11 @@ func _run() -> void:
 	enemy.position = player.position + Vector2(70,0)
 	enemy.health = 1000
 	check(run.use_core_power() and player.energy == 75, "Core burst energy cost wrong")
-	check(is_equal_approx(enemy.health,910) and enemy.slow_timer == 3, "Multi-core effects missing")
+	check(is_equal_approx(enemy.health,897.5) and enemy.slow_timer == 3, "Multi-core effects missing")
 	check(not run.use_core_power(), "Core cooldown bypassed")
 	run._on_damage(1000)
 	check(run.health == run.maximum_health*0.5 and run.final_stand_used and run.state == "combat", "Final Stand failed")
+	run.maximum_health = 100
 	run.health = 30
 	run._load_room(1)
 	check(run.health == 55, "Nanobots did not heal on new room")
@@ -249,8 +260,83 @@ func _run() -> void:
 	var tree = load("res://scenes/ui/CoreTerminal.tscn").instantiate()
 	root.add_child(tree)
 	tree.open_terminal()
-	check(tree.skill_buttons.size() == 20, "Image tree missing nodes")
+	check(tree.skill_buttons.size() == 32, "Image tree missing nodes")
 	tree._select_skill("power_three")
 	check(tree.skill_detail.text.contains("three") and tree.unlock_button.disabled, "Selected node detail wrong")
+
+	# Verify newly added nodes in terminal
+	var expected_nodes := [
+		"toxin_mastery", "core_weapon_rewards", "rarer_cards", "trap_rooms",
+		"affinity_fire", "affinity_ice", "affinity_water", "affinity_lightning", "affinity_earth", "affinity_wind",
+		"reroll_element", "reroll_weapon"
+	]
+	for node_id in expected_nodes:
+		check(tree.skill_buttons.has(node_id), "Terminal missing button for: " + node_id)
+		tree._select_skill(node_id)
+		check(tree.skill_detail.text.contains(DATA.SKILLS[node_id].name), "Detail text mismatch for " + node_id)
+		check(tree.skill_buttons[node_id].is_inside_tree(), "Node button not in scene tree: " + node_id)
+
+	# Test Toxin Core Gating
+	progress.unlocked_skills.assign(["root"])
+	config.refresh_elements()
+	check(not config.get_all_elements().has("toxin"), "Toxin in element pool without toxin_mastery")
+	check(not config.is_element_reward("core_toxin"), "core_toxin valid without toxin_mastery")
+	progress.unlocked_skills.append("power_two")
+	progress.unlocked_skills.append("power_three")
+	progress.unlocked_skills.append("toxin_mastery")
+	config.start_run("medium", {})
+	check(config.get_all_elements().has("toxin"), "Toxin not in element pool with toxin_mastery")
+	check(config.is_element_reward("core_toxin"), "core_toxin invalid with toxin_mastery")
+	check(config.available_elements().has("toxin"), "Toxin not in available elements")
+
+	# Test Core Encounter Rules
+	# At capacity 1 without power_two
+	progress.unlocked_skills.assign(["root"])
+	config.start_run("medium", {})
+	check(config.core_limit == 1, "Core limit should be 1 without power upgrades")
+	check(config.available_elements().size() == 6, "Should have 6 available base elements")
+	config.pick_element("fire")
+	check(config.available_elements().is_empty(), "Cores should not be available after 1 is picked without power_two")
+
+	# At capacity 2 with power_two
+	progress.unlocked_skills.append("power_two")
+	config.start_run("medium", {})
+	check(config.core_limit == 2, "Core limit should be 2 with power_two")
+	config.pick_element("water")
+	check(not config.available_elements().is_empty(), "Should still encounter cores after 1 is picked with power_two")
+	config.pick_element("ice")
+	check(config.available_elements().is_empty(), "Cores should stop after 2 are picked with power_two")
+
+	# At capacity 3 with power_three
+	progress.unlocked_skills.append("power_three")
+	config.start_run("medium", {})
+	check(config.core_limit == 3, "Core limit should be 3 with power_three")
+	config.pick_element("lightning")
+	check(not config.available_elements().is_empty(), "Should encounter cores after 1 is picked with power_three")
+	config.pick_element("wind")
+	check(not config.available_elements().is_empty(), "Should encounter cores after 2 is picked with power_three")
+	config.pick_element("earth")
+	check(config.available_elements().is_empty(), "Cores should stop after 3 are picked with power_three")
+
+	# Test Elemental Cards roll with toxin and rarer_cards
+	var toxin_cards := ElementalCards.get_element_cards("toxin")
+	check(toxin_cards.size() == 11, "Toxin should have 11 cards defined")
+	var rolled_toxin := ElementalCards.roll_elemental_cards("toxin", [])
+	check(rolled_toxin.size() == 3, "Should roll 3 toxin card choices")
+
+	# Test Rarer Cards skill boost
+	progress.unlocked_skills.append("core_weapon_rewards")
+	progress.unlocked_skills.append("rarer_cards")
+	var rolled_rare := ElementalCards.roll_elemental_cards("toxin", [])
+	check(rolled_rare.size() == 3, "Should roll 3 toxin card choices with rarer_cards")
+
+	# Test Reroll skills
+	check(progress.has_skill("reroll_element") == false, "reroll_element should not be unlocked yet")
+	progress.unlocked_skills.append("reroll_element")
+	progress.unlocked_skills.append("trap_rooms")
+	progress.unlocked_skills.append("reroll_weapon")
+	check(progress.has_skill("reroll_element"), "reroll_element should be unlocked")
+	check(progress.has_skill("reroll_weapon"), "reroll_weapon should be unlocked")
+
 	print("SKILL_TREE_CHECKS=", checks, " FAILURES=", failures)
 	quit(1 if failures else 0)

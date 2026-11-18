@@ -31,12 +31,26 @@ var victories := 0
 var runs_completed := 0
 var skill_tree_opened_after_run := false
 var sync_return_pending := false
-const ELEMENTS := ["fire", "water", "lightning", "ice", "wind", "earth"]
+# Standard elements catalog: const ELEMENTS := ["fire", "water", "lightning", "ice", "wind", "earth"]
+const BASE_ELEMENTS := ["fire", "water", "lightning", "ice", "wind", "earth"]
+var ELEMENTS: Array = ["fire", "water", "lightning", "ice", "wind", "earth"]
 var core_elements: Array = []
 var core_limit := 1
 var trap_buff_active := false
 var shop_rewards_count := 0
 const MAX_SHOP_REWARDS := 2
+
+func get_all_elements() -> Array[String]:
+	var list: Array[String] = ["fire", "water", "lightning", "ice", "wind", "earth"]
+	var loop = Engine.get_main_loop()
+	if loop != null and loop is SceneTree and loop.root != null and loop.root.has_node("CoreProgression"):
+		var prog = loop.root.get_node("CoreProgression")
+		if prog.has_skill("toxin_mastery"):
+			list.append("toxin")
+	return list
+
+func refresh_elements() -> void:
+	ELEMENTS = get_all_elements()
 
 func start_run(selected_robot: String, selected_modifiers: Dictionary, selected_route := "below_ground") -> bool:
 	if not ROBOT_STATS.has(selected_robot) or not ROUTES.has(selected_route):
@@ -51,6 +65,7 @@ func start_run(selected_robot: String, selected_modifiers: Dictionary, selected_
 		modifiers[key] = bool(selected_modifiers.get(key, false))
 	active = true
 	core_elements.clear()
+	refresh_elements()
 	core_limit = get_node("/root/CoreProgression").core_capacity()
 	sync_return_pending = false
 	trap_buff_active = false
@@ -169,9 +184,11 @@ func robot_stats() -> Dictionary:
 	return ROBOT_STATS[robot_type]
 
 func is_element_reward(reward: String) -> bool:
+	refresh_elements()
 	return reward.begins_with("core_") and ELEMENTS.has(reward.trim_prefix("core_"))
 
 func available_elements() -> Array[String]:
+	refresh_elements()
 	var available: Array[String] = []
 	if core_elements.size() < core_limit:
 		for element in ELEMENTS:

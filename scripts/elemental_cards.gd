@@ -77,10 +77,18 @@ const BASE_CORE_EFFECTS: Dictionary = {
 		"orbiting_rock_contact_damage": 16.0,
 		"orbiting_rock_launch_damage": 32.0,
 		"description": "Max 3 orbiting rocks (16 contact / 32 launch damage, 3 existence) and 3 stationary constructs (5 existence). Rocks block/deflect projectiles."
+	},
+	"toxin": {
+		"focus": "Damage over time, corrosive acid, armor melting, slowing",
+		"toxin_dps": 7.0,
+		"toxin_duration": 4.0,
+		"total_toxin_damage": 28.0,
+		"corrosion_multiplier": 1.25,
+		"description": "Toxin deals 7 poison damage/sec for 4s (28 total) and corrodes enemy armor, increasing all damage taken by 25%."
 	}
 }
 
-# Complete Card Database (66 cards: 11 per element)
+# Complete Card Database (77 cards: 11 per element across 7 elements)
 const CARDS: Dictionary = {
 	# ==========================================================================
 	# 1. LIGHTNING CARDS
@@ -754,6 +762,119 @@ const CARDS: Dictionary = {
 		"effect": "A launched rock splits into three smaller rocks after its first impact. Each fragment deals 12 Earth damage to a different enemy.",
 		"description": "Launched rocks split into 3 fragments on first impact, each dealing 12 Earth damage to different enemies.",
 		"prerequisite": "rock_shot"
+	},
+	# ==========================================================================
+	# 7. TOXIN CARDS
+	# ==========================================================================
+	"toxin_attack": {
+		"id": "toxin_attack",
+		"element": "toxin",
+		"rarity": "common",
+		"name": "Toxin Attack",
+		"damage": "7 / 7 / 10",
+		"effect": "7 / 7 / 10 per combo hit",
+		"description": "Combo strikes coat enemies in venom, dealing 7 / 7 / 10 elemental Toxin damage.",
+		"prerequisite": ""
+	},
+	"toxin_special": {
+		"id": "toxin_special",
+		"element": "toxin",
+		"rarity": "common",
+		"name": "Toxin Special",
+		"damage": "18",
+		"effect": "18 poison damage in cone",
+		"description": "Special attack sprays corrosive bile, dealing 18 Toxin damage and slowing enemies.",
+		"prerequisite": ""
+	},
+	"toxin_armor": {
+		"id": "toxin_armor",
+		"element": "toxin",
+		"rarity": "common",
+		"name": "Caustic Plating",
+		"damage": "14",
+		"effect": "14 poison damage to attackers",
+		"description": "Melee attackers take 14 Toxin damage and are inflicted with deadly poison.",
+		"prerequisite": ""
+	},
+	"toxin_dash": {
+		"id": "toxin_dash",
+		"element": "toxin",
+		"rarity": "common",
+		"name": "Toxic Trail",
+		"damage": "16",
+		"effect": "16 damage trail",
+		"description": "Dashing leaves behind a toxic sludge trail that damages and slows enemies who step in it.",
+		"prerequisite": ""
+	},
+	"caustic_pool": {
+		"id": "caustic_pool",
+		"element": "toxin",
+		"rarity": "rare",
+		"name": "Caustic Pool",
+		"damage": "35",
+		"effect": "Ground Slam leaves acid pool",
+		"description": "Ground Slam erupts in an acid pool dealing 35 Toxin damage over 3 seconds.",
+		"prerequisite": ""
+	},
+	"virulent_strain": {
+		"id": "virulent_strain",
+		"element": "toxin",
+		"rarity": "rare",
+		"name": "Virulent Strain",
+		"damage": "+30%",
+		"effect": "Toxin spreads upon enemy death",
+		"description": "When a poisoned enemy dies, their toxin explodes outwards, infecting nearby enemies.",
+		"prerequisite": ""
+	},
+	"corrosive_bile": {
+		"id": "corrosive_bile",
+		"element": "toxin",
+		"rarity": "rare",
+		"name": "Corrosive Bile",
+		"damage": "+25%",
+		"effect": "Armor melting",
+		"description": "Enemies affected by Toxin take 25% increased damage from all attack sources.",
+		"prerequisite": ""
+	},
+	"paralytic_venom": {
+		"id": "paralytic_venom",
+		"element": "toxin",
+		"rarity": "rare",
+		"name": "Paralytic Venom",
+		"damage": "Slow 40%",
+		"effect": "40% slow",
+		"description": "Toxin slows enemy movement and attack animation speed by 40%.",
+		"prerequisite": ""
+	},
+	"noxious_cloud": {
+		"id": "noxious_cloud",
+		"element": "toxin",
+		"rarity": "epic",
+		"name": "Noxious Cloud",
+		"damage": "45",
+		"effect": "Large poison cloud",
+		"description": "Core burst releases an expanding toxic miasma dealing 45 Toxin damage and blinding enemies.",
+		"prerequisite": ""
+	},
+	"miasma": {
+		"id": "miasma",
+		"element": "toxin",
+		"rarity": "epic",
+		"name": "Epidemic Miasma",
+		"damage": "2x DoT",
+		"effect": "Doubled poison rate",
+		"description": "All active poison and toxin damage-over-time effects tick twice as fast.",
+		"prerequisite": "virulent_strain"
+	},
+	"neurotoxin": {
+		"id": "neurotoxin",
+		"element": "toxin",
+		"rarity": "legendary",
+		"name": "Lethal Neurotoxin",
+		"damage": "Instant Kill / 120",
+		"effect": "Execution under 20% health",
+		"description": "Non-boss enemies afflicted with Toxin die instantly when reaching 20% health. Bosses suffer 120 extra Toxin damage.",
+		"prerequisite": "corrosive_bile"
 	}
 }
 
@@ -835,8 +956,22 @@ static func roll_elemental_cards(element: String, owned_cards: Array, trap_buff 
 	if eligible.size() <= 3:
 		return eligible.duplicate()
 
+	# Check for Rarer Cards skill from CoreProgression
+	var has_rarer_skill := false
+	var loop = Engine.get_main_loop()
+	if loop != null and loop is SceneTree and loop.root != null and loop.root.has_node("CoreProgression"):
+		has_rarer_skill = loop.root.get_node("CoreProgression").has_skill("rarer_cards")
+
 	# Use active weights
-	var weights_map: Dictionary = TRAP_BUFF_RARITY_WEIGHTS if trap_buff else RARITY_WEIGHTS
+	var weights_map: Dictionary
+	if trap_buff and has_rarer_skill:
+		weights_map = {"common": 25, "rare": 35, "epic": 25, "legendary": 15}
+	elif trap_buff:
+		weights_map = TRAP_BUFF_RARITY_WEIGHTS
+	elif has_rarer_skill:
+		weights_map = {"common": 40, "rare": 32, "epic": 20, "legendary": 8}
+	else:
+		weights_map = RARITY_WEIGHTS
 
 	var chosen: Array[Dictionary] = []
 	var pool: Array[Dictionary] = eligible.duplicate()

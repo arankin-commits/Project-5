@@ -3,6 +3,7 @@ extends CanvasLayer
 const CardChoiceButtonClass := preload("res://scripts/card_choice_button.gd")
 
 signal reward_selected(id: String)
+signal reroll_requested
 signal retry_requested
 signal return_requested
 signal pause_requested
@@ -218,7 +219,7 @@ func _clear_actions() -> void:
 		modal_actions.remove_child(child)
 		child.queue_free()
 
-func show_rewards(choices: Array) -> void:
+func show_rewards(choices: Array, can_reroll := false) -> void:
 	_clear_actions()
 	card_view.show()
 	result_panel.hide()
@@ -229,6 +230,23 @@ func show_rewards(choices: Array) -> void:
 		var choice_id := str(choice.get("id", ""))
 		button.pressed.connect(func(): reward_selected.emit(choice_id))
 		modal_actions.add_child(button)
+	if can_reroll:
+		var reroll_btn := Button.new()
+		reroll_btn.text = "REROLL REWARDS"
+		reroll_btn.custom_minimum_size = Vector2(280, 50)
+		var reroll_style := StyleBoxFlat.new()
+		reroll_style.bg_color = Color("282218")
+		reroll_style.border_color = Color("e5a93b")
+		reroll_style.set_border_width_all(2)
+		reroll_style.set_corner_radius_all(6)
+		reroll_btn.add_theme_stylebox_override("normal", reroll_style)
+		var reroll_hover := reroll_style.duplicate()
+		reroll_hover.bg_color = Color("3d3220")
+		reroll_btn.add_theme_stylebox_override("hover", reroll_hover)
+		reroll_btn.add_theme_font_size_override("font_size", 16)
+		reroll_btn.add_theme_color_override("font_color", Color("ffd580"))
+		reroll_btn.pressed.connect(func(): reroll_requested.emit())
+		modal_actions.add_child(reroll_btn)
 	modal.show()
 	if modal_actions.get_child_count() > 0:
 		modal_actions.get_child(0).grab_focus()
